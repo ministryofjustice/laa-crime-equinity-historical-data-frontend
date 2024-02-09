@@ -1,0 +1,13 @@
+{% extends "../partials/layout.njk" %}
+
+{% set pageTitle = applicationName + " - Error" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+
+  <h1>Uh-oh</h1>
+  <h2>{{ message }}</h2>
+  <h3>{{ status }}</h3>
+  <pre>{{ stack }}</pre>
+
+{% endblock %}

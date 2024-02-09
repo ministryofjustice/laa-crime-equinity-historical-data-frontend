@@ -1,0 +1,10 @@
+$govuk-global-styles: true;
+$moj-page-width: 1170px;
+$govuk-page-width: $moj-page-width;
+
+//Load path used in package.json sass compile to find govuk all.scss file
+@import 'govuk/all';
+@import 'moj/all';
+
+// Import custom scss file here to be compiled into one css file.
+@import './components/search';

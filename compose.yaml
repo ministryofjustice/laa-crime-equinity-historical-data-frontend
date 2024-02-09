@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  laa-edm-frontend:
+    build: .
+    volumes:
+      - .:/home/node/app
+      - /home/node/app/node_modules
+      - /home/node/app/assets
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: development
+    command: npm run dev
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"

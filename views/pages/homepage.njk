@@ -1,0 +1,31 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{%- from "moj/components/search/macro.njk" import mojSearch -%}
+
+{% block content %}
+<div class="govuk-width-container">
+    <h1 class="govuk-heading-l">eForms</h1>
+
+    {{ mojSearch({
+        action: '#',
+        method: 'post',
+        input: {
+            id: 'search',
+            name: 'search'
+        },
+        label: {
+            text: 'Find a person',
+            classes: 'govuk-!-font-weight-bold'
+        },
+        hint: {
+            text: 'You can search by name, date of birth or national insurance number'
+        },
+        button: {
+            text: 'Search'
+        }
+    }) }}
+
+
+{% endblock %}
