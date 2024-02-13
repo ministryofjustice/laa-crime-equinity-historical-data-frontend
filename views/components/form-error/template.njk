@@ -1,0 +1,6 @@
+{% if params.error %}
+    <span id="{{ params.id }}-error" class="govuk-error-message">
+      <span class="govuk-visually-hidden">Error:</span>
+      {{ params.errorMessage }}
+    </span>
+{% endif %}
