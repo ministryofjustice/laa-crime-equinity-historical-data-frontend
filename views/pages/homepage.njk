@@ -31,7 +31,7 @@
                         label: {
                             text: 'USN'
                         },
-                        classes: "govuk-!-width-two-thirds ",
+                        classes: "govuk-input--width-10",
                         hint: {
                             text: "Must be no longer than 10 digits"
                         },
@@ -56,9 +56,9 @@
                         label: {
                             text: "Start date"
                         },
-                        classes: "govuk-!-width-full",
-                        id: "one-quarter",
-                        name: "oneQuarter"
+                        id: "start-date",
+                        name: "startDate",
+                        type: "date"
                     }) }}
                 </div>
                 <div class="govuk-grid-column-one-quarter">
@@ -67,16 +67,17 @@
                             text: "End date"
                         },
                         classes: "govuk-!-width-full",
-                        id: "one-quarter",
-                        name: "oneQuarter"
+                        id: "end-date",
+                        name: "endDate",
+                        type: "date"
                     }) }}
                 </div>
-                    {{ govukButton({
-                        action: '#',
-                        method: 'post',
-                        text: 'Search',
-                        classes: "govuk-!-margin-left-3"
-                    }) }}
+                {{ govukButton({
+                    action: '#',
+                    method: 'post',
+                    text: 'Search',
+                    classes: "govuk-!-margin-left-3"
+                }) }}
             </div>
         </main>
 
