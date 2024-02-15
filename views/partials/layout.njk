@@ -5,7 +5,6 @@
 
 {% set htmlClasses = "app-html-class" %}
 {% set htmlLang = "en" %}
-{% set assetUrl = "registerawesomecat" %}
 {% set themeColor = "blue" %}
 {% set bodyClasses = "app-body-class" %}
 {% set bodyAttributes = {
@@ -15,11 +14,11 @@
 {% set containerClasses = "app-width-container" %}
 
 {% block head %}
-  <meta name="description" content="GOV.UK - Register your awesome cat officially">
+  <meta name="description" content="GOV.UK - Equinity historical data">
   <link href="/assets/stylesheets/application.css" rel="stylesheet">
 {% endblock %}
 
-{% block pageTitle %}GOV.UK - Register you awesome cat{% endblock %}
+{% block pageTitle %} GOV.UK - Equinity historical data {% endblock %}
 
 {% block skipLink %}
     {% include "../components/skipLink.njk" %}
@@ -31,6 +30,10 @@
 
 {% block beforeContent %}
     {% include "../components/phaseBanner.njk" %}
+{% endblock %}
+
+{% block footer %}
+    {% include "./footer.njk" %}
 {% endblock %}
 
 {% block bodyEnd %}
