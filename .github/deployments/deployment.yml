@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laa-crime-equinity-historical-data-frontend-deployment
+  labels:
+    app: laa-crime-equinity-historical-data-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: laa-crime-equinity-historical-data-frontend # this should match the selector in service.yml
+  template:
+    metadata:
+      labels:
+        app: laa-crime-equinity-historical-data-frontend # this should match the selector in service.yml
+    spec:
+      containers:
+        - name: laa-crime-equinity-historical-data-frontend
+          image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
+          ports:
+            - containerPort: 8080
