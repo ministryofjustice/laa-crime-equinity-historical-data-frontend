@@ -27,7 +27,6 @@ COPY --chown=node:node .  /home/node/app/.
 RUN npm install
 
 # Builds all assets needed to be onto a browser.
-RUN chown -R appuser:appgroup /app
 RUN npm run build
 #COPY dist /home/node/app/.
 
