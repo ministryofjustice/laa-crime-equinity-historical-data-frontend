@@ -27,6 +27,7 @@ jobs:
 #          IMAGE_TAG: ${{ github.sha }}
       - run: ls ./.github
       - run: |
+          mkdir deployments
           cat ./.github/deployments/deployment.yml | envsubst > deployments/deployment.yml
           cat deployments/ingress.yml | envsubst > deployments/ingress.yml
           cat deployments/service.yml | envsubst > deployments/service.yml
