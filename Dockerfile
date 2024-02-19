@@ -51,6 +51,6 @@ RUN chown -R appuser:appgroup /app
 
 USER 1017
 
-RUN chmod +x start.sh
+#RUN chmod +x start.sh
 
-CMD ["./start.sh"]
+CMD ["node", "dist/index.js"]
