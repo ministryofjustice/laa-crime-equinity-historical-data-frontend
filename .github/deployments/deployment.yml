@@ -18,4 +18,4 @@ spec:
         - name: laa-crime-equinity-historical-data-frontend
           image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
           ports:
-            - containerPort: 8080
+            - containerPort: 4000

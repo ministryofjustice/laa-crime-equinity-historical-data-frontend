@@ -7,5 +7,5 @@ spec:
     app: laa-crime-equinity-historical-data-frontend # this should match the pod label in deployment.yml
   ports:
     - name: https
-      port: 8080
-      targetPort: 8080
+      port: 4000
+      targetPort: 4000
