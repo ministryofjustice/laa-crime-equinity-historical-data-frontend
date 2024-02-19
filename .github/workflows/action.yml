@@ -2,7 +2,7 @@ name: deploy
 
 on:
   push:
-    branches: [main]
+#    branches: [main]
 
 jobs:
   ecr:
@@ -18,13 +18,14 @@ jobs:
           aws-region: ${{ vars.ECR_REGION }}
       - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
-      - run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          IMAGE_TAG: ${{ github.sha }}
+#      - run: |
+#          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+#          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+#        env:
+#          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+#          IMAGE_TAG: ${{ github.sha }}
+      - run: ls
       - run: |
           cat ./.github/deployments/deployment.yml | envsubst > deployments/deployment.yml
           cat deployments/ingress.yml | envsubst > deployments/ingress.yml

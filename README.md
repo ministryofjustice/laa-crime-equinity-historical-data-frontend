@@ -1,6 +1,6 @@
 # LAA crime Equinity historical data frontend 
 
-This is the frontend displaying the the data from laa-crime-equinity-historical-data backend.
+This is the frontend displaying the data from laa-crime-equinity-historical-data backend.
 
 ## Setup
 
