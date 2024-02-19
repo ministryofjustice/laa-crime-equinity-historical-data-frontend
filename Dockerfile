@@ -17,7 +17,7 @@ USER node
 #COPY package*.json /home/node/app/.
 
 # Copy the application files to the working directory
-#COPY --chown=node:node . .
+COPY --chown=node:node package.json /home/node/app/.
 COPY --chown=node:node .  /home/node/app/.
 
 # Install app dependencies
