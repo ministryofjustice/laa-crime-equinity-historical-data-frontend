@@ -5,7 +5,7 @@ metadata:
   labels:
     app: laa-crime-equinity-historical-data-frontend
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: laa-crime-equinity-historical-data-frontend # this should match the selector in service.yml

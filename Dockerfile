@@ -7,22 +7,25 @@ RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 WORKDIR /home/node/app
 
 # Change ownership of the working directory to node user
-RUN chown -R node:node /home/node/app
+#RUN chown -R node:node /home/node/app
 
 # Switch to the node user
 USER node
 
 # Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+#COPY package*.json ./
+#COPY package*.json /home/node/app/.
 
 # Copy the application files to the working directory
-COPY --chown=node:node . .
+#COPY --chown=node:node . .
+COPY --chown=node:node .  /home/node/app/.
 
 # Install app dependencies
 RUN npm install
 
 # Builds all assets needed to be onto a browser.
 RUN npm run build
+#COPY dist /home/node/app/.
 
 # Expose the port that the app will run on
 EXPOSE 4000
