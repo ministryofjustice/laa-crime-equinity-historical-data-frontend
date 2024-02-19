@@ -1,34 +1,56 @@
-# Use an official Node.js runtime as a parent image
-FROM node:20-bullseye as base
+## Use an official Node.js runtime as a parent image
+#FROM node:20-bullseye as base
+#
+#RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+#
+## Set the working directory in the container
+#WORKDIR /home/node/app
+#
+## Change ownership of the working directory to node user
+##RUN chown -R node:node /home/node/app
+#
+## Switch to the node user
+#USER node
+#
+## Copy package.json and package-lock.json to the working directory
+##COPY package*.json ./
+##COPY package*.json /home/node/app/.
+#
+## Copy the application files to the working directory
+##COPY --chown=node:node . .
+#COPY --chown=node:node package.json /home/node/app/.
+#COPY --chown=node:node .  /home/node/app/.
+#
+## Install app dependencies
+#RUN npm install
+#
+## Builds all assets needed to be onto a browser.
+#RUN npm run build
+##COPY dist /home/node/app/.
+#
+## Expose the port that the app will run on
+#EXPOSE 4000
+#
+## Define the command to run your app
+#CMD ["node", "dist/index.js"]
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+FROM node:16.14-bullseye-slim
 
-# Set the working directory in the container
-WORKDIR /home/node/app
+ENV NODE_ENV=development
 
-# Change ownership of the working directory to node user
-#RUN chown -R node:node /home/node/app
+RUN addgroup --gid 1017 --system appgroup \
+  && adduser --uid 1017 --system appuser --gid 1017
 
-# Switch to the node user
-USER node
+WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
-#COPY package*.json ./
-#COPY package*.json /home/node/app/.
+COPY . .
 
-# Copy the application files to the working directory
-COPY --chown=node:node package.json /home/node/app/.
-COPY --chown=node:node .  /home/node/app/.
-
-# Install app dependencies
 RUN npm install
 
-# Builds all assets needed to be onto a browser.
-RUN npm run build
-#COPY dist /home/node/app/.
+RUN chown -R appuser:appgroup /app
 
-# Expose the port that the app will run on
-EXPOSE 4000
+USER 1017
 
-# Define the command to run your app
-CMD ["node", "dist/index.js"]
+RUN chmod +x start.sh
+
+CMD ["./start.sh"]
