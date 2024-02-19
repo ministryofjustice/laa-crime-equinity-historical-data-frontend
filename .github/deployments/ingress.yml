@@ -3,15 +3,15 @@ kind: Ingress
 metadata:
   name: laa-crime-equinity-historical-data-frontend-ingress
   annotations:
-    external-dns.alpha.kubernetes.io/set-identifier: laa-crime-equinity-historical-data-frontend-ingress-${NAMESPACE}-green
+    external-dns.alpha.kubernetes.io/set-identifier: laa-crime-equinity-historical-data-frontend-ingress-${CP_NAMESPACE}-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
 spec:
   ingressClassName: default
   tls:
     - hosts:
-        - ${NAMESPACE}.apps.live.cloud-platform.service.justice.gov.uk
+        - ${CP_NAMESPACE}.apps.live.cloud-platform.service.justice.gov.uk
   rules:
-    - host: ${NAMESPACE}.apps.live.cloud-platform.service.justice.gov.uk
+    - host: ${CP_NAMESPACE}.apps.live.cloud-platform.service.justice.gov.uk
       http:
         paths:
           - path: /
