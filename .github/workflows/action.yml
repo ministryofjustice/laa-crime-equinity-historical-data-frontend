@@ -3,6 +3,7 @@ name: deploy
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   ecr:
@@ -18,22 +19,27 @@ jobs:
           aws-region: ${{ vars.ECR_REGION }}
       - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
-      - run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+# Build and push docker image to container repo
+      - name: Build and push docker image
+        uses: docker/build-push-action@v5
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
+        with:
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
+          push: true
       - run: |
+          mkdir deployments
           cat ./.github/deployments/deployment.yml | envsubst > deployments/deployment.yml
-          cat deployments/ingress.yml | envsubst > deployments/ingress.yml
-          cat deployments/service.yml | envsubst > deployments/service.yml
+          cat ./.github/deployments/ingress.yml | envsubst > deployments/ingress.yml
+          cat ./.github/deployments/service.yml | envsubst > deployments/service.yml
         env:
           IMAGE_TAG: ${{ github.sha }}
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+          CP_NAMESPACE: "laa-crime-equinity-historical-data-frontend-dev"
       - run: |
           echo "${{ secrets.KUBE_CERT }}" > ca.crt
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
