@@ -61,18 +61,18 @@ RUN npm run build
 FROM base
 
 COPY --from=build --chown=appuser:appgroup \
-        /app/package.json \
-        /app/package-lock.json \
+        /home/node/app/package.json \
+        /home/node/app/package-lock.json \
         ./
 
 COPY --from=build --chown=appuser:appgroup \
-        /app/assets ./assets
+        /home/node/app/assets ./assets
 
 COPY --from=build --chown=appuser:appgroup \
         /home/node/app/dist ./dist
 
 COPY --from=build --chown=appuser:appgroup \
-        /app/node_modules ./node_modules
+        /home/node/app/node_modules ./node_modules
 
 EXPOSE 4000
 ENV NODE_ENV='production'
