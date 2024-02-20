@@ -24,7 +24,7 @@ Install the projects package.json
 
 `npm run dev`
 
-A message should be displayed in your terminal for which port it's running on (localhost:4000)
+A message should be displayed in your terminal for which port it's running on (localhost:4000).
 
 ## Running unit tests
 
