@@ -6,7 +6,7 @@ RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 # Set the working directory in the container
 WORKDIR /home/node/app
 
-# Switch to the node user
+# Switch user
 RUN addgroup --gid 1017 --system appgroup \
   && adduser --uid 1017 --system appuser --gid 1017
 
@@ -16,7 +16,7 @@ COPY --chown=node:node .  /home/node/app/.
 # Install app dependencies
 RUN npm install
 
-# Builds all assets needed to be onto a browser.
+# Builds all assets needed to be onto a browser
 RUN npm run build
 
 # Stage: copy production assets and dependencies
