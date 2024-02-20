@@ -28,13 +28,13 @@ RUN npm install
 
 # Builds all assets needed to be onto a browser.
 RUN npm run build
-COPY dist /home/node/app/.
+#COPY dist /home/node/app/.
 
 # Expose the port that the app will run on
-EXPOSE 4000
+#EXPOSE 4000
 
 # Define the command to run your app
-CMD ["node", "dist/index.js"]
+#CMD ["node", "dist/index.js"]
 
 #FROM node:16.14-bullseye-slim
 #
@@ -56,3 +56,26 @@ CMD ["node", "dist/index.js"]
 ##RUN chmod +x start.sh
 #
 #CMD ["node", "dist/index.js"]
+
+# Stage: copy production assets and dependencies
+FROM base
+
+COPY --from=build --chown=appuser:appgroup \
+        /app/package.json \
+        /app/package-lock.json \
+        ./
+
+COPY --from=build --chown=appuser:appgroup \
+        /app/assets ./assets
+
+COPY --from=build --chown=appuser:appgroup \
+        /home/node/app/dist ./dist
+
+COPY --from=build --chown=appuser:appgroup \
+        /app/node_modules ./node_modules
+
+EXPOSE 4000
+ENV NODE_ENV='production'
+USER 1017
+
+CMD [ "npm", "start" ]

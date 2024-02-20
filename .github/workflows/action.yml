@@ -38,7 +38,7 @@ jobs:
 #          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
 #          IMAGE_TAG: ${{ github.sha }}
       - run: |
-          echo "This is the namespace: ${{ env.CP_NAMESPACE }}"
+#          echo "This is the namespace: ${{ env.CP_NAMESPACE }}"
           mkdir deployments
           cat ./.github/deployments/deployment.yml | envsubst > deployments/deployment.yml
           cat ./.github/deployments/ingress.yml | envsubst > deployments/ingress.yml
