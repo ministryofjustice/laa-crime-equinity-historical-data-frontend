@@ -28,7 +28,7 @@ RUN npm install
 
 # Builds all assets needed to be onto a browser.
 RUN npm run build
-#COPY dist /home/node/app/.
+COPY dist /home/node/app/.
 
 # Expose the port that the app will run on
 EXPOSE 4000
