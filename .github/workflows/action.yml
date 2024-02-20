@@ -27,18 +27,9 @@ jobs:
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
         with:
-#          context: ${{ needs.capture-repo-info.outputs.working_directory }}/.
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
-#      - run: |
-#          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-#          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-#        env:
-#          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-#          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-#          IMAGE_TAG: ${{ github.sha }}
       - run: |
-#          echo "This is the namespace: ${{ env.CP_NAMESPACE }}"
           mkdir deployments
           cat ./.github/deployments/deployment.yml | envsubst > deployments/deployment.yml
           cat ./.github/deployments/ingress.yml | envsubst > deployments/ingress.yml
