@@ -60,18 +60,18 @@ RUN npm run build
 # Stage: copy production assets and dependencies
 FROM base
 
-COPY --from=build --chown=appuser:appgroup \
+COPY --from=base --chown=appuser:appgroup \
         /home/node/app/package.json \
         /home/node/app/package-lock.json \
         ./
 
-COPY --from=build --chown=appuser:appgroup \
+COPY --from=base --chown=appuser:appgroup \
         /home/node/app/assets ./assets
 
-COPY --from=build --chown=appuser:appgroup \
+COPY --from=base --chown=appuser:appgroup \
         /home/node/app/dist ./dist
 
-COPY --from=build --chown=appuser:appgroup \
+COPY --from=base --chown=appuser:appgroup \
         /home/node/app/node_modules ./node_modules
 
 EXPOSE 4000
