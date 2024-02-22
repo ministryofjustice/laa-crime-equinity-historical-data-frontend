@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a parent image
-FROM node:20-bullseye as build
+FROM node:20-bookworm-slim as build
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
