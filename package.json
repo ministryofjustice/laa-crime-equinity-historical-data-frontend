@@ -5,7 +5,7 @@
   "main": "app.ts",
   "scripts": {
     "watch-views": "nodemon --watch views -e html,njk -x npm run copy-views",
-    "watch-node": "nodemon -q dist/index.js",
+    "watch-node": "nodemon dist/index.js",
     "watch-ts": "tsc -w",
     "copy-js": "mkdir -p assets/js/govuk && cp -R node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.js assets/js/govuk",
     "concat-js": "concat-cli -o assets/js/main-dev.js -f assets/js/govuk/govuk-frontend.min.js",
@@ -34,6 +34,7 @@
     "chokidar": "^3.5.3",
     "compression": "^1.7.4",
     "cypress-multi-reporters": "^1.6.4",
+    "dotenv": "^16.4.5",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
