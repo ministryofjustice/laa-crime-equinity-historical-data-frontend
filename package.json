@@ -5,7 +5,7 @@
   "main": "app.ts",
   "scripts": {
     "watch-views": "nodemon --watch views -e html,njk -x npm run copy-views",
-    "watch-node": "nodemon dist/index.js",
+    "watch-node": "nodemon -r dotenv/config dist/index.js",
     "watch-ts": "tsc -w",
     "copy-js": "mkdir -p assets/js/govuk && cp -R node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.js assets/js/govuk",
     "concat-js": "concat-cli -o assets/js/main-dev.js -f assets/js/govuk/govuk-frontend.min.js",
