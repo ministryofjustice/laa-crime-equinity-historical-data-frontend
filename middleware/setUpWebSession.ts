@@ -1,6 +1,5 @@
 import session from 'express-session'
 import express, { Router } from 'express'
-import config from "../config";
 
 export default function setUpWebSession(): Router {
   const router = express.Router()
