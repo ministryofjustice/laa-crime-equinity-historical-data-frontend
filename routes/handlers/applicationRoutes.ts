@@ -3,22 +3,21 @@ import express from 'express'
 export default function ApplicationRoutes() {
   const router = express.Router()
 
+  // router.post('/search', (req, res) => {
+  //   req.session.data = {
+  //     usn: req.body.usn,
+  //     name: req.body.name,
+  //     dob: req.body.dob,
+  //   }
+  //   res.render('searchResult', { session: req.session })
+  // })
+
   router.get('/', (req, res) => {
-    res.render('homepage')
+    res.render('views/search-eform')
   })
 
-  // When a post request is made to this URL we can access the body received
-  router.post('/search', (req, res) => {
-    // Store body values in locals.
-    // We can now store the post request anywhere
-
-    req.session.data = {
-      usn: req.body.usn,
-      name: req.body.name,
-      dob: req.body.dob,
-    }
-
-    res.render('searchResult', { session: req.session })
+  router.get('/search-eform', (req, res) => {
+    res.render('search-eform')
   })
 
   return router
