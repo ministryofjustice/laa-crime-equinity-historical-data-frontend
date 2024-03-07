@@ -36,7 +36,8 @@ COPY --from=build --chown=appuser:appgroup \
 COPY --from=build --chown=appuser:appgroup \
         /home/node/app/node_modules ./node_modules
 
-EXPOSE 4000
+EXPOSE 3000
+ENV NODE_ENV='production'
 USER 1017
 
 CMD [ "npm", "start" ]

@@ -11,7 +11,7 @@ export default defineConfig({
     setupNodeEvents(on) {
       on('task', {})
     },
-    baseUrl: 'http://localhost:4000',
+    baseUrl: 'http://localhost:3000',
     excludeSpecPattern: '**/!(*.cy).ts',
     specPattern: 'integration_tests/e2e/**/*.cy.{js,jsx,ts,tsx}',
     supportFile: false,
