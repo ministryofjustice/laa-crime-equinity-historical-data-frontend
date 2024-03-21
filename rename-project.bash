@@ -52,7 +52,7 @@ mv "helm_deploy/laa-template-typescript" "helm_deploy/$PROJECT_NAME"
 # Update helm values.yaml with product ID.
 sed -i -z -E \
   -e "s/UNASSIGNED/$PRODUCT_ID/" \
-  helm_deploy/$PROJECT_NAME/values.yaml
+  helm_deploy/"$PROJECT_NAME"/values.yaml
 
 # Update helm values files with correct slack channels.
 sed -i -z -E \
