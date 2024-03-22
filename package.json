@@ -1,8 +1,8 @@
 {
-  "name": "laa-template-typescript",
+  "name": "equiniti-historical-data",
   "version": "0.0.1",
-  "description": "LAA Typescript Template",
-  "repository": "git@github.com:ministryofjustice/laa-template-typescript.git",
+  "description": "Equiniti historical data",
+  "repository": "git@github.com:ministryofjustice/laa-crime-equinity-historical-data-frontend.git",
   "license": "MIT",
   "scripts": {
     "prepare": "husky",
