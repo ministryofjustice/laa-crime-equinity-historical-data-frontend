@@ -1,18 +1,9 @@
 {% extends "../partials/layout.njk" %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "moj/components/search/macro.njk" import mojSearch %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
-
-{#{% block content %}#}
-
-{#  <h1>This site is under construction...</h1> #}
-{#  <p>Please check back later when there is content to view.</p> #}
-
-
 
   {% block content %}
       <div class="govuk-width-container">
@@ -112,5 +103,3 @@
       </div>
 
   {% endblock %}
-
-{# {% endblock %} #}
