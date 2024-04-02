@@ -54,5 +54,6 @@ export default {
     expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 120)),
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
-  environmentName: get('ENVIRONMENT_NAME', ''),
+  // The fallback should be empty. It will become when all environments will be setup.
+  environmentName: get('ENVIRONMENT_NAME', 'Local'),
 }

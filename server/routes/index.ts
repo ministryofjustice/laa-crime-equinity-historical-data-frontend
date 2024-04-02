@@ -12,5 +12,9 @@ export default function routes(service: Services): Router {
     res.render('pages/index')
   })
 
+  get('/eform-search', (req, res, next) => {
+    res.render('pages/eformSearch')
+  })
+
   return router
 }
