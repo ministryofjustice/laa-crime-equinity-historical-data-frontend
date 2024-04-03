@@ -4,6 +4,17 @@
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
+{% set tableData = {
+    head: [
+        { text: "Client name / USN" },
+        { text: "Type" },
+        { text: "Started date" },
+        { text: "Submitted" },
+        { text: "Provider name" },
+        { text: "Status" }
+    ],
+    rows: []
+} %}
 
   {% block content %}
       <div class="govuk-width-container">
@@ -99,7 +110,22 @@
                   }) }}
               </div>
           </main>
-
       </div>
+
+      {% if results | length %}
+      <div>
+          <div>
+              Display results
+          </div>
+      </div>
+      {% endif %}
+
+      {% if not results | length %}
+          <div class="govuk-grid-row">
+              <div class="govuk-grid-column-full">
+                  <h2 class="govuk-heading-m govuk-!-margin-top-5">There is no result to display </h2>
+              </div>
+          </div>
+      {% endif %}
 
   {% endblock %}
