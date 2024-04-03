@@ -8,96 +8,15 @@
   {% block content %}
       <div class="govuk-width-container">
           <main class="govuk-main-wrapper">
-              <h1 class="govuk-heading-l">Search for a historical eForm</h1>
-              <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
-              <span class="govuk-caption-m govuk-!-margin-bottom-4">To find cases, search by USN only or combine filters as Client name, Start date and End date.</span>
+              <h1 class="govuk-heading-l">Equiniti historical data</h1>
+              <span>You can generate reports or search for historical data eForm.</span>
 
-              <div class="background-custom govuk-!-padding-top-4 govuk-!-padding-left-4">
-                  <div class="govuk-grid-row">
-                      <div class="govuk-grid-column-one-half">
-                          {{ govukInput({
-                              label: {
-                                  text: 'USN'
-                              },
-                              classes: "govuk-input--width-10",
-                              hint: {
-                                  text: "Must be no longer than 10 digits"
-                              },
-                              id: "usn-search",
-                              name: "usnSearch",
-                              inputmode: "numeric",
-                              spellcheck: false
-                          }) }}
-                      </div>
-                      <div class="govuk-grid-column-one-half">
-                          {{ govukInput({
-                              label: {
-                                  text: "Supplier account number"
-                              },
-                              hint: {
-                                  text: "Must be no longer than 10 digits"
-                              },
-                              classes: "govuk-input--width-10",
-                              id: "supplier-account-number",
-                              name: "supplierAccountNumber"
-                          }) }}
-                      </div>
-                  </div>
-
-                  <div class="govuk-grid-row">
-                      <div class="govuk-grid-column-one-half">
-                          {{ govukInput({
-                              label: {
-                                  text: "Client name"
-                              },
-                              classes: "govuk-!-width-full",
-                              id: "client-name",
-                              name: "clientName"
-                          }) }}
-                      </div>
-                      <div class="govuk-grid-column-one-half">
-                          {{ govukInput({
-                              label: {
-                                  text: "Client date of birth"
-                              },
-                              classes: "govuk-input--width-10",
-                              id: "client-dob",
-                              name: "clientDOB",
-                              type: "date"
-                          }) }}
-                      </div>
-                  </div>
-
-                  <div class="govuk-grid-row">
-                      <div class="govuk-grid-column-one-quarter">
-                          {{ govukInput({
-                              label: {
-                                  text: "Start date"
-                              },
-                              id: "start-date",
-                              name: "startDate",
-                              type: "date"
-                          }) }}
-                      </div>
-                      <div class="govuk-grid-column-one-quarter">
-                          {{ govukInput({
-                              label: {
-                                  text: "End date"
-                              },
-                              classes: "govuk-!-width-full",
-                              id: "end-date",
-                              name: "endDate",
-                              type: "date"
-                          }) }}
-                      </div>
-                  </div>
-
-                  {{ govukButton({
-                      action: '#',
-                      method: 'post',
-                      text: 'Search'
-                  }) }}
-              </div>
+              <p class="govuk-body">
+                  <a href="/generate-report" class="govuk-link govuk-link--no-visited-state">Generate reports</a>
+              </p>
+              <p class="govuk-body">
+                  <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">Historical data eForm</a>
+              </p>
           </main>
 
       </div>

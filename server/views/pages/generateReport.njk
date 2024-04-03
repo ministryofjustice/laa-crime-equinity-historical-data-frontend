@@ -1,0 +1,82 @@
+{% extends "../partials/layout.njk" %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+
+{% set pageTitle = applicationName + " - Home" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+  {% block content %}
+      <div class="govuk-width-container">
+          <main class="govuk-main-wrapper">
+              <h1 class="govuk-heading-l">Generate reports</h1>
+              <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
+              <span class="govuk-caption-m govuk-!-margin-bottom-4">To generate reports, choose the eForm type that you would like to generate and attribute it a date range. </span>
+
+              <div class="background-custom govuk-!-padding-top-4 govuk-!-padding-left-4">
+                  <div class="govuk-grid-row">
+                      <div class="govuk-grid-column-one-half">
+
+                          {{ govukSelect({
+                              id: "eform_type",
+                              name: "eform_type",
+                              label: {
+                                  text: "Eform type"
+                              },
+                              items: [
+                                  {
+                                      value: "crm4",
+                                      text: "CRM 4"
+                                  },
+                                  {
+                                      value: "crm5",
+                                      text: "CRM 5"
+                                  },
+                                  {
+                                      value: "crm7",
+                                      text: "CRM 7"
+                                  },
+                                  {
+                                      value: "crm14",
+                                      text: "CRM 14"
+                                  }
+                              ]
+                          }) }}
+                      </div>
+                  </div>
+
+                  <div class="govuk-grid-row">
+                      <div class="govuk-grid-column-one-quarter">
+                          {{ govukInput({
+                              label: {
+                                  text: "Start date"
+                              },
+                              id: "start-date",
+                              name: "startDate",
+                              type: "date"
+                          }) }}
+                      </div>
+                      <div class="govuk-grid-column-one-quarter">
+                          {{ govukInput({
+                              label: {
+                                  text: "End date"
+                              },
+                              classes: "govuk-!-width-full",
+                              id: "end-date",
+                              name: "endDate",
+                              type: "date"
+                          }) }}
+                      </div>
+                  </div>
+
+                  {{ govukButton({
+                      action: '#',
+                      method: 'post',
+                      text: 'Download report'
+                  }) }}
+              </div>
+          </main>
+
+      </div>
+
+  {% endblock %}
