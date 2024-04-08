@@ -1,5 +1,5 @@
-# equiniti-historical-data
-[![repo standards badge](https://img.shields.io/badge/dynamic/json?color=blue&style=flat&logo=github&label=MoJ%20Compliant&query=%24.result&url=https%3A%2F%2Foperations-engineering-reports.cloud-platform.service.justice.gov.uk%2Fapi%2Fv1%2Fcompliant_public_repositories%2Fhmpps-template-typescript)](https://operations-engineering-reports.cloud-platform.service.justice.gov.uk/public-github-repositories.html#hmpps-template-typescript "Link to report")
+# Equiniti historical data frontend
+[![repo standards badge](https://img.shields.io/badge/endpoint.svg?&style=flat&logo=github&url=https%3A%2F%2Foperations-engineering-reports.cloud-platform.service.justice.gov.uk%2Fapi%2Fv1%2Fcompliant_public_repositories%2Fhmpps-template-typescript)](https://operations-engineering-reports.cloud-platform.service.justice.gov.uk/public-github-repositories.html#hmpps-template-typescript "Link to report")
 [![CircleCI](https://circleci.com/gh/ministryofjustice/hmpps-template-typescript/tree/main.svg?style=svg)](https://app.circleci.com/pipelines/github/ministryofjustice/laa-crime-equinity-historical-data-frontend)
 
 # Instructions
@@ -10,12 +10,6 @@ This bootstrap is community managed by the mojdt `#typescript` Slack channel.
 Please raise any questions or queries there. Contributions welcome!
 
 
-## Manually branding from template app (Renaming from HMPPS Template Typescript - Github Actions)
-Run the `rename-project.bash` and create a PR.
-
-The rename-project.bash script takes a single argument - the name of the project and calculates from it the project description
-It then performs a search and replace and directory renames so the project is ready to be used.
-
 ## Running the app
 The easiest way to run the app is to use docker compose to create the service and all dependencies. 
 
@@ -24,7 +18,7 @@ The easiest way to run the app is to use docker compose to create the service an
 `docker compose up`
 
 ### Dependencies
-The app requires:
+The app will requires (soon):
 * redis - session store and token caching
 
 ### Running the app for development
