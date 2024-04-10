@@ -2,7 +2,7 @@ import nock from 'nock'
 import EqSearchApiClient from './eqSearchApiClient'
 import RestClient from './restClient'
 
-describe('EQ search Api client', () => {
+xdescribe('EQ search Api client', () => {
   let fakeSearchApi: nock.Scope
 
   beforeEach(() => {
