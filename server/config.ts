@@ -57,6 +57,10 @@ export default {
         deadline: Number(get('EQ_SEARCH_API_TIMEOUT_DEADLINE', 10000)),
       },
       agent: new AgentConfig(Number(get('EQ_SEARCH_API_TIMEOUT_RESPONSE', 10000))),
+      headers: {
+        clientId: get('EQ_API_CLIENT_ID', '', requiredInProduction),
+        secret: get('EQ_API_SECRET', '', requiredInProduction),
+      },
     },
   },
   session: {

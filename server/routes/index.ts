@@ -23,9 +23,13 @@ export default function routes(service: Services): Router {
 
   post('/search-eform', async (req, res, next) => {
     const restClient = new RestClient('Mirror Gateway API Client', config.apis.eqSearchApi, 'no_auth')
-    const response = await new EqSearchApiClient(restClient).search()
-    res.locals.responseStatus = response.status
-    res.render('pages/searchEform')
+    const headers = {
+      'EQ-API-CLIENT-ID': config.apis.eqSearchApi.headers.clientId,
+      'EQ-API-SECRET': config.apis.eqSearchApi.headers.secret,
+    }
+
+    const response = await new EqSearchApiClient(restClient, headers).search({ usn: req.body.usnSearch })
+    res.render('pages/searchEform', { results: response.results })
   })
 
   get('/generate-report', (req, res, next) => {

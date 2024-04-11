@@ -56,7 +56,6 @@ export default class RestClient {
   }: Request): Promise<Response> {
     logger.info(`${this.name} GET: ${path}`)
     try {
-      console.log('headers ***************', headers)
       const result = await superagent
         .get(`${this.apiUrl()}${path}`)
         .query(query)
