@@ -82,7 +82,7 @@ export default class RestClient {
     method: 'patch' | 'post' | 'put',
     { path, query = {}, headers = {}, responseType = '', data = {}, raw = false, retry = false }: RequestWithBody,
   ): Promise<Response> {
-    logger.info(`RequestWithBody calling: ${this.name} ${method.toUpperCase()}: ${path}`)
+    logger.info(`${this.name} ${method.toUpperCase()}: ${path}`)
     try {
       const result = await superagent[method](`${this.apiUrl()}${path}`)
         .query(query)
