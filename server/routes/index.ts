@@ -28,7 +28,16 @@ export default function routes(service: Services): Router {
       'EQ-API-SECRET': config.apis.eqSearchApi.headers.secret,
     }
 
-    const response = await new EqSearchApiClient(restClient, headers).search({ usn: req.body.usnSearch })
+    const { usnSearch, supplierAccountNumber, clientName, clientDOB, startDate, endDate } = req.body
+    const searchRequest = {
+      usnSearch,
+      supplierAccountNumber,
+      clientName,
+      clientDOB,
+      startDate,
+      endDate,
+    }
+    const response = await new EqSearchApiClient(restClient, headers).search(searchRequest)
     res.render('pages/searchEform', { results: response.results })
   })
 

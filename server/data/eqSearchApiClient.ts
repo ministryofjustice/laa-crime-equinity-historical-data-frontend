@@ -1,6 +1,6 @@
 import RestClient from './restClient'
 
-type searchResult = {
+type SearchResult = {
   usn: number
   type: string
   clientName: string
@@ -9,25 +9,39 @@ type searchResult = {
   providerAccount: string
 }
 
+export type EqApiHeader = 'EQ-API-CLIENT-ID' | 'EQ-API-SECRET'
+
 interface EqSearchRequest {
-  usn: number
+  usnSearch: number
+  clientName?: string
+  clientDOB?: string
+  startDate?: string
+  endDate?: string
+  supplierAccountNumber?: string
 }
 
 interface EqSearchResponse {
-  results: searchResult[]
+  results: SearchResult[]
 }
 
 export default class EqSearchApiClient {
   constructor(
     private readonly restClient: RestClient,
-    private readonly headers: Record<string, string>,
+    private readonly headers: Record<EqApiHeader, string>,
   ) {}
 
   async search(searchRequest: EqSearchRequest): Promise<EqSearchResponse> {
     return this.restClient.get({
       path: '/api/internal/v1/equinity/search/',
       headers: this.headers,
-      query: { usn: searchRequest.usn },
+      query: {
+        usn: searchRequest.usnSearch,
+        client: searchRequest.clientName,
+        clientDoB: searchRequest.clientDOB,
+        submittedFrom: searchRequest.startDate,
+        submittedTo: searchRequest.endDate,
+        providerAccount: searchRequest.supplierAccountNumber,
+      },
     })
   }
 }
