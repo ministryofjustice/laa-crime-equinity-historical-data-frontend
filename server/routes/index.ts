@@ -28,9 +28,9 @@ export default function routes(service: Services): Router {
       'EQ-API-SECRET': config.apis.eqSearchApi.headers.secret,
     }
 
-    const { usnSearch, supplierAccountNumber, clientName, clientDOB, startDate, endDate } = req.body
+    const { usn, supplierAccountNumber, clientName, clientDOB, startDate, endDate } = req.body
     const searchRequest = {
-      usnSearch,
+      usn,
       supplierAccountNumber,
       clientName,
       clientDOB,
