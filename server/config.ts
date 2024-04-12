@@ -49,6 +49,20 @@ export default {
     password: process.env.REDIS_AUTH_TOKEN,
     tls_enabled: get('REDIS_TLS_ENABLED', 'false'),
   },
+  apis: {
+    eqSearchApi: {
+      url: get('EQ_SEARCH_API_URL', 'http://localhost:8089', requiredInProduction),
+      timeout: {
+        response: Number(get('EQ_SEARCH_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('EQ_SEARCH_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('EQ_SEARCH_API_TIMEOUT_RESPONSE', 10000))),
+      headers: {
+        clientId: get('EQ_API_CLIENT_ID', '', requiredInProduction),
+        secret: get('EQ_API_SECRET', '', requiredInProduction),
+      },
+    },
+  },
   session: {
     secret: get('SESSION_SECRET', 'app-insecure-default-session', requiredInProduction),
     expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 120)),

@@ -1,13 +1,13 @@
 import { Readable } from 'stream'
-
-import Agent, { HttpsAgent } from 'agentkeepalive'
 import superagent from 'superagent'
+import Agent, { HttpsAgent } from 'agentkeepalive'
 
 import logger from '../../logger'
 import sanitiseError from '../sanitisedError'
-import type { ApiConfig } from '../config'
 import type { UnsanitisedError } from '../sanitisedError'
 import { restClientMetricsMiddleware } from './restClientMetricsMiddleware'
+
+import type { ApiConfig } from '../config'
 
 interface Request {
   path: string
