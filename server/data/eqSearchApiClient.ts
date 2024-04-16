@@ -9,7 +9,7 @@ type SearchResult = {
   providerAccount: string
 }
 
-interface EqSearchRequest {
+export interface EqSearchRequest {
   usn?: number
   clientName?: string
   clientDOB?: string
@@ -18,7 +18,7 @@ interface EqSearchRequest {
   supplierAccountNumber?: string
 }
 
-interface EqSearchResponse {
+export interface EqSearchResponse {
   results: SearchResult[]
 }
 
