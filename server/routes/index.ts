@@ -8,7 +8,7 @@ import RestClient from '../data/restClient'
 import config from '../config'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function routes(service: Services): Router {
+export default function routes({ eqSearchService }: Services): Router {
   const router = Router()
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (routePath: string, handler: RequestHandler) => router.post(routePath, asyncMiddleware(handler))
@@ -22,11 +22,6 @@ export default function routes(service: Services): Router {
   })
 
   post('/search-eform', async (req, res, next) => {
-    const restClient = new RestClient('EQ Search API Client', config.apis.eqSearchApi, 'no_auth')
-    const headers = {
-      'EQ-API-CLIENT-ID': config.apis.eqSearchApi.headers.clientId,
-      'EQ-API-SECRET': config.apis.eqSearchApi.headers.secret,
-    }
     const searchRequest = {
       usn: req.body.usn,
       supplierAccountNumber: req.body.supplierAccountNumber,
@@ -35,7 +30,7 @@ export default function routes(service: Services): Router {
       startDate: req.body.startDate,
       endDate: req.body.endDate,
     }
-    const response = await new EqSearchApiClient(restClient, headers).search(searchRequest)
+    const response = await eqSearchService.search(searchRequest)
     res.render('pages/searchEform', { results: response.results })
   })
 

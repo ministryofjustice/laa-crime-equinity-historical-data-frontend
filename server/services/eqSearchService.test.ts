@@ -3,10 +3,12 @@ import EqSearchApiClient from '../data/eqSearchApiClient'
 
 jest.mock('../data/eqSearchApiClient')
 
-const createMockApiClient = () => new EqSearchApiClient(null, null) as jest.Mocked<EqSearchApiClient>
-
 describe('EQ Search Service', () => {
-  const mockApiClient = createMockApiClient()
+  let mockEqSearchApiClient: jest.Mocked<EqSearchApiClient>
+
+  beforeEach(() => {
+    mockEqSearchApiClient = new EqSearchApiClient(null, null) as jest.Mocked<EqSearchApiClient>
+  })
 
   it('should search and return result', async () => {
     const searchResponse = {
@@ -22,13 +24,13 @@ describe('EQ Search Service', () => {
       ],
     }
 
-    mockApiClient.search.mockResolvedValue(searchResponse)
+    mockEqSearchApiClient.search.mockResolvedValue(searchResponse)
 
-    const eqSearchService = new EqSearchService(mockApiClient)
+    const eqSearchService = new EqSearchService(mockEqSearchApiClient)
 
     const result = await eqSearchService.search({ usn: 1234567 })
     expect(result).toEqual(searchResponse)
-    expect(mockApiClient.search).toHaveBeenCalledWith({
+    expect(mockEqSearchApiClient.search).toHaveBeenCalledWith({
       usn: 1234567,
     })
   })
