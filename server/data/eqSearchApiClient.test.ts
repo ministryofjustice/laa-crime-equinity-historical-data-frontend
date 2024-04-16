@@ -3,11 +3,11 @@ import EqSearchApiClient from './eqSearchApiClient'
 import config from '../config'
 
 describe('EQ Search Api Client', () => {
-  let fakeEqSearchApiClient: nock.Scope
+  let fakeRestClient: nock.Scope
   let eqSearchApiClient: EqSearchApiClient
 
   beforeEach(() => {
-    fakeEqSearchApiClient = nock(config.apis.eqSearchApi.url)
+    fakeRestClient = nock(config.apis.eqSearchApi.url)
     eqSearchApiClient = new EqSearchApiClient({
       'EQ-API-CLIENT-ID': 'some-client-id',
       'EQ-API-SECRET': 'some-secret',
@@ -15,7 +15,6 @@ describe('EQ Search Api Client', () => {
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
     nock.cleanAll()
   })
 
@@ -33,10 +32,10 @@ describe('EQ Search Api Client', () => {
       ],
     }
 
-    fakeEqSearchApiClient
+    fakeRestClient
       .get('/api/internal/v1/equinity/search/')
       .query({ usn: '1234567' })
-      .matchHeader('authorization', `Bearer no_auth`)
+      .matchHeader('authorization', 'Bearer no_auth')
       .reply(200, searchResponse)
 
     const result = await eqSearchApiClient.search({ usn: 1234567 })
@@ -58,7 +57,7 @@ describe('EQ Search Api Client', () => {
       ],
     }
 
-    fakeEqSearchApiClient
+    fakeRestClient
       .get('/api/internal/v1/equinity/search/')
       .query({
         client: 'Joe Brown',

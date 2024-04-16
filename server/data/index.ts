@@ -7,7 +7,6 @@ import { initialiseAppInsights, buildAppInsightsClient } from '../utils/azureApp
 import applicationInfoSupplier from '../applicationInfo'
 import EqSearchApiClient from './eqSearchApiClient'
 import config from '../config'
-import RestClient from './restClient'
 
 const applicationInfo = applicationInfoSupplier()
 initialiseAppInsights()
