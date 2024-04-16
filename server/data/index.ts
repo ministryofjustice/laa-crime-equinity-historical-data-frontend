@@ -17,7 +17,7 @@ type RestClientBuilder<T> = (token: string) => T
 
 export const dataAccess = () => ({
   applicationInfo,
-  eqSearchApiClient: new EqSearchApiClient(new RestClient('EQ Search API Client', config.apis.eqSearchApi, 'no_auth'), {
+  eqSearchApiClient: new EqSearchApiClient({
     'EQ-API-CLIENT-ID': config.apis.eqSearchApi.headers.clientId,
     'EQ-API-SECRET': config.apis.eqSearchApi.headers.secret,
   }),

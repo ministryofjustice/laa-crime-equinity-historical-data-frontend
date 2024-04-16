@@ -1,3 +1,4 @@
+import config from '../config'
 import RestClient from './restClient'
 
 type SearchResult = {
@@ -25,13 +26,14 @@ export interface EqSearchResponse {
 export type EqApiHeader = 'EQ-API-CLIENT-ID' | 'EQ-API-SECRET'
 
 export default class EqSearchApiClient {
-  constructor(
-    private readonly restClient: RestClient,
-    private readonly headers: Record<EqApiHeader, string>,
-  ) {}
+  constructor(private readonly headers: Record<EqApiHeader, string>) {}
+
+  private static restClient(token: string): RestClient {
+    return new RestClient('EQ Search API Client', config.apis.eqSearchApi, token)
+  }
 
   async search(searchRequest: EqSearchRequest): Promise<EqSearchResponse> {
-    return this.restClient.get({
+    return EqSearchApiClient.restClient('no_auth').get<EqSearchResponse>({
       path: '/api/internal/v1/equinity/search/',
       headers: this.headers,
       query: createSearchQuery(searchRequest),

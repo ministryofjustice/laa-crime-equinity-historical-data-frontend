@@ -7,7 +7,7 @@ describe('EQ Search Service', () => {
   let mockEqSearchApiClient: jest.Mocked<EqSearchApiClient>
 
   beforeEach(() => {
-    mockEqSearchApiClient = new EqSearchApiClient(null, null) as jest.Mocked<EqSearchApiClient>
+    mockEqSearchApiClient = new EqSearchApiClient(null) as jest.Mocked<EqSearchApiClient>
   })
 
   it('should search and return result', async () => {
