@@ -28,8 +28,19 @@ describe('GET /', () => {
   })
 })
 
+describe('GET /search-eform', () => {
+  it('should render search eForm', () => {
+    return request(app)
+      .get('/search-eform')
+      .expect('Content-Type', /html/)
+      .expect(res => {
+        expect(res.text).toContain('Search for a historical eForm')
+      })
+  })
+})
+
 describe('POST /search-eform', () => {
-  it('should render index page', () => {
+  it('should post search eForm and render results', () => {
     const searchResponse = {
       results: [
         {
@@ -56,7 +67,7 @@ describe('POST /search-eform', () => {
       })
       .expect('Content-Type', /html/)
       .expect(res => {
-        expect(res.text).toContain('Equiniti Historical Data')
+        expect(res.text).toContain('Search for a historical eForm')
         expect(res.text).toContain('1234567')
       })
   })
