@@ -3,10 +3,6 @@ import { type RequestHandler, Router } from 'express'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 
-import EqSearchApiClient from '../data/eqSearchApiClient'
-import RestClient from '../data/restClient'
-import config from '../config'
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function routes({ eqSearchService }: Services): Router {
   const router = Router()

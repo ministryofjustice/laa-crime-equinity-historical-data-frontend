@@ -13,6 +13,7 @@ describe('EQ Search Api Client', () => {
       'EQ-API-SECRET': 'some-secret',
     })
   })
+
   afterEach(() => {
     jest.resetAllMocks()
     nock.cleanAll()
@@ -60,7 +61,7 @@ describe('EQ Search Api Client', () => {
     fakeEqSearchApiClient
       .get('/api/internal/v1/equinity/search/')
       .query({
-        client: 'Some Client',
+        client: 'Joe Brown',
         clientDoB: '1960-01-01',
         providerAccount: '1234AB',
         submittedFrom: '2022-25-23',
@@ -70,7 +71,7 @@ describe('EQ Search Api Client', () => {
       .reply(200, searchResponse)
 
     const result = await eqSearchApiClient.search({
-      clientName: 'Some Client',
+      clientName: 'Joe Brown',
       clientDOB: '1960-01-01',
       startDate: '2022-25-23',
       endDate: '2023-15-13',

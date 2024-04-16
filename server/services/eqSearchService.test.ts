@@ -29,6 +29,7 @@ describe('EQ Search Service', () => {
     const eqSearchService = new EqSearchService(mockEqSearchApiClient)
 
     const result = await eqSearchService.search({ usn: 1234567 })
+
     expect(result).toEqual(searchResponse)
     expect(mockEqSearchApiClient.search).toHaveBeenCalledWith({
       usn: 1234567,
