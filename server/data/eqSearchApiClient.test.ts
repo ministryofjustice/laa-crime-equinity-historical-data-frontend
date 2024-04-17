@@ -49,7 +49,7 @@ describe('EQ Search Api Client', () => {
         {
           usn: 8912345,
           type: 'CRM5',
-          clientName: 'Joe Brown',
+          clientName: 'Jane Doe',
           originatedDate: '2022-25-21',
           submittedDate: '2023-11-13',
           providerAccount: '1234AB',
@@ -60,7 +60,7 @@ describe('EQ Search Api Client', () => {
     fakeRestClient
       .get('/api/internal/v1/equinity/search/')
       .query({
-        client: 'Joe Brown',
+        client: 'Jane Doe',
         clientDoB: '1960-01-01',
         providerAccount: '1234AB',
         submittedFrom: '2022-25-23',
@@ -70,7 +70,7 @@ describe('EQ Search Api Client', () => {
       .reply(200, searchResponse)
 
     const result = await eqSearchApiClient.search({
-      clientName: 'Joe Brown',
+      clientName: 'Jane Doe',
       clientDOB: '1960-01-01',
       startDate: '2022-25-23',
       endDate: '2023-15-13',
