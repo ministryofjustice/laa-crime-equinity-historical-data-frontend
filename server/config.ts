@@ -32,6 +32,7 @@ export interface ApiConfig {
     deadline: number
   }
   agent: AgentConfig
+  headers?: { [key: string]: string }
 }
 
 export default {
