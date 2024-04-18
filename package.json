@@ -91,8 +91,15 @@
       "prettier --write"
     ]
   },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": [
+      "integration_tests/e2e/[filepath]/**/*.{js,ts}",
+      "integration_tests/e2e/[filepath].{js,ts}"
+    ]
+  },
   "dependencies": {
     "@ministryofjustice/frontend": "^2.1.1",
+    "@types/cypress-cucumber-preprocessor": "^4.0.5",
     "agentkeepalive": "^4.5.0",
     "applicationinsights": "^2.9.5",
     "body-parser": "^1.20.2",
@@ -117,6 +124,9 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^20.0.3",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+    "@cucumber/cucumber": "^10.4.0",
     "@types/bunyan": "^1.8.11",
     "@types/bunyan-format": "^0.2.9",
     "@types/compression": "^1.7.5",
@@ -136,7 +146,8 @@
     "audit-ci": "^6.6.1",
     "concurrently": "^8.2.2",
     "cookie-session": "^2.1.0",
-    "cypress": "^13.6.6",
+    "cypress": "^13.7.3",
+    "cypress-cucumber-preprocessor": "^4.3.1",
     "cypress-multi-reporters": "^1.6.4",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
