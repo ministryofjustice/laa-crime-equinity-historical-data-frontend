@@ -113,18 +113,29 @@
       </div>
 
       {% if results | length %}
-          <div>
+          {% for item in results %}
               <div>
-                  Display results
-                  <h2>USN: {{ results[0].usn }}</h2>
+                  <div>
+                      Display results
+                      {% set clientNameAndUsn = [] %}
+                      {% set clientFullName = item.clientName %}
+                      {% set clientUsn = item.usn %}
+                      <h2>Name: {{ results[0].clientName + ' ' + results[0].usn }}</h2>
+                      {{ clientNameAndUsn.push('<li>' + clientFullName + clientUsn + '</li>') }}
+                      <h2>Type: {{ results[0].type }}</h2>
+                      <h2>Start date: {{ results[0].originatedDate }}</h2>
+                      <h2>Submitted: {{ results[0].submittedDate }}</h2>
+                      <h2>Provider name: {{ results[0].providerAccount }}</h2>
+                      <h2>Status: {{ results[0] }}</h2>
+                  </div>
               </div>
-          </div>
+          {% endfor %}
       {% endif %}
 
       {% if not results | length %}
           <div class="govuk-grid-row">
               <div class="govuk-grid-column-full">
-                  <h2 class="govuk-heading-m govuk-!-margin-top-5">There is no result to display </h2>
+                  <h2 class="govuk-heading-m govuk-!-margin-top-5">There is 0 result to display </h2>
               </div>
           </div>
       {% endif %}
