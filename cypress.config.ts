@@ -1,3 +1,6 @@
+import { createEsbuildPlugin } from '@badeball/cypress-cucumber-preprocessor/esbuild'
+import createBundler from '@bahmutov/cypress-esbuild-preprocessor'
+import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor'
 import { defineConfig } from 'cypress'
 import { resetStubs } from './integration_tests/mockApis/wiremock'
 
@@ -12,14 +15,27 @@ export default defineConfig({
   },
   taskTimeout: 60000,
   e2e: {
-    setupNodeEvents(on) {
+    async setupNodeEvents(
+      on: Cypress.PluginEvents,
+      config: Cypress.PluginConfigOptions,
+    ): Promise<Cypress.PluginConfigOptions> {
+      await addCucumberPreprocessorPlugin(on, config)
+
+      on(
+        'file:preprocessor',
+        createBundler({
+          plugins: [createEsbuildPlugin(config)],
+        }),
+      )
+
       on('task', {
         reset: resetStubs,
       })
+      return config
     },
     baseUrl: 'http://localhost:3007',
     excludeSpecPattern: '**/!(*.cy).ts',
-    specPattern: 'integration_tests/e2e/**/*.cy.{js,jsx,ts,tsx}',
+    specPattern: 'integration_tests/e2e/**/*.{js,jsx,ts,tsx,feature}',
     supportFile: 'integration_tests/support/index.ts',
   },
 })

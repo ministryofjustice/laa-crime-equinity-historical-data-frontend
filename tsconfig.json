@@ -15,7 +15,12 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "experimentalDecorators": true,
-    "typeRoots": ["./server/@types", "./node_modules/@types"]
+    "typeRoots": ["./server/@types", "./node_modules/@types"],
+    "paths": {
+      "@badeball/cypress-cucumber-preprocessor/*": [
+        "./node_modules/@badeball/cypress-cucumber-preprocessor/dist/subpath-entrypoints/*"
+      ]
+    }
   },
   "exclude": ["node_modules", "assets/**/*.js", "integration_tests", "dist", "cypress.config.ts"],
   "include": ["**/*.js", "**/*.ts"]
