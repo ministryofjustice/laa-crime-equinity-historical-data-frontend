@@ -1,4 +1,4 @@
-import EqSearchService from './eqSearchService'
+import SearchEformService from './searchEformService'
 import EqSearchApiClient from '../data/eqSearchApiClient'
 
 jest.mock('../data/eqSearchApiClient')
@@ -26,9 +26,9 @@ describe('EQ Search Service', () => {
 
     mockEqSearchApiClient.search.mockResolvedValue(searchResponse)
 
-    const eqSearchService = new EqSearchService(mockEqSearchApiClient)
+    const searchEformService = new SearchEformService(mockEqSearchApiClient)
 
-    const result = await eqSearchService.search({ usn: 1234567 })
+    const result = await searchEformService.search({ usn: 1234567 })
 
     expect(result).toEqual(searchResponse)
     expect(mockEqSearchApiClient.search).toHaveBeenCalledWith({

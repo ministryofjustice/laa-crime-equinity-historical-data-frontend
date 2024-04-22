@@ -15,7 +15,9 @@ import setUpWebSecurity from './middleware/setUpWebSecurity'
 import setUpWebSession from './middleware/setUpWebSession'
 
 import routes from './routes'
+
 import type { Services } from './services'
+import { controllers } from './controllers'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -34,7 +36,7 @@ export default function createApp(services: Services): express.Application {
   nunjucksSetup(app, services.applicationInfo)
   app.use(setUpCsrf())
 
-  app.use('/', routes(services))
+  app.use('/', routes(controllers(services)))
 
   app.use((req, res, next) => next(createError(404, 'Not found')))
   app.use(errorHandler(process.env.NODE_ENV === 'production'))
