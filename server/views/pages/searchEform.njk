@@ -4,17 +4,6 @@
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
-{% set tableData = {
-    head: [
-        { text: "Client name / USN" },
-        { text: "Type" },
-        { text: "Started date" },
-        { text: "Submitted" },
-        { text: "Provider name" },
-        { text: "Status" }
-    ],
-    rows: []
-} %}
 
   {% block content %}
       <div class="govuk-width-container">
@@ -118,14 +107,36 @@
 
       {% if results | length %}
           {% for item in results %}
+
+              {% set tableData = {
+                  head: [
+                      { text: "Client name / USN" },
+                      { text: "Type" },
+                      { text: "Started date" },
+                      { text: "Submitted" },
+                      { text: "Provider name" },
+                      { text: "Status" }
+                  ],
+                  rows: []
+              } %}
+
+              {% set clientName = item.clientName %}
+              {% set usn = item.usn %}
+              {#              {% set startedDate = %} #}
+              {#              {% set submittedDate = %} #}
+              {#              {% set providerName = %} #}
+              {#              {% set status = %} #}
+
+              {%- set tableRow = [
+                  { text: clientName | safe },
+                  { text: usn | safe }
+              ] -%}
+
+
               <div>
                   <div>
                       Display results
-                      {% set clientNameAndUsn = [] %}
-                      {% set clientFullName = item.clientName %}
-                      {% set clientUsn = item.usn %}
                       <h2>Name: {{ results[0].clientName + ' ' + results[0].usn }}</h2>
-                      {{ clientNameAndUsn.push('<li>' + clientFullName + clientUsn + '</li>') }}
                       <h2>Type: {{ results[0].type }}</h2>
                       <h2>Start date: {{ results[0].originatedDate }}</h2>
                       <h2>Submitted: {{ results[0].submittedDate }}</h2>
