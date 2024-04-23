@@ -75,7 +75,7 @@ describe('POST /search-eform', () => {
 })
 
 describe('GET /generate-report', () => {
-  it('should generate report page', () => {
+  it('should render generate report page', () => {
     return request(app)
       .get('/generate-report')
       .expect('Content-Type', /html/)
