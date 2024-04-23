@@ -5,8 +5,9 @@ import { NotFound } from 'http-errors'
 import routes from '../index'
 import nunjucksSetup from '../../utils/nunjucksSetup'
 import errorHandler from '../../errorHandler'
-import type { Controllers } from '../../controllers'
 import type { ApplicationInfo } from '../../applicationInfo'
+import type { Services } from '../../services'
+import { controllers } from '../../controllers'
 
 const testAppInfo: ApplicationInfo = {
   applicationName: 'test',
@@ -18,7 +19,7 @@ const testAppInfo: ApplicationInfo = {
 
 export const flashProvider = jest.fn()
 
-function appSetup(controllers: Controllers, production: boolean): Express {
+function appSetup(services: Services, production: boolean): Express {
   const app = express()
 
   app.set('view engine', 'njk')
@@ -31,7 +32,7 @@ function appSetup(controllers: Controllers, production: boolean): Express {
   })
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
-  app.use(routes(controllers))
+  app.use(routes(controllers(services)))
   app.use((req, res, next) => next(new NotFound()))
   app.use(errorHandler(production))
 
@@ -40,10 +41,10 @@ function appSetup(controllers: Controllers, production: boolean): Express {
 
 export function appWithAllRoutes({
   production = false,
-  controllers = {},
+  services = {},
 }: {
   production?: boolean
-  controllers?: Partial<Controllers>
+  services?: Partial<Services>
 }): Express {
-  return appSetup(controllers as Controllers, production)
+  return appSetup(services as Services, production)
 }

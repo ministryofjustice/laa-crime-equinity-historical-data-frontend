@@ -99,7 +99,6 @@
   },
   "dependencies": {
     "@ministryofjustice/frontend": "^2.1.1",
-    "@types/cypress-cucumber-preprocessor": "^4.0.5",
     "agentkeepalive": "^4.5.0",
     "applicationinsights": "^2.9.5",
     "body-parser": "^1.20.2",
@@ -134,6 +133,7 @@
     "@types/connect-flash": "0.0.40",
     "@types/cookie-session": "^2.0.48",
     "@types/csurf": "^1.11.5",
+    "@types/cypress-cucumber-preprocessor": "^4.0.5",
     "@types/express-session": "^1.18.0",
     "@types/http-errors": "^2.0.4",
     "@types/jest": "^29.5.12",

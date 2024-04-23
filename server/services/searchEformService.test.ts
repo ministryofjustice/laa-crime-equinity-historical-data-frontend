@@ -3,7 +3,7 @@ import EqSearchApiClient from '../data/eqSearchApiClient'
 
 jest.mock('../data/eqSearchApiClient')
 
-describe('EQ Search Service', () => {
+describe('Search Eform Service', () => {
   let mockEqSearchApiClient: jest.Mocked<EqSearchApiClient>
 
   beforeEach(() => {

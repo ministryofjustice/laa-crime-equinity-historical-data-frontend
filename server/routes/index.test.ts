@@ -1,23 +1,24 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes } from './testutils/appSetup'
-import SearchEformController from '../controllers/searchEformController'
+import SearchEformService from '../services/searchEformService'
 
-jest.mock('../controllers/searchEformController')
+jest.mock('../services/searchEformService')
 
 let app: Express
-let mockSearchEformController: jest.Mocked<SearchEformController>
+
+let mockSearchEformService: jest.Mocked<SearchEformService>
 
 beforeEach(() => {
-  mockSearchEformController = new SearchEformController(null) as jest.Mocked<SearchEformController>
-  app = appWithAllRoutes({})
+  mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
+  app = appWithAllRoutes({ services: { searchEformService: mockSearchEformService } })
 })
 
 afterEach(() => {
   jest.resetAllMocks()
 })
 
-xdescribe('GET /', () => {
+describe('GET /', () => {
   it('should render index page', () => {
     return request(app)
       .get('/')
@@ -28,8 +29,8 @@ xdescribe('GET /', () => {
   })
 })
 
-xdescribe('GET /search-eform', () => {
-  it('should render search eForm', () => {
+describe('GET /search-eform', () => {
+  it('should render search eForm page', () => {
     return request(app)
       .get('/search-eform')
       .expect('Content-Type', /html/)
@@ -39,7 +40,7 @@ xdescribe('GET /search-eform', () => {
   })
 })
 
-xdescribe('POST /search-eform', () => {
+describe('POST /search-eform', () => {
   it('should post search eForm and render results', () => {
     const searchResponse = {
       results: [
@@ -53,7 +54,7 @@ xdescribe('POST /search-eform', () => {
         },
       ],
     }
-    // mockSearchEformController.submit.mockResolvedValue(searchResponse)
+    mockSearchEformService.search.mockResolvedValue(searchResponse)
 
     return request(app)
       .post('/search-eform')
@@ -69,6 +70,17 @@ xdescribe('POST /search-eform', () => {
       .expect(res => {
         expect(res.text).toContain('Search for a historical eForm')
         expect(res.text).toContain('1234567')
+      })
+  })
+})
+
+describe('GET /generate-report', () => {
+  it('should generate report page', () => {
+    return request(app)
+      .get('/generate-report')
+      .expect('Content-Type', /html/)
+      .expect(res => {
+        expect(res.text).toContain('Generate reports')
       })
   })
 })
