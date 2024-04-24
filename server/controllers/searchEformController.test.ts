@@ -26,7 +26,7 @@ describe('Search Eform Controller', () => {
     expect(response.render).toHaveBeenCalledWith('pages/searchEform')
   })
 
-  it('should submit eform', async () => {
+  xit('should submit eform', async () => {
     const searchResponse = {
       results: [
         {

@@ -2,7 +2,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {%- from "govuk/components/table/macro.njk" import govukTable -%}
-
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -10,6 +10,12 @@
   {% block content %}
       <div class="govuk-width-container">
           <main class="govuk-main-wrapper">
+              {% if errors| length %}
+                {{ govukErrorSummary({
+                  titleText: "There is a problem",
+                  errorList: errors
+                }) }}
+              {% endif %}
               <h1 class="govuk-heading-l">Search for a historical eForm</h1>
               <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
               <span class="govuk-caption-m govuk-!-margin-bottom-4">To find cases, search by USN only or combine filters as Client name, Start date and End date.</span>
