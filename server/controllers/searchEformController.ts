@@ -14,7 +14,8 @@ export default class SearchEformController {
   submit(): RequestHandler {
     return async (req: Request, res: Response) => {
       const errors = validateFormData(req)
-      if (errors.length > 0) {
+      if (errors) {
+        res.locals.errors = errors
         res.render('pages/searchEform', { errors, results: [] })
       } else {
         const searchRequest = {

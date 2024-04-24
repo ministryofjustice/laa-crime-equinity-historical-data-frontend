@@ -26,7 +26,7 @@ describe('Search Eform Controller', () => {
     expect(response.render).toHaveBeenCalledWith('pages/searchEform')
   })
 
-  xit('should submit eform', async () => {
+  it('should submit eform', async () => {
     const searchResponse = {
       results: [
         {
@@ -43,9 +43,14 @@ describe('Search Eform Controller', () => {
 
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.submit()
+    request.body = {
+      usn: '123456789',
+    }
+
     await requestHandler(request, response, next)
 
     expect(response.render).toHaveBeenCalledWith('pages/searchEform', {
+      formError: false,
       results: [
         {
           usn: 1234567,
