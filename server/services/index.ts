@@ -1,14 +1,14 @@
 import { dataAccess } from '../data'
-import EqSearchService from './eqSearchService'
+import SearchEformService from './searchEformService'
 
 export const services = () => {
   const { applicationInfo, eqSearchApiClient } = dataAccess()
 
-  const eqSearchService = new EqSearchService(eqSearchApiClient)
+  const searchEformService = new SearchEformService(eqSearchApiClient)
 
   return {
     applicationInfo,
-    eqSearchService,
+    searchEformService,
   }
 }
 

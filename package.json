@@ -127,6 +127,7 @@
     "@badeball/cypress-cucumber-preprocessor": "^20.0.3",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@cucumber/cucumber": "^10.4.0",
+    "@golevelup/ts-jest": "^0.5.0",
     "@types/bunyan": "^1.8.11",
     "@types/bunyan-format": "^0.2.9",
     "@types/compression": "^1.7.5",

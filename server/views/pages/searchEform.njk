@@ -1,20 +1,11 @@
 {% extends "../partials/layout.njk" %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{%- from "govuk/components/table/macro.njk" import govukTable -%}
+
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
-{% set tableData = {
-    head: [
-        { text: "Client name / USN" },
-        { text: "Type" },
-        { text: "Started date" },
-        { text: "Submitted" },
-        { text: "Provider name" },
-        { text: "Status" }
-    ],
-    rows: []
-} %}
 
   {% block content %}
       <div class="govuk-width-container">
@@ -102,31 +93,58 @@
                                   type: "date"
                               }) }}
                           </div>
-                          <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-                          {{ govukButton({
-                              text: 'Search'
-                          }) }}
+                      </div>
+                      <div class="govuk-grid-row">
+                          <div class="govuk-grid-column-full">
+                              <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+                              {{ govukButton({
+                                  text: 'Search'
+                              }) }}
+                          </div>
                       </div>
                   </form>
               </div>
           </main>
       </div>
 
+      {% set tableData = {
+          head: [
+              { text: "Client name / USN" },
+              { text: "Type" },
+              { text: "Started date" },
+              { text: "Submitted" },
+              { text: "Provider name" },
+              { text: "Status" }
+          ],
+          rows: []
+      } %}
+
       {% if results | length %}
-          <div>
-              <div>
-                  Display results
-                  <h2>USN: {{ results[0].usn }}</h2>
-              </div>
-          </div>
+          {% for item in results %}
+
+              {% set clientName = item.clientName %}
+              {% set usn = item.usn %}
+              {% set combined = clientName + " " + usn %}
+              {% set type = item.type %}
+              {% set originatedDate = item.originatedDate %}
+              {% set submittedDate = item.submittedDate %}
+              {% set providerAccount = item.providerAccount %}
+              {% set status = " " %}
+
+              {%- set tableRow = [
+                  { text: combined | safe },
+                  { text: type | safe },
+                  { text: originatedDate | safe },
+                  { text: submittedDate | safe },
+                  { text: providerAccount | safe },
+                  { text: status | safe }
+              ] -%}
+
+              {% set list = tableData.rows.push(tableRow) %}
+
+          {% endfor %}
       {% endif %}
 
-      {% if not results | length %}
-          <div class="govuk-grid-row">
-              <div class="govuk-grid-column-full">
-                  <h2 class="govuk-heading-m govuk-!-margin-top-5">There is no result to display </h2>
-              </div>
-          </div>
-      {% endif %}
+      {{ govukTable(tableData) }}
 
   {% endblock %}
