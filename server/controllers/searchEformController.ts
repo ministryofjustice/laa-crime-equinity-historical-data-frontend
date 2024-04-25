@@ -13,21 +13,20 @@ export default class SearchEformController {
 
   submit(): RequestHandler {
     return async (req: Request, res: Response) => {
-      const errors = validateFormData(req)
+      const formValues = {
+        usn: req.body.usn,
+        supplierAccountNumber: req.body.supplierAccountNumber,
+        clientName: req.body.clientName,
+        clientDOB: req.body.clientDOB,
+        startDate: req.body.startDate,
+        endDate: req.body.endDate,
+      }
+      const errors = validateFormData(formValues)
       if (errors) {
-        res.locals.errors = errors
-        res.render('pages/searchEform', { errors, results: [] })
+        res.render('pages/searchEform', { results: [], errors, formValues })
       } else {
-        const searchRequest = {
-          usn: req.body.usn,
-          supplierAccountNumber: req.body.supplierAccountNumber,
-          clientName: req.body.clientName,
-          clientDOB: req.body.clientDOB,
-          startDate: req.body.startDate,
-          endDate: req.body.endDate,
-        }
-        const response = await this.searchEformService.search(searchRequest)
-        res.render('pages/searchEform', { formError: false, results: response.results })
+        const response = await this.searchEformService.search(formValues)
+        res.render('pages/searchEform', { results: response.results })
       }
     }
   }

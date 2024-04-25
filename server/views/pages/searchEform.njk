@@ -29,11 +29,9 @@
                                       text: 'USN'
                                   },
                                   classes: "govuk-input--width-10",
-                                  hint: {
-                                      text: "Must be no longer than 10 digits"
-                                  },
                                   id: "usn",
                                   name: "usn",
+                                  value: formValues.usn,
                                   inputmode: "numeric",
                                   spellcheck: false,
                                   errorMessage: errors.messages.usn
@@ -44,12 +42,11 @@
                                   label: {
                                       text: "Supplier account number"
                                   },
-                                  hint: {
-                                      text: "Must be no longer than 10 digits"
-                                  },
                                   classes: "govuk-input--width-10",
                                   id: "supplier-account-number",
-                                  name: "supplierAccountNumber"
+                                  name: "supplierAccountNumber",
+                                  value: formValues.supplierAccountNumber,
+                                  errorMessage: errors.messages.supplierAccountNumber
                               }) }}
                           </div>
                       </div>
@@ -62,7 +59,8 @@
                                   },
                                   classes: "govuk-!-width-full",
                                   id: "client-name",
-                                  name: "clientName"
+                                  name: "clientName",
+                                  value: formValues.clientName
                               }) }}
                           </div>
                           <div class="govuk-grid-column-one-half">
@@ -73,6 +71,7 @@
                                   classes: "govuk-input--width-10",
                                   id: "client-dob",
                                   name: "clientDOB",
+                                  value: formValues.clientDOB,
                                   type: "date"
                               }) }}
                           </div>
@@ -86,6 +85,7 @@
                                   },
                                   id: "start-date",
                                   name: "startDate",
+                                  value: formValues.startDate,
                                   type: "date"
                               }) }}
                           </div>
@@ -97,6 +97,7 @@
                                   classes: "govuk-!-width-full",
                                   id: "end-date",
                                   name: "endDate",
+                                  value: formValues.endDate,
                                   type: "date"
                               }) }}
                           </div>

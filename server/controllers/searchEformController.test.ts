@@ -50,7 +50,6 @@ describe('Search Eform Controller', () => {
     await requestHandler(request, response, next)
 
     expect(response.render).toHaveBeenCalledWith('pages/searchEform', {
-      formError: false,
       results: [
         {
           usn: 1234567,
