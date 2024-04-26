@@ -19,31 +19,6 @@
     rows: []
 } %}
 
-{% if results | length %}
-    {% for item in results %}
-
-        {% set clientName = item.clientName %}
-        {% set usn = item.usn %}
-        {% set combined = clientName + " " + usn %}
-        {% set type = item.type %}
-        {% set originatedDate = item.originatedDate %}
-        {% set submittedDate = item.submittedDate %}
-        {% set providerAccount = item.providerAccount %}
-        {% set status = " " %}
-
-        {%- set tableRow = [
-            { text: combined | safe },
-            { text: type | safe },
-            { text: originatedDate | safe },
-            { text: submittedDate | safe },
-            { text: providerAccount | safe },
-            { text: status | safe }
-        ] -%}
-
-        {% set list = tableData.rows.push(tableRow) %}
-    {% endfor %}
-{% endif %}
-
 
 <div class="govuk-width-container">
     <main class="govuk-main-wrapper">
@@ -58,8 +33,36 @@
 
                     {% include "components/searchEformBox.njk" %}
 
-                    <h2 class="govuk-!-margin-top-4">Results</h2>
-                    {{ govukTable(tableData) }}
+                    {% if results | length %}
+
+                        {% for item in results %}
+                            {% set clientName = item.clientName %}
+                            {% set usn = item.usn %}
+                            {% set combined = clientName + " " + usn %}
+                            {% set type = item.type %}
+                            {% set originatedDate = item.originatedDate %}
+                            {% set submittedDate = item.submittedDate %}
+                            {% set providerAccount = item.providerAccount %}
+                            {% set status = " " %}
+
+                            {%- set tableRow = [
+                                { text: combined | safe },
+                                { text: type | safe },
+                                { text: originatedDate | safe },
+                                { text: submittedDate | safe },
+                                { text: providerAccount | safe },
+                                { text: status | safe }
+                            ] -%}
+
+                            {% set list = tableData.rows.push(tableRow) %}
+                        {% endfor %}
+
+                        {% set recordLabelPlural = 'record' if tableData.rows | length <= 1 else 'records'  %}
+
+                        <h2 class="govuk-heading-m govuk-!-margin-top-4">{{ tableData.rows | length }} {{ recordLabelPlural }} found
+                            meeting your search criteria</h2>
+                        {{ govukTable(tableData) }}
+                    {% endif %}
 
                 </div>
             </div>
