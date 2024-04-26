@@ -59,7 +59,7 @@
 
                         {% set recordLabelPlural = 'record' if tableData.rows | length <= 1 else 'records'  %}
 
-                        <h2 class="govuk-heading-m govuk-!-margin-top-4">{{ tableData.rows | length }} {{ recordLabelPlural }} found
+                        <h2 class="govuk-!-margin-top-9">{{ tableData.rows | length }} {{ recordLabelPlural }} found
                             meeting your search criteria</h2>
                         {{ govukTable(tableData) }}
                     {% endif %}
