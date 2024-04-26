@@ -1,6 +1,6 @@
 import type { Request, Response, RequestHandler } from 'express'
 import SearchEformService from '../services/searchEformService'
-import validateSearchEform from '../utils/SearchEformValidation'
+import validateSearchEform from '../utils/searchEformValidation'
 
 export default class SearchEformController {
   constructor(private readonly searchEformService: SearchEformService) {}

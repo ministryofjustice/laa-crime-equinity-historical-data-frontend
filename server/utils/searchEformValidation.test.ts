@@ -1,4 +1,4 @@
-import validateSearchEform from './SearchEformValidation'
+import validateSearchEform from './searchEformValidation'
 
 describe('Search Eform Validation', () => {
   it('should validate form fields', () => {
