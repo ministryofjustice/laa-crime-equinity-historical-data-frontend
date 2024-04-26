@@ -62,7 +62,7 @@ describe('POST /search-eform', () => {
         usn: '1234567',
         supplierAccountNumber: '123',
         clientName: 'John Doe',
-        clientDOB: '123',
+        clientDOB: '1960-02-12',
         startDate: '2022-11-01',
         endDate: '2023-11-02',
       })

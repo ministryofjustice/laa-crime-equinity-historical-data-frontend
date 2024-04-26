@@ -2,7 +2,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {%- from "govuk/components/table/macro.njk" import govukTable -%}
-
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -10,6 +10,12 @@
   {% block content %}
       <div class="govuk-width-container">
           <main class="govuk-main-wrapper">
+              {% if errors.list | length %}
+                {{ govukErrorSummary({
+                  titleText: "There is a problem",
+                  errorList: errors.list
+                }) }}
+              {% endif %}
               <h1 class="govuk-heading-l">Search for a historical eForm</h1>
               <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
               <span class="govuk-caption-m govuk-!-margin-bottom-4">To find cases, search by USN only or combine filters as Client name, Start date and End date.</span>
@@ -23,13 +29,12 @@
                                       text: 'USN'
                                   },
                                   classes: "govuk-input--width-10",
-                                  hint: {
-                                      text: "Must be no longer than 10 digits"
-                                  },
                                   id: "usn",
                                   name: "usn",
+                                  value: formValues.usn,
                                   inputmode: "numeric",
-                                  spellcheck: false
+                                  spellcheck: false,
+                                  errorMessage: errors.messages.usn
                               }) }}
                           </div>
                           <div class="govuk-grid-column-one-half">
@@ -37,12 +42,11 @@
                                   label: {
                                       text: "Supplier account number"
                                   },
-                                  hint: {
-                                      text: "Must be no longer than 10 digits"
-                                  },
                                   classes: "govuk-input--width-10",
-                                  id: "supplier-account-number",
-                                  name: "supplierAccountNumber"
+                                  id: "supplierAccountNumber",
+                                  name: "supplierAccountNumber",
+                                  value: formValues.supplierAccountNumber,
+                                  errorMessage: errors.messages.supplierAccountNumber
                               }) }}
                           </div>
                       </div>
@@ -54,8 +58,10 @@
                                       text: "Client name"
                                   },
                                   classes: "govuk-!-width-full",
-                                  id: "client-name",
-                                  name: "clientName"
+                                  id: "clientName",
+                                  name: "clientName",
+                                  value: formValues.clientName,
+                                  errorMessage: errors.messages.clientName
                               }) }}
                           </div>
                           <div class="govuk-grid-column-one-half">
@@ -64,9 +70,11 @@
                                       text: "Client date of birth"
                                   },
                                   classes: "govuk-input--width-10",
-                                  id: "client-dob",
+                                  id: "clientDOB",
                                   name: "clientDOB",
-                                  type: "date"
+                                  value: formValues.clientDOB,
+                                  type: "date",
+                                  errorMessage: errors.messages.clientDOB
                               }) }}
                           </div>
                       </div>
@@ -77,9 +85,11 @@
                                   label: {
                                       text: "Start date"
                                   },
-                                  id: "start-date",
+                                  id: "startDate",
                                   name: "startDate",
-                                  type: "date"
+                                  value: formValues.startDate,
+                                  type: "date",
+                                  errorMessage: errors.messages.startDate
                               }) }}
                           </div>
                           <div class="govuk-grid-column-one-quarter">
@@ -88,9 +98,11 @@
                                       text: "End date"
                                   },
                                   classes: "govuk-!-width-full",
-                                  id: "end-date",
+                                  id: "endDate",
                                   name: "endDate",
-                                  type: "date"
+                                  value: formValues.endDate,
+                                  type: "date",
+                                  errorMessage: errors.messages.endDate
                               }) }}
                           </div>
                       </div>
