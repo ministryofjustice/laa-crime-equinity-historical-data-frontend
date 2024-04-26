@@ -1,6 +1,6 @@
 import type { Request, Response, RequestHandler } from 'express'
 import SearchEformService from '../services/searchEformService'
-import validateFormData from '../utils/searchEformValidation'
+import validateSearchEform from '../utils/SearchEformValidation'
 
 export default class SearchEformController {
   constructor(private readonly searchEformService: SearchEformService) {}
@@ -21,7 +21,7 @@ export default class SearchEformController {
         startDate: req.body.startDate,
         endDate: req.body.endDate,
       }
-      const errors = validateFormData(formValues)
+      const errors = validateSearchEform(formValues)
       if (errors) {
         res.render('pages/searchEform', { results: [], errors, formValues })
       } else {

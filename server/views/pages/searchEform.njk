@@ -60,7 +60,8 @@
                                   classes: "govuk-!-width-full",
                                   id: "client-name",
                                   name: "clientName",
-                                  value: formValues.clientName
+                                  value: formValues.clientName,
+                                  errorMessage: errors.messages.clientName
                               }) }}
                           </div>
                           <div class="govuk-grid-column-one-half">
@@ -72,7 +73,8 @@
                                   id: "client-dob",
                                   name: "clientDOB",
                                   value: formValues.clientDOB,
-                                  type: "date"
+                                  type: "date",
+                                  errorMessage: errors.messages.clientDOB
                               }) }}
                           </div>
                       </div>
@@ -86,7 +88,8 @@
                                   id: "start-date",
                                   name: "startDate",
                                   value: formValues.startDate,
-                                  type: "date"
+                                  type: "date",
+                                  errorMessage: errors.messages.startDate
                               }) }}
                           </div>
                           <div class="govuk-grid-column-one-quarter">
@@ -98,7 +101,8 @@
                                   id: "end-date",
                                   name: "endDate",
                                   value: formValues.endDate,
-                                  type: "date"
+                                  type: "date",
+                                  errorMessage: errors.messages.endDate
                               }) }}
                           </div>
                       </div>
