@@ -89,14 +89,14 @@ describe('Search Eform Validation', () => {
         { href: '#supplierAccountNumber', text: 'Supplier account number must be at least 4 characters' },
         { href: '#clientName', text: 'Client name must be at least 3 characters' },
         { href: '#clientDOB', text: 'Client date of birth must be a valid date' },
-        { href: '#endDate', text: 'Your End date can not be earlier than your Start date' },
+        { href: '#endDate', text: 'Your End date cannot be earlier than your Start date' },
       ],
       messages: {
         clientDOB: { text: 'Client date of birth must be a valid date' },
         clientName: { text: 'Client name must be at least 3 characters' },
         supplierAccountNumber: { text: 'Supplier account number must be at least 4 characters' },
         usn: { text: 'USN must be numeric' },
-        endDate: { text: 'Your End date can not be earlier than your Start date' },
+        endDate: { text: 'Your End date cannot be earlier than your Start date' },
       },
     })
   })

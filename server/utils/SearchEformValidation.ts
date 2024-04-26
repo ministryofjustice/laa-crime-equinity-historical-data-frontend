@@ -22,7 +22,7 @@ const schema = Joi.object({
   startDate: Joi.date().iso().optional().allow('').messages({ 'date.format': 'Start date must be a valid date' }),
   endDate: Joi.date().iso().min(Joi.ref('startDate')).optional().allow('').messages({
     'date.format': 'End date must be a valid date',
-    'date.min': 'Your End date can not be earlier than your Start date',
+    'date.min': 'Your End date cannot be earlier than your Start date',
   }),
 }).options({ allowUnknown: true, abortEarly: false })
 
