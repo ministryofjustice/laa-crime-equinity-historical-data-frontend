@@ -2,7 +2,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {%- from "govuk/components/table/macro.njk" import govukTable -%}
-
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -20,56 +20,56 @@
     rows: []
 } %}
 
+{% block content %}
 
-<div class="govuk-width-container">
-    <main class="govuk-main-wrapper">
+    <div class="govuk-width-container">
+        <main class="govuk-main-wrapper">
 
-        {% block content %}
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
+            {% if errors.list | length %}
+                {{ govukErrorSummary({
+                    titleText: "There is a problem",
+                    errorList: errors.list
+                }) }}
+            {% endif %}
 
-                    <h1 class="govuk-heading-l">Search for a historical eForm</h1>
-                    <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
-                    <span class="govuk-caption-m govuk-!-margin-bottom-4">To find cases, search by USN only or combine filters as Client name, Start date and End date.</span>
+            <h1 class="govuk-heading-l">Search for a historical eForm</h1>
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
+            <span class="govuk-caption-m govuk-!-margin-bottom-4">To find cases, search by USN only or combine filters as Client name, Start date and End date.</span>
 
-                    {% include "components/searchEformBox.njk" %}
+            {% include "components/searchEformBox.njk" %}
 
-                    {% if results | length %}
+            {% if results | length %}
 
-                        {% for item in results %}
-                            {% set clientName = '<a href="#" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-body-m govuk-!-font-weight-bold">' + item.clientName | properCase | capitalize  + '</a>'%}
-                            {% set usn = '<div class="first-column-usn govuk-body-s govuk-!-margin-bottom-2 govuk-!-margin-top-1">' + item.usn + '</div>' %}
-                            {% set combined = clientName + usn %}
-                            {% set type = item.type %}
-                            {% set originatedDate = item.originatedDate %}
-                            {% set submittedDate = item.submittedDate %}
-                            {% set providerAccount = item.providerAccount %}
-                            {% set status = " " %}
+                {% for item in results %}
+                    {% set clientName = '<a href="#" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-body-m govuk-!-font-weight-bold">' + item.clientName | properCase | capitalize  + '</a>' %}
+                    {% set usn = '<div class="first-column-usn govuk-body-s govuk-!-margin-bottom-2 govuk-!-margin-top-1">' + item.usn + '</div>' %}
+                    {% set combined = clientName + usn %}
+                    {% set type = item.type %}
+                    {% set originatedDate = item.originatedDate %}
+                    {% set submittedDate = item.submittedDate %}
+                    {% set providerAccount = item.providerAccount %}
+                    {% set status = " " %}
 
-                            {%- set tableRow = [
-                                { text: combined | safe },
-                                { text: type | safe },
-                                { text: originatedDate | safe },
-                                { text: submittedDate | safe },
-                                { text: providerAccount | safe },
-                                { text: status | safe }
-                            ] -%}
+                    {%- set tableRow = [
+                        { text: combined | safe },
+                        { text: type | safe },
+                        { text: originatedDate | safe },
+                        { text: submittedDate | safe },
+                        { text: providerAccount | safe },
+                        { text: status | safe }
+                    ] -%}
 
-                            {% set list = tableData.rows.push(tableRow) %}
-                        {% endfor %}
+                    {% set list = tableData.rows.push(tableRow) %}
+                {% endfor %}
 
-                        {% set recordLabelPlural = 'record' if tableData.rows | length <= 1 else 'records'  %}
+                {% set recordLabelPlural = 'record' if tableData.rows | length <= 1 else 'records' %}
 
-                        <h2 class="govuk-!-margin-top-9">{{ tableData.rows | length }} {{ recordLabelPlural }} found meeting your search criteria</h2>
+                <h2 class="govuk-!-margin-top-9">{{ tableData.rows | length }} {{ recordLabelPlural }} found meeting
+                    your
+                    search criteria </h2>
+                <div>{{ govukTable(tableData) }}</div>
 
-                        <div>
-                        {{ govukTable(tableData) }}
-                        </div>
-
-                    {% endif %}
-
-                </div>
-            </div>
-        {% endblock %}
-    </main>
-</div>
+            {% endif %}
+        </main>
+    </div>
+{% endblock %}

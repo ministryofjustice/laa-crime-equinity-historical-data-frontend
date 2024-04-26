@@ -1,5 +1,6 @@
 import type { Request, Response, RequestHandler } from 'express'
 import SearchEformService from '../services/searchEformService'
+import validateSearchEform from '../utils/searchEformValidation'
 
 export default class SearchEformController {
   constructor(private readonly searchEformService: SearchEformService) {}
@@ -12,7 +13,7 @@ export default class SearchEformController {
 
   submit(): RequestHandler {
     return async (req: Request, res: Response) => {
-      const searchRequest = {
+      const formValues = {
         usn: req.body.usn,
         supplierAccountNumber: req.body.supplierAccountNumber,
         clientName: req.body.clientName,
@@ -20,8 +21,13 @@ export default class SearchEformController {
         startDate: req.body.startDate,
         endDate: req.body.endDate,
       }
-      const response = await this.searchEformService.search(searchRequest)
-      res.render('pages/searchEform', { results: response.results })
+      const errors = validateSearchEform(formValues)
+      if (errors) {
+        res.render('pages/searchEform', { results: [], errors, formValues })
+      } else {
+        const response = await this.searchEformService.search(formValues)
+        res.render('pages/searchEform', { results: response.results })
+      }
     }
   }
 }
