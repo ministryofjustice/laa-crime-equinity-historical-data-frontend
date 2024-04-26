@@ -5,6 +5,7 @@ import express from 'express'
 import { initialiseName } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
+import filters from './nunjucksFilters'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -41,4 +42,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   )
 
   njkEnv.addFilter('initialiseName', initialiseName)
+
+  Object.entries(filters).forEach(([name, filter]) => njkEnv.addFilter(name, filter))
 }
