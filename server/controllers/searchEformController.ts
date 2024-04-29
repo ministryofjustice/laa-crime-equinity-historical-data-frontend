@@ -59,7 +59,6 @@ const getErrorMessage = (errorStatus: number) => {
       return 'Not authorised to search'
     case 404:
       return 'No search result found'
-    case 500:
     default:
       return 'Something went wrong with the search'
   }

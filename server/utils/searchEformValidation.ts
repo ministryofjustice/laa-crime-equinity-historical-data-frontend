@@ -1,4 +1,4 @@
-import Joi, { Err } from 'joi'
+import Joi from 'joi'
 
 const schema = Joi.object({
   usn: Joi.string().pattern(/^\d+$/).min(4).max(10).optional().allow('').messages({

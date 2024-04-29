@@ -115,7 +115,6 @@ describe('Search Eform Controller', () => {
     ['Not authorised to search', 403],
     ['No search result found', 404],
     ['Something went wrong with the search', 500],
-    ['Something went wrong with the search', 503],
   ])('should render submit eform api error "%s" for status %s', async (errorMessage, errorStatus) => {
     const searchResponse: SearchResponse = {
       results: [],
