@@ -1,6 +1,6 @@
-import { response } from 'express'
-import config from '../config'
+import type { HTTPError } from 'superagent'
 import RestClient from './restClient'
+import config from '../config'
 
 type SearchResult = {
   usn: number
@@ -47,11 +47,8 @@ export default class SearchApiClient {
 
         query: createSearchQuery(searchRequest),
       })
-    } catch (err) {
-      const searchResponse: SearchResponse = { results: [] }
-      const searchError: SearchError = { status: err.status, message: err.message }
-      searchResponse.errors = [searchError]
-      return searchResponse
+    } catch (error) {
+      return addErrorsToResponse(error)
     }
   }
 }
@@ -73,4 +70,11 @@ const createSearchQuery = (searchRequest: SearchRequest) => {
 
 const undefinedIfEmpty = (field: string) => {
   return field.length > 0 ? field : undefined
+}
+
+const addErrorsToResponse = (error: HTTPError) => {
+  const searchResponse: SearchResponse = { results: [] }
+  const searchError: SearchError = { status: error.status, message: error.message }
+  searchResponse.errors = [searchError]
+  return searchResponse
 }

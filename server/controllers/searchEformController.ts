@@ -1,6 +1,7 @@
 import type { Request, RequestHandler, Response } from 'express'
 import SearchEformService from '../services/searchEformService'
 import validateSearchEform, { ErrorSummary, FormErrors } from '../utils/searchEformValidation'
+import { SearchError } from '../data/searchApiClient'
 
 export default class SearchEformController {
   constructor(private readonly searchEformService: SearchEformService) {}
@@ -29,18 +30,37 @@ export default class SearchEformController {
       } else {
         const response = await this.searchEformService.search(formValues)
         if (response.errors) {
-          const { errors } = response
-          const list: ErrorSummary[] = errors.map(error => {
-            return {
-              href: '#',
-              text: error.status === 404 ? 'No search result found' : error.message,
-            }
-          })
-          res.render('pages/searchEform', { results: [], errors: { list }, formValues })
+          const searchErrors = getSearchErrors(response.errors)
+          res.render('pages/searchEform', { results: [], errors: searchErrors, formValues })
         } else {
           res.render('pages/searchEform', { results: response.results })
         }
       }
     }
+  }
+}
+
+const getSearchErrors = (errors: SearchError[]) => {
+  const list: ErrorSummary[] = errors.map(error => {
+    return {
+      href: '#',
+      text: getErrorMessage(error.status),
+    }
+  })
+  return {
+    list,
+  }
+}
+
+const getErrorMessage = (errorStatus: number) => {
+  switch (errorStatus) {
+    case 401:
+    case 403:
+      return 'Not authorised to search'
+    case 404:
+      return 'No search result found'
+    case 500:
+    default:
+      return 'Something went wrong with the search'
   }
 }
