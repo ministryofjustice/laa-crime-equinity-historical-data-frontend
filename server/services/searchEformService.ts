@@ -1,9 +1,9 @@
-import EqSearchApiClient, { EqSearchRequest, EqSearchResponse } from '../data/eqSearchApiClient'
+import SearchApiClient, { SearchRequest, SearchResponse } from '../data/searchApiClient'
 
 export default class SearchEformService {
-  constructor(private readonly eqSearchApiClient: EqSearchApiClient) {}
+  constructor(private readonly searchApiClient: SearchApiClient) {}
 
-  async search(searchRequest: EqSearchRequest): Promise<EqSearchResponse> {
-    return this.eqSearchApiClient.search(searchRequest)
+  async search(searchRequest: SearchRequest): Promise<SearchResponse> {
+    return this.searchApiClient.search(searchRequest)
   }
 }

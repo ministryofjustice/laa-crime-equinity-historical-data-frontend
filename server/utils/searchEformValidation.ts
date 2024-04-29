@@ -1,4 +1,4 @@
-import Joi from 'joi'
+import Joi, { Err } from 'joi'
 
 const schema = Joi.object({
   usn: Joi.string().pattern(/^\d+$/).min(4).max(10).optional().allow('').messages({
@@ -43,7 +43,19 @@ const isFormEmpty = (formData: Record<string, string>) => {
   return !Object.keys(formData).some((key: string) => formData[key].length > 0)
 }
 
-const buildErrors = (error: Joi.ValidationError) => {
+export type ErrorSummary = {
+  href: string
+  text: string
+}
+
+type ErrorMessage = Record<string, { text: string }>
+
+export type FormErrors = {
+  list: Array<ErrorSummary>
+  messages?: ErrorMessage
+}
+
+const buildErrors = (error: Joi.ValidationError): FormErrors => {
   const list: Array<{
     href: string
     text: string

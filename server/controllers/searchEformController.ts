@@ -1,6 +1,6 @@
-import type { Request, Response, RequestHandler } from 'express'
+import type { Request, RequestHandler, Response } from 'express'
 import SearchEformService from '../services/searchEformService'
-import validateSearchEform from '../utils/searchEformValidation'
+import validateSearchEform, { ErrorSummary, FormErrors } from '../utils/searchEformValidation'
 
 export default class SearchEformController {
   constructor(private readonly searchEformService: SearchEformService) {}
@@ -21,12 +21,25 @@ export default class SearchEformController {
         startDate: req.body.startDate,
         endDate: req.body.endDate,
       }
-      const errors = validateSearchEform(formValues)
-      if (errors) {
-        res.render('pages/searchEform', { results: [], errors, formValues })
+
+      const formErrors = validateSearchEform(formValues)
+
+      if (formErrors) {
+        res.render('pages/searchEform', { results: [], errors: formErrors, formValues })
       } else {
         const response = await this.searchEformService.search(formValues)
-        res.render('pages/searchEform', { results: response.results })
+        if (response.errors) {
+          const { errors } = response
+          const list: ErrorSummary[] = errors.map(error => {
+            return {
+              href: '#',
+              text: error.status === 404 ? 'No search result found' : error.message,
+            }
+          })
+          res.render('pages/searchEform', { results: [], errors: { list }, formValues })
+        } else {
+          res.render('pages/searchEform', { results: response.results })
+        }
       }
     }
   }

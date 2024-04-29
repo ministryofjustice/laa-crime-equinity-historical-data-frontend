@@ -1,13 +1,13 @@
 import SearchEformService from './searchEformService'
-import EqSearchApiClient from '../data/eqSearchApiClient'
+import SearchApiClient from '../data/searchApiClient'
 
-jest.mock('../data/eqSearchApiClient')
+jest.mock('../data/searchApiClient')
 
 describe('Search Eform Service', () => {
-  let mockEqSearchApiClient: jest.Mocked<EqSearchApiClient>
+  let mockSearchApiClient: jest.Mocked<SearchApiClient>
 
   beforeEach(() => {
-    mockEqSearchApiClient = new EqSearchApiClient(null) as jest.Mocked<EqSearchApiClient>
+    mockSearchApiClient = new SearchApiClient(null) as jest.Mocked<SearchApiClient>
   })
 
   it('should search and return result', async () => {
@@ -24,14 +24,14 @@ describe('Search Eform Service', () => {
       ],
     }
 
-    mockEqSearchApiClient.search.mockResolvedValue(searchResponse)
+    mockSearchApiClient.search.mockResolvedValue(searchResponse)
 
-    const searchEformService = new SearchEformService(mockEqSearchApiClient)
+    const searchEformService = new SearchEformService(mockSearchApiClient)
 
     const result = await searchEformService.search({ usn: 1234567 })
 
     expect(result).toEqual(searchResponse)
-    expect(mockEqSearchApiClient.search).toHaveBeenCalledWith({
+    expect(mockSearchApiClient.search).toHaveBeenCalledWith({
       usn: 1234567,
     })
   })
