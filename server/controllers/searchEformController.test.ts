@@ -3,6 +3,7 @@ import { createMock } from '@golevelup/ts-jest'
 import type { DeepMocked } from '@golevelup/ts-jest'
 import SearchEformController from './searchEformController'
 import SearchEformService from '../services/searchEformService'
+import { SearchResponse } from '../data/searchApiClient'
 
 jest.mock('../services/searchEformService')
 
@@ -72,7 +73,7 @@ describe('Search Eform Controller', () => {
     })
   })
 
-  it('should render submit eform errors', async () => {
+  it('should render submit eform field errors', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.submit()
     request.body = {
@@ -107,5 +108,61 @@ describe('Search Eform Controller', () => {
     })
 
     expect(mockSearchEformService.search).not.toHaveBeenCalled()
+  })
+
+  it.each([
+    ['Not authorised to search', 401],
+    ['Not authorised to search', 403],
+    ['No search result found', 404],
+    ['Something went wrong with the search', 500],
+    ['Something went wrong with the search', 503],
+  ])('should render submit eform api error "%s" for status %s', async (errorMessage, errorStatus) => {
+    const searchResponse: SearchResponse = {
+      results: [],
+      errors: [
+        {
+          status: errorStatus,
+          message: 'error',
+        },
+      ],
+    }
+    mockSearchEformService.search.mockResolvedValue(searchResponse)
+
+    const searchEformController = new SearchEformController(mockSearchEformService)
+    const requestHandler = searchEformController.submit()
+    request.body = {
+      usn: '8888888',
+    }
+
+    await requestHandler(request, response, next)
+
+    expect(response.render).toHaveBeenCalledWith('pages/searchEform', {
+      results: [],
+      errors: {
+        list: [
+          {
+            href: '#',
+            text: errorMessage,
+          },
+        ],
+      },
+      formValues: {
+        clientDOB: undefined,
+        clientName: undefined,
+        endDate: undefined,
+        startDate: undefined,
+        supplierAccountNumber: undefined,
+        usn: '8888888',
+      },
+    })
+
+    expect(mockSearchEformService.search).toHaveBeenCalledWith({
+      clientDOB: undefined,
+      clientName: undefined,
+      endDate: undefined,
+      startDate: undefined,
+      supplierAccountNumber: undefined,
+      usn: '8888888',
+    })
   })
 })
