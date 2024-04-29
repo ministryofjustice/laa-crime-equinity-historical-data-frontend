@@ -12,6 +12,7 @@ type SearchResult = {
 
 export interface EqSearchRequest {
   usn?: number
+  type?: string
   clientName?: string
   clientDOB?: string
   startDate?: string
@@ -48,6 +49,7 @@ const createSearchQuery = (searchRequest: EqSearchRequest) => {
     }
   }
   return {
+    type: undefinedIfEmpty(searchRequest.type),
     client: undefinedIfEmpty(searchRequest.clientName),
     clientDoB: undefinedIfEmpty(searchRequest.clientDOB),
     submittedFrom: undefinedIfEmpty(searchRequest.startDate),

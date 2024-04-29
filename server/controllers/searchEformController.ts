@@ -15,6 +15,7 @@ export default class SearchEformController {
     return async (req: Request, res: Response) => {
       const formValues = {
         usn: req.body.usn,
+        type: req.body.type,
         supplierAccountNumber: req.body.supplierAccountNumber,
         clientName: req.body.clientName,
         clientDOB: req.body.clientDOB,

@@ -1,7 +1,7 @@
 <div class="form-background govuk-!-padding-top-4 govuk-!-padding-left-4">
     <form action="/search-eform" method="POST">
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-half">
+            <div class="govuk-grid-column-one-third">
                 {{ govukInput({
                     label: {
                         text: 'USN'
@@ -15,7 +15,40 @@
                     errorMessage: errors.messages.usn
                 }) }}
             </div>
-            <div class="govuk-grid-column-one-half">
+            <div class="govuk-grid-column-one-third">
+                {{ govukSelect({
+                    label: {
+                        text: "CRM type"
+                    },
+                items: [
+                        {
+                            value: "chooseCrmType",
+                            text: "Choose CRM type",
+                            selected: true
+                        },
+                        {
+                            value: "crm4",
+                            text: "CRM 4"
+                        },
+                        {
+                            value: "crm5",
+                            text: "CRM 5"
+                        },
+                        {
+                            value: "crm7",
+                            text: "CRM 7"
+                        },
+                        {
+                            value: "CRM14",
+                            text: "CRM 14"
+                        }
+                    ],
+                    id: "type",
+                    name: "type",
+                    value: formValues.type
+                }) }}
+            </div>
+            <div class="govuk-grid-column-one-third">
                 {{ govukInput({
                     label: {
                         text: "Supplier account number"
