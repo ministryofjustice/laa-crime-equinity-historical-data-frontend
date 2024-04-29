@@ -1,0 +1,96 @@
+<div class="form-background govuk-!-padding-top-4 govuk-!-padding-left-4">
+    <form action="/search-eform" method="POST">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+                {{ govukInput({
+                    label: {
+                        text: 'USN'
+                    },
+                    classes: "govuk-input--width-10",
+                    id: "usn",
+                    name: "usn",
+                    value: formValues.usn,
+                    inputmode: "numeric",
+                    spellcheck: false,
+                    errorMessage: errors.messages.usn
+                }) }}
+            </div>
+            <div class="govuk-grid-column-one-half">
+                {{ govukInput({
+                    label: {
+                        text: "Supplier account number"
+                    },
+                    classes: "govuk-input--width-10",
+                    id: "supplierAccountNumber",
+                    name: "supplierAccountNumber",
+                    value: formValues.supplierAccountNumber,
+                    errorMessage: errors.messages.supplierAccountNumber
+                }) }}
+            </div>
+        </div>
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+                {{ govukInput({
+                    label: {
+                        text: "Client name"
+                    },
+                    classes: "govuk-!-width-full",
+                    id: "clientName",
+                    name: "clientName",
+                    value: formValues.clientName,
+                    errorMessage: errors.messages.clientName
+                }) }}
+            </div>
+            <div class="govuk-grid-column-one-half">
+                {{ govukInput({
+                    label: {
+                        text: "Client date of birth"
+                    },
+                    classes: "govuk-input--width-10",
+                    id: "clientDOB",
+                    name: "clientDOB",
+                    value: formValues.clientDOB,
+                    type: "date",
+                    errorMessage: errors.messages.clientDOB
+                }) }}
+            </div>
+        </div>
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-quarter">
+                {{ govukInput({
+                    label: {
+                        text: "Start date"
+                    },
+                    id: "startDate",
+                    name: "startDate",
+                    value: formValues.startDate,
+                    type: "date",
+                    errorMessage: errors.messages.startDate
+                }) }}
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+                {{ govukInput({
+                    label: {
+                        text: "End date"
+                    },
+                    classes: "govuk-!-width-full",
+                    id: "endDate",
+                    name: "endDate",
+                    value: formValues.endDate,
+                    type: "date",
+                    errorMessage: errors.messages.endDate
+                }) }}
+            </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+                {{ govukButton({
+                    text: 'Search'
+                }) }}
+            </div>
+        </div>
+    </form>
+</div>

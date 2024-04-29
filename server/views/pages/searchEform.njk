@@ -7,156 +7,69 @@
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
 
-  {% block content %}
-      <div class="govuk-width-container">
-          <main class="govuk-main-wrapper">
-              {% if errors.list | length %}
+{% set tableData = {
+    head: [
+        { text: "Client name / USN",
+            classes: 'first-column-client-name' },
+        { text: "Type" },
+        { text: "Started date" },
+        { text: "Submitted date" },
+        { text: "Provider name" },
+        { text: "Status" }
+    ],
+    rows: []
+} %}
+
+{% block content %}
+
+    <div class="govuk-width-container">
+        <main class="govuk-main-wrapper">
+
+            {% if errors.list | length %}
                 {{ govukErrorSummary({
-                  titleText: "There is a problem",
-                  errorList: errors.list
+                    titleText: "There is a problem",
+                    errorList: errors.list
                 }) }}
-              {% endif %}
-              <h1 class="govuk-heading-l">Search for a historical eForm</h1>
-              <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
-              <span class="govuk-caption-m govuk-!-margin-bottom-4">To find cases, search by USN only or combine filters as Client name, Start date and End date.</span>
+            {% endif %}
 
-              <div class="background-custom govuk-!-padding-top-4 govuk-!-padding-left-4">
-                  <form action="/search-eform" method="POST">
-                      <div class="govuk-grid-row">
-                          <div class="govuk-grid-column-one-half">
-                              {{ govukInput({
-                                  label: {
-                                      text: 'USN'
-                                  },
-                                  classes: "govuk-input--width-10",
-                                  id: "usn",
-                                  name: "usn",
-                                  value: formValues.usn,
-                                  inputmode: "numeric",
-                                  spellcheck: false,
-                                  errorMessage: errors.messages.usn
-                              }) }}
-                          </div>
-                          <div class="govuk-grid-column-one-half">
-                              {{ govukInput({
-                                  label: {
-                                      text: "Supplier account number"
-                                  },
-                                  classes: "govuk-input--width-10",
-                                  id: "supplierAccountNumber",
-                                  name: "supplierAccountNumber",
-                                  value: formValues.supplierAccountNumber,
-                                  errorMessage: errors.messages.supplierAccountNumber
-                              }) }}
-                          </div>
-                      </div>
+            <h1 class="govuk-heading-l">Search for a historical eForm</h1>
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
+            <span class="govuk-caption-m govuk-!-margin-bottom-4">To find cases, search by USN only or combine filters as Client name, Start date and End date.</span>
 
-                      <div class="govuk-grid-row">
-                          <div class="govuk-grid-column-one-half">
-                              {{ govukInput({
-                                  label: {
-                                      text: "Client name"
-                                  },
-                                  classes: "govuk-!-width-full",
-                                  id: "clientName",
-                                  name: "clientName",
-                                  value: formValues.clientName,
-                                  errorMessage: errors.messages.clientName
-                              }) }}
-                          </div>
-                          <div class="govuk-grid-column-one-half">
-                              {{ govukInput({
-                                  label: {
-                                      text: "Client date of birth"
-                                  },
-                                  classes: "govuk-input--width-10",
-                                  id: "clientDOB",
-                                  name: "clientDOB",
-                                  value: formValues.clientDOB,
-                                  type: "date",
-                                  errorMessage: errors.messages.clientDOB
-                              }) }}
-                          </div>
-                      </div>
+            {% include "components/searchEformBox.njk" %}
 
-                      <div class="govuk-grid-row">
-                          <div class="govuk-grid-column-one-quarter">
-                              {{ govukInput({
-                                  label: {
-                                      text: "Start date"
-                                  },
-                                  id: "startDate",
-                                  name: "startDate",
-                                  value: formValues.startDate,
-                                  type: "date",
-                                  errorMessage: errors.messages.startDate
-                              }) }}
-                          </div>
-                          <div class="govuk-grid-column-one-quarter">
-                              {{ govukInput({
-                                  label: {
-                                      text: "End date"
-                                  },
-                                  classes: "govuk-!-width-full",
-                                  id: "endDate",
-                                  name: "endDate",
-                                  value: formValues.endDate,
-                                  type: "date",
-                                  errorMessage: errors.messages.endDate
-                              }) }}
-                          </div>
-                      </div>
-                      <div class="govuk-grid-row">
-                          <div class="govuk-grid-column-full">
-                              <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-                              {{ govukButton({
-                                  text: 'Search'
-                              }) }}
-                          </div>
-                      </div>
-                  </form>
-              </div>
-          </main>
-      </div>
+            {% if results | length %}
 
-      {% set tableData = {
-          head: [
-              { text: "Client name / USN" },
-              { text: "Type" },
-              { text: "Started date" },
-              { text: "Submitted" },
-              { text: "Provider name" },
-              { text: "Status" }
-          ],
-          rows: []
-      } %}
+                {% for item in results %}
+                    {% set clientName = '<a href="#" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-body-m govuk-!-font-weight-bold">' + item.clientName | lower | capitalize  + '</a>' %}
+                    {% set usn = '<div class="first-column-usn govuk-body-s govuk-!-margin-bottom-2 govuk-!-margin-top-1">' + item.usn + '</div>' %}
+                    {% set combined = clientName + usn %}
+                    {% set type = item.type %}
+                    {% set originatedDate = item.originatedDate %}
+                    {% set submittedDate = item.submittedDate %}
+                    {% set providerAccount = item.providerAccount %}
+                    {% set status = " " %}
 
-      {% if results | length %}
-          {% for item in results %}
+                    {%- set tableRow = [
+                        { text: combined | safe },
+                        { text: type | safe },
+                        { text: originatedDate | safe },
+                        { text: submittedDate | safe },
+                        { text: providerAccount | safe },
+                        { text: status | safe }
+                    ] -%}
 
-              {% set clientName = item.clientName %}
-              {% set usn = item.usn %}
-              {% set combined = clientName + " " + usn %}
-              {% set type = item.type %}
-              {% set originatedDate = item.originatedDate %}
-              {% set submittedDate = item.submittedDate %}
-              {% set providerAccount = item.providerAccount %}
-              {% set status = " " %}
+                    {% set list = tableData.rows.push(tableRow) %}
+                {% endfor %}
 
-              {%- set tableRow = [
-                  { text: combined | safe },
-                  { text: type | safe },
-                  { text: originatedDate | safe },
-                  { text: submittedDate | safe },
-                  { text: providerAccount | safe },
-                  { text: status | safe }
-              ] -%}
+                {% set recordLabelPlural = 'record' if tableData.rows | length <= 1 else 'records' %}
 
-              {% set list = tableData.rows.push(tableRow) %}
+                <h2 class="govuk-!-margin-top-9">{{ tableData.rows | length }} {{ recordLabelPlural }} found meeting
+                    your
+                    search criteria </h2>
+                <div>{{ govukTable(tableData) }}</div>
 
-          {% endfor %}
-      {% endif %}
-
-      {{ govukTable(tableData) }}
-
-  {% endblock %}
+            {% endif %}
+        </main>
+    </div>
+{% endblock %}
