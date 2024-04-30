@@ -1,4 +1,4 @@
-import { type SearchRequest, type SearchResponse } from '@searchEform'
+import type { SearchRequest, SearchResponse } from '@searchEform'
 import RestClient from './restClient'
 import config from '../config'
 

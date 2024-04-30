@@ -1,4 +1,4 @@
-import { type SearchRequest, type SearchResponse } from '@searchEform'
+import type { SearchRequest, SearchResponse } from '@searchEform'
 import SearchApiClient from '../data/searchApiClient'
 import { SanitisedError } from '../sanitisedError'
 import logger from '../../logger'
