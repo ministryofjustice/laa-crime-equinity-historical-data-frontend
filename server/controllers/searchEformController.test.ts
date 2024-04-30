@@ -65,6 +65,7 @@ describe('Search Eform Controller', () => {
 
     expect(mockSearchEformService.search).toHaveBeenCalledWith({
       clientDOB: undefined,
+      type: undefined,
       clientName: undefined,
       endDate: undefined,
       startDate: undefined,
@@ -99,6 +100,7 @@ describe('Search Eform Controller', () => {
       },
       formValues: {
         clientDOB: undefined,
+        type: undefined,
         clientName: undefined,
         endDate: undefined,
         startDate: undefined,
@@ -145,6 +147,7 @@ describe('Search Eform Controller', () => {
       },
       formValues: {
         clientDOB: undefined,
+        type: undefined,
         clientName: undefined,
         endDate: undefined,
         startDate: undefined,
@@ -155,6 +158,7 @@ describe('Search Eform Controller', () => {
 
     expect(mockSearchEformService.search).toHaveBeenCalledWith({
       clientDOB: undefined,
+      type: undefined,
       clientName: undefined,
       endDate: undefined,
       startDate: undefined,
