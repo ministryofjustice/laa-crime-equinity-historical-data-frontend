@@ -43,7 +43,19 @@ const isFormEmpty = (formData: Record<string, string>) => {
   return !Object.keys(formData).some((key: string) => formData[key].length > 0)
 }
 
-const buildErrors = (error: Joi.ValidationError) => {
+export type ErrorSummary = {
+  href: string
+  text: string
+}
+
+type ErrorMessage = Record<string, { text: string }>
+
+export type FormErrors = {
+  list: Array<ErrorSummary>
+  messages?: ErrorMessage
+}
+
+const buildErrors = (error: Joi.ValidationError): FormErrors => {
   const list: Array<{
     href: string
     text: string

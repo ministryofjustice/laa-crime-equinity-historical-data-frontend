@@ -19,7 +19,8 @@
     "paths": {
       "@badeball/cypress-cucumber-preprocessor/*": [
         "./node_modules/@badeball/cypress-cucumber-preprocessor/dist/subpath-entrypoints/*"
-      ]
+      ],
+      "@searchEform": ["./server/@types/searchEform/index.d.ts"]
     }
   },
   "exclude": ["node_modules", "assets/**/*.js", "integration_tests", "dist", "cypress.config.ts"],
