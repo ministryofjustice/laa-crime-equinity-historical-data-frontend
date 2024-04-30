@@ -65,5 +65,5 @@ COPY --from=build --chown=appuser:appgroup \
 EXPOSE 3000 3001
 ENV NODE_ENV='production'
 USER 10001
-
+sudo chown -R 10001:0 "/.npm"
 CMD [ "npm", "start" ]
