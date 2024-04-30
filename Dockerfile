@@ -67,5 +67,5 @@ ENV NODE_ENV='production'
 RUN addgroup -S appgroup && adduser -u 10001 -S appuser -G appgroup
 # You must use a UID, not a username, here
 USER 10001
-sudo chown -R 10001:0 "/.npm"
+RUN chown -R 10001:0 "/.npm"
 CMD [ "npm", "start" ]
