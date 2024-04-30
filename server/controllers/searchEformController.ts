@@ -1,7 +1,7 @@
 import type { Request, RequestHandler, Response } from 'express'
+import { type SearchError } from '@searchEform'
 import SearchEformService from '../services/searchEformService'
-import validateSearchEform, { ErrorSummary, FormErrors } from '../utils/searchEformValidation'
-import { SearchError } from '../data/searchApiClient'
+import validateSearchEform, { FormErrors } from '../utils/searchEformValidation'
 
 export default class SearchEformController {
   constructor(private readonly searchEformService: SearchEformService) {}
@@ -28,27 +28,26 @@ export default class SearchEformController {
       if (formErrors) {
         res.render('pages/searchEform', { results: [], errors: formErrors, formValues })
       } else {
-        const response = await this.searchEformService.search(formValues)
-        if (response.errors) {
-          const searchErrors = getSearchErrors(response.errors)
+        const searchResponse = await this.searchEformService.search(formValues)
+        if (searchResponse.error) {
+          const searchErrors = getSearchErrors(searchResponse.error)
           res.render('pages/searchEform', { results: [], errors: searchErrors, formValues })
         } else {
-          res.render('pages/searchEform', { results: response.results })
+          res.render('pages/searchEform', { results: searchResponse.results })
         }
       }
     }
   }
 }
 
-const getSearchErrors = (errors: SearchError[]) => {
-  const list: ErrorSummary[] = errors.map(error => {
-    return {
-      href: '#',
-      text: getErrorMessage(error.status),
-    }
-  })
+const getSearchErrors = (error: SearchError): FormErrors => {
   return {
-    list,
+    list: [
+      {
+        href: '#',
+        text: getErrorMessage(error.status),
+      },
+    ],
   }
 }
 

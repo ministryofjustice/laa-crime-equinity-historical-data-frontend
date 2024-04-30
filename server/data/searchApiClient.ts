@@ -1,34 +1,6 @@
-import type { HTTPError } from 'superagent'
+import { type SearchRequest, type SearchResponse } from '@searchEform'
 import RestClient from './restClient'
 import config from '../config'
-
-type SearchResult = {
-  usn: number
-  type: string
-  clientName: string
-  originatedDate: string
-  submittedDate: string
-  providerAccount: string
-}
-
-export type SearchError = {
-  status: number
-  message: string
-}
-
-export interface SearchRequest {
-  usn?: number
-  clientName?: string
-  clientDOB?: string
-  startDate?: string
-  endDate?: string
-  supplierAccountNumber?: string
-}
-
-export interface SearchResponse {
-  results: Array<SearchResult>
-  errors?: Array<SearchError>
-}
 
 export type SearchApiHeader = 'EQ-API-CLIENT-ID' | 'EQ-API-SECRET'
 
@@ -40,16 +12,11 @@ export default class SearchApiClient {
   }
 
   async search(searchRequest: SearchRequest): Promise<SearchResponse> {
-    try {
-      return await SearchApiClient.restClient('no_auth').get<SearchResponse>({
-        path: '/api/internal/v1/equinity/search/',
-        headers: this.headers,
-
-        query: createSearchQuery(searchRequest),
-      })
-    } catch (error) {
-      return addErrorsToResponse(error)
-    }
+    return SearchApiClient.restClient('no_auth').get<SearchResponse>({
+      path: '/api/internal/v1/equinity/search/',
+      headers: this.headers,
+      query: createSearchQuery(searchRequest),
+    })
   }
 }
 
@@ -70,11 +37,4 @@ const createSearchQuery = (searchRequest: SearchRequest) => {
 
 const undefinedIfEmpty = (field: string) => {
   return field.length > 0 ? field : undefined
-}
-
-const addErrorsToResponse = (error: HTTPError) => {
-  const searchResponse: SearchResponse = { results: [] }
-  const searchError: SearchError = { status: error.status, message: error.message }
-  searchResponse.errors = [searchError]
-  return searchResponse
 }

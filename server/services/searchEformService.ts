@@ -1,9 +1,24 @@
-import SearchApiClient, { SearchRequest, SearchResponse } from '../data/searchApiClient'
+import { type SearchRequest, type SearchResponse } from '@searchEform'
+import SearchApiClient from '../data/searchApiClient'
+import { SanitisedError } from '../sanitisedError'
+import logger from '../../logger'
 
 export default class SearchEformService {
   constructor(private readonly searchApiClient: SearchApiClient) {}
 
   async search(searchRequest: SearchRequest): Promise<SearchResponse> {
-    return this.searchApiClient.search(searchRequest)
+    try {
+      return await this.searchApiClient.search(searchRequest)
+    } catch (error) {
+      logger.error('Failed to call search API', error)
+      return addErrorsToResponse(error)
+    }
+  }
+}
+
+const addErrorsToResponse = (error: SanitisedError): SearchResponse => {
+  return {
+    results: [],
+    error: { status: error.status, message: error.message },
   }
 }

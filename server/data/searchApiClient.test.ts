@@ -1,5 +1,4 @@
 import nock from 'nock'
-import type { HTTPError } from 'superagent'
 import SearchApiClient from './searchApiClient'
 import config from '../config'
 
@@ -79,34 +78,5 @@ describe('EQ Search Api Client', () => {
     })
 
     expect(result).toEqual(searchResponse)
-  })
-
-  it('should return search error', async () => {
-    const error: HTTPError = {
-      message: '',
-      name: '',
-      stack: '',
-      status: 404,
-      text: 'error',
-      method: 'get',
-      path: '/api/internal/v1/equinity/search/',
-    }
-
-    fakeRestClient
-      .get('/api/internal/v1/equinity/search/')
-      .query({ usn: '9999999' })
-      .matchHeader('authorization', 'Bearer no_auth')
-      .reply(404, error)
-
-    const result = await searchApiClient.search({ usn: 9999999 })
-    expect(result).toEqual({
-      errors: [
-        {
-          message: 'Not Found',
-          status: 404,
-        },
-      ],
-      results: [],
-    })
   })
 })

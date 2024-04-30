@@ -1,9 +1,9 @@
 import type { Request, Response, NextFunction } from 'express'
 import { createMock } from '@golevelup/ts-jest'
 import type { DeepMocked } from '@golevelup/ts-jest'
+import type { SearchResponse } from '@searchEform'
 import SearchEformController from './searchEformController'
 import SearchEformService from '../services/searchEformService'
-import { SearchResponse } from '../data/searchApiClient'
 
 jest.mock('../services/searchEformService')
 
@@ -31,7 +31,7 @@ describe('Search Eform Controller', () => {
     const searchResponse = {
       results: [
         {
-          usn: 1234567,
+          usn: 123456789,
           type: 'CRM4',
           clientName: 'John Doe',
           originatedDate: '2022-25-23',
@@ -53,7 +53,7 @@ describe('Search Eform Controller', () => {
     expect(response.render).toHaveBeenCalledWith('pages/searchEform', {
       results: [
         {
-          usn: 1234567,
+          usn: 123456789,
           type: 'CRM4',
           clientName: 'John Doe',
           originatedDate: '2022-25-23',
@@ -118,12 +118,10 @@ describe('Search Eform Controller', () => {
   ])('should render submit eform api error "%s" for status %s', async (errorMessage, errorStatus) => {
     const searchResponse: SearchResponse = {
       results: [],
-      errors: [
-        {
-          status: errorStatus,
-          message: 'error',
-        },
-      ],
+      error: {
+        status: errorStatus,
+        message: 'error',
+      },
     }
     mockSearchEformService.search.mockResolvedValue(searchResponse)
 
