@@ -1,40 +1,18 @@
-import config from '../config'
+import type { SearchRequest, SearchResponse } from '@searchEform'
 import RestClient from './restClient'
+import config from '../config'
 
-type SearchResult = {
-  usn: number
-  type: string
-  clientName: string
-  originatedDate: string
-  submittedDate: string
-  providerAccount: string
-}
+export type SearchApiHeader = 'EQ-API-CLIENT-ID' | 'EQ-API-SECRET'
 
-export interface EqSearchRequest {
-  usn?: number
-  type?: string
-  clientName?: string
-  clientDOB?: string
-  startDate?: string
-  endDate?: string
-  supplierAccountNumber?: string
-}
-
-export interface EqSearchResponse {
-  results: SearchResult[]
-}
-
-export type EqApiHeader = 'EQ-API-CLIENT-ID' | 'EQ-API-SECRET'
-
-export default class EqSearchApiClient {
-  constructor(private readonly headers: Record<EqApiHeader, string>) {}
+export default class SearchApiClient {
+  constructor(private readonly headers: Record<SearchApiHeader, string>) {}
 
   private static restClient(token: string): RestClient {
     return new RestClient('EQ Search API Client', config.apis.eqSearchApi, token)
   }
 
-  async search(searchRequest: EqSearchRequest): Promise<EqSearchResponse> {
-    return EqSearchApiClient.restClient('no_auth').get<EqSearchResponse>({
+  async search(searchRequest: SearchRequest): Promise<SearchResponse> {
+    return SearchApiClient.restClient('no_auth').get<SearchResponse>({
       path: '/api/internal/v1/equinity/search/',
       headers: this.headers,
       query: createSearchQuery(searchRequest),
@@ -42,7 +20,7 @@ export default class EqSearchApiClient {
   }
 }
 
-const createSearchQuery = (searchRequest: EqSearchRequest) => {
+const createSearchQuery = (searchRequest: SearchRequest) => {
   if (searchRequest.usn) {
     return {
       usn: searchRequest.usn,

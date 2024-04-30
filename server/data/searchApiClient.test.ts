@@ -1,14 +1,14 @@
 import nock from 'nock'
-import EqSearchApiClient from './eqSearchApiClient'
+import SearchApiClient from './searchApiClient'
 import config from '../config'
 
 describe('EQ Search Api Client', () => {
   let fakeRestClient: nock.Scope
-  let eqSearchApiClient: EqSearchApiClient
+  let searchApiClient: SearchApiClient
 
   beforeEach(() => {
     fakeRestClient = nock(config.apis.eqSearchApi.url)
-    eqSearchApiClient = new EqSearchApiClient({
+    searchApiClient = new SearchApiClient({
       'EQ-API-CLIENT-ID': 'some-client-id',
       'EQ-API-SECRET': 'some-secret',
     })
@@ -38,7 +38,7 @@ describe('EQ Search Api Client', () => {
       .matchHeader('authorization', 'Bearer no_auth')
       .reply(200, searchResponse)
 
-    const result = await eqSearchApiClient.search({ usn: 1234567 })
+    const result = await searchApiClient.search({ usn: 1234567 })
 
     expect(result).toEqual(searchResponse)
   })
@@ -70,7 +70,7 @@ describe('EQ Search Api Client', () => {
       .matchHeader('authorization', `Bearer no_auth`)
       .reply(200, searchResponse)
 
-    const result = await eqSearchApiClient.search({
+    const result = await searchApiClient.search({
       clientName: 'Jane Doe',
       type: 'CRM5',
       clientDOB: '1960-01-01',

@@ -1,6 +1,7 @@
-import type { Request, Response, RequestHandler } from 'express'
+import type { Request, RequestHandler, Response } from 'express'
+import { type SearchError } from '@searchEform'
 import SearchEformService from '../services/searchEformService'
-import validateSearchEform from '../utils/searchEformValidation'
+import validateSearchEform, { FormErrors } from '../utils/searchEformValidation'
 
 export default class SearchEformController {
   constructor(private readonly searchEformService: SearchEformService) {}
@@ -22,13 +23,43 @@ export default class SearchEformController {
         startDate: req.body.startDate,
         endDate: req.body.endDate,
       }
-      const errors = validateSearchEform(formValues)
-      if (errors) {
-        res.render('pages/searchEform', { results: [], errors, formValues })
+
+      const formErrors = validateSearchEform(formValues)
+
+      if (formErrors) {
+        res.render('pages/searchEform', { results: [], errors: formErrors, formValues })
       } else {
-        const response = await this.searchEformService.search(formValues)
-        res.render('pages/searchEform', { results: response.results })
+        const searchResponse = await this.searchEformService.search(formValues)
+        if (searchResponse.error) {
+          const searchErrors = getSearchErrors(searchResponse.error)
+          res.render('pages/searchEform', { results: [], errors: searchErrors, formValues })
+        } else {
+          res.render('pages/searchEform', { results: searchResponse.results })
+        }
       }
     }
+  }
+}
+
+const getSearchErrors = (error: SearchError): FormErrors => {
+  return {
+    list: [
+      {
+        href: '#',
+        text: getErrorMessage(error.status),
+      },
+    ],
+  }
+}
+
+const getErrorMessage = (errorStatus: number) => {
+  switch (errorStatus) {
+    case 401:
+    case 403:
+      return 'Not authorised to search'
+    case 404:
+      return 'No search result found'
+    default:
+      return 'Something went wrong with the search'
   }
 }
