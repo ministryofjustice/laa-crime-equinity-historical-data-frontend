@@ -18,7 +18,7 @@ spec:
         - name: laa-crime-equinity-historical-data-frontend
           image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
           ports:
-            - containerPort: 4000
+            - containerPort: 3000
           securityContext:
             runAsNonRoot: true
             allowPrivilegeEscalation: false
