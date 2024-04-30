@@ -12,7 +12,7 @@ RUN ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezo
 
 #RUN addgroup --gid 2000 --system appgroup && \
    #     adduser --uid 2000 --system appuser --gid 2000
-
+RUN addgroup -S appgroup && adduser -u 10001 -S appuser -G appgroup
 WORKDIR /app
 
 # Cache breaking and ensure required build / git args defined
@@ -64,7 +64,7 @@ COPY --from=build --chown=appuser:appgroup \
 
 EXPOSE 3000 3001
 ENV NODE_ENV='production'
-RUN addgroup -S appgroup && adduser -u 10001 -S appuser -G appgroup
+
 # You must use a UID, not a username, here
 USER 10001
 RUN chown -R 10001:0 "/.npm"
