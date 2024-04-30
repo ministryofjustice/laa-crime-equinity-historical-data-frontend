@@ -64,6 +64,6 @@ COPY --from=build --chown=appuser:appgroup \
 
 EXPOSE 3000 3001
 ENV NODE_ENV='production'
-USER 2000
+USER 10001
 
 CMD [ "npm", "start" ]
