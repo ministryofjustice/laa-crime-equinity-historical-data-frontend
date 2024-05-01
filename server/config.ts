@@ -52,7 +52,7 @@ export default {
   },
   apis: {
     eqSearchApi: {
-      url: 'http://localhost:8089', // get('EQ_SEARCH_API_URL', 'http://localhost:8089', requiredInProduction),
+      url: get('EQ_SEARCH_API_URL', 'http://localhost:8089', { requireInProduction: false }),
       timeout: {
         response: Number(get('EQ_SEARCH_API_TIMEOUT_RESPONSE', 10000)),
         deadline: Number(get('EQ_SEARCH_API_TIMEOUT_DEADLINE', 10000)),
