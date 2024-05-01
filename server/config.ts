@@ -65,10 +65,10 @@ export default {
     },
   },
   session: {
-    secret: get('SESSION_SECRET', 'app-insecure-default-session', requiredInProduction),
+    secret: get('SESSION_SECRET', 'app-insecure-default-session', { requireInProduction: false }),
     expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 120)),
   },
-  domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
+  domain: get('INGRESS_URL', 'http://localhost:3000', { requireInProduction: false }),
   // The fallback should be empty. It will become when all environments will be setup.
   environmentName: get('ENVIRONMENT_NAME', 'Local'),
 }
