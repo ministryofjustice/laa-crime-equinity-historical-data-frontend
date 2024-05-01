@@ -1,5 +1,5 @@
 # Stage: base image
-FROM node:20.11-bookworm-slim as base
+FROM node:21-slim AS base
 
 # ARG BUILD_NUMBER
 #ARG GIT_REF
@@ -10,12 +10,8 @@ LABEL maintainer="LAA ..... <....@.......justice.gov.uk>"
 ENV TZ=Europe/London
 RUN ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezone
 
-#RUN addgroup --gid 2000 --system appgroup && \
-   #     adduser --uid 2000 --system appuser --gid 2000
-RUN addgroup --gid 10001 --system appgroup && \
-        adduser --uid 10001 --system appuser --gid 10001
-# RUN addgroup -S appgroup && adduser -u 10001 -S appuser -G appgroup
-USER appuser
+RUN addgroup --gid 2000 --system appgroup && adduser --uid 2000 --system appuser --gid 2000
+
 WORKDIR /app
 
 # Cache breaking and ensure required build / git args defined
@@ -65,16 +61,8 @@ COPY --from=build --chown=appuser:appgroup \
 COPY --from=build --chown=appuser:appgroup \
         /app/node_modules ./node_modules
 
-
-ENV NODE_ENV='production'
-
-
-COPY --chown=app:node . .
-
-
 EXPOSE 3000 3001
-
-# You must use a UID, not a username, here
-
+ENV NODE_ENV='production'
+USER 2000
 
 CMD [ "npm", "start" ]
