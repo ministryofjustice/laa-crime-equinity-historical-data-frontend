@@ -64,10 +64,13 @@ COPY --from=build --chown=appuser:appgroup \
 COPY --from=build --chown=appuser:appgroup \
         /app/node_modules ./node_modules
 
-EXPOSE 3000 3001
+
 ENV NODE_ENV='production'
+COPY --chown=node:node . .
+USER 10001
+EXPOSE 3000 3001
 
 # You must use a UID, not a username, here
-USER 10001
+
 
 CMD [ "npm", "start" ]
