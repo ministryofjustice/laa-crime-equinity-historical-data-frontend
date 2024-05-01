@@ -68,6 +68,6 @@ EXPOSE 3000 3001
 ENV NODE_ENV='production'
 
 # You must use a UID, not a username, here
-USER 10001
-RUN chown -R appuser:appgroup /.npm
+COPY --chown=node:node --from=app /home/node/app /home/node/app
+USER node
 CMD [ "npm", "start" ]
