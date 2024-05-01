@@ -66,8 +66,11 @@ COPY --from=build --chown=appuser:appgroup \
 
 
 ENV NODE_ENV='production'
-COPY --chown=node:node . .
-USER 10001
+RUN npm install
+
+COPY --chown=app:node . .
+
+
 EXPOSE 3000 3001
 
 # You must use a UID, not a username, here
