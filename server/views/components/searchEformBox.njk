@@ -1,12 +1,11 @@
 <div class="form-background govuk-!-padding-top-4 govuk-!-padding-left-4">
     <form action="/search-eform" method="POST">
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-half">
+            <div class="govuk-grid-column-one-quarter">
                 {{ govukInput({
                     label: {
                         text: 'USN'
                     },
-                    classes: "govuk-input--width-10",
                     id: "usn",
                     name: "usn",
                     value: formValues.usn,
@@ -15,12 +14,11 @@
                     errorMessage: errors.messages.usn
                 }) }}
             </div>
-            <div class="govuk-grid-column-one-half">
+            <div class="govuk-grid-column-one-quarter">
                 {{ govukInput({
                     label: {
                         text: "Supplier account number"
                     },
-                    classes: "govuk-input--width-10",
                     id: "supplierAccountNumber",
                     name: "supplierAccountNumber",
                     value: formValues.supplierAccountNumber,
@@ -40,19 +38,6 @@
                     name: "clientName",
                     value: formValues.clientName,
                     errorMessage: errors.messages.clientName
-                }) }}
-            </div>
-            <div class="govuk-grid-column-one-half">
-                {{ govukInput({
-                    label: {
-                        text: "Client date of birth"
-                    },
-                    classes: "govuk-input--width-10",
-                    id: "clientDOB",
-                    name: "clientDOB",
-                    value: formValues.clientDOB,
-                    type: "date",
-                    errorMessage: errors.messages.clientDOB
                 }) }}
             </div>
         </div>
