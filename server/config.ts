@@ -36,10 +36,10 @@ export interface ApiConfig {
 }
 
 export default {
-  buildNumber: get('BUILD_NUMBER', '1_0_0', requiredInProduction),
+  buildNumber: get('BUILD_NUMBER', '1_0_0', { requireInProduction: false }),
   productId: get('PRODUCT_ID', 'UNASSIGNED', requiredInProduction),
-  gitRef: get('GIT_REF', 'xxxxxxxxxxxxxxxxxxx', requiredInProduction),
-  branchName: get('GIT_BRANCH', 'xxxxxxxxxxxxxxxxxxx', requiredInProduction),
+  gitRef: get('GIT_REF', 'xxxxxxxxxxxxxxxxxxx', { requireInProduction: false }),
+  branchName: get('GIT_BRANCH', 'main', { requireInProduction: false }),
   production,
   https: production,
   staticResourceCacheDuration: '1h',
@@ -52,15 +52,15 @@ export default {
   },
   apis: {
     eqSearchApi: {
-      url: get('EQ_SEARCH_API_URL', 'http://localhost:8089', requiredInProduction),
+      url: get('EQ_SEARCH_API_URL', 'http://localhost:8089', { requireInProduction: false }),
       timeout: {
         response: Number(get('EQ_SEARCH_API_TIMEOUT_RESPONSE', 10000)),
         deadline: Number(get('EQ_SEARCH_API_TIMEOUT_DEADLINE', 10000)),
       },
       agent: new AgentConfig(Number(get('EQ_SEARCH_API_TIMEOUT_RESPONSE', 10000))),
       headers: {
-        clientId: get('EQ_API_CLIENT_ID', '', requiredInProduction),
-        secret: get('EQ_API_SECRET', '', requiredInProduction),
+        clientId: get('EQ_API_CLIENT_ID', 'xxx', { requireInProduction: false }),
+        secret: get('EQ_API_SECRET', 'xxx', { requireInProduction: false }),
       },
     },
   },
