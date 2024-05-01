@@ -37,7 +37,7 @@ export interface ApiConfig {
 
 export default {
   buildNumber: get('BUILD_NUMBER', '1_0_0', { requireInProduction: false }),
-  productId: get('PRODUCT_ID', 'UNASSIGNED', requiredInProduction),
+  productId: get('PRODUCT_ID', 'UNASSIGNED', { requireInProduction: false }),
   gitRef: get('GIT_REF', 'xxxxxxxxxxxxxxxxxxx', { requireInProduction: false }),
   branchName: get('GIT_BRANCH', 'main', { requireInProduction: false }),
   production,
