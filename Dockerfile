@@ -12,7 +12,9 @@ RUN ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezo
 
 #RUN addgroup --gid 2000 --system appgroup && \
    #     adduser --uid 2000 --system appuser --gid 2000
-RUN addgroup -S appgroup && adduser -u 10001 -S appuser -G appgroup
+RUN addgroup --gid 10001 --system appgroup && \
+        adduser --uid 10001 --system appuser --gid 10001
+# RUN addgroup -S appgroup && adduser -u 10001 -S appuser -G appgroup
 WORKDIR /app
 
 # Cache breaking and ensure required build / git args defined
