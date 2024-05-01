@@ -69,5 +69,5 @@ ENV NODE_ENV='production'
 
 # You must use a UID, not a username, here
 USER 10001
-RUN chown -R appuser:appgroup /.npm
+
 CMD [ "npm", "start" ]
