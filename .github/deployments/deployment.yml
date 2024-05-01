@@ -26,3 +26,19 @@ spec:
               type: RuntimeDefault
             capabilities:
               drop: [ "ALL" ]
+          env:
+          - name: EQ_API_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: appsecret
+                key: EQ_API_CLIENT_ID
+          - name:  EQ_API_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: appsecret
+                key: EQ_API_SECRET    
+          - name:  EQ_SEARCH_API_URL
+            valueFrom:
+              secretKeyRef:
+                name: appsecret
+                key: EQ_SEARCH_API_URL    
