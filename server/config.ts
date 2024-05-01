@@ -44,8 +44,8 @@ export default {
   https: production,
   staticResourceCacheDuration: '1h',
   redis: {
-    enabled: get('REDIS_ENABLED', 'false', requiredInProduction) === 'true',
-    host: get('REDIS_HOST', 'localhost', requiredInProduction),
+    enabled: get('REDIS_ENABLED', 'false', { requireInProduction: false }) ,
+    host: get('REDIS_HOST', 'localhost', { requireInProduction: false }),
     port: parseInt(process.env.REDIS_PORT, 10) || 6379,
     password: process.env.REDIS_AUTH_TOKEN,
     tls_enabled: get('REDIS_TLS_ENABLED', 'false'),
