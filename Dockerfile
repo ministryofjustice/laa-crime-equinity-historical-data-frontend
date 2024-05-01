@@ -15,6 +15,7 @@ RUN ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezo
 RUN addgroup --gid 10001 --system appgroup && \
         adduser --uid 10001 --system appuser --gid 10001
 # RUN addgroup -S appgroup && adduser -u 10001 -S appuser -G appgroup
+USER appuser
 WORKDIR /app
 
 # Cache breaking and ensure required build / git args defined
@@ -66,7 +67,7 @@ COPY --from=build --chown=appuser:appgroup \
 
 
 ENV NODE_ENV='production'
-RUN npm install
+
 
 COPY --chown=app:node . .
 
