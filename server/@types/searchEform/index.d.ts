@@ -21,8 +21,17 @@ type SearchRequest = {
   supplierAccountNumber?: string
 }
 
+type SearchPaging = {
+  size: number
+  number: number
+  total: number
+  itemsPage: number
+  itemsTotal: number
+}
+
 type SearchResponse = {
   results: Array<SearchResult>
+  paging?: SearchPaging
   error?: SearchError
 }
 

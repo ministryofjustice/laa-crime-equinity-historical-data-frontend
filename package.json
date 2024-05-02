@@ -8,6 +8,7 @@
     "prepare": "husky",
     "copy-views": "cp -R server/views dist/server/",
     "compile-sass": "sass --quiet-deps --no-source-map --load-path=node_modules/govuk-frontend/dist --load-path=node_modules/@ministryofjustice/frontend --load-path=. assets/scss/application.scss:./assets/stylesheets/application.css --style compressed",
+    "generate-govuk-frontend-types": "ts-node script/utils/generateGovukFrontendTypes/runner.ts && prettier --write server/@types/govukFrontend/index.d.ts",
     "watch-ts": "tsc -w",
     "watch-views": "nodemon --watch server/views -e html,njk -x npm run copy-views",
     "watch-node": "DEBUG=gov-starter-server* nodemon -r dotenv/config --watch dist/ dist/server.js | bunyan -o short",
@@ -173,6 +174,7 @@
     "sass": "^1.71.1",
     "supertest": "^6.3.4",
     "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.2"
   }
 }

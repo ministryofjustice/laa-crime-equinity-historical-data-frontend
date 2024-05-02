@@ -2,6 +2,7 @@ import type { Request, RequestHandler, Response } from 'express'
 import { type SearchError } from '@searchEform'
 import SearchEformService from '../services/searchEformService'
 import validateSearchEform, { FormErrors } from '../utils/searchEformValidation'
+import getPagination from '../utils/pagination'
 
 export default class SearchEformController {
   constructor(private readonly searchEformService: SearchEformService) {}
@@ -33,7 +34,13 @@ export default class SearchEformController {
           const searchErrors = getSearchErrors(searchResponse.error)
           res.render('pages/searchEform', { results: [], errors: searchErrors, formValues })
         } else {
-          res.render('pages/searchEform', { results: searchResponse.results })
+          const { results, paging } = searchResponse
+          const pagination = getPagination(paging.number + 1, 100)
+          res.render('pages/searchEform', {
+            results,
+            itemsTotal: paging.itemsTotal,
+            pagination,
+          })
         }
       }
     }
