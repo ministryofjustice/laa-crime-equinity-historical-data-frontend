@@ -30,6 +30,20 @@ jobs:
         with:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
+  deployt-dev:    
+    runs-on: ubuntu-latest
+    environment: "dev"
+    env:  
+      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Update image tag
+        env:
+          ECR_URL: ${{ secrets.ECR_URL }}
+        run: export IMAGE_TAG=${{ github.sha }} && cat kubectl_deploy/deployment.tpl | envsubst > kubectl_deploy/deployment.yaml
+      - name: Authenticate to the cluster
       - run: |
           mkdir deployments
           cat ./.github/deployments/deployment.yml | envsubst > deployments/deployment.yml
