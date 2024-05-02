@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: laa-crime-equinity-historical-data-frontend
-          image: ${ECR_URL}:${IMAGE_TAG}
+          image: "${ECR_URL}:${IMAGE_TAG}"
           ports:
             - containerPort: 3000
           securityContext:
