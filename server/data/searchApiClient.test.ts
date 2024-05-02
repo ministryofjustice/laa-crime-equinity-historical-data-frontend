@@ -43,7 +43,36 @@ describe('EQ Search Api Client', () => {
     expect(result).toEqual(searchResponse)
   })
 
-  it('should search by custom fields and return results', async () => {
+  it('should search by one custom field and return results', async () => {
+    const searchResponse = {
+      results: [
+        {
+          usn: 8912345,
+          type: 'CRM5',
+          clientName: 'Jane Doe',
+          originatedDate: '2022-25-21',
+          submittedDate: '2023-11-13',
+          providerAccount: '1234AB',
+        },
+      ],
+    }
+
+    fakeRestClient
+      .get('/api/internal/v1/equinity/search/')
+      .query({
+        client: 'Jane Doe',
+      })
+      .matchHeader('authorization', `Bearer no_auth`)
+      .reply(200, searchResponse)
+
+    const result = await searchApiClient.search({
+      clientName: 'Jane Doe',
+    })
+
+    expect(result).toEqual(searchResponse)
+  })
+
+  it('should search by mutiple custom fields and return results', async () => {
     const searchResponse = {
       results: [
         {
