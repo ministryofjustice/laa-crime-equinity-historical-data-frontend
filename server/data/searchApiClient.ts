@@ -21,23 +21,23 @@ export default class SearchApiClient {
 }
 
 const createSearchQuery = (searchRequest: SearchRequest) => {
-  let query
+  const baseQuery = {
+    pageSize: 10,
+  }
+
   if (searchRequest.usn) {
-    query = {
+    return {
+      ...baseQuery,
       usn: searchRequest.usn,
-    }
-  } else {
-    query = {
-      client: undefinedIfEmpty(searchRequest.clientName),
-      clientDoB: undefinedIfEmpty(searchRequest.clientDOB),
-      submittedFrom: undefinedIfEmpty(searchRequest.startDate),
-      submittedTo: undefinedIfEmpty(searchRequest.endDate),
-      providerAccount: undefinedIfEmpty(searchRequest.supplierAccountNumber),
     }
   }
   return {
-    ...query,
-    pageSize: 10,
+    ...baseQuery,
+    client: undefinedIfEmpty(searchRequest.clientName),
+    clientDoB: undefinedIfEmpty(searchRequest.clientDOB),
+    submittedFrom: undefinedIfEmpty(searchRequest.startDate),
+    submittedTo: undefinedIfEmpty(searchRequest.endDate),
+    providerAccount: undefinedIfEmpty(searchRequest.supplierAccountNumber),
   }
 }
 

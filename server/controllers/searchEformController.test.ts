@@ -27,7 +27,7 @@ describe('Search Eform Controller', () => {
     expect(response.render).toHaveBeenCalledWith('pages/searchEform')
   })
 
-  xit('should submit eform', async () => {
+  it('should submit eform', async () => {
     const searchResponse = {
       results: [
         {
@@ -39,6 +39,13 @@ describe('Search Eform Controller', () => {
           providerAccount: '1234AB',
         },
       ],
+      paging: {
+        size: 10,
+        number: 0,
+        total: 1,
+        itemsPage: 10,
+        itemsTotal: 1,
+      },
     }
     mockSearchEformService.search.mockResolvedValue(searchResponse)
 
@@ -61,6 +68,16 @@ describe('Search Eform Controller', () => {
           providerAccount: '1234AB',
         },
       ],
+      itemsTotal: 1,
+      pagination: {
+        items: [
+          {
+            current: true,
+            href: '#',
+            number: 1,
+          },
+        ],
+      },
     })
 
     expect(mockSearchEformService.search).toHaveBeenCalledWith({

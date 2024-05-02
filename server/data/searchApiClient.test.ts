@@ -2,7 +2,7 @@ import nock from 'nock'
 import SearchApiClient from './searchApiClient'
 import config from '../config'
 
-xdescribe('EQ Search Api Client', () => {
+describe('EQ Search Api Client', () => {
   let fakeRestClient: nock.Scope
   let searchApiClient: SearchApiClient
 
@@ -49,7 +49,7 @@ xdescribe('EQ Search Api Client', () => {
 
     fakeRestClient
       .get('/api/internal/v1/equinity/search/')
-      .query({ usn: '1234567' })
+      .query({ usn: '1234567', pageSize: 10 })
       .matchHeader('authorization', 'Bearer no_auth')
       .reply(200, searchResponse)
 
@@ -76,6 +76,7 @@ xdescribe('EQ Search Api Client', () => {
       .get('/api/internal/v1/equinity/search/')
       .query({
         client: 'Jane Doe',
+        pageSize: 10,
       })
       .matchHeader('authorization', `Bearer no_auth`)
       .reply(200, searchResponse)
@@ -116,6 +117,7 @@ xdescribe('EQ Search Api Client', () => {
         providerAccount: '1234AB',
         submittedFrom: '2022-25-23',
         submittedTo: '2023-15-13',
+        pageSize: 10,
       })
       .matchHeader('authorization', `Bearer no_auth`)
       .reply(200, searchResponse)

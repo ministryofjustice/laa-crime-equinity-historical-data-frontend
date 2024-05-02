@@ -19,6 +19,7 @@ type SearchRequest = {
   startDate?: string
   endDate?: string
   supplierAccountNumber?: string
+  pageSize?: number
 }
 
 type SearchPaging = {
