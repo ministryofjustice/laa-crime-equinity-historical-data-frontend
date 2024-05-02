@@ -56,7 +56,7 @@ jobs:
       - name: Update image tag
         env:
           ECR_URL: ${{ secrets.ECR_URL }}
-        run: export IMAGE_TAG=${{ github.sha }} && cat deployments/deployment.tpl | envsubst > deployments/deployment.yaml
+        run: export IMAGE_TAG=${{ github.sha }} && cat deployments/deployment.tpl | envsubst > deployments/deployment.yml
      
       - name: deploy to dev
         run: |
