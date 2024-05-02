@@ -59,7 +59,7 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
       - name: printing tags
-        run: echo ${tags}
+        run: echo ${{tags}}
       - name: Authenticate to the cluster
         run: |
           mkdir deployments
@@ -75,7 +75,7 @@ jobs:
       - name: deploy to dev
         run: |
           echo "${{ secrets.KUBE_CERT }}" > ca.crt
-          echo ${KUBE_NAMESPACE}
+          echo ${{KUBE_NAMESPACE}}
           echo ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.sha }}
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
           kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
