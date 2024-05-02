@@ -40,10 +40,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Update image tag
-        env:
-          ECR_URL: ${{ secrets.ECR_URL }}
-        run: export IMAGE_TAG=${{ github.sha }} && cat kubectl_deploy/deployment.tpl | envsubst > kubectl_deploy/deployment.yaml
       - name: Authenticate to the cluster
         run: |
           mkdir deployments
