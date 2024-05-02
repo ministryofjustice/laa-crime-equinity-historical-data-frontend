@@ -53,12 +53,6 @@ jobs:
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           CP_NAMESPACE: "laa-crime-equinity-historical-data-frontend-dev"
-      - name: Update image tag
-        env:
-          ECR_URL: ${{ secrets.ECR_URL }}
-        run: export IMAGE_TAG=${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }} && cat deployments/deployment.tpl | envsubst > deployments/deployment.yml
-             echo "${ IMAGE_TAG }" > ca.crt
-             echo "${ ECR_URL }"  > ca.crt
       - name: deploy to dev
         run: |
           echo "${{ secrets.KUBE_CERT }}" > ca.crt
