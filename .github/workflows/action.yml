@@ -35,29 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: ecr
     environment: dev
-    permissions:
-      id-token: write # This is required for requesting the JWT
-      contents: read # This is required for actions/checkout
     env:  
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
     steps:
-      
-      - uses: actions/checkout@v4
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-          aws-region: ${{ vars.ECR_REGION }}
-      - uses: aws-actions/amazon-ecr-login@v2
-        id: login-ecr
-      - name: Build and push docker image
-        uses: docker/build-push-action@v5
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
-        with:
-          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
-          push: true
       - name: printing tags
         run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
       - name: Authenticate to the cluster
