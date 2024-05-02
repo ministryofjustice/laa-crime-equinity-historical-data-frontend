@@ -79,7 +79,7 @@ jobs:
   deploy-staging:    
         runs-on: ubuntu-latest
         needs: deploy-dev
-        environment: staging
+        environment: "staging"
         permissions:
           id-token: write # This is required for requesting the JWT
           contents: read # This is required for actions/checkout
@@ -118,6 +118,6 @@ jobs:
               kubectl config use-context ${KUBE_CLUSTER}
               kubectl -n ${KUBE_NAMESPACE} apply -f deployments/
             env:
-              CP_NAMESPACE: "laa-crime-equinity-historical-data-frontend-dev"
+              CP_NAMESPACE: "laa-crime-equinity-historical-data-frontend-staging"
               KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
               KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
