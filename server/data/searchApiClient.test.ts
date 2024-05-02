@@ -72,7 +72,7 @@ describe('EQ Search Api Client', () => {
     expect(result).toEqual(searchResponse)
   })
 
-  it('should search by mutiple custom fields and return results', async () => {
+  it('should search by multiple custom fields and return results', async () => {
     const searchResponse = {
       results: [
         {
