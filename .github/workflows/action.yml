@@ -59,7 +59,7 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
       - name: printing tags
-        run: echo ${{tags}}
+        run: echo ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
       - name: Authenticate to the cluster
         run: |
           mkdir deployments
