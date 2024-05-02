@@ -39,8 +39,13 @@ jobs:
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
     
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
       - name: Authenticate to the cluster
         run: |
           mkdir deployments
@@ -63,5 +68,6 @@ jobs:
           kubectl config use-context ${KUBE_CLUSTER}
           kubectl -n ${KUBE_NAMESPACE} apply -f deployments/
         env:
+          CP_NAMESPACE: "laa-crime-equinity-historical-data-frontend-dev"
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
