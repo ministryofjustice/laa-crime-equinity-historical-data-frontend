@@ -33,6 +33,7 @@ jobs:
         
   deployt-dev:    
     runs-on: ubuntu-latest
+    needs: ecr
     environment: "dev"
     env:  
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
