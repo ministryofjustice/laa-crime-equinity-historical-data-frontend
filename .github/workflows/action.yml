@@ -110,7 +110,7 @@ jobs:
           - name: deploy to dev
             run: |
               echo "${{ secrets.KUBE_CERT }}" > ca.crt
-              echo ${KUBE_NAMESPACE}
+              echo ${{ secrets.KUBE_NAMESPACE }}
               echo ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.sha }}
               kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
               kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
