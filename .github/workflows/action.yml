@@ -48,7 +48,7 @@ jobs:
           cat ./.github/deployments/ingress.yml | envsubst > deployments/ingress.yml
           cat ./.github/deployments/service.yml | envsubst > deployments/service.yml
         env:
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
