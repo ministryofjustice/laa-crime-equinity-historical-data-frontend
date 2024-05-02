@@ -36,5 +36,5 @@ const createSearchQuery = (searchRequest: SearchRequest) => {
 }
 
 const undefinedIfEmpty = (field: string) => {
-  return field.length > 0 ? field : undefined
+  return field && field.length > 0 ? field : undefined
 }
