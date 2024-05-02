@@ -35,7 +35,7 @@ export default class SearchEformController {
           res.render('pages/searchEform', { results: [], errors: searchErrors, formValues })
         } else {
           const { results, paging } = searchResponse
-          const pagination = getPagination(paging.number + 1, 100)
+          const pagination = getPagination(paging.number + 1, paging.total)
           res.render('pages/searchEform', {
             results,
             itemsTotal: paging.itemsTotal,
