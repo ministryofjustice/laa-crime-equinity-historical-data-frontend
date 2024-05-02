@@ -103,7 +103,7 @@ jobs:
               tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
               push: true
           - name: printing tags
-            run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.dev.ECR_REPOSITORY }}:${{ github.sha }}
+            run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
           - name: Authenticate to the cluster
             run: |
               mkdir deployments
