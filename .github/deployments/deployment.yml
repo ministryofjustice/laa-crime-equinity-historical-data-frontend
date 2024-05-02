@@ -15,7 +15,7 @@ spec:
         app: laa-crime-equinity-historical-data-frontend # this should match the selector in service.yml
     spec:
       containers:
-        - name: laa-crime-equinity-historical-data-frontend
+        - name: eqmfrontend
           image: ${IMAGE_TAG}
           ports:
             - containerPort: 3000
