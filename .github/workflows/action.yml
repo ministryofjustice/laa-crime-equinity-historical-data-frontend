@@ -61,7 +61,7 @@ jobs:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-          CP_NAMESPACE: "laa-crime-equinity-historical-data-frontend-dev"
+          CP_NAMESPACE: "dev"
       - name: deploy to dev
         run: |
           echo "${{ secrets.KUBE_CERT }}" > ca.crt
@@ -115,7 +115,7 @@ jobs:
               REGISTRY: ${{ steps.login-ecr.outputs.registry }}
               REPOSITORY: ${{ vars.ECR_REPOSITORY }}
               NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-              CP_NAMESPACE: "laa-crime-equinity-historical-data-frontend-staging"
+              CP_NAMESPACE: "staging"
           - name: deploy to staging
             run: |
               echo "${{ secrets.KUBE_CERT }}" > ca.crt
