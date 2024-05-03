@@ -1,12 +1,33 @@
-import { GovukPagination, GovukPaginationItem } from '@govukFrontend'
+type Pagination = {
+  items?: Array<PaginationItem>
+  previous?: PaginationPrevious
+  next?: PaginationNext
+}
 
-const getPagination = (currentPageNumber: number, totalPages: number) => {
-  const paginationData: GovukPagination = { items: [] }
+type PaginationItem = {
+  number?: number
+  href?: string
+  current?: boolean
+  ellipsis?: boolean
+}
+
+type PaginationPrevious = {
+  href: string
+}
+
+type PaginationNext = {
+  href: string
+}
+
+const getPagination = (currentPageNumber: number, totalPages: number): Pagination => {
+  const paginationData: Pagination = { items: [] }
   if (currentPageNumber > 1) {
     paginationData.previous = {
       href: '#',
     }
   }
+
+  paginationData.items = getPaginationItems(currentPageNumber, totalPages)
 
   if (!isLastPage(currentPageNumber, totalPages)) {
     paginationData.next = {
@@ -14,13 +35,22 @@ const getPagination = (currentPageNumber: number, totalPages: number) => {
     }
   }
 
+  return paginationData
+}
+
+const isLastPage = (currentPageNumber: number, totalPages: number): boolean => {
+  return currentPageNumber === totalPages
+}
+
+const getPaginationItems = (currentPageNumber: number, totalPages: number): Array<PaginationItem> => {
+  const items: Array<PaginationItem> = []
   const pageNumbers = pageNumbersToDisplay(currentPageNumber, totalPages)
   pageNumbers.forEach((pageNumber: number, pageNumberIndex: number) => {
     if (shouldAddEllipsis(pageNumbers, pageNumberIndex)) {
-      paginationData.items.push({ ellipsis: true })
+      items.push({ ellipsis: true })
     }
 
-    const item: GovukPaginationItem = {
+    const item: PaginationItem = {
       href: '#',
       number: pageNumber,
     }
@@ -28,13 +58,9 @@ const getPagination = (currentPageNumber: number, totalPages: number) => {
       item.current = true
     }
 
-    paginationData.items.push(item)
+    items.push(item)
   })
-  return paginationData
-}
-
-const isLastPage = (currentPageNumber: number, totalPages: number): boolean => {
-  return currentPageNumber === totalPages
+  return items
 }
 
 const shouldAddEllipsis = (pageNumbers: Array<number>, currentPageIndex: number): boolean => {
@@ -49,7 +75,7 @@ const shouldAddEllipsis = (pageNumbers: Array<number>, currentPageIndex: number)
   return currentPageNumber > previousPageNumber + 1
 }
 
-export const pageNumbersToDisplay = (currentPageNumber: number, totalPages: number): Array<number> => {
+const pageNumbersToDisplay = (currentPageNumber: number, totalPages: number): Array<number> => {
   const previousPageNumber = currentPageNumber - 1
   const nextPageNumber = currentPageNumber + 1
   const allPossibleNumbers = Array.from(new Set([1, previousPageNumber, currentPageNumber, nextPageNumber, totalPages]))

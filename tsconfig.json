@@ -20,7 +20,6 @@
       "@badeball/cypress-cucumber-preprocessor/*": [
         "./node_modules/@badeball/cypress-cucumber-preprocessor/dist/subpath-entrypoints/*"
       ],
-      "@govukFrontend": ["./server/@types/govukFrontend/index.d.ts"],
       "@searchEform": ["./server/@types/searchEform/index.d.ts"]
     }
   },
