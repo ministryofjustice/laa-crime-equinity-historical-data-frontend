@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: eqmfrontend
-          image: ${IMAGE_TAG}
+          image: ${IMAGE_NAME}
           ports:
             - containerPort: 3000
           securityContext:
