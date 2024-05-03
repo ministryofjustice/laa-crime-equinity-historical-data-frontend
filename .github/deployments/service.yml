@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ${CP_APP_NAME}-service
+  name: ${CP_APP_NAME}
   namespace: ${CP_APP_NAME}-${CP_NAMESPACE}
 spec:
   selector:
     app: ${CP_APP_NAME} # this should match the pod label in deployment.yml
   ports:
-    - name: https
+    - name: http
       port: 3000
       targetPort: 3000
+      protocol: TCP
