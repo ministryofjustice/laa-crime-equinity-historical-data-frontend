@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: laa-crime-equinity-historical-data-frontend-ingress
+  namespace: laa-crime-equinity-historical-data-frontend-${CP_NAMESPACE}
   annotations:
     external-dns.alpha.kubernetes.io/set-identifier: laa-crime-equinity-historical-data-frontend-ingress-laa-crime-equinity-historical-data-frontend-${CP_NAMESPACE}-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
