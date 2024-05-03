@@ -14,6 +14,7 @@ type SearchError = {
 
 type SearchRequest = {
   usn?: number
+  type?: string
   clientName?: string
   clientDOB?: string
   startDate?: string

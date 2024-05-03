@@ -27,6 +27,7 @@ const createSearchQuery = (searchRequest: SearchRequest) => {
     }
   }
   return {
+    type: undefinedIfEmpty(searchRequest.type),
     client: undefinedIfEmpty(searchRequest.clientName),
     clientDoB: undefinedIfEmpty(searchRequest.clientDOB),
     submittedFrom: undefinedIfEmpty(searchRequest.startDate),
