@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ${APP_NAME}-deployment
+  namespace: ${CP_NAMESPACE}
   labels:
     app: laa-crime-equinity-historical-data-frontend
 spec:
