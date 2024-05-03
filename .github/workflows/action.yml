@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - 'main'
+env:
+  CP_APP_NAME: "laa-crime-equinity-historical-data-frontend"
 
 jobs:
   ecr:
@@ -14,13 +16,15 @@ jobs:
       contents: read # This is required for actions/checkout
     steps:
       - uses: actions/checkout@v4
-      - uses: aws-actions/configure-aws-credentials@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
           aws-region: ${{ vars.ECR_REGION }}
-      - uses: aws-actions/amazon-ecr-login@v2
+      - name: Login to AWS SCR
+        uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
-# Build and push docker image to container repo
+      # Build and push docker image to container repo
       - name: Build and push docker image
         uses: docker/build-push-action@v5
         env:
@@ -73,63 +77,62 @@ jobs:
           kubectl config use-context ${KUBE_CLUSTER}
           kubectl -n ${KUBE_NAMESPACE} apply -f deployments/
         env:
-          CP_NAMESPACE: "laa-crime-equinity-historical-data-frontend-dev"
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
   
-  deploy-staging:    
-        if: ${{ 'remove later' == 'success' }}
-        runs-on: ubuntu-latest
-        needs: deploy-dev
-        environment: staging
-        permissions:
-          id-token: write # This is required for requesting the JWT
-          contents: read # This is required for actions/checkout
-        env:  
+  deploy-staging:
+    # TODO (EMP-000): remove if condition after dev deployment is working
+    if: ${{ 'remove later' == 'success' }}
+    ###
+    runs-on: ubuntu-latest
+    needs: deploy-dev
+    environment: staging
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read # This is required for actions/checkout
+    env:
+      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+      - name: Build and push docker image
+        uses: docker/build-push-action@v5
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
+        with:
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
+          push: true
+      - name: printing tags
+        run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
+      - name: Authenticate to the cluster
+        run: |
+          mkdir deployments
+          cat ./.github/deployments/deployment.yml | envsubst > deployments/deployment.yml
+          cat ./.github/deployments/ingress.yml | envsubst > deployments/ingress.yml
+          cat ./.github/deployments/service.yml | envsubst > deployments/service.yml
+        env:
+          IMAGE_TAG: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+          NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+          CP_NAMESPACE: "staging"
+      - name: deploy to staging
+        run: |
+          echo "${{ secrets.KUBE_CERT }}" > ca.crt
+          echo ${{ secrets.KUBE_NAMESPACE }}
+          echo ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.sha }}
+          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
+          kubectl config use-context ${KUBE_CLUSTER}
+          kubectl -n ${KUBE_NAMESPACE} apply -f deployments/
+        env:
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-        steps:
-          - uses: actions/checkout@v4
-          - uses: aws-actions/configure-aws-credentials@v4
-            with:
-              role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-              aws-region: ${{ vars.ECR_REGION }}
-          - uses: aws-actions/amazon-ecr-login@v2
-            id: login-ecr
-          - name: Build and push docker image
-            uses: docker/build-push-action@v5
-            env:
-              REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-              REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-              IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
-            with:
-              tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
-              push: true
-          - name: printing tags
-            run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
-          - name: Authenticate to the cluster
-            run: |
-              mkdir deployments
-              cat ./.github/deployments/deployment.yml | envsubst > deployments/deployment.yml
-              cat ./.github/deployments/ingress.yml | envsubst > deployments/ingress.yml
-              cat ./.github/deployments/service.yml | envsubst > deployments/service.yml
-            env:
-              IMAGE_TAG: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
-              REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-              REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-              NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-              CP_NAMESPACE: "staging"
-          - name: deploy to staging
-            run: |
-              echo "${{ secrets.KUBE_CERT }}" > ca.crt
-              echo ${{ secrets.KUBE_NAMESPACE }}
-              echo ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.sha }}
-              kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
-              kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
-              kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
-              kubectl config use-context ${KUBE_CLUSTER}
-              kubectl -n ${KUBE_NAMESPACE} apply -f deployments/
-            env:
-              CP_NAMESPACE: "laa-crime-equinity-historical-data-frontend-staging"
-              KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-              KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
-  
+          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}

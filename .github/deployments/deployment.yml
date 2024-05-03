@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: laa-crime-equinity-historical-data-frontend-deployment
-  namespace: laa-crime-equinity-historical-data-frontend-${CP_NAMESPACE}
+  name: ${CP_APP_NAME}-deployment
+  namespace: ${CP_APP_NAME}-${CP_NAMESPACE}
   labels:
-    app: laa-crime-equinity-historical-data-frontend
+    app: ${CP_APP_NAME}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: laa-crime-equinity-historical-data-frontend # this should match the selector in service.yml
+      app: ${CP_APP_NAME} # this should match the selector in service.yml
   template:
     metadata:
       labels:
-        app: laa-crime-equinity-historical-data-frontend # this should match the selector in service.yml
+        app: ${CP_APP_NAME} # this should match the selector in service.yml
     spec:
       containers:
         - name: eqmfrontend
