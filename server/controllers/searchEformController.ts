@@ -35,7 +35,8 @@ export default class SearchEformController {
           res.render('pages/searchEform', { results: [], errors: searchErrors, formValues })
         } else {
           const { results, paging } = searchResponse
-          const pagination = getPagination(paging.number + 1, paging.total)
+          const baseLink = `/search-eform-results?usn=1234&`
+          const pagination = getPagination(paging.number + 1, paging.total, baseLink)
           res.render('pages/searchEform', {
             results,
             itemsTotal: paging.itemsTotal,
@@ -43,6 +44,21 @@ export default class SearchEformController {
           })
         }
       }
+    }
+  }
+
+  searchResults(): RequestHandler {
+    return async (req: Request, res: Response) => {
+      const page = Number(req.query.page)
+      const searchResponse = await this.searchEformService.search({ usn: Number(req.query.usn), page })
+      const { results, paging } = searchResponse
+      const baseLink = `/search-eform-results?usn=5001&`
+      const pagination = getPagination(paging.number + 1, paging.total, baseLink)
+      res.render('pages/searchEform', {
+        results,
+        itemsTotal: paging.itemsTotal,
+        pagination,
+      })
     }
   }
 }

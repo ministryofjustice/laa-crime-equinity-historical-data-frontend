@@ -19,19 +19,19 @@ type PaginationNext = {
   href: string
 }
 
-const getPagination = (currentPageNumber: number, totalPages: number): Pagination => {
+const getPagination = (currentPageNumber: number, totalPages: number, baseUrl: string): Pagination => {
   const paginationData: Pagination = { items: [] }
   if (currentPageNumber > 1) {
     paginationData.previous = {
-      href: '#',
+      href: `${baseUrl}page=${currentPageNumber - 1}`,
     }
   }
 
-  paginationData.items = getPaginationItems(currentPageNumber, totalPages)
+  paginationData.items = getPaginationItems(currentPageNumber, totalPages, baseUrl)
 
   if (!isLastPage(currentPageNumber, totalPages)) {
     paginationData.next = {
-      href: '#',
+      href: `${baseUrl}page=${currentPageNumber + 1}`,
     }
   }
 
@@ -42,7 +42,7 @@ const isLastPage = (currentPageNumber: number, totalPages: number): boolean => {
   return currentPageNumber === totalPages
 }
 
-const getPaginationItems = (currentPageNumber: number, totalPages: number): Array<PaginationItem> => {
+const getPaginationItems = (currentPageNumber: number, totalPages: number, baseUrl: string): Array<PaginationItem> => {
   const items: Array<PaginationItem> = []
   const pageNumbers = pageNumbersToDisplay(currentPageNumber, totalPages)
   pageNumbers.forEach((pageNumber: number, pageNumberIndex: number) => {
@@ -51,7 +51,7 @@ const getPaginationItems = (currentPageNumber: number, totalPages: number): Arra
     }
 
     const item: PaginationItem = {
-      href: '#',
+      href: `${baseUrl}page=${pageNumber}`,
       number: pageNumber,
     }
     if (pageNumber === currentPageNumber) {

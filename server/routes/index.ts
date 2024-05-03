@@ -17,6 +17,8 @@ export default function routes({ searchEformController }: Controllers): Router {
 
   post('/search-eform', searchEformController.submit())
 
+  get('/search-eform-results', searchEformController.searchResults())
+
   get('/generate-report', (req, res, next) => {
     res.render('pages/generateReport')
   })

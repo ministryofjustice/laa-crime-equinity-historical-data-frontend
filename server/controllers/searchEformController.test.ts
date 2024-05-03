@@ -73,7 +73,7 @@ describe('Search Eform Controller', () => {
         items: [
           {
             current: true,
-            href: '#',
+            href: '/search-eform-results?usn=1234&page=1',
             number: 1,
           },
         ],

@@ -20,6 +20,7 @@ type SearchRequest = {
   endDate?: string
   supplierAccountNumber?: string
   pageSize?: number
+  page?: number
 }
 
 type SearchPaging = {

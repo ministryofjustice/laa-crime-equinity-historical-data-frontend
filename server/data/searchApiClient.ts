@@ -23,6 +23,7 @@ export default class SearchApiClient {
 const createSearchQuery = (searchRequest: SearchRequest) => {
   const baseQuery = {
     pageSize: 10,
+    page: searchRequest.page ? searchRequest.page - 1 : undefined,
   }
 
   if (searchRequest.usn) {
