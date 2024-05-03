@@ -6,7 +6,6 @@
                     label: {
                         text: 'USN'
                     },
-                    classes: "govuk-input--width-10",
                     id: "usn",
                     name: "usn",
                     value: formValues.usn,
@@ -16,11 +15,22 @@
                 }) }}
             </div>
             <div class="govuk-grid-column-one-quarter">
+                {{ govukInput({
+                    label: {
+                        text: "Supplier account number"
+                    },
+                    id: "supplierAccountNumber",
+                    name: "supplierAccountNumber",
+                    value: formValues.supplierAccountNumber,
+                    errorMessage: errors.messages.supplierAccountNumber
+                }) }}
+            </div>
+            <div class="govuk-grid-column-one-quarter">
                 {{ govukSelect({
                     label: {
                         text: "CRM type"
                     },
-                items: [
+                    items: [
                         {
                             value: "chooseCrmType",
                             text: "Choose CRM type",
@@ -48,18 +58,6 @@
                     value: formValues.type
                 }) }}
             </div>
-            <div class="govuk-grid-column-one-quarter">
-                {{ govukInput({
-                    label: {
-                        text: "Supplier account number"
-                    },
-                    classes: "govuk-input--width-10",
-                    id: "supplierAccountNumber",
-                    name: "supplierAccountNumber",
-                    value: formValues.supplierAccountNumber,
-                    errorMessage: errors.messages.supplierAccountNumber
-                }) }}
-            </div>
         </div>
 
         <div class="govuk-grid-row">
@@ -73,19 +71,6 @@
                     name: "clientName",
                     value: formValues.clientName,
                     errorMessage: errors.messages.clientName
-                }) }}
-            </div>
-            <div class="govuk-grid-column-one-half">
-                {{ govukInput({
-                    label: {
-                        text: "Client date of birth"
-                    },
-                    classes: "govuk-input--width-10",
-                    id: "clientDOB",
-                    name: "clientDOB",
-                    value: formValues.clientDOB,
-                    type: "date",
-                    errorMessage: errors.messages.clientDOB
                 }) }}
             </div>
         </div>
