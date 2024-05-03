@@ -1,5 +1,5 @@
 import type { Request, RequestHandler, Response } from 'express'
-import { type SearchError } from '@searchEform'
+import { type SearchError, SearchRequest } from '@searchEform'
 import SearchEformService from '../services/searchEformService'
 import validateSearchEform, { FormErrors } from '../utils/searchEformValidation'
 import getPagination from '../utils/pagination'
@@ -19,7 +19,6 @@ export default class SearchEformController {
         usn: req.body.usn,
         supplierAccountNumber: req.body.supplierAccountNumber,
         clientName: req.body.clientName,
-        clientDOB: req.body.clientDOB,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
       }
@@ -35,7 +34,7 @@ export default class SearchEformController {
           res.render('pages/searchEform', { results: [], errors: searchErrors, formValues })
         } else {
           const { results, paging } = searchResponse
-          const baseLink = `/search-eform-results?usn=1234&`
+          const baseLink = buildBaseLink(formValues)
           const pagination = getPagination(paging.number + 1, paging.total, baseLink)
           res.render('pages/searchEform', {
             results,
@@ -49,10 +48,19 @@ export default class SearchEformController {
 
   searchResults(): RequestHandler {
     return async (req: Request, res: Response) => {
-      const page = Number(req.query.page)
-      const searchResponse = await this.searchEformService.search({ usn: Number(req.query.usn), page })
+      const searchRequest: SearchRequest = {
+        usn: Number(req.query.usn),
+        supplierAccountNumber: req.body.supplierAccountNumber,
+        clientName: req.body.clientName,
+        startDate: req.body.startDate,
+        endDate: req.body.endDate,
+        page: Number(req.query.page),
+      }
+
+      const searchResponse = await this.searchEformService.search(searchRequest)
+
       const { results, paging } = searchResponse
-      const baseLink = `/search-eform-results?usn=1234&`
+      const baseLink = buildBaseLink(searchRequest)
       const pagination = getPagination(paging.number + 1, paging.total, baseLink)
       res.render('pages/searchEform', {
         results,
@@ -84,4 +92,15 @@ const getErrorMessage = (errorStatus: number) => {
     default:
       return 'Something went wrong with the search'
   }
+}
+
+const buildBaseLink = (searchRequest: SearchRequest) => {
+  return `/search-eform-results?${buildQueryString(searchRequest)}&`
+}
+
+const buildQueryString = (params: { [key: string]: string | number }): string => {
+  return Object.keys(params)
+    .map(key => (params[key] && key !== 'page' ? `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}` : ''))
+    .filter(Boolean)
+    .join('&')
 }
