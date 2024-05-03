@@ -48,6 +48,7 @@ jobs:
     env:  
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
       APP_ENV: "dev"
+      IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
     steps:
       - uses: actions/checkout@v4
       
@@ -63,13 +64,14 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
+#          IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
         with:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
       
       - name: printing tags
-        run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
+        run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+
       - name: Authenticate to the cluster
         run: |
           mkdir deployments
@@ -77,16 +79,16 @@ jobs:
           cat ./.github/deployments/ingress.yml | envsubst > deployments/ingress.yml
           cat ./.github/deployments/service.yml | envsubst > deployments/service.yml
         env:
-          IMAGE_TAG: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-          CP_NAMESPACE: "dev"
+          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          CP_NAMESPACE: "${{ env.APP_NAME }}-${{ env.APP_ENV }}"
       - name: deploy to dev
         run: |
           echo "${{ secrets.KUBE_CERT }}" > ca.crt
           echo ${KUBE_NAMESPACE}
-          echo ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.sha }}
+          echo ${{ env.IMAGE_NAME }}
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
           kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
           kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
@@ -95,6 +97,7 @@ jobs:
         env:
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
   
   deploy-staging:
     # TODO (EMP-000): remove if condition after dev deployment is working
@@ -108,8 +111,10 @@ jobs:
       contents: read # This is required for actions/checkout
     env:
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+      APP_ENV: "staging"
     steps:
       - uses: actions/checkout@v4
+
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
@@ -125,6 +130,7 @@ jobs:
         with:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
+
       - name: printing tags
         run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
       - name: Authenticate to the cluster
@@ -134,11 +140,11 @@ jobs:
           cat ./.github/deployments/ingress.yml | envsubst > deployments/ingress.yml
           cat ./.github/deployments/service.yml | envsubst > deployments/service.yml
         env:
-          IMAGE_TAG: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
+          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-          CP_NAMESPACE: "${{APP_NAME}}-staging"
+          CP_NAMESPACE: "${{ env.APP_NAME }}-${{ env.APP_ENV }}"
 
       - name: deploy to staging
         run: |
@@ -151,6 +157,5 @@ jobs:
           kubectl config use-context ${KUBE_CLUSTER}
           kubectl -n ${KUBE_NAMESPACE} apply -f deployments/
         env:
-          CP_NAMESPACE: "${{APP_NAME}}-staging"
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
