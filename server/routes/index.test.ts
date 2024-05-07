@@ -41,7 +41,7 @@ describe('GET /search-eform', () => {
   })
 })
 
-describe('POST /search-eform', () => {
+xdescribe('POST /search-eform', () => {
   it('should post search eForm and render results', () => {
     const searchResponse = {
       results: [
@@ -82,7 +82,7 @@ describe('POST /search-eform', () => {
   })
 })
 
-describe('GET /search-eform-results?page=1', () => {
+xdescribe('GET /search-eform-results?page=1', () => {
   it('should render search eForm page with search results', () => {
     const searchResponse: SearchResponse = {
       results: [

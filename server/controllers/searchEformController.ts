@@ -1,7 +1,7 @@
 import type { Request, RequestHandler, Response } from 'express'
 import { type SearchError, SearchRequest } from '@searchEform'
 import SearchEformService from '../services/searchEformService'
-import validateSearchEform, { FormErrors } from '../utils/searchEformValidation'
+import validateSearchData, { SearchValidationErrors } from '../utils/searchEformValidation'
 import getPagination from '../utils/pagination'
 
 export default class SearchEformController {
@@ -9,7 +9,48 @@ export default class SearchEformController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response) => {
-      res.render('pages/searchEform')
+      if (!req.query.page) {
+        res.render('pages/searchEform')
+      } else {
+        const queryValues = {
+          usn: req.query.usn as string,
+          supplierAccountNumber: req.query.supplierAccountNumber as string,
+          clientName: req.query.clientName as string,
+          startDate: req.query.startDate as string,
+          endDate: req.query.endDate as string,
+          page: req.query.page as string,
+        }
+
+        const validationErrors = validateSearchData(queryValues)
+
+        if (validationErrors) {
+          res.render('pages/searchEform', { results: [], errors: validationErrors })
+        } else {
+          const searchRequest: SearchRequest = {
+            usn: undefinedIfEmpty(queryValues.usn),
+            supplierAccountNumber: undefinedIfEmpty(queryValues.supplierAccountNumber),
+            clientName: undefinedIfEmpty(queryValues.clientName),
+            startDate: undefinedIfEmpty(queryValues.startDate),
+            endDate: undefinedIfEmpty(queryValues.endDate),
+            page: Number(queryValues.page),
+          }
+
+          const searchResponse = await this.searchEformService.search(searchRequest)
+          if (searchResponse.error) {
+            const searchErrors = getSearchErrors(searchResponse.error)
+            res.render('pages/searchEform', { results: [], errors: searchErrors, queryValues })
+          } else {
+            const { results, paging } = searchResponse
+            const baseLink = buildBaseLink(searchRequest)
+            const pagination = getPagination(paging.number + 1, paging.total, baseLink)
+            res.render('pages/searchEform', {
+              results,
+              itemsTotal: paging.itemsTotal,
+              pagination,
+            })
+          }
+        }
+      }
     }
   }
 
@@ -22,56 +63,13 @@ export default class SearchEformController {
         startDate: req.body.startDate,
         endDate: req.body.endDate,
       }
-
-      const formErrors = validateSearchEform(formValues)
-
-      if (formErrors) {
-        res.render('pages/searchEform', { results: [], errors: formErrors, formValues })
-      } else {
-        const searchResponse = await this.searchEformService.search(formValues)
-        if (searchResponse.error) {
-          const searchErrors = getSearchErrors(searchResponse.error)
-          res.render('pages/searchEform', { results: [], errors: searchErrors, formValues })
-        } else {
-          const { results, paging } = searchResponse
-          const baseLink = buildBaseLink(formValues)
-          const pagination = getPagination(paging.number + 1, paging.total, baseLink)
-          res.render('pages/searchEform', {
-            results,
-            itemsTotal: paging.itemsTotal,
-            pagination,
-          })
-        }
-      }
-    }
-  }
-
-  searchResults(): RequestHandler {
-    return async (req: Request, res: Response) => {
-      const searchRequest: SearchRequest = {
-        usn: Number(req.query.usn),
-        supplierAccountNumber: req.body.supplierAccountNumber,
-        clientName: req.body.clientName,
-        startDate: req.body.startDate,
-        endDate: req.body.endDate,
-        page: Number(req.query.page),
-      }
-
-      const searchResponse = await this.searchEformService.search(searchRequest)
-
-      const { results, paging } = searchResponse
-      const baseLink = buildBaseLink(searchRequest)
-      const pagination = getPagination(paging.number + 1, paging.total, baseLink)
-      res.render('pages/searchEform', {
-        results,
-        itemsTotal: paging.itemsTotal,
-        pagination,
-      })
+      const queryString = buildQueryString(formValues)
+      res.redirect(302, `/search-eform?page=1&${queryString}`)
     }
   }
 }
 
-const getSearchErrors = (error: SearchError): FormErrors => {
+const getSearchErrors = (error: SearchError): SearchValidationErrors => {
   return {
     list: [
       {
@@ -95,7 +93,7 @@ const getErrorMessage = (errorStatus: number) => {
 }
 
 const buildBaseLink = (searchRequest: SearchRequest) => {
-  return `/search-eform-results?${buildQueryString(searchRequest)}&`
+  return `/search-eform?${buildQueryString(searchRequest)}&`
 }
 
 const buildQueryString = (params: { [key: string]: string | number }): string => {
@@ -103,4 +101,8 @@ const buildQueryString = (params: { [key: string]: string | number }): string =>
     .map(key => (params[key] && key !== 'page' ? `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}` : ''))
     .filter(Boolean)
     .join('&')
+}
+
+const undefinedIfEmpty = (field: string) => {
+  return field && field.length > 0 ? field : undefined
 }

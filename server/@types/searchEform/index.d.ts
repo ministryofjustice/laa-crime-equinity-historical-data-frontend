@@ -13,7 +13,7 @@ type SearchError = {
 }
 
 type SearchRequest = {
-  usn?: number
+  usn?: string
   clientName?: string
   clientDOB?: string
   startDate?: string

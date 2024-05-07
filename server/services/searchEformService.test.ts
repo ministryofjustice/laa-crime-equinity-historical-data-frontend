@@ -29,11 +29,11 @@ describe('Search Eform Service', () => {
 
     const searchEformService = new SearchEformService(mockSearchApiClient)
 
-    const result = await searchEformService.search({ usn: 1234567 })
+    const result = await searchEformService.search({ usn: '1234567' })
 
     expect(result).toEqual(searchResponse)
     expect(mockSearchApiClient.search).toHaveBeenCalledWith({
-      usn: 1234567,
+      usn: '1234567',
     })
   })
 
@@ -50,7 +50,7 @@ describe('Search Eform Service', () => {
 
     const searchEformService = new SearchEformService(mockSearchApiClient)
 
-    const result = await searchEformService.search({ usn: 1234567 })
+    const result = await searchEformService.search({ usn: '1234567' })
 
     expect(result).toEqual({
       error: {
@@ -60,7 +60,7 @@ describe('Search Eform Service', () => {
       results: [],
     })
     expect(mockSearchApiClient.search).toHaveBeenCalledWith({
-      usn: 1234567,
+      usn: '1234567',
     })
   })
 })

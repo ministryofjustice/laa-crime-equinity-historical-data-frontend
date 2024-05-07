@@ -1,5 +1,17 @@
 import Joi from 'joi'
 
+type ErrorMessage = Record<string, { text: string }>
+
+type ErrorSummary = {
+  href: string
+  text: string
+}
+
+export type SearchValidationErrors = {
+  list: Array<ErrorSummary>
+  messages?: ErrorMessage
+}
+
 const schema = Joi.object({
   usn: Joi.string().pattern(/^\d+$/).min(4).max(10).optional().allow('').messages({
     'string.min': 'USN must be at least 4 digits',
@@ -24,14 +36,15 @@ const schema = Joi.object({
     'date.format': 'End date must be a valid date',
     'date.min': 'Your End date cannot be earlier than your Start date',
   }),
+  page: Joi.number().min(1).optional().allow('').messages({ 'number.min': 'Invalid page specified' }),
 }).options({ allowUnknown: true, abortEarly: false })
 
-export default function validateSearchEform(formData: Record<string, string>) {
-  if (isFormEmpty(formData)) {
+export default function validateSearchData(data: Record<string, string>): SearchValidationErrors | null {
+  if (isSearchDataEmpty(data)) {
     return { list: [{ href: '#', text: 'Enter at least one search field' }] }
   }
 
-  const { error } = schema.validate(formData)
+  const { error } = schema.validate(data)
   if (error?.details) {
     return buildErrors(error)
   }
@@ -39,23 +52,11 @@ export default function validateSearchEform(formData: Record<string, string>) {
   return null
 }
 
-const isFormEmpty = (formData: Record<string, string>) => {
-  return !Object.keys(formData).some((key: string) => formData[key].length > 0)
+const isSearchDataEmpty = (searchData: Record<string, string>): boolean => {
+  return !Object.keys(searchData).some((key: string) => searchData[key] && searchData[key].length > 0)
 }
 
-export type ErrorSummary = {
-  href: string
-  text: string
-}
-
-type ErrorMessage = Record<string, { text: string }>
-
-export type FormErrors = {
-  list: Array<ErrorSummary>
-  messages?: ErrorMessage
-}
-
-const buildErrors = (error: Joi.ValidationError): FormErrors => {
+const buildErrors = (error: Joi.ValidationError): SearchValidationErrors => {
   const list: Array<{
     href: string
     text: string

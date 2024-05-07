@@ -53,7 +53,7 @@ describe('EQ Search Api Client', () => {
       .matchHeader('authorization', 'Bearer no_auth')
       .reply(200, searchResponse)
 
-    const result = await searchApiClient.search({ usn: 1234567 })
+    const result = await searchApiClient.search({ usn: '1234567' })
 
     expect(result).toEqual(searchResponse)
   })
