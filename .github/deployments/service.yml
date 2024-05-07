@@ -1,7 +1,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: laa-crime-equinity-historical-data-frontend-service
+  name: ${APP_NAME}-service
+  namespace: ${CP_NAMESPACE}
 spec:
   selector:
     app: laa-crime-equinity-historical-data-frontend # this should match the pod label in deployment.yml

@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: laa-crime-equinity-historical-data-frontend-deployment
+  name: ${APP_NAME}-deployment
+  namespace: ${CP_NAMESPACE}
   labels:
     app: laa-crime-equinity-historical-data-frontend
 spec:
@@ -15,8 +16,8 @@ spec:
         app: laa-crime-equinity-historical-data-frontend # this should match the selector in service.yml
     spec:
       containers:
-        - name: laa-crime-equinity-historical-data-frontend
-          image: $IMAGE_TAG
+        - name: eqmfrontend
+          image: ${IMAGE_NAME}
           ports:
             - containerPort: 3000
           securityContext:

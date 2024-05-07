@@ -26,6 +26,43 @@
                     errorMessage: errors.messages.supplierAccountNumber
                 }) }}
             </div>
+            <div class="govuk-grid-column-one-quarter">
+                {{ govukSelect({
+                    label: {
+                        text: "CRM type"
+                    },
+                    items: [
+                        {
+                            value: "chooseCrmType",
+                            text: "Choose CRM type",
+                            selected: true
+                        },
+                        {
+                            value: "1",
+                            text: "CRM 4"
+                        },
+                        {
+                            value: "4",
+                            text: "CRM 5"
+                        },
+                        {
+                            value: "5",
+                            text: "CRM 7"
+                        },
+                        {
+                            value: "6",
+                            text: "CRM 14"
+                        },
+                        {
+                            value: "7",
+                            text: "CRM 14 Post Submission Evidence"
+                        }
+                    ],
+                    id: "type",
+                    name: "type",
+                    value: formValues.type
+                }) }}
+            </div>
         </div>
 
         <div class="govuk-grid-row">

@@ -49,11 +49,11 @@ describe('EQ Search Api Client', () => {
 
     fakeRestClient
       .get('/api/internal/v1/equinity/search/')
-      .query({ usn: '1234567', pageSize: 10 })
+      .query({ usn: '1234567', page: 0, pageSize: 10 })
       .matchHeader('authorization', 'Bearer no_auth')
       .reply(200, searchResponse)
 
-    const result = await searchApiClient.search({ usn: '1234567' })
+    const result = await searchApiClient.search({ usn: '1234567', page: 0, pageSize: 10 })
 
     expect(result).toEqual(searchResponse)
   })
@@ -76,6 +76,7 @@ describe('EQ Search Api Client', () => {
       .get('/api/internal/v1/equinity/search/')
       .query({
         client: 'Jane Doe',
+        page: 0,
         pageSize: 10,
       })
       .matchHeader('authorization', `Bearer no_auth`)
@@ -83,6 +84,8 @@ describe('EQ Search Api Client', () => {
 
     const result = await searchApiClient.search({
       clientName: 'Jane Doe',
+      page: 0,
+      pageSize: 10,
     })
 
     expect(result).toEqual(searchResponse)
@@ -113,10 +116,12 @@ describe('EQ Search Api Client', () => {
       .get('/api/internal/v1/equinity/search/')
       .query({
         client: 'Jane Doe',
+        type: 'CRM5',
         clientDoB: '1960-01-01',
         providerAccount: '1234AB',
         submittedFrom: '2022-25-23',
         submittedTo: '2023-15-13',
+        page: 0,
         pageSize: 10,
       })
       .matchHeader('authorization', `Bearer no_auth`)
@@ -124,10 +129,13 @@ describe('EQ Search Api Client', () => {
 
     const result = await searchApiClient.search({
       clientName: 'Jane Doe',
+      type: 'CRM5',
       clientDOB: '1960-01-01',
       startDate: '2022-25-23',
       endDate: '2023-15-13',
       supplierAccountNumber: '1234AB',
+      page: 0,
+      pageSize: 10,
     })
 
     expect(result).toEqual(searchResponse)

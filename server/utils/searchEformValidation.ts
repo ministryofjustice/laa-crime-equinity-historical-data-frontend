@@ -31,7 +31,9 @@ const schema = Joi.object({
     'date.format': 'Client date of birth must be a valid date',
     'date.max': 'Client date of birth must be a valid date',
   }),
-  startDate: Joi.date().iso().optional().allow('').messages({ 'date.format': 'Start date must be a valid date' }),
+  startDate: Joi.date().iso().optional().allow('').messages({
+    'date.format': 'Start date must be a valid date',
+  }),
   endDate: Joi.date().iso().min(Joi.ref('startDate')).optional().allow('').messages({
     'date.format': 'End date must be a valid date',
     'date.min': 'Your End date cannot be earlier than your Start date',

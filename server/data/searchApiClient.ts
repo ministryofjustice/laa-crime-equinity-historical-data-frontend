@@ -16,14 +16,15 @@ export default class SearchApiClient {
       path: '/api/internal/v1/equinity/search/',
       headers: this.headers,
       query: {
-        pageSize: 10,
-        page: searchRequest.page ? searchRequest.page - 1 : undefined,
         usn: searchRequest.usn,
+        type: searchRequest.type,
         client: searchRequest.clientName,
         clientDoB: searchRequest.clientDOB,
         submittedFrom: searchRequest.startDate,
         submittedTo: searchRequest.endDate,
         providerAccount: searchRequest.supplierAccountNumber,
+        page: searchRequest.page,
+        pageSize: searchRequest.pageSize,
       },
     })
   }

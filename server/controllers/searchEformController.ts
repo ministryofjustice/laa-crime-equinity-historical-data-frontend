@@ -4,6 +4,8 @@ import SearchEformService from '../services/searchEformService'
 import validateSearchData, { SearchValidationErrors } from '../utils/searchEformValidation'
 import getPagination from '../utils/pagination'
 
+const SEARCH_PAGE_SIZE = 10
+
 export default class SearchEformController {
   constructor(private readonly searchEformService: SearchEformService) {}
 
@@ -14,8 +16,10 @@ export default class SearchEformController {
       } else {
         const queryValues = {
           usn: req.query.usn as string,
+          type: req.query.type as string,
           supplierAccountNumber: req.query.supplierAccountNumber as string,
           clientName: req.query.clientName as string,
+          clientDOB: req.query.clientDOB as string,
           startDate: req.query.startDate as string,
           endDate: req.query.endDate as string,
           page: req.query.page as string,
@@ -28,11 +32,14 @@ export default class SearchEformController {
         } else {
           const searchRequest = {
             usn: undefinedIfEmpty(queryValues.usn),
+            type: undefinedIfEmpty(queryValues.type),
             supplierAccountNumber: undefinedIfEmpty(queryValues.supplierAccountNumber),
             clientName: undefinedIfEmpty(queryValues.clientName),
+            clientDOB: undefinedIfEmpty(queryValues.clientDOB),
             startDate: undefinedIfEmpty(queryValues.startDate),
             endDate: undefinedIfEmpty(queryValues.endDate),
-            page: Number(queryValues.page),
+            page: Number(queryValues.page) - 1, // search api page number starts from 0
+            pageSize: SEARCH_PAGE_SIZE,
           }
 
           const searchResponse = await this.searchEformService.search(searchRequest)

@@ -74,7 +74,7 @@ describe('Search Eform Controller', () => {
         items: [
           {
             current: true,
-            href: '/search-eform?usn=123456789&page=1',
+            href: '/search-eform?usn=123456789&pageSize=10&page=1',
             number: 1,
           },
         ],
@@ -83,12 +83,14 @@ describe('Search Eform Controller', () => {
 
     expect(mockSearchEformService.search).toHaveBeenCalledWith({
       clientDOB: undefined,
+      type: undefined,
       clientName: undefined,
       endDate: undefined,
       startDate: undefined,
       supplierAccountNumber: undefined,
       usn: '123456789',
-      page: 1,
+      page: 0,
+      pageSize: 10,
     })
   })
 
@@ -118,6 +120,7 @@ describe('Search Eform Controller', () => {
         },
       },
       formValues: {
+        type: undefined,
         clientName: undefined,
         endDate: undefined,
         startDate: undefined,
@@ -165,7 +168,9 @@ describe('Search Eform Controller', () => {
         ],
       },
       formValues: {
+        type: undefined,
         clientName: undefined,
+        clientDOB: undefined,
         endDate: undefined,
         startDate: undefined,
         supplierAccountNumber: undefined,
@@ -175,12 +180,14 @@ describe('Search Eform Controller', () => {
     })
 
     expect(mockSearchEformService.search).toHaveBeenCalledWith({
+      type: undefined,
       clientName: undefined,
       endDate: undefined,
       startDate: undefined,
       supplierAccountNumber: undefined,
       usn: '8888888',
-      page: 1,
+      page: 0,
+      pageSize: 10,
     })
   })
 
