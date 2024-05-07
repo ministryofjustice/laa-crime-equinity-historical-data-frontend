@@ -1,6 +1,5 @@
 <div class="form-background govuk-!-padding-top-4 govuk-!-padding-left-4">
     <form action="/search-eform" method="POST">
-        <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
                 {{ govukInput({
@@ -108,6 +107,8 @@
             </div>
         </div>
         <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
                 {{ govukButton({
                     text: 'Search'
                 }) }}

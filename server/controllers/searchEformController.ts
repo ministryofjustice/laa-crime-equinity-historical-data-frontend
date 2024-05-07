@@ -14,7 +14,7 @@ export default class SearchEformController {
       if (!req.query.page) {
         res.render('pages/searchEform')
       } else {
-        const queryValues = {
+        const queryParams: Record<string, string> = {
           usn: req.query.usn as string,
           type: req.query.type as string,
           supplierAccountNumber: req.query.supplierAccountNumber as string,
@@ -25,36 +25,30 @@ export default class SearchEformController {
           page: req.query.page as string,
         }
 
-        const validationErrors = validateSearchData(queryValues)
+        const validationErrors = validateSearchData(queryParams)
 
         if (validationErrors) {
-          res.render('pages/searchEform', { results: [], errors: validationErrors, formValues: queryValues })
+          res.render('pages/searchEform', { results: [], errors: validationErrors, formValues: queryParams })
         } else {
-          const searchRequest = {
-            usn: undefinedIfEmpty(queryValues.usn),
-            type: undefinedIfEmpty(queryValues.type),
-            supplierAccountNumber: undefinedIfEmpty(queryValues.supplierAccountNumber),
-            clientName: undefinedIfEmpty(queryValues.clientName),
-            clientDOB: undefinedIfEmpty(queryValues.clientDOB),
-            startDate: undefinedIfEmpty(queryValues.startDate),
-            endDate: undefinedIfEmpty(queryValues.endDate),
-            page: Number(queryValues.page) - 1, // search api page number starts from 0
-            pageSize: SEARCH_PAGE_SIZE,
-          }
-
+          const searchRequest = buildSearchRequest(queryParams)
           const searchResponse = await this.searchEformService.search(searchRequest)
           if (searchResponse.error) {
             const searchErrors = getSearchErrors(searchResponse.error)
-            res.render('pages/searchEform', { results: [], errors: searchErrors, formValues: queryValues })
+            res.render('pages/searchEform', { results: [], errors: searchErrors, formValues: queryParams })
           } else {
             const { results, paging } = searchResponse
-            const baseLink = buildBaseLink(searchRequest)
-            const pagination = getPagination(paging.number + 1, paging.total, baseLink)
-            res.render('pages/searchEform', {
-              results,
-              itemsTotal: paging.itemsTotal,
-              pagination,
-            })
+            if (results && results.length === 0) {
+              const searchErrors = buildSearchValidationErrors('Something went wrong with the search')
+              res.render('pages/searchEform', { results: [], errors: searchErrors, formValues: queryParams })
+            } else {
+              const baseLink = buildBaseLink(searchRequest)
+              const pagination = getPagination(paging.number + 1, paging.total, baseLink)
+              res.render('pages/searchEform', {
+                results,
+                itemsTotal: paging.itemsTotal,
+                pagination,
+              })
+            }
           }
         }
       }
@@ -77,11 +71,15 @@ export default class SearchEformController {
 }
 
 const getSearchErrors = (error: SearchError): SearchValidationErrors => {
+  return buildSearchValidationErrors(getErrorMessage(error.status))
+}
+
+const buildSearchValidationErrors = (errorMessage: string): SearchValidationErrors => {
   return {
     list: [
       {
         href: '#',
-        text: getErrorMessage(error.status),
+        text: errorMessage,
       },
     ],
   }
@@ -96,6 +94,20 @@ const getErrorMessage = (errorStatus: number): string => {
       return 'No search result found'
     default:
       return 'Something went wrong with the search'
+  }
+}
+
+const buildSearchRequest = (queryParams: Record<string, string>): SearchRequest => {
+  return {
+    usn: undefinedIfEmpty(queryParams.usn),
+    type: undefinedIfEmpty(queryParams.type),
+    supplierAccountNumber: undefinedIfEmpty(queryParams.supplierAccountNumber),
+    clientName: undefinedIfEmpty(queryParams.clientName),
+    clientDOB: undefinedIfEmpty(queryParams.clientDOB),
+    startDate: undefinedIfEmpty(queryParams.startDate),
+    endDate: undefinedIfEmpty(queryParams.endDate),
+    page: Number(queryParams.page) - 1, // search api page number starts from 0
+    pageSize: SEARCH_PAGE_SIZE,
   }
 }
 

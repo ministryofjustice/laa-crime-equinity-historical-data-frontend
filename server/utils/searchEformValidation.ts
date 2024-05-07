@@ -41,8 +41,8 @@ const schema = Joi.object({
   page: Joi.number().min(1).optional().allow('').messages({ 'number.min': 'Invalid page specified' }),
 }).options({ allowUnknown: true, abortEarly: false })
 
-export default function validateSearchData(data: Record<string, string>): SearchValidationErrors | null {
-  if (isSearchDataEmpty(data)) {
+export default function validateSearchQuery(data: Record<string, string>): SearchValidationErrors | null {
+  if (isSearchQueryEmpty(data)) {
     return { list: [{ href: '#', text: 'Enter at least one search field' }] }
   }
 
@@ -54,8 +54,8 @@ export default function validateSearchData(data: Record<string, string>): Search
   return null
 }
 
-const isSearchDataEmpty = (searchData: Record<string, string>): boolean => {
-  return !Object.keys(searchData).some((key: string) => searchData[key] && searchData[key].length > 0)
+const isSearchQueryEmpty = (searchQuery: Record<string, string>): boolean => {
+  return !Object.keys(searchQuery).some((key: string) => searchQuery[key] && searchQuery[key].length > 0)
 }
 
 const buildErrors = (error: Joi.ValidationError): SearchValidationErrors => {

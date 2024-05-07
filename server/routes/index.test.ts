@@ -1,18 +1,11 @@
 import type { Express } from 'express'
 import request from 'supertest'
-import { SearchResponse } from '@searchEform'
 import { appWithAllRoutes } from './testutils/appSetup'
-import SearchEformService from '../services/searchEformService'
-
-jest.mock('../services/searchEformService')
 
 let app: Express
 
-let mockSearchEformService: jest.Mocked<SearchEformService>
-
 beforeEach(() => {
-  mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
-  app = appWithAllRoutes({ services: { searchEformService: mockSearchEformService } })
+  app = appWithAllRoutes({})
 })
 
 afterEach(() => {
@@ -41,29 +34,8 @@ describe('GET /search-eform', () => {
   })
 })
 
-xdescribe('POST /search-eform', () => {
-  it('should post search eForm and render results', () => {
-    const searchResponse = {
-      results: [
-        {
-          usn: 1234567,
-          type: 'CRM4',
-          clientName: 'John Doe',
-          originatedDate: '2022-25-23',
-          submittedDate: '2023-15-13',
-          providerAccount: '1234AB',
-        },
-      ],
-      paging: {
-        size: 10,
-        number: 0,
-        total: 1,
-        itemsPage: 10,
-        itemsTotal: 1,
-      },
-    }
-    mockSearchEformService.search.mockResolvedValue(searchResponse)
-
+describe('POST /search-eform', () => {
+  it('should post search eForm and redirect', () => {
     return request(app)
       .post('/search-eform')
       .send({
@@ -74,42 +46,11 @@ xdescribe('POST /search-eform', () => {
         startDate: '2022-11-01',
         endDate: '2023-11-02',
       })
-      .expect('Content-Type', /html/)
       .expect(res => {
-        expect(res.text).toContain('Search for a historical eForm')
-        expect(res.text).toContain('1234567')
-      })
-  })
-})
-
-xdescribe('GET /search-eform-results?page=1', () => {
-  it('should render search eForm page with search results', () => {
-    const searchResponse: SearchResponse = {
-      results: [
-        {
-          usn: 1234567,
-          type: 'CRM4',
-          clientName: 'John Doe',
-          originatedDate: '2022-25-23',
-          submittedDate: '2023-15-13',
-          providerAccount: '1234AB',
-        },
-      ],
-      paging: {
-        size: 10,
-        number: 0,
-        total: 1,
-        itemsPage: 10,
-        itemsTotal: 1,
-      },
-    }
-    mockSearchEformService.search.mockResolvedValue(searchResponse)
-
-    return request(app)
-      .get('/search-eform-results')
-      .expect('Content-Type', /html/)
-      .expect(res => {
-        expect(res.text).toContain('Search for a historical eForm')
+        expect(res.status).toEqual(302)
+        expect(res.headers.location).toEqual(
+          '/search-eform?page=1&usn=1234567&supplierAccountNumber=123&clientName=John%20Doe&startDate=2022-11-01&endDate=2023-11-02',
+        )
       })
   })
 })
