@@ -7,7 +7,7 @@ import SearchEformService from '../services/searchEformService'
 
 jest.mock('../services/searchEformService')
 
-xdescribe('Search Eform Controller', () => {
+describe('Search Eform Controller', () => {
   let mockSearchEformService: jest.Mocked<SearchEformService>
   let request: DeepMocked<Request>
   let response: DeepMocked<Response>
@@ -19,7 +19,7 @@ xdescribe('Search Eform Controller', () => {
     mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
   })
 
-  it('should render eform', async () => {
+  it('should render initial eform', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.show()
     await requestHandler(request, response, next)
@@ -27,7 +27,7 @@ xdescribe('Search Eform Controller', () => {
     expect(response.render).toHaveBeenCalledWith('pages/searchEform')
   })
 
-  it('should submit eform', async () => {
+  it('should render eform with search results', async () => {
     const searchResponse = {
       results: [
         {
@@ -50,9 +50,10 @@ xdescribe('Search Eform Controller', () => {
     mockSearchEformService.search.mockResolvedValue(searchResponse)
 
     const searchEformController = new SearchEformController(mockSearchEformService)
-    const requestHandler = searchEformController.submit()
-    request.body = {
+    const requestHandler = searchEformController.show()
+    request.query = {
       usn: '123456789',
+      page: '1',
     }
 
     await requestHandler(request, response, next)
@@ -73,7 +74,7 @@ xdescribe('Search Eform Controller', () => {
         items: [
           {
             current: true,
-            href: '/search-eform-results?usn=123456789&page=1',
+            href: '/search-eform?usn=123456789&page=1',
             number: 1,
           },
         ],
@@ -87,14 +88,16 @@ xdescribe('Search Eform Controller', () => {
       startDate: undefined,
       supplierAccountNumber: undefined,
       usn: '123456789',
+      page: 1,
     })
   })
 
-  it('should render submit eform field errors', async () => {
+  it('should render eform with field errors', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
-    const requestHandler = searchEformController.submit()
-    request.body = {
+    const requestHandler = searchEformController.show()
+    request.query = {
       usn: '1',
+      page: '1',
     }
 
     await requestHandler(request, response, next)
@@ -115,12 +118,12 @@ xdescribe('Search Eform Controller', () => {
         },
       },
       formValues: {
-        clientDOB: undefined,
         clientName: undefined,
         endDate: undefined,
         startDate: undefined,
         supplierAccountNumber: undefined,
         usn: '1',
+        page: '1',
       },
     })
 
@@ -132,7 +135,7 @@ xdescribe('Search Eform Controller', () => {
     ['Not authorised to search', 403],
     ['No search result found', 404],
     ['Something went wrong with the search', 500],
-  ])('should render submit eform api error "%s" for status %s', async (errorMessage, errorStatus) => {
+  ])('should render eform with errors for "%s" api error and status %s', async (errorMessage, errorStatus) => {
     const searchResponse: SearchResponse = {
       results: [],
       error: {
@@ -143,9 +146,10 @@ xdescribe('Search Eform Controller', () => {
     mockSearchEformService.search.mockResolvedValue(searchResponse)
 
     const searchEformController = new SearchEformController(mockSearchEformService)
-    const requestHandler = searchEformController.submit()
-    request.body = {
+    const requestHandler = searchEformController.show()
+    request.query = {
       usn: '8888888',
+      page: '1',
     }
 
     await requestHandler(request, response, next)
@@ -161,22 +165,34 @@ xdescribe('Search Eform Controller', () => {
         ],
       },
       formValues: {
-        clientDOB: undefined,
         clientName: undefined,
         endDate: undefined,
         startDate: undefined,
         supplierAccountNumber: undefined,
         usn: '8888888',
+        page: '1',
       },
     })
 
     expect(mockSearchEformService.search).toHaveBeenCalledWith({
-      clientDOB: undefined,
       clientName: undefined,
       endDate: undefined,
       startDate: undefined,
       supplierAccountNumber: undefined,
       usn: '8888888',
+      page: 1,
     })
+  })
+
+  it('should submit eform', async () => {
+    const searchEformController = new SearchEformController(mockSearchEformService)
+    const requestHandler = searchEformController.submit()
+    request.body = {
+      usn: '123456789',
+    }
+
+    await requestHandler(request, response, next)
+
+    expect(response.redirect).toHaveBeenCalledWith(302, '/search-eform?page=1&usn=123456789')
   })
 })

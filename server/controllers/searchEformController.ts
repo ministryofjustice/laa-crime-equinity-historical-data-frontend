@@ -8,7 +8,7 @@ export default class SearchEformController {
   constructor(private readonly searchEformService: SearchEformService) {}
 
   show(): RequestHandler {
-    return async (req: Request, res: Response) => {
+    return async (req: Request, res: Response): Promise<void> => {
       if (!req.query.page) {
         res.render('pages/searchEform')
       } else {
@@ -24,9 +24,9 @@ export default class SearchEformController {
         const validationErrors = validateSearchData(queryValues)
 
         if (validationErrors) {
-          res.render('pages/searchEform', { results: [], errors: validationErrors })
+          res.render('pages/searchEform', { results: [], errors: validationErrors, formValues: queryValues })
         } else {
-          const searchRequest: SearchRequest = {
+          const searchRequest = {
             usn: undefinedIfEmpty(queryValues.usn),
             supplierAccountNumber: undefinedIfEmpty(queryValues.supplierAccountNumber),
             clientName: undefinedIfEmpty(queryValues.clientName),
@@ -38,7 +38,7 @@ export default class SearchEformController {
           const searchResponse = await this.searchEformService.search(searchRequest)
           if (searchResponse.error) {
             const searchErrors = getSearchErrors(searchResponse.error)
-            res.render('pages/searchEform', { results: [], errors: searchErrors, queryValues })
+            res.render('pages/searchEform', { results: [], errors: searchErrors, formValues: queryValues })
           } else {
             const { results, paging } = searchResponse
             const baseLink = buildBaseLink(searchRequest)
@@ -55,7 +55,7 @@ export default class SearchEformController {
   }
 
   submit(): RequestHandler {
-    return async (req: Request, res: Response) => {
+    return async (req: Request, res: Response): Promise<void> => {
       const formValues = {
         usn: req.body.usn,
         supplierAccountNumber: req.body.supplierAccountNumber,
@@ -80,7 +80,7 @@ const getSearchErrors = (error: SearchError): SearchValidationErrors => {
   }
 }
 
-const getErrorMessage = (errorStatus: number) => {
+const getErrorMessage = (errorStatus: number): string => {
   switch (errorStatus) {
     case 401:
     case 403:
@@ -92,7 +92,7 @@ const getErrorMessage = (errorStatus: number) => {
   }
 }
 
-const buildBaseLink = (searchRequest: SearchRequest) => {
+const buildBaseLink = (searchRequest: SearchRequest): string => {
   return `/search-eform?${buildQueryString(searchRequest)}&`
 }
 
@@ -103,6 +103,6 @@ const buildQueryString = (params: { [key: string]: string | number }): string =>
     .join('&')
 }
 
-const undefinedIfEmpty = (field: string) => {
+const undefinedIfEmpty = (field: string): string => {
   return field && field.length > 0 ? field : undefined
 }
