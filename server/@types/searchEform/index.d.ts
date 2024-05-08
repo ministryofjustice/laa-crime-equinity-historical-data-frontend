@@ -5,6 +5,7 @@ type SearchResult = {
   originatedDate: string
   submittedDate: string
   providerAccount: string
+  status: string
 }
 
 type SearchError = {

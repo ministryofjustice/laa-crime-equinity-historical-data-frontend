@@ -49,7 +49,7 @@
                     {% set originatedDate = item.originatedDate %}
                     {% set submittedDate = item.submittedDate %}
                     {% set providerAccount = item.providerAccount %}
-                    {% set status = " " %}
+                    {% set status = item.status  %}
 
                     {%- set tableRow = [
                         { text: combined | safe },

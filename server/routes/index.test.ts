@@ -51,6 +51,7 @@ describe('POST /search-eform', () => {
           originatedDate: '2022-25-23',
           submittedDate: '2023-15-13',
           providerAccount: '1234AB',
+          status: 'Completed',
         },
       ],
     }

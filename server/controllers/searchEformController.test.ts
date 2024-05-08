@@ -37,6 +37,7 @@ describe('Search Eform Controller', () => {
           originatedDate: '2022-25-23',
           submittedDate: '2023-15-13',
           providerAccount: '1234AB',
+          status: 'Completed',
         },
       ],
     }
@@ -59,6 +60,7 @@ describe('Search Eform Controller', () => {
           originatedDate: '2022-25-23',
           submittedDate: '2023-15-13',
           providerAccount: '1234AB',
+          status: 'Completed',
         },
       ],
     })
