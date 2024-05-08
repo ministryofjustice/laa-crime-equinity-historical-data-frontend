@@ -71,7 +71,7 @@ jobs:
       - name: printing tags
         run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
 
-      - name: Authenticate to the cluster
+      - name: Authenticate to K8 Cluster
         run: |
           mkdir deployments
           cat ./.github/deployments/deployment.yml | envsubst > deployments/deployment.yml
@@ -83,7 +83,7 @@ jobs:
           NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           CP_NAMESPACE: "${{ env.APP_NAME }}-${{ env.APP_ENV }}"
-      - name: deploy to dev
+      - name: Deploy to K8 Cluster
         run: |
           echo "${{ secrets.KUBE_CERT }}" > ca.crt
           echo ${KUBE_NAMESPACE}
