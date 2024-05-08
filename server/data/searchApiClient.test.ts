@@ -116,7 +116,7 @@ describe('EQ Search Api Client', () => {
       .get('/api/internal/v1/equinity/search/')
       .query({
         client: 'Jane Doe',
-        type: 'CRM5',
+        type: 4,
         clientDoB: '1960-01-01',
         providerAccount: '1234AB',
         submittedFrom: '2022-25-23',
@@ -129,7 +129,7 @@ describe('EQ Search Api Client', () => {
 
     const result = await searchApiClient.search({
       clientName: 'Jane Doe',
-      type: 'CRM5',
+      type: 4,
       clientDOB: '1960-01-01',
       startDate: '2022-25-23',
       endDate: '2023-15-13',

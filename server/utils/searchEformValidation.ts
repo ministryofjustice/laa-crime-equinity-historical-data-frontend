@@ -18,6 +18,11 @@ const schema = Joi.object({
     'string.max': 'USN must be 10 digits or less',
     'string.pattern.base': 'USN must be numeric',
   }),
+  type: Joi.string()
+    .valid('1', '4', '5', '6', '7')
+    .optional()
+    .allow('')
+    .messages({ 'any.only': 'Invalid type specified' }),
   supplierAccountNumber: Joi.string().min(4).max(6).optional().allow('').messages({
     'string.min': 'Supplier account number must be at least 4 characters',
     'string.max': 'Supplier account number must be 6 characters or less',
@@ -38,7 +43,11 @@ const schema = Joi.object({
     'date.format': 'End date must be a valid date',
     'date.min': 'Your End date cannot be earlier than your Start date',
   }),
-  page: Joi.number().min(1).optional().allow('').messages({ 'number.min': 'Invalid page specified' }),
+  page: Joi.number()
+    .min(1)
+    .optional()
+    .allow('')
+    .messages({ 'number.min': 'Invalid page specified', 'number.base': 'Invalid page specified' }),
 }).options({ allowUnknown: true, abortEarly: false })
 
 export default function validateSearchQuery(data: Record<string, string>): SearchValidationErrors | null {

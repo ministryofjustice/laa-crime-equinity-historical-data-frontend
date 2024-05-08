@@ -59,6 +59,7 @@ export default class SearchEformController {
     return async (req: Request, res: Response): Promise<void> => {
       const formValues = {
         usn: req.body.usn,
+        type: req.body.type,
         supplierAccountNumber: req.body.supplierAccountNumber,
         clientName: req.body.clientName,
         startDate: req.body.startDate,
@@ -100,7 +101,7 @@ const getErrorMessage = (errorStatus: number): string => {
 const buildSearchRequest = (queryParams: Record<string, string>): SearchRequest => {
   return {
     usn: undefinedIfEmpty(queryParams.usn),
-    type: undefinedIfEmpty(queryParams.type),
+    type: undefinedIfEmpty(queryParams.type) && Number(queryParams.type),
     supplierAccountNumber: undefinedIfEmpty(queryParams.supplierAccountNumber),
     clientName: undefinedIfEmpty(queryParams.clientName),
     clientDOB: undefinedIfEmpty(queryParams.clientDOB),
