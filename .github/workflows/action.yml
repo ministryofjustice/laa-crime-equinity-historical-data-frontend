@@ -192,7 +192,7 @@ jobs:
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
 
-deploy-prod:
+  deploy-prod:
     runs-on: ubuntu-latest
     needs: deploy-staging
     environment: prod
