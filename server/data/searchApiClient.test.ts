@@ -36,6 +36,7 @@ describe('EQ Search Api Client', () => {
           originatedDate: '2023-09-17',
           submittedDate: '2023-15-13',
           providerAccount: '1234AB',
+          status: 'Completed',
         },
       ],
       paging: {
@@ -68,6 +69,7 @@ describe('EQ Search Api Client', () => {
           originatedDate: '2022-25-21',
           submittedDate: '2023-11-13',
           providerAccount: '1234AB',
+          status: 'Completed',
         },
       ],
     }
@@ -101,6 +103,7 @@ describe('EQ Search Api Client', () => {
           originatedDate: '2022-25-21',
           submittedDate: '2023-11-13',
           providerAccount: '1234AB',
+          status: 'Completed',
         },
       ],
       paging: {

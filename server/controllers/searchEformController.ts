@@ -66,7 +66,8 @@ export default class SearchEformController {
         endDate: req.body.endDate,
       }
       const queryString = buildQueryString(formValues)
-      res.redirect(302, `/search-eform?page=1&${queryString}`)
+      const url = queryString.length > 0 ? `&${queryString}` : ''
+      res.redirect(302, `/search-eform?page=1${url}`)
     }
   }
 }

@@ -37,6 +37,7 @@ describe('Search Eform Controller', () => {
           originatedDate: '2022-25-23',
           submittedDate: '2023-15-13',
           providerAccount: '1234AB',
+          status: 'Completed',
         },
       ],
       paging: {
@@ -67,6 +68,7 @@ describe('Search Eform Controller', () => {
           originatedDate: '2022-25-23',
           submittedDate: '2023-15-13',
           providerAccount: '1234AB',
+          status: 'Completed',
         },
       ],
       itemsTotal: 1,
@@ -126,6 +128,40 @@ describe('Search Eform Controller', () => {
         startDate: undefined,
         supplierAccountNumber: undefined,
         usn: '1',
+        page: '1',
+      },
+    })
+
+    expect(mockSearchEformService.search).not.toHaveBeenCalled()
+  })
+
+  it('should render eform with error when empty form submitted', async () => {
+    const searchEformController = new SearchEformController(mockSearchEformService)
+    const requestHandler = searchEformController.show()
+    request.query = {
+      page: '1',
+    }
+
+    await requestHandler(request, response, next)
+
+    expect(response.render).toHaveBeenCalledWith('pages/searchEform', {
+      results: [],
+      errors: {
+        list: [
+          {
+            href: '#',
+            text: 'Enter at least one search field',
+          },
+        ],
+      },
+      formValues: {
+        type: undefined,
+        clientDOB: undefined,
+        clientName: undefined,
+        endDate: undefined,
+        startDate: undefined,
+        supplierAccountNumber: undefined,
+        usn: undefined,
         page: '1',
       },
     })

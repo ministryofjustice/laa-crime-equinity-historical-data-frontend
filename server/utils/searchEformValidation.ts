@@ -64,7 +64,10 @@ export default function validateSearchQuery(data: Record<string, string>): Searc
 }
 
 const isSearchQueryEmpty = (searchQuery: Record<string, string>): boolean => {
-  return !Object.keys(searchQuery).some((key: string) => searchQuery[key] && searchQuery[key].length > 0)
+  // ignore page query parameter
+  return !Object.keys(searchQuery).some(
+    (key: string) => key !== 'page' && searchQuery[key] && searchQuery[key].length > 0,
+  )
 }
 
 const buildErrors = (error: Joi.ValidationError): SearchValidationErrors => {

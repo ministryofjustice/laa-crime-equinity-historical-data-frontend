@@ -51,8 +51,6 @@ describe('Search Eform Validation', () => {
     ['Client date of birth must be a valid date', 'clientDOB', `${new Date().getFullYear() + 1}-01-01`], // future date
     ['Start date must be a valid date', 'startDate', '5555-55-55'],
     ['End date must be a valid date', 'endDate', '5555-55-55'],
-    ['Invalid page specified', 'page', '0'],
-    ['Invalid page specified', 'page', 'w'],
   ])('should return "%s" error for %s = %s', (errorMessage: string, fieldName: string, fieldValue: string) => {
     const formData = {
       [fieldName]: fieldValue,
@@ -65,6 +63,32 @@ describe('Search Eform Validation', () => {
         {
           href: `#${fieldName}`,
           text: errorMessage,
+        },
+      ],
+      messages: {
+        [fieldName]: {
+          text: errorMessage,
+        },
+      },
+    })
+  })
+
+  it.each([
+    ['Invalid page specified', 'page', '0'],
+    ['Invalid page specified', 'page', 'w'],
+  ])('should return "%s" error for %s = %s', (errorMessage: string, fieldName: string, fieldValue: string) => {
+    const formData = {
+      [fieldName]: fieldValue,
+      usn: '123456789',
+    }
+
+    const result = validateSearchEform(formData)
+
+    expect(result).toEqual({
+      list: [
+        {
+          href: '#page',
+          text: 'Invalid page specified',
         },
       ],
       messages: {
