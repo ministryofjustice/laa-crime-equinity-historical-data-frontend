@@ -1,11 +1,28 @@
 import Joi from 'joi'
 
+type ErrorMessage = Record<string, { text: string }>
+
+type ErrorSummary = {
+  href: string
+  text: string
+}
+
+export type SearchValidationErrors = {
+  list: Array<ErrorSummary>
+  messages?: ErrorMessage
+}
+
 const schema = Joi.object({
   usn: Joi.string().pattern(/^\d+$/).min(4).max(10).optional().allow('').messages({
     'string.min': 'USN must be at least 4 digits',
     'string.max': 'USN must be 10 digits or less',
     'string.pattern.base': 'USN must be numeric',
   }),
+  type: Joi.string()
+    .valid('1', '4', '5', '6', '7')
+    .optional()
+    .allow('')
+    .messages({ 'any.only': 'Invalid type specified' }),
   supplierAccountNumber: Joi.string().min(4).max(6).optional().allow('').messages({
     'string.min': 'Supplier account number must be at least 4 characters',
     'string.max': 'Supplier account number must be 6 characters or less',
@@ -26,14 +43,19 @@ const schema = Joi.object({
     'date.format': 'End date must be a valid date',
     'date.min': 'Your End date cannot be earlier than your Start date',
   }),
+  page: Joi.number()
+    .min(1)
+    .optional()
+    .allow('')
+    .messages({ 'number.min': 'Invalid page specified', 'number.base': 'Invalid page specified' }),
 }).options({ allowUnknown: true, abortEarly: false })
 
-export default function validateSearchEform(formData: Record<string, string>) {
-  if (isFormEmpty(formData)) {
+export default function validateSearchQuery(data: Record<string, string>): SearchValidationErrors | null {
+  if (isSearchQueryEmpty(data)) {
     return { list: [{ href: '#', text: 'Enter at least one search field' }] }
   }
 
-  const { error } = schema.validate(formData)
+  const { error } = schema.validate(data)
   if (error?.details) {
     return buildErrors(error)
   }
@@ -41,23 +63,11 @@ export default function validateSearchEform(formData: Record<string, string>) {
   return null
 }
 
-const isFormEmpty = (formData: Record<string, string>) => {
-  return !Object.keys(formData).some((key: string) => formData[key].length > 0)
+const isSearchQueryEmpty = (searchQuery: Record<string, string>): boolean => {
+  return !Object.keys(searchQuery).some((key: string) => searchQuery[key] && searchQuery[key].length > 0)
 }
 
-export type ErrorSummary = {
-  href: string
-  text: string
-}
-
-type ErrorMessage = Record<string, { text: string }>
-
-export type FormErrors = {
-  list: Array<ErrorSummary>
-  messages?: ErrorMessage
-}
-
-const buildErrors = (error: Joi.ValidationError): FormErrors => {
+const buildErrors = (error: Joi.ValidationError): SearchValidationErrors => {
   const list: Array<{
     href: string
     text: string

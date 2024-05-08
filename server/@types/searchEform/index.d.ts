@@ -14,17 +14,28 @@ type SearchError = {
 }
 
 type SearchRequest = {
-  usn?: number
-  type?: string
+  usn?: string
+  type?: number
   clientName?: string
   clientDOB?: string
   startDate?: string
   endDate?: string
   supplierAccountNumber?: string
+  pageSize: number
+  page: number
+}
+
+type SearchPaging = {
+  size: number
+  number: number
+  total: number
+  itemsPage: number
+  itemsTotal: number
 }
 
 type SearchResponse = {
   results: Array<SearchResult>
+  paging?: SearchPaging
   error?: SearchError
 }
 
