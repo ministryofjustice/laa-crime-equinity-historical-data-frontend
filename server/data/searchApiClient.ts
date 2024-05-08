@@ -15,27 +15,17 @@ export default class SearchApiClient {
     return SearchApiClient.restClient('no_auth').get<SearchResponse>({
       path: '/api/internal/v1/equinity/search/',
       headers: this.headers,
-      query: createSearchQuery(searchRequest),
+      query: {
+        usn: searchRequest.usn,
+        type: searchRequest.type,
+        client: searchRequest.clientName,
+        clientDoB: searchRequest.clientDOB,
+        submittedFrom: searchRequest.startDate,
+        submittedTo: searchRequest.endDate,
+        providerAccount: searchRequest.supplierAccountNumber,
+        page: searchRequest.page,
+        pageSize: searchRequest.pageSize,
+      },
     })
   }
-}
-
-const createSearchQuery = (searchRequest: SearchRequest) => {
-  if (searchRequest.usn) {
-    return {
-      usn: searchRequest.usn,
-    }
-  }
-  return {
-    type: undefinedIfEmpty(searchRequest.type),
-    client: undefinedIfEmpty(searchRequest.clientName),
-    clientDoB: undefinedIfEmpty(searchRequest.clientDOB),
-    submittedFrom: undefinedIfEmpty(searchRequest.startDate),
-    submittedTo: undefinedIfEmpty(searchRequest.endDate),
-    providerAccount: undefinedIfEmpty(searchRequest.supplierAccountNumber),
-  }
-}
-
-const undefinedIfEmpty = (field: string) => {
-  return field && field.length > 0 ? field : undefined
 }

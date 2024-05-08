@@ -42,6 +42,8 @@ describe('Search Eform Validation', () => {
     ['USN must be numeric', 'usn', 'abcd'],
     ['USN must be at least 4 digits', 'usn', '12'],
     ['USN must be 10 digits or less', 'usn', '123456789012'],
+    ['Invalid type specified', 'type', 'w'],
+    ['Invalid type specified', 'type', '99'],
     ['Supplier account number must be at least 4 characters', 'supplierAccountNumber', '12A'],
     ['Supplier account number must be 6 characters or less', 'supplierAccountNumber', '1234ABC'],
     ['Client name must be at least 3 characters', 'clientName', 'J'],
@@ -49,6 +51,8 @@ describe('Search Eform Validation', () => {
     ['Client date of birth must be a valid date', 'clientDOB', `${new Date().getFullYear() + 1}-01-01`], // future date
     ['Start date must be a valid date', 'startDate', '5555-55-55'],
     ['End date must be a valid date', 'endDate', '5555-55-55'],
+    ['Invalid page specified', 'page', '0'],
+    ['Invalid page specified', 'page', 'w'],
   ])('should return "%s" error for %s = %s', (errorMessage: string, fieldName: string, fieldValue: string) => {
     const formData = {
       [fieldName]: fieldValue,
