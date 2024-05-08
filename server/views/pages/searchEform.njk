@@ -40,10 +40,21 @@
 
             {% include "components/searchEformBox.njk" %}
 
+
             {% if results | length %}
 
                 {% for item in results %}
-                    {% set clientName = '<a href="#" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-body-m govuk-!-font-weight-bold">' + item.clientName | lower | capitalize  + '</a>' %}
+
+                    {# Temporary hard-coded links - will come from BE api when available #}
+                    {% set crmLink %}
+                      {% if item.type == 'CRM5' %}
+                         /crm5
+                      {% else %}
+                         /
+                      {% endif %}
+                    {% endset %}
+
+                    {% set clientName = '<a href=' + crmLink + '" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-body-m govuk-!-font-weight-bold">' + item.clientName | lower | capitalize  + '</a>' %}
                     {% set usn = '<div class="first-column-usn govuk-body-s govuk-!-margin-bottom-2 govuk-!-margin-top-1">' + item.usn + '</div>' %}
                     {% set combined = clientName + usn %}
                     {% set type = item.type %}
