@@ -119,18 +119,6 @@ jobs:
       - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
 
-      - name: Build and push docker image
-        uses: docker/build-push-action@v5
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-        with:
-          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
-          push: true
-
-      - name: printing tags
-        run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
-
       - name: Authenticate to K8 Cluster
         run: |
           mkdir deployments
