@@ -101,7 +101,7 @@ jobs:
   
   deploy-staging:
     # TODO (EMP-000): remove if condition after dev deployment is working
-    if: ${{ 'remove later' == 'success' }}
+#    if: ${{ 'remove later' == 'success' }}
     ###
     runs-on: ubuntu-latest
     needs: deploy-dev
@@ -121,19 +121,19 @@ jobs:
           aws-region: ${{ vars.ECR_REGION }}
       - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
-      - name: Build and push docker image
-        uses: docker/build-push-action@v5
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
-        with:
-          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
-          push: true
+#      - name: Build and push docker image
+#        uses: docker/build-push-action@v5
+#        env:
+#          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+#          IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
+#        with:
+#          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
+#          push: true
 
-      - name: printing tags
-        run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
-      - name: Authenticate to the cluster
+#      - name: printing tags
+#        run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
+      - name: Authenticate to the K8 cluster
         run: |
           mkdir deployments
           cat ./.github/deployments/deployment.yml | envsubst > deployments/deployment.yml
@@ -146,7 +146,7 @@ jobs:
           NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           CP_NAMESPACE: "${{ env.APP_NAME }}-${{ env.APP_ENV }}"
 
-      - name: deploy to staging
+      - name: Deploy to K8 Cluster
         run: |
           echo "${{ secrets.KUBE_CERT }}" > ca.crt
           echo ${{ secrets.KUBE_NAMESPACE }}
