@@ -55,6 +55,17 @@ describe('POST /search-eform', () => {
   })
 })
 
+describe('GET /crm5', () => {
+  it('should render crm5 page', () => {
+    return request(app)
+      .get('/crm5')
+      .expect('Content-Type', /html/)
+      .expect(res => {
+        expect(res.text).toContain('CRM5')
+      })
+  })
+})
+
 describe('GET /generate-report', () => {
   it('should render generate report page', () => {
     return request(app)
