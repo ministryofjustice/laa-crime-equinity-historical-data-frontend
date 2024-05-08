@@ -118,7 +118,11 @@ const buildBaseLink = (searchRequest: SearchRequest): string => {
 
 const buildQueryString = (params: { [key: string]: string | number }): string => {
   return Object.keys(params)
-    .map(key => (params[key] && key !== 'page' ? `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}` : ''))
+    .map(key =>
+      params[key] && key !== 'page' && key !== 'pageSize'
+        ? `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
+        : '',
+    )
     .filter(Boolean)
     .join('&')
 }
