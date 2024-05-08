@@ -135,6 +135,40 @@ describe('Search Eform Controller', () => {
     expect(mockSearchEformService.search).not.toHaveBeenCalled()
   })
 
+  it('should render eform with error when empty form submitted', async () => {
+    const searchEformController = new SearchEformController(mockSearchEformService)
+    const requestHandler = searchEformController.show()
+    request.query = {
+      page: '1',
+    }
+
+    await requestHandler(request, response, next)
+
+    expect(response.render).toHaveBeenCalledWith('pages/searchEform', {
+      results: [],
+      errors: {
+        list: [
+          {
+            href: '#',
+            text: 'Enter at least one search field',
+          },
+        ],
+      },
+      formValues: {
+        type: undefined,
+        clientDOB: undefined,
+        clientName: undefined,
+        endDate: undefined,
+        startDate: undefined,
+        supplierAccountNumber: undefined,
+        usn: undefined,
+        page: '1',
+      },
+    })
+
+    expect(mockSearchEformService.search).not.toHaveBeenCalled()
+  })
+
   it.each([
     ['Not authorised to search', 401],
     ['Not authorised to search', 403],
