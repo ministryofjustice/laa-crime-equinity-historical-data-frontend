@@ -1,5 +1,3 @@
-import { EqApiError } from '@eqApi'
-
 type SearchResult = {
   usn: number
   type: string
@@ -8,6 +6,11 @@ type SearchResult = {
   submittedDate: string
   providerAccount: string
   status: string
+}
+
+type SearchError = {
+  status: number
+  message: string
 }
 
 type SearchRequest = {
@@ -33,7 +36,7 @@ type SearchPaging = {
 type SearchResponse = {
   results: Array<SearchResult>
   paging?: SearchPaging
-  error?: EqApiError
+  error?: SearchError
 }
 
-export type { SearchRequest, SearchResponse }
+export type { SearchRequest, SearchResponse, SearchError }

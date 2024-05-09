@@ -42,5 +42,8 @@ const successResponse = (): Crm5Response => {
       firmContactName: 'Some Firm',
       firmSolicitorName: 'Some Solicitor',
     },
+    StatementOfCase: 'Statement Of Case',
+    DetailsOfWorkCompleted: 'Some Details of Work Completed',
+    DetailsOfApplication: 'Some Details of Application',
   }
 }

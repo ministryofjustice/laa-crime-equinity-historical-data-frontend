@@ -117,6 +117,9 @@ describe('GET /crm5', () => {
         firmContactName: 'Some Firm',
         firmSolicitorName: 'Some Solicitor',
       },
+      StatementOfCase: 'Statement Of Case',
+      DetailsOfWorkCompleted: 'Some Details of Work Completed',
+      DetailsOfApplication: 'Some Details of Application',
     }
     mockCrm5Service.getCrm5.mockResolvedValue(crm5Response)
 
