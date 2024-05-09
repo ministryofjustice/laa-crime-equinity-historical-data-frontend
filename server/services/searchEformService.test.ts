@@ -1,8 +1,8 @@
 import SearchEformService from './searchEformService'
-import SearchApiClient from '../data/searchApiClient'
+import SearchApiClient from '../data/api/searchApiClient'
 import { SanitisedError } from '../sanitisedError'
 
-jest.mock('../data/searchApiClient')
+jest.mock('../data/api/searchApiClient')
 
 describe('Search Eform Service', () => {
   let mockSearchApiClient: jest.Mocked<SearchApiClient>

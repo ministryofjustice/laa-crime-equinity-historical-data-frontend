@@ -20,6 +20,8 @@
       "@badeball/cypress-cucumber-preprocessor/*": [
         "./node_modules/@badeball/cypress-cucumber-preprocessor/dist/subpath-entrypoints/*"
       ],
+      "@crm5": ["./server/@types/crm5/index.d.ts"],
+      "@eqApi": ["./server/@types/eqApi/index.d.ts"],
       "@searchEform": ["./server/@types/searchEform/index.d.ts"]
     }
   },

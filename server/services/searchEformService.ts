@@ -1,5 +1,5 @@
 import type { SearchRequest, SearchResponse } from '@searchEform'
-import SearchApiClient from '../data/searchApiClient'
+import SearchApiClient from '../data/api/searchApiClient'
 import { SanitisedError } from '../sanitisedError'
 import logger from '../../logger'
 

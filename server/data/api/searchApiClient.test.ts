@@ -1,13 +1,13 @@
 import nock from 'nock'
 import SearchApiClient from './searchApiClient'
-import config from '../config'
+import config from '../../config'
 
 describe('EQ Search Api Client', () => {
   let fakeRestClient: nock.Scope
   let searchApiClient: SearchApiClient
 
   beforeEach(() => {
-    fakeRestClient = nock(config.apis.eqSearchApi.url)
+    fakeRestClient = nock(config.apis.eqApi.url)
     searchApiClient = new SearchApiClient({
       'EQ-API-CLIENT-ID': 'some-client-id',
       'EQ-API-SECRET': 'some-secret',
