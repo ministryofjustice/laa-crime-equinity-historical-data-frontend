@@ -1,5 +1,5 @@
 import type { Request, RequestHandler, Response } from 'express'
-import { SearchRequest, SearchError } from '@searchEform'
+import type { SearchRequest, SearchError } from '@searchEform'
 import SearchEformService from '../services/searchEformService'
 import validateSearchData, { SearchValidationErrors } from '../utils/searchEformValidation'
 import getPagination from '../utils/pagination'

@@ -120,7 +120,7 @@ type AllCosts = {
 
 type CaseHistory = {
   summary: string
-  addtionalInfo: string // typo from BE
+  addtionalInfo: string // typo from BE, awaiting fix
 }
 
 type Solicitor = {

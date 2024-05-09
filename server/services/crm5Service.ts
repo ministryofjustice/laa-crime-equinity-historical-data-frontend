@@ -1,4 +1,4 @@
-import { Crm5Response } from '@crm5'
+import type { Crm5Response } from '@crm5'
 import Crm5ApiClient from '../data/api/crm5ApiClient'
 
 export default class Crm5Service {
