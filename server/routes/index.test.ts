@@ -102,22 +102,20 @@ describe('POST /search-eform', () => {
 describe('GET /crm5', () => {
   it('should render crm5 page', () => {
     const crm5Response = {
-      data: {
-        usn: 1234567,
-        hasPreviousApplication: 'No',
-        previousApplicationRef: '',
-        appealedPrevDecision: 'No',
-        appealedPrevDecisionDetails: '',
-        urgent: 'Yes',
-        urgencyReason: 'Urgent',
-        Firm: {
-          firmAddress: '1 Some Lane',
-          firmName: 'ABC Firm',
-          firmPhone: '123456789',
-          firmSupplierNo: '1234AB',
-          firmContactName: 'Some Firm',
-          firmSolicitorName: 'Some Solicitor',
-        },
+      usn: 1234567,
+      hasPreviousApplication: 'No',
+      previousApplicationRef: '',
+      appealedPrevDecision: 'No',
+      appealedPrevDecisionDetails: '',
+      urgent: 'Yes',
+      urgencyReason: 'Urgent',
+      Firm: {
+        firmAddress: '1 Some Lane',
+        firmName: 'ABC Firm',
+        firmPhone: '123456789',
+        firmSupplierNo: '1234AB',
+        firmContactName: 'Some Firm',
+        firmSolicitorName: 'Some Solicitor',
       },
     }
     mockCrm5Service.getCrm5.mockResolvedValue(crm5Response)

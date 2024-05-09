@@ -1,5 +1,3 @@
-import { EqApiError } from '@eqApi'
-
 type Firm = {
   firmAddress: string
   firmName: string
@@ -9,7 +7,7 @@ type Firm = {
   firmSolicitorName: string
 }
 
-type Crm5Data = {
+export type Crm5Response = {
   usn: number
   hasPreviousApplication: string
   previousApplicationRef: string
@@ -18,9 +16,4 @@ type Crm5Data = {
   urgent: string
   urgencyReason: string
   Firm: Firm
-}
-
-export type Crm5Response = {
-  data: Crm5Data
-  error?: EqApiError
 }

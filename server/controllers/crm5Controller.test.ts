@@ -1,6 +1,5 @@
 import type { Request, Response, NextFunction } from 'express'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
-import { Crm5Response } from '@crm5'
 import Crm5Controller from './crm5Controller'
 import Crm5Service from '../services/crm5Service'
 
@@ -20,51 +19,32 @@ describe('CRM5 Controller', () => {
 
   it('should render CRM5 page', async () => {
     const crm5Response = {
+      usn: 1234567,
+      hasPreviousApplication: 'No',
+      previousApplicationRef: '',
+      appealedPrevDecision: 'No',
+      appealedPrevDecisionDetails: '',
+      urgent: 'Yes',
+      urgencyReason: 'Urgent',
+      Firm: {
+        firmAddress: '1 Some Lane',
+        firmName: 'ABC Firm',
+        firmPhone: '123456789',
+        firmSupplierNo: '1234AB',
+        firmContactName: 'Some Firm',
+        firmSolicitorName: 'Some Solicitor',
+      },
+    }
+
+    mockCrm5Service.getCrm5.mockResolvedValue(crm5Response)
+    const crm5Controller = new Crm5Controller(mockCrm5Service)
+    const requestHandler = crm5Controller.show()
+    await requestHandler(request, response, next)
+
+    expect(response.render).toHaveBeenCalledWith('pages/crmDetails', {
+      title: 'CRM5',
       data: {
-        usn: 1234567,
-        hasPreviousApplication: 'No',
-        previousApplicationRef: '',
-        appealedPrevDecision: 'No',
-        appealedPrevDecisionDetails: '',
-        urgent: 'Yes',
-        urgencyReason: 'Urgent',
-        Firm: {
-          firmAddress: '1 Some Lane',
-          firmName: 'ABC Firm',
-          firmPhone: '123456789',
-          firmSupplierNo: '1234AB',
-          firmContactName: 'Some Firm',
-          firmSolicitorName: 'Some Solicitor',
-        },
-      },
-    }
-
-    mockCrm5Service.getCrm5.mockResolvedValue(crm5Response)
-    const crm5Controller = new Crm5Controller(mockCrm5Service)
-    const requestHandler = crm5Controller.show()
-    await requestHandler(request, response, next)
-
-    expect(response.render).toHaveBeenCalledWith('pages/crm5', crm5Response)
-  })
-
-  it('should render CRM5 page with errors', async () => {
-    const crm5Response: Crm5Response = {
-      data: null,
-      error: {
-        status: 500,
-        message: 'Some error',
-      },
-    }
-
-    mockCrm5Service.getCrm5.mockResolvedValue(crm5Response)
-    const crm5Controller = new Crm5Controller(mockCrm5Service)
-    const requestHandler = crm5Controller.show()
-    await requestHandler(request, response, next)
-
-    expect(response.render).toHaveBeenCalledWith('pages/crm5', {
-      errors: {
-        status: 500,
-        message: 'Some error',
+        ...crm5Response,
       },
     })
   })

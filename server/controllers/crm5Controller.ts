@@ -8,8 +8,7 @@ export default class Crm5Controller {
     return async (req: Request, res: Response): Promise<void> => {
       const usn = Number(req.query.usn)
       const crm5Response = await this.crm5Service.getCrm5(usn)
-      const renderOptions = crm5Response.error ? { errors: crm5Response.error } : { data: crm5Response.data }
-      res.render('pages/crm5', renderOptions)
+      res.render('pages/crmDetails', { title: 'CRM5', data: crm5Response })
     }
   }
 }
