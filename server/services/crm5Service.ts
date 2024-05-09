@@ -10,7 +10,7 @@ export default class Crm5Service {
     try {
       return await this.crm5ApiClient.getCrm5(usn)
     } catch (error) {
-      logger.error('Failed to call search API', error)
+      logger.error('Failed to call CRM5 API', error)
       return addErrorsToResponse(error)
     }
   }

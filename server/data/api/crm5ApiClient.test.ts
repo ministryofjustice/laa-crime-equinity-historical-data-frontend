@@ -19,7 +19,25 @@ describe('CRM5 Client', () => {
   })
 
   it('should return CRM5 for given usn', async () => {
-    const crm5Response = {}
+    const crm5Response = {
+      data: {
+        usn: 1234567,
+        hasPreviousApplication: 'No',
+        previousApplicationRef: '',
+        appealedPrevDecision: 'No',
+        appealedPrevDecisionDetails: '',
+        urgent: 'Yes',
+        urgencyReason: 'Urgent',
+        Firm: {
+          firmAddress: '1 Some Lane',
+          firmName: 'ABC Firm',
+          firmPhone: '123456789',
+          firmSupplierNo: '1234AB',
+          firmContactName: 'Some Firm',
+          firmSolicitorName: 'Some Solicitor',
+        },
+      },
+    }
 
     fakeRestClient
       .get('/api/internal/v1/equinity/crm5/1234567')

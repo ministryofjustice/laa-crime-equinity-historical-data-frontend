@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from 'express'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
+import { Crm5Response } from '@crm5'
 import Crm5Controller from './crm5Controller'
 import Crm5Service from '../services/crm5Service'
 
@@ -44,5 +45,27 @@ describe('CRM5 Controller', () => {
     await requestHandler(request, response, next)
 
     expect(response.render).toHaveBeenCalledWith('pages/crm5', crm5Response)
+  })
+
+  it('should render CRM5 page with errors', async () => {
+    const crm5Response: Crm5Response = {
+      data: null,
+      error: {
+        status: 500,
+        message: 'Some error',
+      },
+    }
+
+    mockCrm5Service.getCrm5.mockResolvedValue(crm5Response)
+    const crm5Controller = new Crm5Controller(mockCrm5Service)
+    const requestHandler = crm5Controller.show()
+    await requestHandler(request, response, next)
+
+    expect(response.render).toHaveBeenCalledWith('pages/crm5', {
+      errors: {
+        status: 500,
+        message: 'Some error',
+      },
+    })
   })
 })

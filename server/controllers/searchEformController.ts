@@ -1,5 +1,6 @@
 import type { Request, RequestHandler, Response } from 'express'
-import { type SearchError, SearchRequest } from '@searchEform'
+import type { EqApiError } from '@eqApi'
+import { SearchRequest } from '@searchEform'
 import SearchEformService from '../services/searchEformService'
 import validateSearchData, { SearchValidationErrors } from '../utils/searchEformValidation'
 import getPagination from '../utils/pagination'
@@ -72,7 +73,7 @@ export default class SearchEformController {
   }
 }
 
-const getSearchErrors = (error: SearchError): SearchValidationErrors => {
+const getSearchErrors = (error: EqApiError): SearchValidationErrors => {
   return buildSearchValidationErrors(getErrorMessage(error.status))
 }
 
