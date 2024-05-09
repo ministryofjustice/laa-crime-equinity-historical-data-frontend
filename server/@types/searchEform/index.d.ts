@@ -39,4 +39,4 @@ type SearchResponse = {
   error?: SearchError
 }
 
-export type { SearchResult, SearchError, SearchRequest, SearchResponse }
+export type { SearchRequest, SearchResponse, SearchError }

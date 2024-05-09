@@ -1,11 +1,12 @@
 import type { Services } from '../services'
-import SearchEformController from './searchEformController'
 import Crm5Controller from './crm5Controller'
+import SearchEformController from './searchEformController'
 
 export const controllers = (services: Services) => {
+  const crm5Controller = new Crm5Controller(services.crm5Service)
   const searchEformController = new SearchEformController(services.searchEformService)
-  const crm5Controller = new Crm5Controller()
-  return { searchEformController, crm5Controller }
+
+  return { crm5Controller, searchEformController }
 }
 
 export type Controllers = ReturnType<typeof controllers>

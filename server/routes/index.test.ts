@@ -1,11 +1,21 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes } from './testutils/appSetup'
+import Crm5Service from '../services/crm5Service'
+import SearchEformService from '../services/searchEformService'
+
+jest.mock('../services/crm5Service')
+jest.mock('../services/searchEformService')
 
 let app: Express
 
+let mockCrm5Service: jest.Mocked<Crm5Service>
+let mockSearchEformService: jest.Mocked<SearchEformService>
+
 beforeEach(() => {
-  app = appWithAllRoutes({})
+  mockCrm5Service = new Crm5Service(null) as jest.Mocked<Crm5Service>
+  mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
+  app = appWithAllRoutes({ services: { crm5Service: mockCrm5Service, searchEformService: mockSearchEformService } })
 })
 
 afterEach(() => {
@@ -57,6 +67,27 @@ describe('POST /search-eform', () => {
 
 describe('GET /crm5', () => {
   it('should render crm5 page', () => {
+    const crm5Response = {
+      data: {
+        usn: 1234567,
+        hasPreviousApplication: 'No',
+        previousApplicationRef: '',
+        appealedPrevDecision: 'No',
+        appealedPrevDecisionDetails: '',
+        urgent: 'Yes',
+        urgencyReason: 'Urgent',
+        Firm: {
+          firmAddress: '1 Some Lane',
+          firmName: 'ABC Firm',
+          firmPhone: '123456789',
+          firmSupplierNo: '1234AB',
+          firmContactName: 'Some Firm',
+          firmSolicitorName: 'Some Solicitor',
+        },
+      },
+    }
+    mockCrm5Service.getCrm5.mockResolvedValue(crm5Response)
+
     return request(app)
       .get('/crm5')
       .expect('Content-Type', /html/)
