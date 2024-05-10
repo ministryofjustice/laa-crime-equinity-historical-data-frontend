@@ -30,6 +30,11 @@ type ClientDetails = {
   UFN: string
 }
 
+type AdviceAssistance = {
+  transferFromSolicitor: string
+  adviceCriteria: string
+}
+
 type CapitalDetails = {
   isUnder18: string
   numOfDependants: number
@@ -120,7 +125,7 @@ type AllCosts = {
 
 type CaseHistory = {
   summary: string
-  addtionalInfo: string // typo from BE, awaiting fix
+  additionalInfo: string
 }
 
 type Solicitor = {
@@ -149,6 +154,7 @@ export type Crm5Response = {
   Firm?: Firm
   CaseDetails?: CaseDetails
   ClientDetails?: ClientDetails
+  AdviceAssistance?: AdviceAssistance
   CapitalDetails?: CapitalDetails
   IncomeDetails?: IncomeDetails
   Proceedings?: Proceedings
