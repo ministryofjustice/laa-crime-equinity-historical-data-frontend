@@ -4,6 +4,7 @@
  * In particular, applicationinsights automatically collects bunyan logs
  */
 import { Crm5Response } from '@crm5'
+import { EqApiHeader } from '@eqApi'
 import { initialiseAppInsights, buildAppInsightsClient } from '../utils/azureAppInsights'
 import applicationInfoSupplier from '../applicationInfo'
 import SearchApiClient from './api/searchApiClient'
@@ -16,9 +17,9 @@ buildAppInsightsClient(applicationInfo)
 
 type RestClientBuilder<T> = (token: string) => T
 
-const eqiApiHeaders = {
-  'EQ-API-CLIENT-ID': config.eqApi.clientId,
-  'EQ-API-SECRET': config.eqApi.secret,
+const eqiApiHeaders: Record<EqApiHeader, string> = {
+  'EQ-API-CLIENT-ID': config.apis.eqApi.headers.clientId,
+  'EQ-API-SECRET': config.apis.eqApi.headers.secret,
 }
 
 export const dataAccess = () => ({
