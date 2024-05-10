@@ -17,7 +17,7 @@ export default function routes({ searchEformController, crm5Controller }: Contro
 
   post('/search-eform', searchEformController.submit())
 
-  get('/crm5', crm5Controller.show())
+  get('/crm5/:usn', crm5Controller.show())
 
   get('/generate-report', (req, res, next) => {
     res.render('pages/generateReport')

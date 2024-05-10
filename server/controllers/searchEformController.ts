@@ -37,18 +37,13 @@ export default class SearchEformController {
             res.render('pages/searchEform', { results: [], errors: searchErrors, formValues: queryParams })
           } else {
             const { results, paging } = searchResponse
-            if (results.length === 0) {
-              const searchErrors = buildSearchValidationErrors('Something went wrong with the search')
-              res.render('pages/searchEform', { results: [], errors: searchErrors, formValues: queryParams })
-            } else {
-              const baseLink = buildBaseLink(searchRequest)
-              const pagination = getPagination(paging.number + 1, paging.total, baseLink)
-              res.render('pages/searchEform', {
-                results,
-                itemsTotal: paging.itemsTotal,
-                pagination,
-              })
-            }
+            const baseLink = buildBaseLink(searchRequest)
+            const pagination = getPagination(paging.number + 1, paging.total, baseLink)
+            res.render('pages/searchEform', {
+              results,
+              itemsTotal: paging.itemsTotal,
+              pagination,
+            })
           }
         }
       }

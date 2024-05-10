@@ -1,19 +1,20 @@
 import type { Express } from 'express'
 import request from 'supertest'
+import { Crm5Response } from '@crm5'
 import { appWithAllRoutes } from './testutils/appSetup'
-import Crm5Service from '../services/crm5Service'
+import CrmService from '../services/crmService'
 import SearchEformService from '../services/searchEformService'
 
-jest.mock('../services/crm5Service')
+jest.mock('../services/crmService')
 jest.mock('../services/searchEformService')
 
 let app: Express
 
-let mockCrm5Service: jest.Mocked<Crm5Service>
+let mockCrm5Service: jest.Mocked<CrmService<Crm5Response>>
 let mockSearchEformService: jest.Mocked<SearchEformService>
 
 beforeEach(() => {
-  mockCrm5Service = new Crm5Service(null) as jest.Mocked<Crm5Service>
+  mockCrm5Service = new CrmService(null) as jest.Mocked<CrmService<Crm5Response>>
   mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
   app = appWithAllRoutes({ services: { crm5Service: mockCrm5Service, searchEformService: mockSearchEformService } })
 })
@@ -121,13 +122,14 @@ describe('GET /crm5', () => {
       DetailsOfWorkCompleted: 'Some Details of Work Completed',
       DetailsOfApplication: 'Some Details of Application',
     }
-    mockCrm5Service.getCrm5.mockResolvedValue(crm5Response)
+    mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
 
     return request(app)
-      .get('/crm5')
+      .get('/crm5/1234567')
       .expect('Content-Type', /html/)
       .expect(res => {
         expect(res.text).toContain('CRM5')
+        expect(res.text).toContain('1234567')
       })
   })
 })

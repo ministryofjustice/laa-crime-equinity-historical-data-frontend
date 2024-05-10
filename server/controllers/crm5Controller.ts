@@ -1,13 +1,14 @@
 import type { Request, RequestHandler, Response } from 'express'
-import Crm5Service from '../services/crm5Service'
+import { Crm5Response } from '@crm5'
+import CrmService from '../services/crmService'
 
 export default class Crm5Controller {
-  constructor(private readonly crm5Service: Crm5Service) {}
+  constructor(private readonly crm5Service: CrmService<Crm5Response>) {}
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      const usn = Number(req.query.usn)
-      const crm5Response = await this.crm5Service.getCrm5(usn)
+      const usn = Number(req.params.usn)
+      const crm5Response = await this.crm5Service.getCrm(usn)
       res.render('pages/crmDetails', { title: 'CRM5', data: crm5Response })
     }
   }

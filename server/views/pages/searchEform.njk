@@ -45,17 +45,8 @@
 
                 {% for item in results %}
 
-                    {# Temporary hard-coded links - will come from BE api when available #}
-
-                    {% if item.type == 'CRM5' %}
-                        {% set crmFullLink = ['/crm5?usn=', item.usn] | join %}
-                    {% else %}
-                        {% set crmFullLink = '#' %}
-                    {% endif %}
-
-                    {% set clientName = '<a href="' + crmFullLink + '" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-body-m govuk-!-font-weight-bold">' + item.clientName | lower | capitalize  + '</a>' %}
+                    {% set clientName = '<a href="' + item.crmLink + '" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-body-m govuk-!-font-weight-bold">' + item.clientName | lower | capitalize  + '</a>' %}
                     {% set usn = '<div class="first-column-usn govuk-body-s govuk-!-margin-bottom-2 govuk-!-margin-top-1">' + item.usn + '</div>' %}
-                    {% set combined = clientName + usn %}
                     {% set type = item.type %}
                     {% set originatedDate = item.originatedDate %}
                     {% set submittedDate = item.submittedDate %}
@@ -63,7 +54,7 @@
                     {% set status = item.status  %}
 
                     {%- set tableRow = [
-                        { text: combined | safe },
+                        { text: [clientName, usn] | join | safe },
                         { text: type | safe },
                         { text: originatedDate | safe },
                         { text: submittedDate | safe },

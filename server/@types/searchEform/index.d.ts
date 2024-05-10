@@ -6,6 +6,7 @@ type SearchResult = {
   submittedDate: string
   providerAccount: string
   status: string
+  crmLink?: string
 }
 
 type SearchError = {
@@ -39,4 +40,4 @@ type SearchResponse = {
   error?: SearchError
 }
 
-export type { SearchRequest, SearchResponse, SearchError }
+export type { SearchRequest, SearchResponse, SearchError, SearchResult }

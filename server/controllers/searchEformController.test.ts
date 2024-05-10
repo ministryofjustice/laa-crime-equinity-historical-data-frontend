@@ -227,63 +227,6 @@ describe('Search Eform Controller', () => {
     })
   })
 
-  it('should render eform with error if no results found', async () => {
-    const searchResponse: SearchResponse = {
-      results: [],
-      paging: {
-        size: 10,
-        number: 100,
-        total: 3,
-        itemsPage: 0,
-        itemsTotal: 29,
-      },
-    }
-
-    mockSearchEformService.search.mockResolvedValue(searchResponse)
-
-    const searchEformController = new SearchEformController(mockSearchEformService)
-    const requestHandler = searchEformController.show()
-    request.query = {
-      usn: '9999999',
-      page: '100',
-    }
-
-    await requestHandler(request, response, next)
-
-    expect(response.render).toHaveBeenCalledWith('pages/searchEform', {
-      results: [],
-      errors: {
-        list: [
-          {
-            href: '#',
-            text: 'Something went wrong with the search',
-          },
-        ],
-      },
-      formValues: {
-        type: undefined,
-        clientName: undefined,
-        clientDOB: undefined,
-        endDate: undefined,
-        startDate: undefined,
-        supplierAccountNumber: undefined,
-        usn: '9999999',
-        page: '100',
-      },
-    })
-
-    expect(mockSearchEformService.search).toHaveBeenCalledWith({
-      type: undefined,
-      clientName: undefined,
-      endDate: undefined,
-      startDate: undefined,
-      supplierAccountNumber: undefined,
-      usn: '9999999',
-      page: 99,
-      pageSize: 10,
-    })
-  })
-
   it('should submit eform', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.submit()

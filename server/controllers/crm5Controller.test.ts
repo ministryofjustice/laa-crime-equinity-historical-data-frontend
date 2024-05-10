@@ -1,12 +1,13 @@
 import type { Request, Response, NextFunction } from 'express'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
+import { Crm5Response } from '@crm5'
 import Crm5Controller from './crm5Controller'
-import Crm5Service from '../services/crm5Service'
+import CrmService from '../services/crmService'
 
-jest.mock('../services/crm5Service')
+jest.mock('../services/crmService')
 
 describe('CRM5 Controller', () => {
-  let mockCrm5Service: jest.Mocked<Crm5Service>
+  let mockCrm5Service: jest.Mocked<CrmService<Crm5Response>>
   let request: DeepMocked<Request>
   let response: DeepMocked<Response>
   const next: DeepMocked<NextFunction> = createMock<NextFunction>({})
@@ -14,7 +15,7 @@ describe('CRM5 Controller', () => {
   beforeEach(() => {
     request = createMock<Request>({})
     response = createMock<Response>({})
-    mockCrm5Service = new Crm5Service(null) as jest.Mocked<Crm5Service>
+    mockCrm5Service = new CrmService(null) as jest.Mocked<CrmService<Crm5Response>>
   })
 
   it('should render CRM5 page', async () => {
@@ -39,7 +40,7 @@ describe('CRM5 Controller', () => {
       DetailsOfApplication: 'Some Details of Application',
     }
 
-    mockCrm5Service.getCrm5.mockResolvedValue(crm5Response)
+    mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
     const crm5Controller = new Crm5Controller(mockCrm5Service)
     const requestHandler = crm5Controller.show()
     await requestHandler(request, response, next)
