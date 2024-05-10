@@ -21,3 +21,14 @@ export const initialiseName = (fullName?: string): string | null => {
   const array = fullName.split(' ')
   return `${array[0][0]}. ${array.reverse()[0]}`
 }
+
+export const buildQueryString = (params: { [key: string]: string | number }): string => {
+  return Object.keys(params)
+    .map(key =>
+      params[key] && key !== 'page' && key !== 'pageSize'
+        ? `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
+        : '',
+    )
+    .filter(Boolean)
+    .join('&')
+}

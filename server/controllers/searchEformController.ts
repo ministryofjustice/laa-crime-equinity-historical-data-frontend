@@ -3,6 +3,7 @@ import type { SearchRequest, SearchError } from '@searchEform'
 import SearchEformService from '../services/searchEformService'
 import validateSearchData, { SearchValidationErrors } from '../utils/searchEformValidation'
 import getPagination from '../utils/pagination'
+import { buildQueryString } from '../utils/utils'
 
 const SEARCH_PAGE_SIZE = 10
 
@@ -14,6 +15,7 @@ export default class SearchEformController {
       if (!req.query.page) {
         res.render('pages/searchEform')
       } else {
+        // render page with search results
         const queryParams: Record<string, string> = {
           usn: req.query.usn as string,
           type: req.query.type as string,
@@ -26,7 +28,6 @@ export default class SearchEformController {
         }
 
         const validationErrors = validateSearchData(queryParams)
-
         if (validationErrors) {
           res.render('pages/searchEform', { results: [], errors: validationErrors, formValues: queryParams })
         } else {
@@ -37,8 +38,8 @@ export default class SearchEformController {
             res.render('pages/searchEform', { results: [], errors: searchErrors, formValues: queryParams })
           } else {
             const { results, paging } = searchResponse
-            const baseLink = buildBaseLink(searchRequest)
-            const pagination = getPagination(paging.number + 1, paging.total, baseLink)
+            const baseUrl = `/search-eform?${buildQueryString(searchRequest)}&`
+            const pagination = getPagination(paging.number + 1, paging.total, baseUrl)
             res.render('pages/searchEform', {
               results,
               itemsTotal: paging.itemsTotal,
@@ -61,8 +62,7 @@ export default class SearchEformController {
         endDate: req.body.endDate,
       }
       const queryString = buildQueryString(formValues)
-      const url = queryString.length > 0 ? `&${queryString}` : ''
-      res.redirect(302, `/search-eform?page=1${url}`)
+      res.redirect(302, `/search-eform?page=1${queryString ? `&${queryString}` : ''}`)
     }
   }
 }
@@ -108,21 +108,6 @@ const buildSearchRequest = (queryParams: Record<string, string>): SearchRequest 
   }
 }
 
-const buildBaseLink = (searchRequest: SearchRequest): string => {
-  return `/search-eform?${buildQueryString(searchRequest)}&`
-}
-
-const buildQueryString = (params: { [key: string]: string | number }): string => {
-  return Object.keys(params)
-    .map(key =>
-      params[key] && key !== 'page' && key !== 'pageSize'
-        ? `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
-        : '',
-    )
-    .filter(Boolean)
-    .join('&')
-}
-
 const undefinedIfEmpty = (field: string): string => {
-  return field && field.length > 0 ? field : undefined
+  return field || undefined
 }
