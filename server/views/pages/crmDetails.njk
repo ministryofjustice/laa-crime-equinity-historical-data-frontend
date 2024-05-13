@@ -1,0 +1,16 @@
+{% extends "../partials/layout.njk" %}
+
+{% set pageTitle = applicationName + " - Home" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+
+    <div class="govuk-width-container">
+        <main class="govuk-main-wrapper">
+            <h1 class="govuk-heading-l">{{ title }}</h1>
+            <p class="govuk-body">
+                USN {{ data.usn }}
+            </p>
+        </main>
+    </div>
+{% endblock %}

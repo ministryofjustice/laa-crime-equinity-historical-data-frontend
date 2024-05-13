@@ -51,13 +51,13 @@ export default {
     tls_enabled: get('REDIS_TLS_ENABLED', 'false'),
   },
   apis: {
-    eqSearchApi: {
+    eqApi: {
       url: get('EQ_SEARCH_API_URL', 'http://localhost:8089', { requireInProduction: false }),
       timeout: {
-        response: Number(get('EQ_SEARCH_API_TIMEOUT_RESPONSE', 10000)),
-        deadline: Number(get('EQ_SEARCH_API_TIMEOUT_DEADLINE', 10000)),
+        response: Number(get('EQ_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('EQ_API_TIMEOUT_DEADLINE', 10000)),
       },
-      agent: new AgentConfig(Number(get('EQ_SEARCH_API_TIMEOUT_RESPONSE', 10000))),
+      agent: new AgentConfig(Number(get('EQ_API_TIMEOUT_RESPONSE', 10000))),
       headers: {
         clientId: get('EQ_API_CLIENT_ID', 'xxx', { requireInProduction: false }),
         secret: get('EQ_API_SECRET', 'xxx', { requireInProduction: false }),

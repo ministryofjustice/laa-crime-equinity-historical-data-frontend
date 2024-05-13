@@ -1,13 +1,14 @@
 import nock from 'nock'
+import { SearchResponse } from '@searchEform'
 import SearchApiClient from './searchApiClient'
-import config from '../config'
+import config from '../../config'
 
 describe('EQ Search Api Client', () => {
   let fakeRestClient: nock.Scope
   let searchApiClient: SearchApiClient
 
   beforeEach(() => {
-    fakeRestClient = nock(config.apis.eqSearchApi.url)
+    fakeRestClient = nock(config.apis.eqApi.url)
     searchApiClient = new SearchApiClient({
       'EQ-API-CLIENT-ID': 'some-client-id',
       'EQ-API-SECRET': 'some-secret',
@@ -19,7 +20,7 @@ describe('EQ Search Api Client', () => {
   })
 
   it('should search by usn only and return results', async () => {
-    const searchResponse = {
+    const searchResponse: SearchResponse = {
       results: [
         {
           usn: 1234567,
@@ -28,6 +29,7 @@ describe('EQ Search Api Client', () => {
           originatedDate: '2022-11-23',
           submittedDate: '2023-12-13',
           providerAccount: '1234AB',
+          status: 'Completed',
         },
         {
           usn: 3456789,
@@ -60,7 +62,7 @@ describe('EQ Search Api Client', () => {
   })
 
   it('should search by one custom field and return results', async () => {
-    const searchResponse = {
+    const searchResponse: SearchResponse = {
       results: [
         {
           usn: 8912345,
@@ -94,7 +96,7 @@ describe('EQ Search Api Client', () => {
   })
 
   it('should search by multiple custom fields and return results', async () => {
-    const searchResponse = {
+    const searchResponse: SearchResponse = {
       results: [
         {
           usn: 8912345,

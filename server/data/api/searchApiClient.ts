@@ -1,14 +1,13 @@
+import type { EqApiHeader } from '@eqApi'
 import type { SearchRequest, SearchResponse } from '@searchEform'
-import RestClient from './restClient'
-import config from '../config'
-
-export type SearchApiHeader = 'EQ-API-CLIENT-ID' | 'EQ-API-SECRET'
+import RestClient from '../restClient'
+import config from '../../config'
 
 export default class SearchApiClient {
-  constructor(private readonly headers: Record<SearchApiHeader, string>) {}
+  constructor(private readonly headers: Record<EqApiHeader, string>) {}
 
   private static restClient(token: string): RestClient {
-    return new RestClient('EQ Search API Client', config.apis.eqSearchApi, token)
+    return new RestClient('Search API Client', config.apis.eqApi, token)
   }
 
   async search(searchRequest: SearchRequest): Promise<SearchResponse> {

@@ -1,8 +1,9 @@
+import type { SearchResponse } from '@searchEform'
 import SearchEformService from './searchEformService'
-import SearchApiClient from '../data/searchApiClient'
+import SearchApiClient from '../data/api/searchApiClient'
 import { SanitisedError } from '../sanitisedError'
 
-jest.mock('../data/searchApiClient')
+jest.mock('../data/api/searchApiClient')
 
 describe('Search Eform Service', () => {
   let mockSearchApiClient: jest.Mocked<SearchApiClient>
@@ -12,7 +13,7 @@ describe('Search Eform Service', () => {
   })
 
   it('should search and return result', async () => {
-    const searchResponse = {
+    const searchResponse: SearchResponse = {
       results: [
         {
           usn: 1234567,
@@ -32,7 +33,20 @@ describe('Search Eform Service', () => {
 
     const result = await searchEformService.search({ usn: '1234567', page: 0, pageSize: 10 })
 
-    expect(result).toEqual(searchResponse)
+    expect(result).toEqual({
+      results: [
+        {
+          usn: 1234567,
+          type: 'CRM4',
+          clientName: 'John Doe',
+          originatedDate: '2022-25-23',
+          submittedDate: '2023-15-13',
+          providerAccount: '1234AB',
+          status: 'Completed',
+          crmLink: '#',
+        },
+      ],
+    })
     expect(mockSearchApiClient.search).toHaveBeenCalledWith({
       usn: '1234567',
       page: 0,
@@ -65,6 +79,37 @@ describe('Search Eform Service', () => {
     expect(mockSearchApiClient.search).toHaveBeenCalledWith({
       usn: '1234567',
       page: 0,
+      pageSize: 10,
+    })
+  })
+
+  it('should search and return error if no results found', async () => {
+    const searchResponse: SearchResponse = {
+      results: [],
+      paging: {
+        size: 10,
+        number: 100,
+        total: 3,
+        itemsPage: 0,
+        itemsTotal: 29,
+      },
+    }
+
+    mockSearchApiClient.search.mockResolvedValue(searchResponse)
+
+    const searchEformService = new SearchEformService(mockSearchApiClient)
+
+    const result = await searchEformService.search({ usn: '1234567', page: 100, pageSize: 10 })
+    expect(result).toEqual({
+      error: {
+        message: 'No search results found',
+        status: 500,
+      },
+      results: [],
+    })
+    expect(mockSearchApiClient.search).toHaveBeenCalledWith({
+      usn: '1234567',
+      page: 100,
       pageSize: 10,
     })
   })
