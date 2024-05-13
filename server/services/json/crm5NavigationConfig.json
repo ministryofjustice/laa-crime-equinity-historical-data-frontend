@@ -1,0 +1,54 @@
+{
+  "label": "Side navigation",
+  "items": [
+    {
+      "text": "General Information",
+      "href": "1",
+      "active": true
+    },
+    {
+      "text": "Firm Details",
+      "href": "2"
+    },
+    {
+      "text": "Client's Details",
+      "href": "2"
+    },
+    {
+      "text": "Capital Details",
+      "href": "2"
+    },
+    {
+      "text": "Income Details",
+      "href": "2"
+    },
+    {
+      "text": "Advice and Assistance",
+      "href": "2"
+    },
+    {
+      "text": "Solicitors Declaration",
+      "href": "2"
+    },
+    {
+      "text": "Court of Appeal Funding",
+      "href": "2"
+    },
+    {
+      "text": "Details of Work Completed",
+      "href": "2"
+    },
+    {
+      "text": "Costs",
+      "href": "2"
+    },
+    {
+      "text": "Case History",
+      "href": "2"
+    },
+    {
+      "text": "Solicitor's Certification",
+      "href": "2"
+    }
+  ]
+}

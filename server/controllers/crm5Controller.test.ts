@@ -3,11 +3,15 @@ import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import { Crm5Response } from '@crm5'
 import Crm5Controller from './crm5Controller'
 import CrmService from '../services/crmService'
+import NavigationService from '../services/navigationService'
 
 jest.mock('../services/crmService')
+jest.mock('../services/navigationService')
 
 describe('CRM5 Controller', () => {
   let mockCrm5Service: jest.Mocked<CrmService<Crm5Response>>
+  let mockNavigationService: jest.Mocked<NavigationService>
+
   let request: DeepMocked<Request>
   let response: DeepMocked<Response>
   const next: DeepMocked<NextFunction> = createMock<NextFunction>({})
@@ -16,6 +20,7 @@ describe('CRM5 Controller', () => {
     request = createMock<Request>({})
     response = createMock<Response>({})
     mockCrm5Service = new CrmService(null) as jest.Mocked<CrmService<Crm5Response>>
+    mockNavigationService = new NavigationService() as jest.Mocked<NavigationService>
   })
 
   it('should render CRM5 page', async () => {
@@ -41,7 +46,18 @@ describe('CRM5 Controller', () => {
     }
 
     mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
-    const crm5Controller = new Crm5Controller(mockCrm5Service)
+    mockNavigationService.getCrm5NavigationConfig.mockReturnValue({
+      label: 'Side navigation',
+      items: [
+        {
+          text: 'General Information',
+          href: '1',
+          active: true,
+        },
+      ],
+    })
+
+    const crm5Controller = new Crm5Controller(mockCrm5Service, mockNavigationService)
     const requestHandler = crm5Controller.show()
     request.params = {
       usn: '123456789',
@@ -59,52 +75,8 @@ describe('CRM5 Controller', () => {
         items: [
           {
             text: 'General Information',
-            href: '/crm5/123456789/1',
+            href: '1',
             active: true,
-          },
-          {
-            text: 'Firm Details',
-            href: '/crm5/123456789/2',
-          },
-          {
-            text: "Client's Details",
-            href: '#',
-          },
-          {
-            text: 'Capital Details',
-            href: '#',
-          },
-          {
-            text: 'Income Details',
-            href: '#',
-          },
-          {
-            text: 'Advice and Assistance',
-            href: '#',
-          },
-          {
-            text: 'Solicitors Declaration',
-            href: '#',
-          },
-          {
-            text: 'Court of Appeal Funding',
-            href: '#',
-          },
-          {
-            text: 'Details of Work Completed',
-            href: '#',
-          },
-          {
-            text: 'Costs',
-            href: '#',
-          },
-          {
-            text: 'Case History',
-            href: '#',
-          },
-          {
-            text: "Solicitor's Certification",
-            href: '#',
           },
         ],
       },

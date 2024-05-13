@@ -4,19 +4,29 @@ import { Crm5Response } from '@crm5'
 import { appWithAllRoutes } from './testutils/appSetup'
 import CrmService from '../services/crmService'
 import SearchEformService from '../services/searchEformService'
+import NavigationService from '../services/navigationService'
 
 jest.mock('../services/crmService')
 jest.mock('../services/searchEformService')
+jest.mock('../services/navigationService')
 
 let app: Express
 
 let mockCrm5Service: jest.Mocked<CrmService<Crm5Response>>
 let mockSearchEformService: jest.Mocked<SearchEformService>
+let mockNavigationService: jest.Mocked<NavigationService>
 
 beforeEach(() => {
   mockCrm5Service = new CrmService(null) as jest.Mocked<CrmService<Crm5Response>>
   mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
-  app = appWithAllRoutes({ services: { crm5Service: mockCrm5Service, searchEformService: mockSearchEformService } })
+  mockNavigationService = new NavigationService() as jest.Mocked<NavigationService>
+  app = appWithAllRoutes({
+    services: {
+      crm5Service: mockCrm5Service,
+      searchEformService: mockSearchEformService,
+      navigationService: mockNavigationService,
+    },
+  })
 })
 
 afterEach(() => {
