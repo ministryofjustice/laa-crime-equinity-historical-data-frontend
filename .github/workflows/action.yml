@@ -100,7 +100,7 @@ jobs:
 
   deploy-uat:
     runs-on: ubuntu-latest
-    needs: deploy-dev
+    needs: ecr
     environment: uat
     permissions:
       id-token: write # This is required for requesting the JWT
