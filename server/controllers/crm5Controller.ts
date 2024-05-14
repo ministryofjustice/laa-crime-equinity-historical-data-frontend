@@ -14,7 +14,7 @@ export default class Crm5Controller {
       const usn = Number(req.params.usn)
       const crm5Response = await this.crm5Service.getCrm(usn)
       const navLink = `/crm5/${usn}`
-      const navigationItems = this.navigationService.getCrm5NavigationConfig()
+      const navigationItems = this.navigationService.getCrm5NavigationConfig(navLink)
       res.render('pages/crmDetails', { title: 'CRM5', data: crm5Response, navigationItems })
     }
   }

@@ -3,52 +3,52 @@
   "items": [
     {
       "text": "General Information",
-      "href": "1",
+      "href": "general-information",
       "active": true
     },
     {
       "text": "Firm Details",
-      "href": "2"
+      "href": "firm-details"
     },
     {
       "text": "Client's Details",
-      "href": "2"
+      "href": "clients-details"
     },
     {
       "text": "Capital Details",
-      "href": "2"
+      "href": "capital-details"
     },
     {
       "text": "Income Details",
-      "href": "2"
+      "href": "income-details"
     },
     {
       "text": "Advice and Assistance",
-      "href": "2"
+      "href": "advice-and-assistance"
     },
     {
       "text": "Solicitors Declaration",
-      "href": "2"
+      "href": "solicitors-declaration"
     },
     {
       "text": "Court of Appeal Funding",
-      "href": "2"
+      "href": "court-of-appeal-funding"
     },
     {
       "text": "Details of Work Completed",
-      "href": "2"
+      "href": "details-of-work-completed"
     },
     {
       "text": "Costs",
-      "href": "2"
+      "href": "costs"
     },
     {
       "text": "Case History",
-      "href": "2"
+      "href": "case-history"
     },
     {
       "text": "Solicitor's Certification",
-      "href": "2"
+      "href": "solicitors-certification"
     }
   ]
 }
