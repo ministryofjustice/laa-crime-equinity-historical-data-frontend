@@ -43,12 +43,70 @@ describe('CRM5 Controller', () => {
     mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
     const crm5Controller = new Crm5Controller(mockCrm5Service)
     const requestHandler = crm5Controller.show()
+    request.params = {
+      usn: '123456789',
+    }
+
     await requestHandler(request, response, next)
 
     expect(response.render).toHaveBeenCalledWith('pages/crmDetails', {
       title: 'CRM5',
       data: {
         ...crm5Response,
+      },
+      navigationItems: {
+        label: 'Side navigation',
+        items: [
+          {
+            text: 'General Information',
+            href: '/crm5/123456789/1',
+            active: true,
+          },
+          {
+            text: 'Firm Details',
+            href: '/crm5/123456789/2',
+          },
+          {
+            text: "Client's Details",
+            href: '#',
+          },
+          {
+            text: 'Capital Details',
+            href: '#',
+          },
+          {
+            text: 'Income Details',
+            href: '#',
+          },
+          {
+            text: 'Advice and Assistance',
+            href: '#',
+          },
+          {
+            text: 'Solicitors Declaration',
+            href: '#',
+          },
+          {
+            text: 'Court of Appeal Funding',
+            href: '#',
+          },
+          {
+            text: 'Details of Work Completed',
+            href: '#',
+          },
+          {
+            text: 'Costs',
+            href: '#',
+          },
+          {
+            text: 'Case History',
+            href: '#',
+          },
+          {
+            text: "Solicitor's Certification",
+            href: '#',
+          },
+        ],
       },
     })
   })
