@@ -1,8 +1,8 @@
-import CRMDetailService from './crmDetailsService'
+import CRMDetailsService from './crmDetailsService'
 
 describe('CRM Detail Service', () => {
   it('should return crm5 detail config', () => {
-    const crmDetailService = new CRMDetailService()
+    const crmDetailService = new CRMDetailsService()
     const result = crmDetailService.getCrm5DetailConfig()
 
     expect(result).not.toBeNull()
