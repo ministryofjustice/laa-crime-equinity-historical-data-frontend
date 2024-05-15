@@ -51,7 +51,21 @@
                     {% set originatedDate = item.originatedDate %}
                     {% set submittedDate = item.submittedDate %}
                     {% set providerAccount = item.providerAccount %}
-                    {% set status = item.status  %}
+                    {% set status = item.status %}
+
+                    {% set statusColour = [] %}
+                    {% if (status === 'Granted') or (status === 'Part Granted') or (status === 'Part Granted By SC') or (status === 'Granted By SC') or (status === 'Post Refer Granted') or (status === 'Post Refer Part Granted') %}
+                        {{ statusColour.push('<div class="govuk-tag govuk-tag--turquoise">' + status + '</div>') }}
+                    {% elseif (status === 'Completed') or (status === 'Part Granted') or (status === 'Part Granted By SC') or (status === 'Granted By SC') or (status === 'Post Refer Granted') or (status === 'Post Refer Part Granted') %}
+                        {{ statusColour.push('<div class="govuk-tag govuk-tag--green">' + status + '</div>') }}
+                    {%  elseif (status === 'Aborted') %}
+                        {{ statusColour.push('<div class="govuk-tag govuk-tag--orange">' + status + '</div>') }}
+                    {%  elseif (status === 'Rejected No Info') or (status === 'Rejected') or (status === 'Rejected By SC') or (status === 'Post Refer Rejected') %}
+                        {{ statusColour.push('<div class="govuk-tag govuk-tag--red">' + status + '</div>') }}
+                    {%  else %}
+                        {{ statusColour.push(status) }}
+                    {% endif %}
+
 
                     {%- set tableRow = [
                         { text: [clientName, usn] | join | safe },
@@ -59,7 +73,7 @@
                         { text: originatedDate | safe },
                         { text: submittedDate | safe },
                         { text: providerAccount | safe },
-                        { text: status | safe }
+                        { text: statusColour | safe }
                     ] -%}
 
                     {% set list = tableData.rows.push(tableRow) %}
@@ -67,12 +81,9 @@
 
                 {% set recordLabelPlural = 'record' if itemsTotal <= 1 else 'records' %}
 
-                <h2 class="govuk-!-margin-top-9">{{ itemsTotal }} {{ recordLabelPlural }} found meeting
-                    your
-                    search criteria </h2>
-                <div>{{ govukTable(tableData) }}</div>
-
-                 {{ paginationBox(pagination) }}
+                <h2 class="govuk-!-margin-top-9">{{ itemsTotal }} {{ recordLabelPlural }} found meeting your search criteria </h2>
+                <div> {{ govukTable(tableData) }} </div>
+                {{ paginationBox(pagination) }}
             {% endif %}
         </main>
     </div>
