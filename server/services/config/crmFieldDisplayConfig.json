@@ -1,0 +1,135 @@
+{
+  "sections": [
+    {
+      "urlPath": "general-information",
+      "title": "General Information",
+      "subsections": [
+        {
+          "title": "General Information",
+          "fields": [
+            {
+              "label": "Has a previous application for an extension been made?",
+              "apiField": "hasPreviousApplication"
+            },
+            {
+              "label": "Most recent application reference",
+              "apiField": "previousApplicationRef"
+            },
+            {
+              "label": "Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?",
+              "apiField": "appealedPrevDecision"
+            },
+            {
+              "label": "Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?",
+              "apiField": "appealedPrevDecision"
+            },
+            {
+              "label": "Please give details",
+              "apiField": "appealedPrevDecisionDetails"
+            },
+            {
+              "label": "Urgent?",
+              "apiField": "urgent"
+            },
+            {
+              "label": "Reason for urgency",
+              "apiField": "urgencyReason"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "firm-details",
+      "title": "Firm Details",
+      "subsections": [
+        {
+          "title": "Firm Details",
+          "fields": [
+            {
+              "label": "Name of firm",
+              "apiField": "Firm.firmName"
+            },
+            {
+              "label": "Provider number",
+              "apiField": "Firm.firmSupplierNo"
+            }
+          ]
+        },
+        {
+          "title": "Solicitor's Details",
+          "fields": [
+            {
+              "label": "Address / DX",
+              "apiField": "Firm.firmAddress"
+            },
+            {
+              "label": "Telephone Number",
+              "apiField": "Firm.firmPhone"
+            },
+            {
+              "label": "Contact Name",
+              "apiField": "Firm.firmContactName"
+            },
+            {
+              "label": "Name of Solicitor or Fellow of the Institute of Legal Executives instructed",
+              "apiField": "Firm.firmSolicitorName"
+            }
+          ]
+        },
+        {
+          "title": "Case Details",
+          "fields": [
+            {
+              "label": "Level of work:",
+              "apiField": "CaseDetails.levelOfWork"
+            },
+            {
+              "label": "Class of work",
+              "apiField": null
+            },
+            {
+              "label": null,
+              "apiField": "CaseDetails.cwCriminalInvestigation"
+            },
+            {
+              "label": null,
+              "apiField": "CaseDetails.cwAppealsReview"
+            },
+            {
+              "label": null,
+              "apiField": "CaseDetails.cwCcrc"
+            },
+            {
+              "label": null,
+              "apiField": "CaseDetails.cwPrisonLaw"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "clients-details",
+      "title": "Client's Details",
+      "subsections": [
+        {
+          "title": "Client's Details",
+          "fields": [
+            {
+              "label": "UFN",
+              "apiField": "ClientDetails.UFN"
+            },
+            {
+              "label": "Surname",
+              "apiField": "ClientDetails.surname"
+            },
+            {
+              "label": "First name",
+              "apiField": "ClientDetails.firstName"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
