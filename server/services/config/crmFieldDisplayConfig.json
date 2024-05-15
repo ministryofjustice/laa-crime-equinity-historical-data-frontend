@@ -20,15 +20,11 @@
               "apiField": "appealedPrevDecision"
             },
             {
-              "label": "Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?",
-              "apiField": "appealedPrevDecision"
-            },
-            {
               "label": "Please give details",
               "apiField": "appealedPrevDecisionDetails"
             },
             {
-              "label": "Urgent?",
+              "label": "Urgent",
               "apiField": "urgent"
             },
             {
@@ -60,7 +56,7 @@
           "title": "Solicitor's Details",
           "fields": [
             {
-              "label": "Address / DX",
+              "label": "Address/DX",
               "apiField": "Firm.firmAddress"
             },
             {
@@ -126,6 +122,77 @@
             {
               "label": "First name",
               "apiField": "ClientDetails.firstName"
+            },
+            {
+              "label": "Date of birth",
+              "apiField": "ClientDetails.dateOfBirth"
+            },
+            {
+              "label": "Marital status",
+              "apiField": "ClientDetails.maritalStatus"
+            },
+            {
+              "label": "Address",
+              "apiField": null
+            },
+            {
+              "label": "Address Line 1",
+              "apiField": "ClientDetails.addressLine1"
+            },
+            {
+              "label": "Address Line 2",
+              "apiField": "ClientDetails.addressLine2"
+            },
+            {
+              "label": "Address Line 3",
+              "apiField": "ClientDetails.addressLine3"
+            },
+            {
+              "label": "Town",
+              "apiField": "ClientDetails.city"
+            },
+            {
+              "label": "County",
+              "apiField": "ClientDetails.county"
+            },
+            {
+              "label": "Postcode",
+              "apiField": "ClientDetails.postcode"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "capital-details",
+      "title": "Capital Details",
+      "subsections": [
+        {
+          "title": "Capital Details",
+          "fields": [
+            {
+              "label": "Is your client under 18 years old?",
+              "apiField": "CapitalDetails.isUnder18"
+            },
+            {
+              "label": "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance or Guarantee State Pension Credit?",
+              "apiField": "ClientDetails.hasIncomeSupport"
+            },
+            {
+              "label": "How many dependants does your client have?",
+              "apiField": "ClientDetails.numOfDependants"
+            },
+            {
+              "label": "Client",
+              "apiField": "ClientDetails.clientSavings"
+            },
+            {
+              "label": "Partner",
+              "apiField": "ClientDetails.partnerSavings"
+            },
+            {
+              "label": "Total",
+              "apiField": "ClientDetails.totalSavings"
             }
           ]
         }
