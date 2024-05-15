@@ -197,6 +197,77 @@
           ]
         }
       ]
+    },
+    {
+      "urlPath": "income-details",
+      "title": "Income Details",
+      "subsections": [
+        {
+          "title": "Income Details",
+          "fields": [
+            {
+              "label": "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance, Guarantee State Pension Credit, Working Tax credit plus Child Tax Credit* or Working Tax Credit with disabilities element?",
+              "apiField": "IncomeDetails.hasIncomeSupport"
+            },
+            {
+              "label": "Give the total weekly income of:",
+              "apiField": null
+            },
+            {
+              "label": "Client",
+              "apiField": "IncomeDetails.weeklyClientIncome"
+            },
+            {
+              "label": "Partner",
+              "apiField": "IncomeDetails.weeklyPartnerIncome"
+            },
+            {
+              "label": "Total",
+              "apiField": "IncomeDetails.totalWeeklyIncome"
+            },
+            {
+              "label": "Allowable deductions",
+              "apiField": null
+            },
+            {
+              "label": "Income tax",
+              "apiField": "IncomeDetails.incomeTaxDeductions"
+            },
+            {
+              "label": "National Insurance contributions",
+              "apiField": "IncomeDetails.niDeductions"
+            },
+            {
+              "label": "Partner",
+              "apiField": "IncomeDetails.partnerDeductions"
+            },
+            {
+              "label": "Attendance allowance, disability living allowance, constant attendance allowance and any payment made out of the Social Fund",
+              "apiField": "IncomeDetails.socialFundDeductions"
+            },
+            {
+              "label": "Dependent children and other dependants:",
+              "apiField": null
+            },
+            {
+              "label": "Aged 15 or under",
+              "apiField": "IncomeDetails.dependantChildrenUnder15"
+            },
+            {
+              "label": "Aged 16 or over",
+              "apiField": "IncomeDetails.dependantChildrenOver16"
+            },
+            {
+              "label": "Less Total deductions",
+              "apiField": "IncomeDetails.totalDeductions"
+            },
+            {
+              "label": "Total weekly disposable income",
+              "apiField": "IncomeDetails.totalWeeklyIncome"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
