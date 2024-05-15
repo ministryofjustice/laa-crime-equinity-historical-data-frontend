@@ -327,6 +327,104 @@
           ]
         }
       ]
+    },
+    {
+      "urlPath": "court-of-appeal-funding",
+      "title": "Court of Appeal Funding",
+      "subsections": [
+        {
+          "title": "Court of Appeal Funding",
+          "fields": [
+            {
+              "label": "Have you approached the Court of Appeal for any funding in this matter?",
+              "apiField": "CourtAppealFunding.hasCourtAppeal"
+            },
+            {
+              "label": "Please advise what funding has the Court granted or, if the Court has refused funding, the reason for refusal",
+              "apiField": "CourtAppealFunding.appealDetails"
+            },
+            {
+              "label": "Does client have the benefit of any Court of Appeal Representation Order, even if such an order does not cover work by solicitors?",
+              "apiField": "CourtAppealFunding.benefitOfCourt"
+            },
+            {
+              "label": "Is this for an expert report only?",
+              "apiField": "CourtAppealFunding.expertReport"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "details-of-work-completed",
+      "title": "Details of Work Completed",
+      "subsections": [
+        {
+          "title": "Details of Work Completed",
+          "fields": [
+            {
+              "label": "Please give details of work that has been completed to date",
+              "apiField": "DetailsOfWorkCompleted"
+            },
+            {
+              "label": "Please explain what additional work is to be carried out and explain how this is necessary to the progress of the case and/or the benefit of the client.",
+              "apiField": "DetailsOfApplication"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "costs",
+      "title": "Costs",
+      "subsections": []
+    },
+    {
+      "urlPath": "case-history",
+      "title": "Case History",
+      "subsections": [
+        {
+          "title": "Case History",
+          "fields": [
+            {
+              "label": "Summary of Case History",
+              "apiField": "CaseHistory.summary"
+            }
+          ]
+        },
+        {
+          "title": "Additional Information",
+          "fields": [
+            {
+              "label": "Please include any additional information pertinent to this submission or use to complete entries where there wasn't sufficient room for your answer. (Please show clearly what these details relate to on the form).",
+              "apiField": "CaseHistory.additionalInfo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "solicitors-certification",
+      "title": "Solicitor's Certification",
+      "subsections": [
+        {
+          "title": "Solicitor's Certification",
+          "fields": [
+            {
+              "label": "I certify that the information provided is correct.",
+              "apiField": null
+            },
+            {
+              "label": "Name",
+              "apiField": "Solicitor.certification.name"
+            },
+            {
+              "label": "Date",
+              "apiField": "Solicitor.certification.date"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
