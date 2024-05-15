@@ -41,6 +41,7 @@ const successResponse = (): Crm5Response => {
       firmSupplierNo: '1234AB',
       firmContactName: 'Some Firm',
       firmSolicitorName: 'Some Solicitor',
+      firmSolicitorRef: 'Ref1',
     },
     StatementOfCase: 'Statement Of Case',
     DetailsOfWorkCompleted: 'Some Details of Work Completed',

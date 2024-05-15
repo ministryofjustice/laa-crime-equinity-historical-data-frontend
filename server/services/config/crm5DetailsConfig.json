@@ -24,7 +24,7 @@
               "apiField": "appealedPrevDecisionDetails"
             },
             {
-              "label": "Urgent",
+              "label": "Urgent?",
               "apiField": "urgent"
             },
             {
@@ -70,6 +70,10 @@
             {
               "label": "Name of Solicitor or Fellow of the Institute of Legal Executives instructed",
               "apiField": "Firm.firmSolicitorName"
+            },
+            {
+              "label": "Solicitor reference",
+              "apiField": "Firm.firmSolicitorRef"
             }
           ]
         },
@@ -134,6 +138,10 @@
             {
               "label": "Address",
               "apiField": null
+            },
+            {
+              "label": "Client has no fixed abode",
+              "apiField": "ClientDetails.noFixedAbode"
             },
             {
               "label": "Address Line 1",
@@ -264,6 +272,57 @@
             {
               "label": "Total weekly disposable income",
               "apiField": "IncomeDetails.totalWeeklyIncome"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "advice-and-assistance",
+      "title": "Advice and Assistance",
+      "subsections": [
+        {
+          "title": "Advice and Assistance",
+          "fields": [
+            {
+              "label": "Has your client received Advice & Assistance for this same matter from another solicitor within the six months preceding this application?",
+              "apiField": "AdviceAssistance.transferFromSolicitor"
+            },
+            {
+              "label": "As you have indicated \"Yes\", please specify which of the following criteria enables your firm to offer further Advice & Assistance on this matter within the 6 month period:",
+              "apiField": "AdviceAssistance.adviceCriteria"
+            }
+          ]
+        },
+        {
+          "title": "LAA Advice and Assistance",
+          "fields": [
+            {
+              "label": "Have you provided Advice and Assistance to a client who has already received it on the same matter within the last six months. Unified Contract (Crime) Specification Parts B 3.1.11, B 4.1.7 or B 4.2.8?",
+              "apiField": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "solicitors-declaration",
+      "title": "Solicitor's Declaration",
+      "subsections": [
+        {
+          "title": "Solicitor's Declaration",
+          "fields": [
+            {
+              "label": "I confirm that my client has completed and signed the CRM2 Application for Advice and Assistance. I also confirm that the CRM2 Application shall be retained on file and submitted as per usual with the final bill or upon request by the Legal Aid Agency.",
+              "apiField": null
+            },
+            {
+              "label": "Name",
+              "apiField": "Solicitor.declaration.name"
+            },
+            {
+              "label": "Date",
+              "apiField": "Solicitor.declaration.date"
             }
           ]
         }
