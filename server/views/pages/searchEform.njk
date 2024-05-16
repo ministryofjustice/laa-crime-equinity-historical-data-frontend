@@ -40,7 +40,6 @@
 
             {% include "components/searchEformBox.njk" %}
 
-
             {% if results | length %}
 
                 {% for item in results %}
@@ -54,11 +53,11 @@
                     {% set status = item.status %}
 
                     {% set statusColour = [] %}
-                    {% if (status === 'Granted') or (status === 'Part Granted') or (status === 'Part Granted By SC') or (status === 'Granted By SC') or (status === 'Post Refer Granted') or (status === 'Post Refer Part Granted') %}
+                    {% if (status === 'Granted') or (status === 'Completed') or (status === 'Post Refer Granted') or (status === 'Granted By SC') or (status === 'Printed') %}
                         {{ statusColour.push('<div class="govuk-tag govuk-tag--turquoise">' + status + '</div>') }}
-                    {% elseif (status === 'Completed') or (status === 'Part Granted') or (status === 'Part Granted By SC') or (status === 'Granted By SC') or (status === 'Post Refer Granted') or (status === 'Post Refer Part Granted') %}
+                    {% elseif (status === 'Part Granted') or (status === 'Part Granted By SC') or (status === 'Post Refer Part Granted') %}
                         {{ statusColour.push('<div class="govuk-tag govuk-tag--green">' + status + '</div>') }}
-                    {%  elseif (status === 'Aborted') %}
+                    {%  elseif (status === 'Aborted') or (status === 'Deleted') or (status === 'Returned or Reassigned') %}
                         {{ statusColour.push('<div class="govuk-tag govuk-tag--orange">' + status + '</div>') }}
                     {%  elseif (status === 'Rejected No Info') or (status === 'Rejected') or (status === 'Rejected By SC') or (status === 'Post Refer Rejected') %}
                         {{ statusColour.push('<div class="govuk-tag govuk-tag--red">' + status + '</div>') }}
