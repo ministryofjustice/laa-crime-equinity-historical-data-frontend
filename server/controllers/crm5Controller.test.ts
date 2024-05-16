@@ -24,7 +24,7 @@ describe('CRM5 Controller', () => {
   })
 
   it('should render CRM5 page', async () => {
-    const crm5Response = {
+    const crm5Response: Crm5Response = {
       usn: 1234567,
       hasPreviousApplication: 'No',
       previousApplicationRef: '',
@@ -39,6 +39,7 @@ describe('CRM5 Controller', () => {
         firmSupplierNo: '1234AB',
         firmContactName: 'Some Firm',
         firmSolicitorName: 'Some Solicitor',
+        firmSolicitorRef: 'Ref1',
       },
       StatementOfCase: 'Statement Of Case',
       DetailsOfWorkCompleted: 'Some Details of Work Completed',

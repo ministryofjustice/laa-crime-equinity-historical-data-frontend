@@ -5,6 +5,7 @@ type Firm = {
   firmSupplierNo: string
   firmContactName: string
   firmSolicitorName: string
+  firmSolicitorRef: string
 }
 
 type CaseDetails = {

@@ -1,6 +1,7 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { Crm5Response } from '@crm5'
+import { SearchResponse } from '@searchEform'
 import { appWithAllRoutes } from './testutils/appSetup'
 import CrmService from '../services/crmService'
 import SearchEformService from '../services/searchEformService'
@@ -57,7 +58,7 @@ describe('GET /search-eform', () => {
 
 describe('GET /search-eform?page=1&usn=1234567', () => {
   it('should render search eForm page with search results', () => {
-    const searchResponse = {
+    const searchResponse: SearchResponse = {
       results: [
         {
           usn: 123456789,
@@ -112,7 +113,7 @@ describe('POST /search-eform', () => {
 
 describe('GET /crm5', () => {
   it('should render crm5 page', () => {
-    const crm5Response = {
+    const crm5Response: Crm5Response = {
       usn: 1234567,
       hasPreviousApplication: 'No',
       previousApplicationRef: '',
@@ -127,6 +128,7 @@ describe('GET /crm5', () => {
         firmSupplierNo: '1234AB',
         firmContactName: 'Some Firm',
         firmSolicitorName: 'Some Solicitor',
+        firmSolicitorRef: 'Ref1',
       },
       StatementOfCase: 'Statement Of Case',
       DetailsOfWorkCompleted: 'Some Details of Work Completed',
