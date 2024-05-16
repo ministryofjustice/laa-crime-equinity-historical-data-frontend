@@ -54,15 +54,15 @@
 
                     {% set statusColour = [] %}
                     {% if (status === 'Granted') or (status === 'Completed') or (status === 'Post Refer Granted') or (status === 'Granted By SC') or (status === 'Printed') %}
-                        {{ statusColour.push('<div class="govuk-tag govuk-tag--turquoise">' + status + '</div>') }}
+                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--green">' + status + '</div>'), statusColour) %}
                     {% elseif (status === 'Part Granted') or (status === 'Part Granted By SC') or (status === 'Post Refer Part Granted') %}
-                        {{ statusColour.push('<div class="govuk-tag govuk-tag--green">' + status + '</div>') }}
+                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--purple">' + status + '</div>'), statusColour) %}
                     {%  elseif (status === 'Aborted') or (status === 'Deleted') or (status === 'Returned or Reassigned') %}
-                        {{ statusColour.push('<div class="govuk-tag govuk-tag--orange">' + status + '</div>') }}
+                       {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--orange">' + status + '</div>'), statusColour) %}
                     {%  elseif (status === 'Rejected No Info') or (status === 'Rejected') or (status === 'Rejected By SC') or (status === 'Post Refer Rejected') %}
-                        {{ statusColour.push('<div class="govuk-tag govuk-tag--red">' + status + '</div>') }}
+                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--red">' + status + '</div>'), statusColour)  %}
                     {%  else %}
-                        {{ statusColour.push(status) }}
+                        {% set statusColour = (statusColour.push(status), statusColour) %}
                     {% endif %}
 
 
