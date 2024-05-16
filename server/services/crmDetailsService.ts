@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import crm5DetailConfig from './config/crm5DetailsConfig.json'
+import crm5DetailsConfig from './config/crm5DetailsConfig.json'
 
 type Field = {
   label: string
@@ -17,7 +17,7 @@ type Section = {
   subsections: Array<SubSection>
 }
 
-type CRMDetailConfig = {
+type CRMDetailsConfig = {
   sections: Array<Section>
 }
 
@@ -35,7 +35,7 @@ const schema = Joi.object({
   }),
 })
 
-const getValidConfig = (config: CRMDetailConfig, configName: string) => {
+const getValidConfig = (config: CRMDetailsConfig, configName: string) => {
   const { error } = schema.validate(config)
   if (error?.details) {
     throw new Error(`Invalid ${configName} Details config: ${JSON.stringify(error.details)}`)
@@ -44,7 +44,7 @@ const getValidConfig = (config: CRMDetailConfig, configName: string) => {
 }
 
 export default class CrmDetailsService {
-  getCrm5DetailConfig(): CRMDetailConfig {
-    return getValidConfig(crm5DetailConfig, 'CRM5')
+  getCrm5DetailsConfig(): CRMDetailsConfig {
+    return getValidConfig(crm5DetailsConfig, 'CRM5')
   }
 }
