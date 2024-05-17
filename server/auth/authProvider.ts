@@ -16,7 +16,7 @@ type Options = {
 }
 
 class AuthProvider {
-  cryptoProvider
+  cryptoProvider: msal.CryptoProvider
 
   constructor(private readonly authConfig: Configuration) {
     this.cryptoProvider = new msal.CryptoProvider()
