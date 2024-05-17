@@ -3,6 +3,7 @@ import { type RequestHandler, Router } from 'express'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import { Controllers } from '../controllers'
 
+import authProvider from '../auth/authProvider'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function routes({ searchEformController, crm5Controller }: Controllers): Router {
   const router = Router()
@@ -22,6 +23,15 @@ export default function routes({ searchEformController, crm5Controller }: Contro
   get('/generate-report', (req, res, next) => {
     res.render('pages/generateReport')
   })
+
+  get(
+    '/signin',
+    authProvider.login({
+      scopes: [],
+      redirectUri: 'REDIRECT_URI',
+      successRedirect: '/',
+    }),
+  )
 
   return router
 }
