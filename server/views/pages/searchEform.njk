@@ -40,7 +40,6 @@
 
             {% include "components/searchEformBox.njk" %}
 
-
             {% if results | length %}
 
                 {% for item in results %}
@@ -51,7 +50,21 @@
                     {% set originatedDate = item.originatedDate %}
                     {% set submittedDate = item.submittedDate %}
                     {% set providerAccount = item.providerAccount %}
-                    {% set status = item.status  %}
+                    {% set status = item.status %}
+
+                    {% set statusColour = [] %}
+                    {% if (status === 'Granted') or (status === 'Completed') or (status === 'Post Refer Granted') or (status === 'Granted By SC') or (status === 'Printed') %}
+                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--green">' + status + '</div>'), statusColour) %}
+                    {% elseif (status === 'Part Granted') or (status === 'Part Granted By SC') or (status === 'Post Refer Part Granted') %}
+                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--purple">' + status + '</div>'), statusColour) %}
+                    {%  elseif (status === 'Aborted') or (status === 'Deleted') or (status === 'Returned or Reassigned') %}
+                       {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--orange">' + status + '</div>'), statusColour) %}
+                    {%  elseif (status === 'Rejected No Info') or (status === 'Rejected') or (status === 'Rejected By SC') or (status === 'Post Refer Rejected') %}
+                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--red">' + status + '</div>'), statusColour)  %}
+                    {%  else %}
+                        {% set statusColour = (statusColour.push(status), statusColour) %}
+                    {% endif %}
+
 
                     {%- set tableRow = [
                         { text: [clientName, usn] | join | safe },
@@ -59,7 +72,7 @@
                         { text: originatedDate | safe },
                         { text: submittedDate | safe },
                         { text: providerAccount | safe },
-                        { text: status | safe }
+                        { text: statusColour | safe }
                     ] -%}
 
                     {% set list = tableData.rows.push(tableRow) %}
@@ -67,12 +80,9 @@
 
                 {% set recordLabelPlural = 'record' if itemsTotal <= 1 else 'records' %}
 
-                <h2 class="govuk-!-margin-top-9">{{ itemsTotal }} {{ recordLabelPlural }} found meeting
-                    your
-                    search criteria </h2>
-                <div>{{ govukTable(tableData) }}</div>
-
-                 {{ paginationBox(pagination) }}
+                <h2 class="govuk-!-margin-top-9">{{ itemsTotal }} {{ recordLabelPlural }} found meeting your search criteria </h2>
+                <div> {{ govukTable(tableData) }} </div>
+                {{ paginationBox(pagination) }}
             {% endif %}
         </main>
     </div>

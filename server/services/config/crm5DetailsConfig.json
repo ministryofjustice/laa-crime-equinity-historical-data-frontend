@@ -89,19 +89,19 @@
               "apiField": null
             },
             {
-              "label": null,
+              "label": "",
               "apiField": "CaseDetails.cwCriminalInvestigation"
             },
             {
-              "label": null,
+              "label": "",
               "apiField": "CaseDetails.cwAppealsReview"
             },
             {
-              "label": null,
+              "label": "",
               "apiField": "CaseDetails.cwCcrc"
             },
             {
-              "label": null,
+              "label": "",
               "apiField": "CaseDetails.cwPrisonLaw"
             }
           ]
