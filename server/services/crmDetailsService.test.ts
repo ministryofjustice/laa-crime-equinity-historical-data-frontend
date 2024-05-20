@@ -1,23 +1,66 @@
 import CRMDetailsService from './crmDetailsService'
 
 describe('CRM Detail Service', () => {
-  it('should return crm5 detail config', () => {
-    const crmDetailService = new CRMDetailsService()
-    const result = crmDetailService.getCrm5DetailsConfig()
+  it('should return crm details for given CRM type & section', () => {
+    const crm5Response = {
+      usn: 1234567,
+      hasPreviousApplication: 'No',
+      previousApplicationRef: '',
+      appealedPrevDecision: 'No',
+      appealedPrevDecisionDetails: '',
+      urgent: 'Yes',
+      urgencyReason: 'Urgent',
+      Firm: {
+        firmAddress: '1 Some Lane',
+        firmName: 'ABC Firm',
+        firmPhone: '123456789',
+        firmSupplierNo: '1234AB',
+        firmContactName: 'Some Firm',
+        firmSolicitorName: 'Some Solicitor',
+        firmSolicitorRef: 'Ref1',
+      },
+      StatementOfCase: 'Statement Of Case',
+      DetailsOfWorkCompleted: 'Some Details of Work Completed',
+      DetailsOfApplication: 'Some Details of Application',
+    }
 
-    expect(result).not.toBeNull()
-    expect(result.sections.length).toEqual(12)
-    expect(result.sections[0].title).toEqual('General Information')
-    expect(result.sections[1].title).toEqual('Firm Details')
-    expect(result.sections[2].title).toEqual("Client's Details")
-    expect(result.sections[3].title).toEqual('Capital Details')
-    expect(result.sections[4].title).toEqual('Income Details')
-    expect(result.sections[5].title).toEqual('Advice and Assistance')
-    expect(result.sections[6].title).toEqual("Solicitor's Declaration")
-    expect(result.sections[7].title).toEqual('Court of Appeal Funding')
-    expect(result.sections[8].title).toEqual('Details of Work Completed')
-    expect(result.sections[9].title).toEqual('Costs')
-    expect(result.sections[10].title).toEqual('Case History')
-    expect(result.sections[11].title).toEqual("Solicitor's Certification")
+    const crmDetailService = new CRMDetailsService()
+    const result = crmDetailService.getCrmDetails('CRM5', 'general-information', crm5Response)
+
+    expect(result).toEqual({
+      sectionId: 'general-information',
+      subsections: [
+        {
+          fields: [
+            {
+              apiField: 'No',
+              label: 'Has a previous application for an extension been made?',
+            },
+            {
+              apiField: '',
+              label: 'Most recent application reference',
+            },
+            {
+              apiField: 'No',
+              label: 'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
+            },
+            {
+              apiField: '',
+              label: 'Please give details',
+            },
+            {
+              apiField: 'Yes',
+              label: 'Urgent?',
+            },
+            {
+              apiField: 'Urgent',
+              label: 'Reason for urgency',
+            },
+          ],
+          title: 'General Information',
+        },
+      ],
+      title: 'General Information',
+    })
   })
 })
