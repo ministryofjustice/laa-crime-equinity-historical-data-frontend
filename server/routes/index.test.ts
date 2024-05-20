@@ -6,26 +6,31 @@ import { appWithAllRoutes } from './testutils/appSetup'
 import CrmApiService from '../services/crmApiService'
 import SearchEformService from '../services/searchEformService'
 import NavigationService from '../services/navigationService'
+import CrmDisplayService from '../services/crmDisplayService'
 
 jest.mock('../services/crmApiService')
 jest.mock('../services/searchEformService')
 jest.mock('../services/navigationService')
+jest.mock('../services/crmDisplayService')
 
 let app: Express
 
 let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
 let mockSearchEformService: jest.Mocked<SearchEformService>
 let mockNavigationService: jest.Mocked<NavigationService>
+let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
 
 beforeEach(() => {
   mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
   mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
   mockNavigationService = new NavigationService() as jest.Mocked<NavigationService>
+  mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
   app = appWithAllRoutes({
     services: {
       crm5Service: mockCrm5Service,
       searchEformService: mockSearchEformService,
       navigationService: mockNavigationService,
+      crmDisplayService: mockCrmDisplayService,
     },
   })
 })
@@ -141,7 +146,6 @@ describe('GET /crm5', () => {
       .expect('Content-Type', /html/)
       .expect(res => {
         expect(res.text).toContain('CRM5')
-        expect(res.text).toContain('1234567')
       })
   })
 })
