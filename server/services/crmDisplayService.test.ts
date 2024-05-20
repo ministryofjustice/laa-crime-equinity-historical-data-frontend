@@ -1,7 +1,7 @@
 import CrmDisplayService from './crmDisplayService'
 
-describe('CRM Detail Service', () => {
-  it('should return crm details for given CRM type & section', () => {
+describe('CRM Display Service', () => {
+  it('should return crm section for given CRM type & section id', () => {
     const crm5Response = {
       usn: 1234567,
       hasPreviousApplication: 'No',
