@@ -1,11 +1,11 @@
 import type { Request, RequestHandler, Response } from 'express'
 import { Crm5Response } from '@crm5'
-import CrmService from '../services/crmService'
+import CrmApiService from '../services/crmApiService'
 import NavigationService from '../services/navigationService'
 
 export default class Crm5Controller {
   constructor(
-    private readonly crm5Service: CrmService<Crm5Response>,
+    private readonly crm5Service: CrmApiService<Crm5Response>,
     private readonly navigationService: NavigationService,
   ) {}
 

@@ -1,22 +1,22 @@
 import type { Crm5Response } from '@crm5'
 import CrmApiClient from '../data/api/crmApiClient'
-import CrmService from './crmService'
+import CrmApiService from './crmApiService'
 
 jest.mock('../data/api/crmApiClient')
 
-describe('CRM Service', () => {
+describe('CRM API Service', () => {
   let mockCrm5ApiClient: jest.Mocked<CrmApiClient<Crm5Response>>
 
   beforeEach(() => {
     mockCrm5ApiClient = new CrmApiClient(null, null) as jest.Mocked<CrmApiClient<Crm5Response>>
   })
 
-  it('should return CRM5', async () => {
+  it('should return crm for given usn', async () => {
     const expectedResponse = successResponse()
 
     mockCrm5ApiClient.getCrm.mockResolvedValue(expectedResponse)
 
-    const crm5Service = new CrmService(mockCrm5ApiClient)
+    const crm5Service = new CrmApiService(mockCrm5ApiClient)
 
     const result = await crm5Service.getCrm(1234567)
 

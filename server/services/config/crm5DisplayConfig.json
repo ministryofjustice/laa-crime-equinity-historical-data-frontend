@@ -1,7 +1,7 @@
 {
   "sections": [
     {
-      "urlPath": "general-information",
+      "sectionId": "general-information",
       "title": "General Information",
       "subsections": [
         {
@@ -36,7 +36,7 @@
       ]
     },
     {
-      "urlPath": "firm-details",
+      "sectionId": "firm-details",
       "title": "Firm Details",
       "subsections": [
         {
@@ -109,7 +109,7 @@
       ]
     },
     {
-      "urlPath": "clients-details",
+      "sectionId": "clients-details",
       "title": "Client's Details",
       "subsections": [
         {
@@ -172,7 +172,7 @@
       ]
     },
     {
-      "urlPath": "capital-details",
+      "sectionId": "capital-details",
       "title": "Capital Details",
       "subsections": [
         {
@@ -207,7 +207,7 @@
       ]
     },
     {
-      "urlPath": "income-details",
+      "sectionId": "income-details",
       "title": "Income Details",
       "subsections": [
         {
@@ -278,7 +278,7 @@
       ]
     },
     {
-      "urlPath": "advice-and-assistance",
+      "sectionId": "advice-and-assistance",
       "title": "Advice and Assistance",
       "subsections": [
         {
@@ -306,7 +306,7 @@
       ]
     },
     {
-      "urlPath": "solicitors-declaration",
+      "sectionId": "solicitors-declaration",
       "title": "Solicitor's Declaration",
       "subsections": [
         {
@@ -329,7 +329,7 @@
       ]
     },
     {
-      "urlPath": "court-of-appeal-funding",
+      "sectionId": "court-of-appeal-funding",
       "title": "Court of Appeal Funding",
       "subsections": [
         {
@@ -356,7 +356,7 @@
       ]
     },
     {
-      "urlPath": "details-of-work-completed",
+      "sectionId": "details-of-work-completed",
       "title": "Details of Work Completed",
       "subsections": [
         {
@@ -375,7 +375,7 @@
       ]
     },
     {
-      "urlPath": "costs",
+      "sectionId": "costs",
       "title": "Costs",
       "subsections": [
         {
@@ -547,7 +547,7 @@
       ]
     },
     {
-      "urlPath": "case-history",
+      "sectionId": "case-history",
       "title": "Case History",
       "subsections": [
         {
@@ -571,7 +571,7 @@
       ]
     },
     {
-      "urlPath": "solicitors-certification",
+      "sectionId": "solicitors-certification",
       "title": "Solicitor's Certification",
       "subsections": [
         {

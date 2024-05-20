@@ -3,22 +3,22 @@ import request from 'supertest'
 import { Crm5Response } from '@crm5'
 import { SearchResponse } from '@searchEform'
 import { appWithAllRoutes } from './testutils/appSetup'
-import CrmService from '../services/crmService'
+import CrmApiService from '../services/crmApiService'
 import SearchEformService from '../services/searchEformService'
 import NavigationService from '../services/navigationService'
 
-jest.mock('../services/crmService')
+jest.mock('../services/crmApiService')
 jest.mock('../services/searchEformService')
 jest.mock('../services/navigationService')
 
 let app: Express
 
-let mockCrm5Service: jest.Mocked<CrmService<Crm5Response>>
+let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
 let mockSearchEformService: jest.Mocked<SearchEformService>
 let mockNavigationService: jest.Mocked<NavigationService>
 
 beforeEach(() => {
-  mockCrm5Service = new CrmService(null) as jest.Mocked<CrmService<Crm5Response>>
+  mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
   mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
   mockNavigationService = new NavigationService() as jest.Mocked<NavigationService>
   app = appWithAllRoutes({
