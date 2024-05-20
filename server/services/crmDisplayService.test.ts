@@ -1,4 +1,4 @@
-import CRMDetailsService from './crmDetailsService'
+import CrmDisplayService from './crmDisplayService'
 
 describe('CRM Detail Service', () => {
   it('should return crm details for given CRM type & section', () => {
@@ -24,8 +24,8 @@ describe('CRM Detail Service', () => {
       DetailsOfApplication: 'Some Details of Application',
     }
 
-    const crmDetailService = new CRMDetailsService()
-    const result = crmDetailService.getCrmDetails('CRM5', 'general-information', crm5Response)
+    const crmDetailService = new CrmDisplayService()
+    const result = crmDetailService.getCrmSection('CRM5', 'general-information', crm5Response)
 
     expect(result).toEqual({
       sectionId: 'general-information',

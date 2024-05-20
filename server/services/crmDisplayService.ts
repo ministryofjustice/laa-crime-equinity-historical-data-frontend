@@ -1,6 +1,6 @@
 import Joi from 'joi'
 import _ from 'lodash'
-import crm5DetailsConfig from './config/crm5DetailsConfig.json'
+import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 
 type Field = {
   label: string
@@ -20,13 +20,13 @@ type Section = {
 
 type CrmType = 'CRM4' | 'CRM5'
 
-type CRMDetailsConfig = {
+type CrmDisplayConfig = {
   sections: Array<Section>
 }
 
-const configMap: Record<CrmType, CRMDetailsConfig> = {
+const configMap: Record<CrmType, CrmDisplayConfig> = {
   CRM4: null, // not supported yet
-  CRM5: crm5DetailsConfig,
+  CRM5: crm5DisplayConfig,
 }
 
 const schema = Joi.object({
@@ -44,7 +44,7 @@ const schema = Joi.object({
 })
 
 const getValidConfig = (crmType: CrmType) => {
-  const config: CRMDetailsConfig = configMap[crmType]
+  const config: CrmDisplayConfig = configMap[crmType]
   const { error } = schema.validate(config)
   if (error?.details) {
     throw new Error(`Invalid ${crmType} Details config: ${JSON.stringify(error.details)}`)
@@ -52,8 +52,8 @@ const getValidConfig = (crmType: CrmType) => {
   return config
 }
 
-export default class CrmDetailsService {
-  getCrmDetails<T>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
+export default class CrmDisplayService {
+  getCrmSection<T>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
     const config = getValidConfig(crmType)
     const section = getSection(sectionId, config.sections)
     const subsections = section.subsections.map(subsection => {

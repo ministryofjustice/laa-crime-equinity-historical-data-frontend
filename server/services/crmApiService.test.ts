@@ -1,6 +1,6 @@
 import type { Crm5Response } from '@crm5'
 import CrmApiClient from '../data/api/crmApiClient'
-import CrmService from './crmService'
+import CrmApiService from './crmApiService'
 
 jest.mock('../data/api/crmApiClient')
 
@@ -16,7 +16,7 @@ describe('CRM Service', () => {
 
     mockCrm5ApiClient.getCrm.mockResolvedValue(expectedResponse)
 
-    const crm5Service = new CrmService(mockCrm5ApiClient)
+    const crm5Service = new CrmApiService(mockCrm5ApiClient)
 
     const result = await crm5Service.getCrm(1234567)
 
