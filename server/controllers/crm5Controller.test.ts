@@ -2,14 +2,14 @@ import type { Request, Response, NextFunction } from 'express'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import { Crm5Response } from '@crm5'
 import Crm5Controller from './crm5Controller'
-import CrmService from '../services/crmService'
+import CrmApiService from '../services/crmApiService'
 import NavigationService from '../services/navigationService'
 
-jest.mock('../services/crmService')
+jest.mock('../services/crmApiService')
 jest.mock('../services/navigationService')
 
 describe('CRM5 Controller', () => {
-  let mockCrm5Service: jest.Mocked<CrmService<Crm5Response>>
+  let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
   let mockNavigationService: jest.Mocked<NavigationService>
 
   let request: DeepMocked<Request>
@@ -19,7 +19,7 @@ describe('CRM5 Controller', () => {
   beforeEach(() => {
     request = createMock<Request>({})
     response = createMock<Response>({})
-    mockCrm5Service = new CrmService(null) as jest.Mocked<CrmService<Crm5Response>>
+    mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
     mockNavigationService = new NavigationService() as jest.Mocked<NavigationService>
   })
 
