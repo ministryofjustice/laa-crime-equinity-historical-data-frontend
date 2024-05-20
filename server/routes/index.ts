@@ -3,6 +3,9 @@ import { type RequestHandler, Router } from 'express'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import { Controllers } from '../controllers'
 
+import authProvider from '../auth/authProvider'
+import { REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } from '../auth/authConfig'
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function routes({ searchEformController, crm5Controller }: Controllers): Router {
   const router = Router()
@@ -22,6 +25,33 @@ export default function routes({ searchEformController, crm5Controller }: Contro
   get('/generate-report', (req, res, next) => {
     res.render('pages/generateReport')
   })
+
+  get(
+    '/signin',
+    authProvider.login({
+      scopes: [],
+      redirectUri: REDIRECT_URI,
+      successRedirect: '/',
+    }),
+  )
+
+  get(
+    '/acquireToken',
+    authProvider.acquireToken({
+      scopes: ['User.Read'],
+      redirectUri: REDIRECT_URI,
+      successRedirect: '/users/profile',
+    }),
+  )
+
+  post('/redirect', authProvider.handleRedirect())
+
+  get(
+    '/signout',
+    authProvider.logout({
+      postLogoutRedirectUri: POST_LOGOUT_REDIRECT_URI,
+    }),
+  )
 
   return router
 }
