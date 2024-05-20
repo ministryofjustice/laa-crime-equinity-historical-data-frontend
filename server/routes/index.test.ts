@@ -1,22 +1,33 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { Crm5Response } from '@crm5'
+import { SearchResponse } from '@searchEform'
 import { appWithAllRoutes } from './testutils/appSetup'
-import CrmService from '../services/crmService'
+import CrmApiService from '../services/crmApiService'
 import SearchEformService from '../services/searchEformService'
+import NavigationService from '../services/navigationService'
 
-jest.mock('../services/crmService')
+jest.mock('../services/crmApiService')
 jest.mock('../services/searchEformService')
+jest.mock('../services/navigationService')
 
 let app: Express
 
-let mockCrm5Service: jest.Mocked<CrmService<Crm5Response>>
+let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
 let mockSearchEformService: jest.Mocked<SearchEformService>
+let mockNavigationService: jest.Mocked<NavigationService>
 
 beforeEach(() => {
-  mockCrm5Service = new CrmService(null) as jest.Mocked<CrmService<Crm5Response>>
+  mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
   mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
-  app = appWithAllRoutes({ services: { crm5Service: mockCrm5Service, searchEformService: mockSearchEformService } })
+  mockNavigationService = new NavigationService() as jest.Mocked<NavigationService>
+  app = appWithAllRoutes({
+    services: {
+      crm5Service: mockCrm5Service,
+      searchEformService: mockSearchEformService,
+      navigationService: mockNavigationService,
+    },
+  })
 })
 
 afterEach(() => {
@@ -47,7 +58,7 @@ describe('GET /search-eform', () => {
 
 describe('GET /search-eform?page=1&usn=1234567', () => {
   it('should render search eForm page with search results', () => {
-    const searchResponse = {
+    const searchResponse: SearchResponse = {
       results: [
         {
           usn: 123456789,
@@ -102,7 +113,7 @@ describe('POST /search-eform', () => {
 
 describe('GET /crm5', () => {
   it('should render crm5 page', () => {
-    const crm5Response = {
+    const crm5Response: Crm5Response = {
       usn: 1234567,
       hasPreviousApplication: 'No',
       previousApplicationRef: '',
@@ -117,6 +128,7 @@ describe('GET /crm5', () => {
         firmSupplierNo: '1234AB',
         firmContactName: 'Some Firm',
         firmSolicitorName: 'Some Solicitor',
+        firmSolicitorRef: 'Ref1',
       },
       StatementOfCase: 'Statement Of Case',
       DetailsOfWorkCompleted: 'Some Details of Work Completed',

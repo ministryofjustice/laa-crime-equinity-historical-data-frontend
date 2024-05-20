@@ -5,6 +5,7 @@ type Firm = {
   firmSupplierNo: string
   firmContactName: string
   firmSolicitorName: string
+  firmSolicitorRef: string
 }
 
 type CaseDetails = {
@@ -77,10 +78,10 @@ type Proceedings = {
 }
 
 type CourtAppealFunding = {
-  hasCourtAppeal: false
+  hasCourtAppeal: boolean
   appealDetails: string
-  benefitOfCourt: false
-  expertReport: false
+  benefitOfCourt: boolean
+  expertReport: boolean
 }
 
 type TimedAndCost = {
