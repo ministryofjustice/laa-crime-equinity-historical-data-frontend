@@ -3,8 +3,7 @@
   "items": [
     {
       "text": "General Information",
-      "href": "general-information",
-      "active": true
+      "href": "general-information"
     },
     {
       "text": "Firm Details",

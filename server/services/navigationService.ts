@@ -12,11 +12,12 @@ type NavigationConfig = {
 }
 
 export default class NavigationService {
-  getCrm5NavigationConfig(baseLink: string): NavigationConfig {
+  getCrm5NavigationConfig(baseLink: string, sectionId: string): NavigationConfig {
     const items = crm5NavigationConfig.items.map(item => {
       return {
         ...item,
         href: `${baseLink}/${item.href}`,
+        active: item.href === sectionId,
       }
     })
 

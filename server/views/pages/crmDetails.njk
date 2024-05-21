@@ -15,9 +15,27 @@
                 </div>
                 <div class="govuk-grid-column-two-thirds">
                     <div>
-                        <p class="govuk-body">
-                            USN {{ data.usn }}
-                        </p>
+
+                        {% for subsection in section.subsections %}
+                            <div class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></div>
+                            <div class="govuk-form-group">
+                                <h2 class="govuk-heading-l">{{ subsection.title }}</h2>
+                                {% for field in subsection.fields %}
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label"><strong>{{ field.label }}</strong></label>
+                                        <span class="govuk-body">
+                                            {% if field.apiField %}
+                                                {{  field.apiField }}
+                                            {% else %}
+                                                N/A
+                                            {% endif %}
+                                          </span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+
+
                     </div>
                 </div>
             </div>
