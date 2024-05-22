@@ -126,10 +126,35 @@ describe('routes', () => {
       const crm4Response: Crm4Response = {
         greaterValue: true,
         postMortemExamination: 'No',
-        AlternativeQuotes: {
-          alternativeQuote: 'No',
-          reason: 'n/a',
-          numberOfQuotes: 0,
+        ExpenditureDetails: {
+          Details: {
+            expenditureType: 'a Psychiatrist',
+            priorAuthority: 'No',
+            expertName: 'tyjtjtjt',
+            companyName: '',
+            statusExpert: '',
+            postCodeExpert: 'e1',
+          },
+          Preparation: {
+            hours: '4',
+            hourlyRate: 50,
+            total: 200,
+          },
+          AdditionalExpenditure: [
+            {
+              description: 'some description',
+              justification: 'required',
+              quantity: 0,
+              rate: 0,
+              total: 0,
+            },
+          ],
+          Travel: {
+            hours: '0',
+            rate: 0,
+            total: 0,
+          },
+          Authority: 200.0,
         },
       }
       mockCrm4Service.getCrm.mockResolvedValue(crm4Response)

@@ -63,17 +63,42 @@ type Travel = {
   total: number
 }
 
+type AdditionalExpenditure = {
+  description: string
+  justification: string
+  quantity: number
+  rate: number
+  total: number
+}
+
 type ExpenditureDetails = {
   Details: Details
   Preparation: Preparation
+  AdditionalExpenditure: Array<AdditionalExpenditure>
   Travel: Travel
   Authority: number
+}
+
+type Quote = {
+  companyName: string
+  expertName: string
+  contactPhone: string
+  costBasis: string
+  preparationHours: number
+  hourlyRate: number
+  addtionalItemDesc: string
+  addtionalItemAmount: number
+  travelHours: string
+  travelHourlyRate: number
+  quoteTotal: number
+  qcDetails: string
 }
 
 type AlternativeQuotes = {
   alternativeQuote: string
   reason: string
   numberOfQuotes: number
+  Quotes: Array<Quote>
 }
 
 type PriorAuthorityDetails = {

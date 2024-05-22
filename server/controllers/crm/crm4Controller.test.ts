@@ -44,17 +44,21 @@ describe('CRM4 Controller', () => {
           hourlyRate: 50,
           total: 200,
         },
+        AdditionalExpenditure: [
+          {
+            description: 'some description',
+            justification: 'required',
+            quantity: 0,
+            rate: 0,
+            total: 0,
+          },
+        ],
         Travel: {
           hours: '0',
           rate: 0,
           total: 0,
         },
         Authority: 200.0,
-      },
-      AlternativeQuotes: {
-        alternativeQuote: 'No',
-        reason: 'n/a',
-        numberOfQuotes: 0,
       },
     }
 
