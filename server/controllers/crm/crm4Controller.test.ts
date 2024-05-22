@@ -2,12 +2,12 @@ import type { Request, Response, NextFunction } from 'express'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import { Crm4Response } from '@crm4'
 import Crm4Controller from './crm4Controller'
-import CrmApiService from '../services/crmApiService'
-import NavigationService from '../services/navigationService'
-import CrmDisplayService from '../services/crmDisplayService'
+import CrmApiService from '../../services/crmApiService'
+import NavigationService from '../../services/navigationService'
+import CrmDisplayService from '../../services/crmDisplayService'
 
-jest.mock('../services/crmApiService')
-jest.mock('../services/navigationService')
+jest.mock('../../services/crmApiService')
+jest.mock('../../services/navigationService')
 
 describe('CRM4 Controller', () => {
   let mockCrmApiService: jest.Mocked<CrmApiService<Crm4Response>>
