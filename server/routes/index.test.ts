@@ -160,10 +160,10 @@ describe('routes', () => {
       mockCrm4Service.getCrm.mockResolvedValue(crm4Response)
 
       return request(app)
-        .get('/crm5/1234567')
+        .get('/crm4/1234567')
         .expect('Content-Type', /html/)
         .expect(res => {
-          expect(res.text).toContain('CRM5')
+          expect(res.text).toContain('CRM4')
         })
     })
   })
