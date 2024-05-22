@@ -64,7 +64,7 @@ describe('CRM4 Controller', () => {
 
     mockCrmApiService.getCrm.mockResolvedValue(crm4Response)
 
-    const crm4Controller = new Crm4Controller(mockCrmApiService, mockNavigationService, mockCrmDisplayService)
+    const crm4Controller = new Crm4Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm4Controller.show()
     request.params = {
       usn: '123456789',

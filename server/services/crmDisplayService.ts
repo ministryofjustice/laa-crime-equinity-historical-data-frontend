@@ -1,46 +1,10 @@
 import Joi from 'joi'
 import _ from 'lodash'
+import { CrmDisplayConfig, CrmType, Field, Navigation, NavigationItem, Section, SubSection } from '@crmDisplay'
 import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 
-type Field = {
-  label: string
-  apiField: string
-}
-
-type SubSection = {
-  title: string
-  fields: Array<Field>
-}
-
-type Section = {
-  sectionId: string
-  title: string
-  subsections: Array<SubSection>
-}
-
-type CrmType = 'CRM4' | 'CRM5'
-
-type CrmDisplayConfig = {
-  sections: Array<Section>
-}
-
-type NavigationItem = {
-  text: string
-  href: string
-  active?: boolean
-}
-
-type Navigation = {
-  label: string
-  items: Array<NavigationItem>
-}
-
-const configMap: Record<CrmType, CrmDisplayConfig> = {
-  CRM4: null, // not supported yet
-  CRM5: crm5DisplayConfig,
-}
-
 const schema = Joi.object({
+  title: Joi.string().required(),
   sections: Joi.array().items({
     sectionId: Joi.string().required(),
     title: Joi.string().required(),
@@ -54,18 +18,26 @@ const schema = Joi.object({
   }),
 })
 
-const getValidConfig = (crmType: CrmType) => {
-  const displayConfig = configMap[crmType]
-  const { error } = schema.validate(displayConfig)
+const getValidConfig = (config: CrmDisplayConfig, crmType: CrmType) => {
+  const { error } = schema.validate(config)
   if (error?.details) {
     throw new Error(`Invalid ${crmType} Display config: ${JSON.stringify(error.details)}`)
   }
-  return displayConfig
+  return config
+}
+
+const configMap: Record<CrmType, CrmDisplayConfig> = {
+  CRM4: null, // not supported yet
+  CRM5: getValidConfig(crm5DisplayConfig, 'CRM5'),
 }
 
 export default class CrmDisplayService {
+  getCrmTitle(crmType: CrmType) {
+    return configMap[crmType].title
+  }
+
   getCrmNavigation(crmType: CrmType, baseLink: string, sectionId: string): Navigation {
-    const displayConfig = getValidConfig(crmType)
+    const displayConfig = configMap[crmType]
 
     let isAnySectionActive = false
     const items: Array<NavigationItem> = displayConfig.sections.map(section => {
@@ -91,7 +63,7 @@ export default class CrmDisplayService {
   }
 
   getCrmSection<T>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
-    const crmDisplayConfig = getValidConfig(crmType)
+    const crmDisplayConfig = configMap[crmType]
     const section = getSection(sectionId, crmDisplayConfig.sections)
     const subsections: Array<SubSection> = section.subsections.map(subsection => {
       return { ...subsection, fields: getFields(subsection.fields, crmResponse) }

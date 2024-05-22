@@ -7,7 +7,6 @@ import CrmDisplayService from '../../services/crmDisplayService'
 export default class Crm4Controller {
   constructor(
     private readonly crm4Service: CrmApiService<Crm4Response>,
-    private readonly navigationService: NavigationService,
     private readonly crmDisplayService: CrmDisplayService,
   ) {}
 

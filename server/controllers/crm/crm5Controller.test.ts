@@ -3,15 +3,13 @@ import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import { Crm5Response } from '@crm5'
 import Crm5Controller from './crm5Controller'
 import CrmApiService from '../../services/crmApiService'
-import NavigationService from '../../services/navigationService'
 import CrmDisplayService from '../../services/crmDisplayService'
 
 jest.mock('../../services/crmApiService')
-jest.mock('../../services/navigationService')
+jest.mock('../../services/crmDisplayService')
 
 describe('CRM5 Controller', () => {
   let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
-  let mockNavigationService: jest.Mocked<NavigationService>
   let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
 
   let request: DeepMocked<Request>
@@ -22,7 +20,6 @@ describe('CRM5 Controller', () => {
     request = createMock<Request>({})
     response = createMock<Response>({})
     mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
-    mockNavigationService = new NavigationService() as jest.Mocked<NavigationService>
     mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
   })
 
@@ -50,7 +47,8 @@ describe('CRM5 Controller', () => {
     }
 
     mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
-    mockNavigationService.getCrm5NavigationConfig.mockReturnValue({
+    mockCrmDisplayService.getCrmTitle.mockReturnValue('CRM5')
+    mockCrmDisplayService.getCrmNavigation.mockReturnValue({
       label: 'Side navigation',
       items: [
         {
@@ -60,8 +58,27 @@ describe('CRM5 Controller', () => {
         },
       ],
     })
+    mockCrmDisplayService.getCrmSection.mockReturnValue({
+      sectionId: 'general-information',
+      title: 'General Information',
+      subsections: [
+        {
+          title: 'General Information',
+          fields: [
+            {
+              label: 'Has a previous application for an extension been made?',
+              apiField: 'No',
+            },
+            {
+              label: 'Most recent application reference',
+              apiField: '',
+            },
+          ],
+        },
+      ],
+    })
 
-    const crm5Controller = new Crm5Controller(mockCrm5Service, mockNavigationService, mockCrmDisplayService)
+    const crm5Controller = new Crm5Controller(mockCrm5Service, mockCrmDisplayService)
     const requestHandler = crm5Controller.show()
     request.params = {
       usn: '123456789',
@@ -93,23 +110,6 @@ describe('CRM5 Controller', () => {
               {
                 apiField: '',
                 label: 'Most recent application reference',
-              },
-              {
-                apiField: 'No',
-                label:
-                  'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
-              },
-              {
-                apiField: '',
-                label: 'Please give details',
-              },
-              {
-                apiField: 'Yes',
-                label: 'Urgent?',
-              },
-              {
-                apiField: 'Urgent',
-                label: 'Reason for urgency',
               },
             ],
             title: 'General Information',
