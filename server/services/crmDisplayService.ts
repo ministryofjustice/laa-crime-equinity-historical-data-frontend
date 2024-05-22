@@ -24,6 +24,17 @@ type CrmDisplayConfig = {
   sections: Array<Section>
 }
 
+type NavigationItem = {
+  text: string
+  href: string
+  active?: boolean
+}
+
+type Navigation = {
+  label: string
+  items: Array<NavigationItem>
+}
+
 const configMap: Record<CrmType, CrmDisplayConfig> = {
   CRM4: null, // not supported yet
   CRM5: crm5DisplayConfig,
@@ -44,19 +55,45 @@ const schema = Joi.object({
 })
 
 const getValidConfig = (crmType: CrmType) => {
-  const config: CrmDisplayConfig = configMap[crmType]
-  const { error } = schema.validate(config)
+  const displayConfig = configMap[crmType]
+  const { error } = schema.validate(displayConfig)
   if (error?.details) {
-    throw new Error(`Invalid ${crmType} Details config: ${JSON.stringify(error.details)}`)
+    throw new Error(`Invalid ${crmType} Display config: ${JSON.stringify(error.details)}`)
   }
-  return config
+  return displayConfig
 }
 
 export default class CrmDisplayService {
+  getCrmNavigation(crmType: CrmType, baseLink: string, sectionId: string): Navigation {
+    const displayConfig = getValidConfig(crmType)
+
+    let isAnySectionActive = false
+    const items: Array<NavigationItem> = displayConfig.sections.map(section => {
+      const isActive = section.sectionId === sectionId
+      if (isActive) {
+        isAnySectionActive = true
+      }
+      return {
+        href: `${baseLink}/${section.sectionId}`,
+        text: section.title,
+        active: isActive,
+      }
+    })
+
+    if (!isAnySectionActive && items.length > 0) {
+      items[0].active = true
+    }
+
+    return {
+      items,
+      label: 'Side navigation',
+    }
+  }
+
   getCrmSection<T>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
-    const config = getValidConfig(crmType)
-    const section = getSection(sectionId, config.sections)
-    const subsections = section.subsections.map(subsection => {
+    const crmDisplayConfig = getValidConfig(crmType)
+    const section = getSection(sectionId, crmDisplayConfig.sections)
+    const subsections: Array<SubSection> = section.subsections.map(subsection => {
       return { ...subsection, fields: getFields(subsection.fields, crmResponse) }
     })
     return {
