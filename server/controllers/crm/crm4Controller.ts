@@ -1,7 +1,6 @@
 import type { Request, RequestHandler, Response } from 'express'
 import { Crm4Response } from '@crm4'
 import CrmApiService from '../../services/crmApiService'
-import NavigationService from '../../services/navigationService'
 import CrmDisplayService from '../../services/crmDisplayService'
 
 export default class Crm4Controller {

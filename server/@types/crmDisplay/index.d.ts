@@ -18,6 +18,7 @@ type CrmType = 'CRM4' | 'CRM5'
 
 type CrmDisplayConfig = {
   title: string
+  urlPath: string
   sections: Array<Section>
 }
 
@@ -32,4 +33,10 @@ type Navigation = {
   items: Array<NavigationItem>
 }
 
-export type { CrmType, CrmDisplayConfig, Navigation, NavigationItem, Section, SubSection, Field }
+type CrmDetails = {
+  title: string
+  navigation: Navigation
+  section: Section
+}
+
+export type { CrmDisplayConfig, CrmType, CrmDetails, Navigation, NavigationItem, Section, SubSection, Field }

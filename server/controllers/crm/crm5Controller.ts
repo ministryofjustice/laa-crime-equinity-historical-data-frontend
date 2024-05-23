@@ -14,10 +14,8 @@ export default class Crm5Controller {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm5Response = await this.crm5Service.getCrm(usn)
-      const title = this.crmDisplayService.getCrmTitle('CRM5')
-      const section = this.crmDisplayService.getCrmSection('CRM5', sectionId, crm5Response)
-      const navigation = this.crmDisplayService.getCrmNavigation('CRM5', `/crm5/${usn}`, sectionId)
-      res.render('pages/crmDetails', { title, navigationItems: navigation, section })
+      const crm5Details = this.crmDisplayService.getCrmDetails('CRM5', sectionId, usn, crm5Response)
+      res.render('pages/crmDetails', crm5Details)
     }
   }
 }

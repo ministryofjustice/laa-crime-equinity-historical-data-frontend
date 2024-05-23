@@ -2,9 +2,15 @@ import { Crm5Response } from '@crm5'
 import CrmDisplayService from './crmDisplayService'
 
 describe('CRM Display Service', () => {
+  const crmDisplayService = new CrmDisplayService()
+  describe('getTitle()', () => {
+    const result = crmDisplayService.getCrmTitle('CRM5')
+
+    expect(result).toEqual('CRM5')
+  })
+
   describe('getCrmNavigation()', () => {
     it('should return crm5 navigation config', () => {
-      const crmDisplayService = new CrmDisplayService()
       const result = crmDisplayService.getCrmNavigation('CRM5', '/test', 'advice-and-assistance')
 
       expect(result).toEqual({
@@ -29,7 +35,6 @@ describe('CRM Display Service', () => {
     })
 
     it('should set the first item as active if no sectionId is provided', () => {
-      const crmDisplayService = new CrmDisplayService()
       const result = crmDisplayService.getCrmNavigation('CRM5', '/test', '')
 
       expect(result).toEqual({
@@ -54,7 +59,6 @@ describe('CRM Display Service', () => {
     })
 
     it('should set the first item as active if sectionId does not match any item', () => {
-      const crmDisplayService = new CrmDisplayService()
       const result = crmDisplayService.getCrmNavigation('CRM5', '/test', 'non-existent-section')
 
       expect(result).toEqual({
@@ -103,7 +107,6 @@ describe('CRM Display Service', () => {
         DetailsOfApplication: 'Some Details of Application',
       }
 
-      const crmDisplayService = new CrmDisplayService()
       const result = crmDisplayService.getCrmSection('CRM5', 'general-information', crm5Response)
 
       expect(result).toEqual({

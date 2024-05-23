@@ -1,5 +1,6 @@
 {
   "title": "CRM5",
+  "urlPath": "crm5",
   "sections": [
     {
       "sectionId": "general-information",
