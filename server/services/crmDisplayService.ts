@@ -80,7 +80,7 @@ function getFields<T>(fields: Array<Field>, crmResponse: T): Array<Field> {
         value: getApiFieldValue(crmResponse, apiFieldName),
       }
     })
-    .filter(field => field.value) // Filter out fields with empty values
+    .filter(field => field.value)
 }
 
 function getApiFieldValue<T>(crmResponse: T, propertyName: string): string {
