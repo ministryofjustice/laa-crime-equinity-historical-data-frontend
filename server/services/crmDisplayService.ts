@@ -5,6 +5,7 @@ import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 type Field = {
   label: string
   apiField: string
+  value?: string
 }
 
 type SubSection = {
@@ -71,15 +72,17 @@ const getSection = (sectionId: string, sections: Array<Section>): Section => {
 }
 
 function getFields<T>(fields: Array<Field>, crmResponse: T): Array<Field> {
-  return fields.map(field => {
-    const apiFieldName = field.apiField
-    return {
-      ...field,
-      apiField: getApiFieldValue(crmResponse, apiFieldName),
-    }
-  })
+  return fields
+    .map(field => {
+      const apiFieldName = field.apiField
+      return {
+        ...field,
+        value: getApiFieldValue(crmResponse, apiFieldName),
+      }
+    })
+    .filter(field => field.value) // Filter out fields with empty values
 }
 
 function getApiFieldValue<T>(crmResponse: T, propertyName: string): string {
-  return _.get(crmResponse, propertyName)
+  return _.get(crmResponse, propertyName) || ''
 }
