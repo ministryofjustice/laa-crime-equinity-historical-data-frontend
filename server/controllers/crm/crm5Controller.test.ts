@@ -8,6 +8,7 @@ import CrmDisplayService from '../../services/crmDisplayService'
 
 jest.mock('../../services/crmApiService')
 jest.mock('../../services/navigationService')
+jest.mock('../../services/crmDisplayService')
 
 describe('CRM5 Controller', () => {
   let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
@@ -61,10 +62,53 @@ describe('CRM5 Controller', () => {
       ],
     })
 
+    mockCrmDisplayService.getCrmSection.mockReturnValue({
+      sectionId: 'general-information',
+      title: 'General Information',
+      subsections: [
+        {
+          title: 'General Information',
+          fields: [
+            {
+              label: 'Has a previous application for an extension been made?',
+              apiField: 'hasPreviousApplication',
+              value: 'No',
+            },
+            {
+              label: 'Most recent application reference',
+              apiField: 'previousApplicationRef',
+              value: '',
+            },
+            {
+              label: 'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
+              apiField: 'appealedPrevDecision',
+              value: 'No',
+            },
+            {
+              label: 'Please give details',
+              apiField: 'appealedPrevDecisionDetails',
+              value: '',
+            },
+            {
+              label: 'Urgent?',
+              apiField: 'urgent',
+              value: 'Yes',
+            },
+            {
+              label: 'Reason for urgency',
+              apiField: 'urgencyReason',
+              value: 'Urgent',
+            },
+          ],
+        },
+      ],
+    })
+
     const crm5Controller = new Crm5Controller(mockCrm5Service, mockNavigationService, mockCrmDisplayService)
     const requestHandler = crm5Controller.show()
     request.params = {
-      usn: '123456789',
+      usn: '1234567',
+      sectionId: 'general-information',
     }
 
     await requestHandler(request, response, next)
@@ -83,39 +127,45 @@ describe('CRM5 Controller', () => {
       },
       section: {
         sectionId: 'general-information',
+        title: 'General Information',
         subsections: [
           {
+            title: 'General Information',
             fields: [
               {
-                apiField: 'No',
                 label: 'Has a previous application for an extension been made?',
+                apiField: 'hasPreviousApplication',
+                value: 'No',
               },
               {
-                apiField: '',
                 label: 'Most recent application reference',
+                apiField: 'previousApplicationRef',
+                value: '',
               },
               {
-                apiField: 'No',
                 label:
                   'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
+                apiField: 'appealedPrevDecision',
+                value: 'No',
               },
               {
-                apiField: '',
                 label: 'Please give details',
+                apiField: 'appealedPrevDecisionDetails',
+                value: '',
               },
               {
-                apiField: 'Yes',
                 label: 'Urgent?',
+                apiField: 'urgent',
+                value: 'Yes',
               },
               {
-                apiField: 'Urgent',
                 label: 'Reason for urgency',
+                apiField: 'urgencyReason',
+                value: 'Urgent',
               },
             ],
-            title: 'General Information',
           },
         ],
-        title: 'General Information',
       },
     })
   })
