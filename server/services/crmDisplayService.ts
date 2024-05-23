@@ -53,10 +53,6 @@ export default class CrmDisplayService {
     }
   }
 
-  private getCrmTitle(crmType: CrmType) {
-    return this.getCrmDisplayConfig(crmType).title
-  }
-
   private getCrmNavigation(crmType: CrmType, baseLink: string, sectionId: string): Navigation {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
 
