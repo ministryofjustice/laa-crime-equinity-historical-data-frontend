@@ -106,16 +106,18 @@ export default class CrmDisplayService {
   }
 
   private getFields<T>(fields: Array<Field>, crmResponse: T): Array<Field> {
-    return fields.map(field => {
-      const apiFieldName = field.apiField
-      return {
-        ...field,
-        apiField: this.getApiFieldValue(crmResponse, apiFieldName),
-      }
-    })
+    return fields
+      .map(field => {
+        const apiFieldName = field.apiField
+        return {
+          ...field,
+          value: this.getApiFieldValue(crmResponse, apiFieldName),
+        }
+      })
+      .filter(field => field.value)
   }
 
   private getApiFieldValue<T>(crmResponse: T, propertyName: string): string {
-    return _.get(crmResponse, propertyName)
+    return _.get(crmResponse, propertyName) || ''
   }
 }

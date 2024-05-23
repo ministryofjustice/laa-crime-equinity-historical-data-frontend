@@ -1,6 +1,7 @@
 type Field = {
   label: string
   apiField: string
+  value?: string
 }
 
 type SubSection = {
