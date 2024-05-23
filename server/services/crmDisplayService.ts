@@ -53,11 +53,11 @@ export default class CrmDisplayService {
     }
   }
 
-  getCrmTitle(crmType: CrmType) {
+  private getCrmTitle(crmType: CrmType) {
     return this.getCrmDisplayConfig(crmType).title
   }
 
-  getCrmNavigation(crmType: CrmType, baseLink: string, sectionId: string): Navigation {
+  private getCrmNavigation(crmType: CrmType, baseLink: string, sectionId: string): Navigation {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
 
     let isAnySectionActive = false
@@ -83,7 +83,7 @@ export default class CrmDisplayService {
     }
   }
 
-  getCrmSection<T>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
+  private getCrmSection<T>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
     const section = this.getSection(sectionId, crmDisplayConfig.sections)
     const subsections: Array<SubSection> = section.subsections.map(subsection => {

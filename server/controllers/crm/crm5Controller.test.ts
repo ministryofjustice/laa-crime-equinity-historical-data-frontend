@@ -23,7 +23,7 @@ describe('CRM5 Controller', () => {
     mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
   })
 
-  xit('should render CRM5 page', async () => {
+  it('should render CRM5 page', async () => {
     const crm5Response: Crm5Response = {
       usn: 1234567,
       hasPreviousApplication: 'No',
@@ -47,35 +47,37 @@ describe('CRM5 Controller', () => {
     }
 
     mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
-    mockCrmDisplayService.getCrmTitle.mockReturnValue('CRM5')
-    mockCrmDisplayService.getCrmNavigation.mockReturnValue({
-      label: 'Side navigation',
-      items: [
-        {
-          text: 'General Information',
-          href: '1',
-          active: true,
-        },
-      ],
-    })
-    mockCrmDisplayService.getCrmSection.mockReturnValue({
-      sectionId: 'general-information',
-      title: 'General Information',
-      subsections: [
-        {
-          title: 'General Information',
-          fields: [
-            {
-              label: 'Has a previous application for an extension been made?',
-              apiField: 'No',
-            },
-            {
-              label: 'Most recent application reference',
-              apiField: '',
-            },
-          ],
-        },
-      ],
+    mockCrmDisplayService.getCrmDetails.mockReturnValue({
+      title: 'CRM5',
+      navigation: {
+        label: 'Side navigation',
+        items: [
+          {
+            text: 'General Information',
+            href: '1',
+            active: true,
+          },
+        ],
+      },
+      section: {
+        sectionId: 'general-information',
+        title: 'General Information',
+        subsections: [
+          {
+            title: 'General Information',
+            fields: [
+              {
+                label: 'Has a previous application for an extension been made?',
+                apiField: 'No',
+              },
+              {
+                label: 'Most recent application reference',
+                apiField: '',
+              },
+            ],
+          },
+        ],
+      },
     })
 
     const crm5Controller = new Crm5Controller(mockCrm5Service, mockCrmDisplayService)
@@ -88,7 +90,7 @@ describe('CRM5 Controller', () => {
 
     expect(response.render).toHaveBeenCalledWith('pages/crmDetails', {
       title: 'CRM5',
-      navigationItems: {
+      navigation: {
         label: 'Side navigation',
         items: [
           {
