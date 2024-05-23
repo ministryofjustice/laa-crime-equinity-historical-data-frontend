@@ -39,10 +39,11 @@ const addCrmLinksToResponse = (searchResponse: SearchResponse) => {
 }
 
 const getCrmLink = (result: SearchResult) => {
-  switch (result.type) {
-    case 'CRM5':
-      return `/crm5/${result.usn}`
-    default:
-      return '#'
-  }
+  const urlPath = crmTypeToUrlPath[result.type]
+  return urlPath ? `/${urlPath}/${result.usn}` : ''
+}
+
+const crmTypeToUrlPath: Record<string, string> = {
+  CRM4: 'crm4',
+  CRM5: 'crm5',
 }
