@@ -18,26 +18,38 @@ type CaseDetails = {
 
 type ClientDetails = {
   firstName: string
+  middleName: string
   surname: string
   maritalStatus: string
   dateOfBirth: string
+  nationalInsuranceNumber: string
   address: {
+    noFixedAbode: boolean
     postcode: string
     addressLine1: string
     addressLine2: string
+    addressLine3: string
     city: string
     county: string
+    country: string
   }
   UFN: string
+}
+
+type LaaAdviceAssistance = {
+  providedAdvice: string
+  notes: string
 }
 
 type AdviceAssistance = {
   transferFromSolicitor: string
   adviceCriteria: string
+  laaAdviceAssistance: LaaAdviceAssistance
 }
 
 type CapitalDetails = {
   isUnder18: string
+  hasIncomeSupport: string
   numOfDependants: number
   clientSavings: number
   partnerSavings: number
@@ -78,10 +90,10 @@ type Proceedings = {
 }
 
 type CourtAppealFunding = {
-  hasCourtAppeal: boolean
+  hasCourtAppeal: string
   appealDetails: string
-  benefitOfCourt: boolean
-  expertReport: boolean
+  benefitOfCourt: string
+  expertReport: string
 }
 
 type TimedAndCost = {
