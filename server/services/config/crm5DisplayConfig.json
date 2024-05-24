@@ -587,11 +587,11 @@
             },
             {
               "label": "Cost",
-              "apiField": "AllCosts.AccruedCosts.OtherDisbursement.cost"
+              "apiField": "AllCosts.AnticipatedCosts.OtherDisbursement.cost"
             },
             {
               "label": "Total Anticipated Costs",
-              "apiField": "AllCosts.AccruedCosts.TotalCost.cost"
+              "apiField": "AllCosts.AnticipatedCosts.TotalCost.cost"
             },
             {
               "label": "NEW LIMIT REQUEST",
