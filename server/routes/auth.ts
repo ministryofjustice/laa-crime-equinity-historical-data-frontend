@@ -22,7 +22,7 @@ export default function routes(): Router {
     authProvider.login({
       scopes: [],
       redirectUri: REDIRECT_URI,
-      successRedirect: '/',
+      successRedirect: '/auth',
     }),
   )
 
