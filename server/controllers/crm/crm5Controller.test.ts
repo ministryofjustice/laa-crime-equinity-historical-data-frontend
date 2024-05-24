@@ -47,60 +47,56 @@ describe('CRM5 Controller', () => {
     }
 
     mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
-    mockCrmDisplayService.getCrmDetails.mockReturnValue({
-      title: 'CRM5',
-      navigation: {
-        label: 'Side navigation',
-        items: [
-          {
-            text: 'General Information',
-            href: '1',
-            active: true,
-          },
-        ],
-      },
-      section: {
-        sectionId: 'general-information',
-        title: 'General Information',
-        subsections: [
-          {
-            title: 'General Information',
-            fields: [
-              {
-                label: 'Has a previous application for an extension been made?',
-                apiField: 'hasPreviousApplication',
-                value: 'No',
-              },
-              {
-                label: 'Most recent application reference',
-                apiField: 'previousApplicationRef',
-                value: '',
-              },
-              {
-                label:
-                  'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
-                apiField: 'appealedPrevDecision',
-                value: 'No',
-              },
-              {
-                label: 'Please give details',
-                apiField: 'appealedPrevDecisionDetails',
-                value: '',
-              },
-              {
-                label: 'Urgent?',
-                apiField: 'urgent',
-                value: 'Yes',
-              },
-              {
-                label: 'Reason for urgency',
-                apiField: 'urgencyReason',
-                value: 'Urgent',
-              },
-            ],
-          },
-        ],
-      },
+    mockCrmDisplayService.getCrmNavigation.mockReturnValue({
+      label: 'Side navigation',
+      items: [
+        {
+          text: 'General Information',
+          href: '1',
+          active: true,
+        },
+      ],
+    })
+    mockCrmDisplayService.getCrmSection.mockReturnValue({
+      sectionId: 'general-information',
+      title: 'General Information',
+      subsections: [
+        {
+          title: 'General Information',
+          fields: [
+            {
+              label: 'Has a previous application for an extension been made?',
+              apiField: 'hasPreviousApplication',
+              value: 'No',
+            },
+            {
+              label: 'Most recent application reference',
+              apiField: 'previousApplicationRef',
+              value: '',
+            },
+            {
+              label: 'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
+              apiField: 'appealedPrevDecision',
+              value: 'No',
+            },
+            {
+              label: 'Please give details',
+              apiField: 'appealedPrevDecisionDetails',
+              value: '',
+            },
+            {
+              label: 'Urgent?',
+              apiField: 'urgent',
+              value: 'Yes',
+            },
+            {
+              label: 'Reason for urgency',
+              apiField: 'urgencyReason',
+              value: 'Urgent',
+            },
+          ],
+        },
+      ],
     })
 
     const crm5Controller = new Crm5Controller(mockCrm5Service, mockCrmDisplayService)
@@ -114,7 +110,7 @@ describe('CRM5 Controller', () => {
 
     expect(response.render).toHaveBeenCalledWith('pages/crmDetails', {
       title: 'CRM5',
-      navigation: {
+      navigationItems: {
         label: 'Side navigation',
         items: [
           {

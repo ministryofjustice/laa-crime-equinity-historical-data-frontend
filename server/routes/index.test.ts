@@ -187,37 +187,34 @@ describe('routes', () => {
         DetailsOfApplication: 'Some Details of Application',
       }
       mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
-      mockCrmDisplayService.getCrmDetails.mockReturnValue({
-        title: 'CRM5',
-        navigation: {
-          label: 'Side navigation',
-          items: [
-            {
-              text: 'General Information',
-              href: '1',
-              active: true,
-            },
-          ],
-        },
-        section: {
-          sectionId: 'general-information',
-          title: 'General Information',
-          subsections: [
-            {
-              title: 'General Information',
-              fields: [
-                {
-                  label: 'Has a previous application for an extension been made?',
-                  apiField: 'No',
-                },
-                {
-                  label: 'Most recent application reference',
-                  apiField: '',
-                },
-              ],
-            },
-          ],
-        },
+      mockCrmDisplayService.getCrmNavigation.mockReturnValue({
+        label: 'Side navigation',
+        items: [
+          {
+            text: 'General Information',
+            href: '1',
+            active: true,
+          },
+        ],
+      })
+      mockCrmDisplayService.getCrmSection.mockReturnValue({
+        sectionId: 'general-information',
+        title: 'General Information',
+        subsections: [
+          {
+            title: 'General Information',
+            fields: [
+              {
+                label: 'Has a previous application for an extension been made?',
+                apiField: 'No',
+              },
+              {
+                label: 'Most recent application reference',
+                apiField: '',
+              },
+            ],
+          },
+        ],
       })
 
       return request(app)

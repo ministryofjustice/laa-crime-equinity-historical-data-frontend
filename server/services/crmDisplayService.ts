@@ -1,10 +1,10 @@
 import Joi from 'joi'
 import _ from 'lodash'
 import {
-  CrmDetails,
   CrmDisplayConfig,
   CrmType,
   Field,
+  ConfigField,
   Navigation,
   NavigationItem,
   Section,
@@ -14,22 +14,22 @@ import {
 import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 
 const schema = Joi.object({
-  title: Joi.string().required(),
-  urlPath: Joi.string().required(),
-  sections: Joi.array().items({
-    sectionId: Joi.string().required(),
-    title: Joi.string().required(),
-    subsections: Joi.array().items({
+  sections: Joi.array()
+    .min(1)
+    .items({
+      sectionId: Joi.string().required(),
       title: Joi.string().required(),
-      fields: Joi.array().items({
-        label: Joi.string().required().allow(''),
-        apiField: Joi.string().required().allow(null),
+      subsections: Joi.array().items({
+        title: Joi.string().required(),
+        fields: Joi.array().items({
+          label: Joi.string().required().allow(''),
+          apiField: Joi.string().required().allow(null),
+        }),
       }),
     }),
-  }),
 })
 
-const getValidConfig = (config: CrmDisplayConfig, crmType: CrmType) => {
+const getValidConfig = (config: CrmDisplayConfig, crmType: CrmType): CrmDisplayConfig => {
   const { error } = schema.validate(config)
   if (error?.details) {
     throw new Error(`Invalid ${crmType} Display config: ${JSON.stringify(error.details)}`)
@@ -38,22 +38,12 @@ const getValidConfig = (config: CrmDisplayConfig, crmType: CrmType) => {
 }
 
 const configMap: Record<CrmType, CrmDisplayConfig> = {
-  CRM4: null, // not supported yet
-  CRM5: getValidConfig(crm5DisplayConfig, 'CRM5'),
+  crm4: null, // not supported yet
+  crm5: getValidConfig(crm5DisplayConfig, 'crm5'),
 }
 
 export default class CrmDisplayService {
-  getCrmDetails<T>(crmType: CrmType, sectionId: string, usn: number, crmResponse: T): CrmDetails {
-    const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
-    const { title, urlPath } = crmDisplayConfig
-    return {
-      title,
-      navigation: this.getCrmNavigation(crmType, `/${urlPath}/${usn}`, sectionId),
-      section: this.getCrmSection(crmType, sectionId, crmResponse),
-    }
-  }
-
-  private getCrmNavigation(crmType: CrmType, baseLink: string, sectionId: string): Navigation {
+  getCrmNavigation(crmType: CrmType, usn: number, sectionId: string): Navigation {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
 
     let isAnySectionActive = false
@@ -63,7 +53,7 @@ export default class CrmDisplayService {
         isAnySectionActive = true
       }
       return {
-        href: `${baseLink}/${section.sectionId}`,
+        href: `/${crmType}/${usn}/${section.sectionId}`,
         text: section.title,
         active: isActive,
       }
@@ -79,7 +69,7 @@ export default class CrmDisplayService {
     }
   }
 
-  private getCrmSection<T>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
+  getCrmSection<T>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
     const section = this.getSection(sectionId, crmDisplayConfig.sections)
     const subsections: Array<SubSection> = section.subsections.map(subsection => {
@@ -104,9 +94,9 @@ export default class CrmDisplayService {
   private getFields<T>(fields: Array<Field>, crmResponse: T): Array<Field> {
     return fields
       .map(field => {
-        const apiFieldName = field.apiField
+        const { apiField: apiFieldName } = field as ConfigField
         return {
-          ...field,
+          label: field.label,
           value: this.getApiFieldValue(crmResponse, apiFieldName),
         }
       })

@@ -1,8 +1,14 @@
-type Field = {
+type ConfigField = {
   label: string
   apiField: string
-  value?: string
 }
+
+type DisplayField = {
+  label: string
+  value: string
+}
+
+type Field = ConfigField | DisplayField
 
 type SubSection = {
   title: string
@@ -15,11 +21,9 @@ type Section = {
   subsections: Array<SubSection>
 }
 
-type CrmType = 'CRM4' | 'CRM5'
+type CrmType = 'crm4' | 'crm5'
 
 type CrmDisplayConfig = {
-  title: string
-  urlPath: string
   sections: Array<Section>
 }
 
@@ -34,10 +38,4 @@ type Navigation = {
   items: Array<NavigationItem>
 }
 
-type CrmDetails = {
-  title: string
-  navigation: Navigation
-  section: Section
-}
-
-export type { CrmDisplayConfig, CrmType, CrmDetails, Navigation, NavigationItem, Section, SubSection, Field }
+export type { CrmDisplayConfig, CrmType, Navigation, NavigationItem, Section, SubSection, Field, ConfigField }
