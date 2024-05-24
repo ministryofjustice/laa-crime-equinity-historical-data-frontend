@@ -14,6 +14,7 @@ export default function routes(): Router {
       title: 'MSAL SSO POC',
       isAuthenticated: req.session.isAuthenticated,
       username: req.session.account?.username,
+      name: req.session.account?.name
     })
   })
 
