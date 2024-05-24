@@ -12,6 +12,7 @@ const msalConfig = {
   system: {
     loggerOptions: {
       loggerCallback(loglevel: number, message: string) {
+        // to be removed
         console.log(message)
       },
       piiLoggingEnabled: false,
