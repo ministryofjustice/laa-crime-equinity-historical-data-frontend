@@ -10,7 +10,8 @@ export default function routes({ searchEformController, crm4Controller, crm5Cont
   const post = (routePath: string, handler: RequestHandler) => router.post(routePath, asyncMiddleware(handler))
 
   get('/', (req, res, next) => {
-    res.render('pages/index')
+    res.render('pages/index'),
+       name: req.session.account?.name
   })
 
   get('/search-eform', searchEformController.show())
