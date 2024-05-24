@@ -35,7 +35,7 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpWebRequestParsing())
   app.use(setUpStaticResources())
   nunjucksSetup(app, services.applicationInfo)
-  app.use(setUpCsrf())
+  // app.use(setUpCsrf())
 
   app.use('/', routes(controllers(services)))
   app.use('/auth', authRoutes())
