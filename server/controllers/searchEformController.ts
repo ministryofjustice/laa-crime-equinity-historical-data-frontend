@@ -1,10 +1,13 @@
 import type { Request, RequestHandler, Response } from 'express'
 import type { SearchRequest, SearchError } from '@searchEform'
 import SearchEformService from '../services/searchEformService'
-import validateSearchData, { SearchValidationErrors } from '../utils/searchEformValidation'
+import validateSearchQuery, { SearchValidationErrors } from '../utils/searchEformValidation'
 import getPagination from '../utils/pagination'
+import { buildQueryString } from '../utils/utils'
 
 const SEARCH_PAGE_SIZE = 10
+
+const VIEW_PATH = 'pages/searchEform'
 
 export default class SearchEformController {
   constructor(private readonly searchEformService: SearchEformService) {}
@@ -12,8 +15,9 @@ export default class SearchEformController {
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
       if (!req.query.page) {
-        res.render('pages/searchEform')
+        res.render(VIEW_PATH)
       } else {
+        // render page with search results
         const queryParams: Record<string, string> = {
           usn: req.query.usn as string,
           type: req.query.type as string,
@@ -25,24 +29,27 @@ export default class SearchEformController {
           page: req.query.page as string,
         }
 
-        const validationErrors = validateSearchData(queryParams)
-
+        const validationErrors = validateSearchQuery(queryParams)
         if (validationErrors) {
-          res.render('pages/searchEform', { results: [], errors: validationErrors, formValues: queryParams })
+          // render with search query validation errors
+          res.render(VIEW_PATH, { results: [], errors: validationErrors, formValues: queryParams })
         } else {
+          // perform search
           const searchRequest = buildSearchRequest(queryParams)
           const searchResponse = await this.searchEformService.search(searchRequest)
+
           if (searchResponse.error) {
+            // render with errors for search API error
             const searchErrors = getSearchErrors(searchResponse.error)
-            res.render('pages/searchEform', { results: [], errors: searchErrors, formValues: queryParams })
+            res.render(VIEW_PATH, { results: [], errors: searchErrors, formValues: queryParams })
           } else {
+            // render with search results
             const { results, paging } = searchResponse
-            const baseLink = buildBaseLink(searchRequest)
-            const pagination = getPagination(paging.number + 1, paging.total, baseLink)
-            res.render('pages/searchEform', {
+            const baseUrl = `/search-eform?${buildQueryString(searchRequest)}&`
+            res.render(VIEW_PATH, {
               results,
               itemsTotal: paging.itemsTotal,
-              pagination,
+              pagination: getPagination(paging.number + 1, paging.total, baseUrl),
             })
           }
         }
@@ -61,8 +68,7 @@ export default class SearchEformController {
         endDate: req.body.endDate,
       }
       const queryString = buildQueryString(formValues)
-      const url = queryString.length > 0 ? `&${queryString}` : ''
-      res.redirect(302, `/search-eform?page=1${url}`)
+      res.redirect(302, `/search-eform?page=1${queryString ? `&${queryString}` : ''}`)
     }
   }
 }
@@ -108,21 +114,6 @@ const buildSearchRequest = (queryParams: Record<string, string>): SearchRequest 
   }
 }
 
-const buildBaseLink = (searchRequest: SearchRequest): string => {
-  return `/search-eform?${buildQueryString(searchRequest)}&`
-}
-
-const buildQueryString = (params: { [key: string]: string | number }): string => {
-  return Object.keys(params)
-    .map(key =>
-      params[key] && key !== 'page' && key !== 'pageSize'
-        ? `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
-        : '',
-    )
-    .filter(Boolean)
-    .join('&')
-}
-
 const undefinedIfEmpty = (field: string): string => {
-  return field && field.length > 0 ? field : undefined
+  return field || undefined
 }

@@ -1,4 +1,4 @@
-import { convertToTitleCase, initialiseName } from './utils'
+import { buildQueryString, convertToTitleCase, initialiseName } from './utils'
 
 describe('convert to title case', () => {
   it.each([
@@ -26,5 +26,19 @@ describe('initialise name', () => {
     ['Double barrelled', 'Robert-John Smith-Jones-Wilson', 'R. Smith-Jones-Wilson'],
   ])('%s initialiseName(%s, %s)', (_: string, a: string, expected: string) => {
     expect(initialiseName(a)).toEqual(expected)
+  })
+})
+
+describe('buildQueryString', () => {
+  it.each([
+    [{}, ''],
+    [{ clientName: 'Jane Doe' }, 'clientName=Jane%20Doe'], // url encoded
+    [{ clientName: 'Jane Doe', supplierAccountNumber: '1234AB' }, 'clientName=Jane%20Doe&supplierAccountNumber=1234AB'],
+    [{ usn: null, supplierAccountNumber: '1234AB' }, 'supplierAccountNumber=1234AB'], // null excluded
+    [{ usn: undefined, supplierAccountNumber: '1234AB' }, 'supplierAccountNumber=1234AB'], // undefined excluded
+    [{ usn: 1234567, supplierAccountNumber: '' }, 'usn=1234567'], // empty string excluded
+    [{ usn: 1234567, page: 1, pageSize: 10 }, 'usn=1234567'], // page & pageSize excluded
+  ])('given %s returns "%s"', (input: { [key: string]: string | number }, expected: string) => {
+    expect(buildQueryString(input)).toEqual(expected)
   })
 })

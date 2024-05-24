@@ -1,5 +1,6 @@
 import type { Express } from 'express'
 import request from 'supertest'
+import { Crm4Response } from '@crm4'
 import { Crm5Response } from '@crm5'
 import { SearchResponse } from '@searchEform'
 import { appWithAllRoutes } from './testutils/appSetup'
@@ -15,18 +16,21 @@ jest.mock('../services/crmDisplayService')
 
 let app: Express
 
+let mockCrm4Service: jest.Mocked<CrmApiService<Crm4Response>>
 let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
 let mockSearchEformService: jest.Mocked<SearchEformService>
 let mockNavigationService: jest.Mocked<NavigationService>
 let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
 
 beforeEach(() => {
+  mockCrm4Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm4Response>>
   mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
   mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
   mockNavigationService = new NavigationService() as jest.Mocked<NavigationService>
   mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
   app = appWithAllRoutes({
     services: {
+      crm4Service: mockCrm4Service,
       crm5Service: mockCrm5Service,
       searchEformService: mockSearchEformService,
       navigationService: mockNavigationService,
@@ -39,124 +43,173 @@ afterEach(() => {
   jest.resetAllMocks()
 })
 
-describe('GET /', () => {
-  it('should render index page', () => {
-    return request(app)
-      .get('/')
-      .expect('Content-Type', /html/)
-      .expect(res => {
-        expect(res.text).toContain('Equiniti Historical Data')
-      })
+describe('routes', () => {
+  describe('GET /', () => {
+    it('should render index page', () => {
+      return request(app)
+        .get('/')
+        .expect('Content-Type', /html/)
+        .expect(res => {
+          expect(res.text).toContain('Equiniti Historical Data')
+        })
+    })
   })
-})
 
-describe('GET /search-eform', () => {
-  it('should render search eForm page', () => {
-    return request(app)
-      .get('/search-eform')
-      .expect('Content-Type', /html/)
-      .expect(res => {
-        expect(res.text).toContain('Search for a historical eForm')
-      })
+  describe('GET /search-eform', () => {
+    it('should render search eForm page', () => {
+      return request(app)
+        .get('/search-eform')
+        .expect('Content-Type', /html/)
+        .expect(res => {
+          expect(res.text).toContain('Search for a historical eForm')
+        })
+    })
   })
-})
 
-describe('GET /search-eform?page=1&usn=1234567', () => {
-  it('should render search eForm page with search results', () => {
-    const searchResponse: SearchResponse = {
-      results: [
-        {
-          usn: 123456789,
-          type: 'CRM4',
-          clientName: 'John Doe',
-          originatedDate: '2022-25-23',
-          submittedDate: '2023-15-13',
-          providerAccount: '1234AB',
-          status: 'Completed',
+  describe('GET /search-eform?page=1&usn=1234567', () => {
+    it('should render search eForm page with search results', () => {
+      const searchResponse: SearchResponse = {
+        results: [
+          {
+            usn: 123456789,
+            type: 'CRM4',
+            clientName: 'John Doe',
+            originatedDate: '2022-25-23',
+            submittedDate: '2023-15-13',
+            providerAccount: '1234AB',
+            status: 'Completed',
+          },
+        ],
+        paging: {
+          size: 10,
+          number: 0,
+          total: 1,
+          itemsPage: 10,
+          itemsTotal: 1,
         },
-      ],
-      paging: {
-        size: 10,
-        number: 0,
-        total: 1,
-        itemsPage: 10,
-        itemsTotal: 1,
-      },
-    }
-    mockSearchEformService.search.mockResolvedValue(searchResponse)
+      }
+      mockSearchEformService.search.mockResolvedValue(searchResponse)
 
-    return request(app)
-      .get('/search-eform?page=1&usn=1234567')
-      .expect('Content-Type', /html/)
-      .expect(res => {
-        expect(res.text).toContain('Search for a historical eForm')
-        expect(res.text).toContain('1234567')
-      })
+      return request(app)
+        .get('/search-eform?page=1&usn=1234567')
+        .expect('Content-Type', /html/)
+        .expect(res => {
+          expect(res.text).toContain('Search for a historical eForm')
+          expect(res.text).toContain('1234567')
+        })
+    })
   })
-})
 
-describe('POST /search-eform', () => {
-  it('should post search eForm and redirect', () => {
-    return request(app)
-      .post('/search-eform')
-      .send({
-        usn: '1234567',
-        supplierAccountNumber: '123',
-        clientName: 'John Doe',
-        clientDOB: '1960-02-12',
-        startDate: '2022-11-01',
-        endDate: '2023-11-02',
-      })
-      .expect(res => {
-        expect(res.status).toEqual(302)
-        expect(res.headers.location).toEqual(
-          '/search-eform?page=1&usn=1234567&supplierAccountNumber=123&clientName=John%20Doe&startDate=2022-11-01&endDate=2023-11-02',
-        )
-      })
+  describe('POST /search-eform', () => {
+    it('should post search eForm and redirect', () => {
+      return request(app)
+        .post('/search-eform')
+        .send({
+          usn: '1234567',
+          supplierAccountNumber: '123',
+          clientName: 'John Doe',
+          clientDOB: '1960-02-12',
+          startDate: '2022-11-01',
+          endDate: '2023-11-02',
+        })
+        .expect(res => {
+          expect(res.status).toEqual(302)
+          expect(res.headers.location).toEqual(
+            '/search-eform?page=1&usn=1234567&supplierAccountNumber=123&clientName=John%20Doe&startDate=2022-11-01&endDate=2023-11-02',
+          )
+        })
+    })
   })
-})
 
-describe('GET /crm5', () => {
-  it('should render crm5 page', () => {
-    const crm5Response: Crm5Response = {
-      usn: 1234567,
-      hasPreviousApplication: 'No',
-      previousApplicationRef: '',
-      appealedPrevDecision: 'No',
-      appealedPrevDecisionDetails: '',
-      urgent: 'Yes',
-      urgencyReason: 'Urgent',
-      Firm: {
-        firmAddress: '1 Some Lane',
-        firmName: 'ABC Firm',
-        firmPhone: '123456789',
-        firmSupplierNo: '1234AB',
-        firmContactName: 'Some Firm',
-        firmSolicitorName: 'Some Solicitor',
-        firmSolicitorRef: 'Ref1',
-      },
-      StatementOfCase: 'Statement Of Case',
-      DetailsOfWorkCompleted: 'Some Details of Work Completed',
-      DetailsOfApplication: 'Some Details of Application',
-    }
-    mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
+  describe('GET /crm4', () => {
+    it('should render crm4 page', () => {
+      const crm4Response: Crm4Response = {
+        greaterValue: true,
+        postMortemExamination: 'No',
+        ExpenditureDetails: {
+          Details: {
+            expenditureType: 'a Psychiatrist',
+            priorAuthority: 'No',
+            expertName: 'tyjtjtjt',
+            companyName: '',
+            statusExpert: '',
+            postCodeExpert: 'e1',
+          },
+          Preparation: {
+            hours: '4',
+            hourlyRate: 50,
+            total: 200,
+          },
+          AdditionalExpenditure: [
+            {
+              description: 'some description',
+              justification: 'required',
+              quantity: 0,
+              rate: 0,
+              total: 0,
+            },
+          ],
+          Travel: {
+            hours: '0',
+            rate: 0,
+            total: 0,
+          },
+          Authority: 200.0,
+        },
+      }
+      mockCrm4Service.getCrm.mockResolvedValue(crm4Response)
 
-    return request(app)
-      .get('/crm5/1234567')
-      .expect('Content-Type', /html/)
-      .expect(res => {
-        expect(res.text).toContain('CRM5')
-      })
+      return request(app)
+        .get('/crm4/1234567')
+        .expect('Content-Type', /html/)
+        .expect(res => {
+          expect(res.text).toContain('CRM4')
+        })
+    })
   })
-})
 
-describe('GET /generate-report', () => {
-  it('should render generate report page', () => {
-    return request(app)
-      .get('/generate-report')
-      .expect('Content-Type', /html/)
-      .expect(res => {
-        expect(res.text).toContain('Generate reports')
-      })
+  describe('GET /crm5', () => {
+    it('should render crm5 page', () => {
+      const crm5Response: Crm5Response = {
+        usn: 1234567,
+        hasPreviousApplication: 'No',
+        previousApplicationRef: '',
+        appealedPrevDecision: 'No',
+        appealedPrevDecisionDetails: '',
+        urgent: 'Yes',
+        urgencyReason: 'Urgent',
+        Firm: {
+          firmAddress: '1 Some Lane',
+          firmName: 'ABC Firm',
+          firmPhone: '123456789',
+          firmSupplierNo: '1234AB',
+          firmContactName: 'Some Firm',
+          firmSolicitorName: 'Some Solicitor',
+          firmSolicitorRef: 'Ref1',
+        },
+        StatementOfCase: 'Statement Of Case',
+        DetailsOfWorkCompleted: 'Some Details of Work Completed',
+        DetailsOfApplication: 'Some Details of Application',
+      }
+      mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
+
+      return request(app)
+        .get('/crm5/1234567')
+        .expect('Content-Type', /html/)
+        .expect(res => {
+          expect(res.text).toContain('CRM5')
+        })
+    })
+  })
+
+  describe('GET /generate-report', () => {
+    it('should render generate report page', () => {
+      return request(app)
+        .get('/generate-report')
+        .expect('Content-Type', /html/)
+        .expect(res => {
+          expect(res.text).toContain('Generate reports')
+        })
+    })
   })
 })

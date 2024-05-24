@@ -29,38 +29,34 @@ describe('CRM Display Service', () => {
 
     expect(result).toEqual({
       sectionId: 'general-information',
+      title: 'General Information',
       subsections: [
         {
+          title: 'General Information',
           fields: [
             {
-              apiField: 'No',
               label: 'Has a previous application for an extension been made?',
+              apiField: 'hasPreviousApplication',
+              value: 'No',
             },
             {
-              apiField: '',
-              label: 'Most recent application reference',
-            },
-            {
-              apiField: 'No',
               label: 'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
+              apiField: 'appealedPrevDecision',
+              value: 'No',
             },
             {
-              apiField: '',
-              label: 'Please give details',
-            },
-            {
-              apiField: 'Yes',
               label: 'Urgent?',
+              apiField: 'urgent',
+              value: 'Yes',
             },
             {
-              apiField: 'Urgent',
               label: 'Reason for urgency',
+              apiField: 'urgencyReason',
+              value: 'Urgent',
             },
           ],
-          title: 'General Information',
         },
       ],
-      title: 'General Information',
     })
   })
 })

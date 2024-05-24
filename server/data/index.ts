@@ -10,6 +10,7 @@ import applicationInfoSupplier from '../applicationInfo'
 import SearchApiClient from './api/searchApiClient'
 import CrmApiClient from './api/crmApiClient'
 import config from '../config'
+import { Crm4Response } from '../@types/crm4'
 
 const applicationInfo = applicationInfoSupplier()
 initialiseAppInsights()
@@ -25,6 +26,7 @@ const eqiApiHeaders: Record<EqApiHeader, string> = {
 export const dataAccess = () => ({
   applicationInfo,
   searchApiClient: new SearchApiClient(eqiApiHeaders),
+  crm4ApiClient: new CrmApiClient<Crm4Response>(eqiApiHeaders, 'crm4'),
   crm5ApiClient: new CrmApiClient<Crm5Response>(eqiApiHeaders, 'crm5'),
 })
 
