@@ -278,6 +278,57 @@
       ]
     },
     {
+      "sectionId": "proceedings",
+      "title": "Proceedings",
+      "subsections": [
+        {
+          "title": "Type of proceedings",
+          "fields": [
+            {
+              "label": "Pre-charge",
+              "apiField": "Proceedings.TypeOfProceedings.preCharge"
+            },
+            {
+              "label": "Appeal proceedings in the Crown Court relating to:",
+              "apiField": "Proceedings.TypeOfProceedings.appealProceedings"
+            },
+            {
+              "label": "Prison Law:",
+              "apiField": "Proceedings.TypeOfProceedings.prisonLaw"
+            }
+          ]
+        },
+        {
+          "title": "Details of proceedings",
+          "fields": [
+            {
+              "label": "Date of next hearing",
+              "apiField": "Proceedings.DetailsOfProceedings.dateOfNextHearing"
+            },
+            {
+              "label": "Has counsel been instructed?",
+              "apiField": "Proceedings.DetailsOfProceedings.isCounselInstructed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "statement-of-case",
+      "title": "Statement of Case",
+      "subsections": [
+        {
+          "title": "Statement of Case",
+          "fields": [
+            {
+              "label": "Give a brief description of the case and the issues involved, and explain how the case satisfies the appropriate merits test set out in the Contact Specification.",
+              "apiField": "StatementOfCase"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "sectionId": "advice-and-assistance",
       "title": "Advice and Assistance",
       "subsections": [
@@ -327,57 +378,6 @@
             {
               "label": "Date",
               "apiField": "Solicitor.declaration.date"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "sectionId": "proceedings",
-      "title": "Proceedings",
-      "subsections": [
-        {
-          "title": "Type of proceedings",
-          "fields": [
-            {
-              "label": "Pre-charge",
-              "apiField": "Proceedings.TypeOfProceedings.preCharge"
-            },
-            {
-              "label": "Appeal proceedings in the Crown Court relating to:",
-              "apiField": "Proceedings.TypeOfProceedings.appealProceedings"
-            },
-            {
-              "label": "Prison Law:",
-              "apiField": "Proceedings.TypeOfProceedings.prisonLaw"
-            }
-          ]
-        },
-        {
-          "title": "Details of proceedings",
-          "fields": [
-            {
-              "label": "Date of next hearing",
-              "apiField": "Proceedings.DetailsOfProceedings.dateOfNextHearing"
-            },
-            {
-              "label": "Has counsel been instructed?",
-              "apiField": "Proceedings.DetailsOfProceedings.isCounselInstructed"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "sectionId": "statement-of-case",
-      "title": "Statement of Case",
-      "subsections": [
-        {
-          "title": "Statement of Case",
-          "fields": [
-            {
-              "label": "Give a brief description of the case and the issues involved, and explain how the case satisfies the appropriate merits test set out in the Contact Specification.",
-              "apiField": "StatementOfCase"
             }
           ]
         }

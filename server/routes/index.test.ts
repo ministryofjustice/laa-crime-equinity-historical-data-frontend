@@ -6,12 +6,10 @@ import { SearchResponse } from '@searchEform'
 import { appWithAllRoutes } from './testutils/appSetup'
 import CrmApiService from '../services/crmApiService'
 import SearchEformService from '../services/searchEformService'
-import NavigationService from '../services/navigationService'
 import CrmDisplayService from '../services/crmDisplayService'
 
 jest.mock('../services/crmApiService')
 jest.mock('../services/searchEformService')
-jest.mock('../services/navigationService')
 jest.mock('../services/crmDisplayService')
 
 let app: Express
@@ -19,21 +17,18 @@ let app: Express
 let mockCrm4Service: jest.Mocked<CrmApiService<Crm4Response>>
 let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
 let mockSearchEformService: jest.Mocked<SearchEformService>
-let mockNavigationService: jest.Mocked<NavigationService>
 let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
 
 beforeEach(() => {
   mockCrm4Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm4Response>>
   mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
   mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
-  mockNavigationService = new NavigationService() as jest.Mocked<NavigationService>
   mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
   app = appWithAllRoutes({
     services: {
       crm4Service: mockCrm4Service,
       crm5Service: mockCrm5Service,
       searchEformService: mockSearchEformService,
-      navigationService: mockNavigationService,
       crmDisplayService: mockCrmDisplayService,
     },
   })
@@ -192,6 +187,35 @@ describe('routes', () => {
         DetailsOfApplication: 'Some Details of Application',
       }
       mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
+      mockCrmDisplayService.getCrmNavigation.mockReturnValue({
+        label: 'Side navigation',
+        items: [
+          {
+            text: 'General Information',
+            href: '1',
+            active: true,
+          },
+        ],
+      })
+      mockCrmDisplayService.getCrmSection.mockReturnValue({
+        sectionId: 'general-information',
+        title: 'General Information',
+        subsections: [
+          {
+            title: 'General Information',
+            fields: [
+              {
+                label: 'Has a previous application for an extension been made?',
+                apiField: 'No',
+              },
+              {
+                label: 'Most recent application reference',
+                apiField: '',
+              },
+            ],
+          },
+        ],
+      })
 
       return request(app)
         .get('/crm5/1234567')

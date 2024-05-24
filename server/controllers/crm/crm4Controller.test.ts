@@ -3,15 +3,12 @@ import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import { Crm4Response } from '@crm4'
 import Crm4Controller from './crm4Controller'
 import CrmApiService from '../../services/crmApiService'
-import NavigationService from '../../services/navigationService'
 import CrmDisplayService from '../../services/crmDisplayService'
 
 jest.mock('../../services/crmApiService')
-jest.mock('../../services/navigationService')
 
 describe('CRM4 Controller', () => {
   let mockCrmApiService: jest.Mocked<CrmApiService<Crm4Response>>
-  let mockNavigationService: jest.Mocked<NavigationService>
   let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
 
   let request: DeepMocked<Request>
@@ -22,7 +19,6 @@ describe('CRM4 Controller', () => {
     request = createMock<Request>({})
     response = createMock<Response>({})
     mockCrmApiService = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm4Response>>
-    mockNavigationService = new NavigationService() as jest.Mocked<NavigationService>
     mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
   })
 
@@ -64,7 +60,7 @@ describe('CRM4 Controller', () => {
 
     mockCrmApiService.getCrm.mockResolvedValue(crm4Response)
 
-    const crm4Controller = new Crm4Controller(mockCrmApiService, mockNavigationService, mockCrmDisplayService)
+    const crm4Controller = new Crm4Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm4Controller.show()
     request.params = {
       usn: '123456789',

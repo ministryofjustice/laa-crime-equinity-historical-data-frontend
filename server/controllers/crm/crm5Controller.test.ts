@@ -3,16 +3,13 @@ import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import { Crm5Response } from '@crm5'
 import Crm5Controller from './crm5Controller'
 import CrmApiService from '../../services/crmApiService'
-import NavigationService from '../../services/navigationService'
 import CrmDisplayService from '../../services/crmDisplayService'
 
 jest.mock('../../services/crmApiService')
-jest.mock('../../services/navigationService')
 jest.mock('../../services/crmDisplayService')
 
 describe('CRM5 Controller', () => {
   let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
-  let mockNavigationService: jest.Mocked<NavigationService>
   let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
 
   let request: DeepMocked<Request>
@@ -23,7 +20,6 @@ describe('CRM5 Controller', () => {
     request = createMock<Request>({})
     response = createMock<Response>({})
     mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
-    mockNavigationService = new NavigationService() as jest.Mocked<NavigationService>
     mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
   })
 
@@ -51,7 +47,7 @@ describe('CRM5 Controller', () => {
     }
 
     mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
-    mockNavigationService.getCrm5NavigationConfig.mockReturnValue({
+    mockCrmDisplayService.getCrmNavigation.mockReturnValue({
       label: 'Side navigation',
       items: [
         {
@@ -61,7 +57,6 @@ describe('CRM5 Controller', () => {
         },
       ],
     })
-
     mockCrmDisplayService.getCrmSection.mockReturnValue({
       sectionId: 'general-information',
       title: 'General Information',
@@ -104,7 +99,7 @@ describe('CRM5 Controller', () => {
       ],
     })
 
-    const crm5Controller = new Crm5Controller(mockCrm5Service, mockNavigationService, mockCrmDisplayService)
+    const crm5Controller = new Crm5Controller(mockCrm5Service, mockCrmDisplayService)
     const requestHandler = crm5Controller.show()
     request.params = {
       usn: '1234567',

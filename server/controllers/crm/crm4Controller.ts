@@ -1,13 +1,11 @@
 import type { Request, RequestHandler, Response } from 'express'
 import { Crm4Response } from '@crm4'
 import CrmApiService from '../../services/crmApiService'
-import NavigationService from '../../services/navigationService'
 import CrmDisplayService from '../../services/crmDisplayService'
 
 export default class Crm4Controller {
   constructor(
     private readonly crm4Service: CrmApiService<Crm4Response>,
-    private readonly navigationService: NavigationService,
     private readonly crmDisplayService: CrmDisplayService,
   ) {}
 
