@@ -182,23 +182,23 @@
             },
             {
               "label": "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance or Guarantee State Pension Credit?",
-              "apiField": "ClientDetails.hasIncomeSupport"
+              "apiField": "CapitalDetails.hasIncomeSupport"
             },
             {
               "label": "How many dependants does your client have?",
-              "apiField": "ClientDetails.numOfDependants"
+              "apiField": "CapitalDetails.numOfDependants"
             },
             {
               "label": "Client",
-              "apiField": "ClientDetails.clientSavings"
+              "apiField": "CapitalDetails.clientSavings"
             },
             {
               "label": "Partner",
-              "apiField": "ClientDetails.partnerSavings"
+              "apiField": "CapitalDetails.partnerSavings"
             },
             {
               "label": "Total",
-              "apiField": "ClientDetails.totalSavings"
+              "apiField": "CapitalDetails.totalSavings"
             }
           ]
         }
@@ -216,7 +216,7 @@
               "apiField": "IncomeDetails.hasIncomeSupport"
             },
             {
-              "subHeading": "Give the total weekly income of:"
+              "subHeading": "Give the total weekly income of"
             },
             {
               "label": "Client",
@@ -250,15 +250,23 @@
               "apiField": "IncomeDetails.socialFundDeductions"
             },
             {
-              "subHeading": "Dependent children and other dependants:"
+              "subHeading": "Dependent children and other dependants"
             },
             {
               "label": "Aged 15 or under",
               "apiField": "IncomeDetails.dependantChildrenUnder15"
             },
             {
+              "label": "Amount",
+              "apiField": "IncomeDetails.deductionUnder15"
+            },
+            {
               "label": "Aged 16 or over",
               "apiField": "IncomeDetails.dependantChildrenOver16"
+            },
+            {
+              "label": "Amount",
+              "apiField": "IncomeDetails.deductionOver16"
             },
             {
               "label": "Less Total deductions",
