@@ -19,9 +19,15 @@ type SubSection = {
   fields: Array<FieldOrSubHeading>
 }
 
+type Condition = {
+  apiField: string
+  value: string
+}
+
 type Section = {
   sectionId: string
   title: string
+  condition?: Condition
   subsections: Array<SubSection>
 }
 
@@ -43,6 +49,7 @@ type Navigation = {
 }
 
 export type {
+  Condition,
   ConfigField,
   CrmDisplayConfig,
   CrmType,

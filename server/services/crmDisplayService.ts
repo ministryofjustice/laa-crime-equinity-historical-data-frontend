@@ -1,6 +1,7 @@
 import Joi from 'joi'
 import _ from 'lodash'
 import {
+  Condition,
   ConfigField,
   CrmDisplayConfig,
   CrmType,
@@ -22,6 +23,10 @@ const schema = Joi.object({
     .items({
       sectionId: Joi.string().required(),
       title: Joi.string().required(),
+      condition: Joi.object({
+        apiField: Joi.string().required(),
+        value: Joi.string().required(),
+      }).optional(),
       subsections: Joi.array().items({
         title: Joi.string().required(),
         fields: Joi.array().items(
@@ -51,21 +56,31 @@ const configMap: Record<CrmType, CrmDisplayConfig> = {
 }
 
 export default class CrmDisplayService {
-  getCrmNavigation(crmType: CrmType, usn: number, sectionId: string): Navigation {
+  getCrmNavigation<T extends CrmResponse>(
+    crmType: CrmType,
+    usn: number,
+    sectionId: string,
+    crmResponse: T,
+  ): Navigation {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
 
     let isAnySectionActive = false
-    const items: Array<NavigationItem> = crmDisplayConfig.sections.map(section => {
-      const isActive = section.sectionId === sectionId
-      if (isActive) {
-        isAnySectionActive = true
-      }
-      return {
-        href: `/${crmType}/${usn}/${section.sectionId}`,
-        text: section.title,
-        active: isActive,
-      }
-    })
+    const items: Array<NavigationItem> = crmDisplayConfig.sections
+      .map(section => {
+        if (section.condition && !this.conditionIsTrue(section.condition, crmResponse)) {
+          return null
+        }
+        const isActive = section.sectionId === sectionId
+        if (isActive) {
+          isAnySectionActive = true
+        }
+        return {
+          href: `/${crmType}/${usn}/${section.sectionId}`,
+          text: section.title,
+          active: isActive,
+        }
+      })
+      .filter(Boolean)
 
     if (!isAnySectionActive && items.length > 0) {
       items[0].active = true
@@ -120,6 +135,11 @@ export default class CrmDisplayService {
 
   private getApiFieldValue<T extends CrmResponse>(crmResponse: T, apiFieldName: string): string {
     return _.get(crmResponse, apiFieldName) || ''
+  }
+
+  private conditionIsTrue<T extends CrmResponse>(condition: Condition, crmResponse: T): boolean {
+    const apiFieldValue = this.getApiFieldValue(crmResponse, condition.apiField)
+    return condition.value === apiFieldValue
   }
 }
 

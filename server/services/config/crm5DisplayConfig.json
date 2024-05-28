@@ -172,6 +172,10 @@
     {
       "sectionId": "capital-details",
       "title": "Capital Details",
+      "condition": {
+        "apiField": "hasPreviousApplication",
+        "value": "No"
+      },
       "subsections": [
         {
           "title": "Capital Details",
@@ -207,6 +211,10 @@
     {
       "sectionId": "income-details",
       "title": "Income Details",
+      "condition": {
+        "apiField": "hasPreviousApplication",
+        "value": "No"
+      },
       "subsections": [
         {
           "title": "Income Details",
@@ -366,6 +374,10 @@
     {
       "sectionId": "solicitors-declaration",
       "title": "Solicitor's Declaration",
+      "condition": {
+        "apiField": "hasPreviousApplication",
+        "value": "No"
+      },
       "subsections": [
         {
           "title": "Solicitor's Declaration",

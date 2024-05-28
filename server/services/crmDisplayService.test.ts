@@ -44,7 +44,7 @@ describe('CRM Display Service', () => {
 
   describe('getCrmNavigation()', () => {
     it('should return crm navigation for given crm type, sectionId, usn', () => {
-      const result = crmDisplayService.getCrmNavigation('crm5', 1234567, 'capital-details')
+      const result = crmDisplayService.getCrmNavigation('crm5', 1234567, 'capital-details', crm5Response)
 
       expect(result).toEqual({
         items: [
@@ -68,7 +68,7 @@ describe('CRM Display Service', () => {
     })
 
     it('should set the first item as active if no sectionId is provided', () => {
-      const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '')
+      const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '', crm5Response)
 
       expect(result).toEqual({
         items: [
@@ -92,7 +92,7 @@ describe('CRM Display Service', () => {
     })
 
     it('should set the first item as active if sectionId does not match any item', () => {
-      const result = crmDisplayService.getCrmNavigation('crm5', 1234567, 'non-existent-section')
+      const result = crmDisplayService.getCrmNavigation('crm5', 1234567, 'non-existent-section', crm5Response)
 
       expect(result).toEqual({
         items: [
@@ -122,6 +122,11 @@ describe('CRM Display Service', () => {
 
       expect(result).toEqual({
         sectionId: 'capital-details',
+        title: 'Capital Details',
+        condition: {
+          apiField: 'hasPreviousApplication',
+          value: 'No',
+        },
         subsections: [
           {
             fields: [
@@ -151,7 +156,6 @@ describe('CRM Display Service', () => {
             title: 'Capital Details',
           },
         ],
-        title: 'Capital Details',
       })
     })
 
