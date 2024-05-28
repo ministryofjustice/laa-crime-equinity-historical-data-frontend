@@ -480,7 +480,7 @@
             },
             {
               "label": "Letters",
-              "apiField": "AllCosts.AccruedCosts.Letters.time"
+              "apiField": "AllCosts.AccruedCosts.Letters.total"
             },
             {
               "label": "Cost",
@@ -488,7 +488,7 @@
             },
             {
               "label": "Telephone Calls",
-              "apiField": "AllCosts.AccruedCosts.TelephoneCalls.time"
+              "apiField": "AllCosts.AccruedCosts.TelephoneCalls.total"
             },
             {
               "label": "Cost",
@@ -496,14 +496,14 @@
             },
             {
               "label": "Mileage",
-              "apiField": "AllCosts.AccruedCosts.Mileage.time"
+              "apiField": "AllCosts.AccruedCosts.Mileage.total"
             },
             {
               "label": "Cost",
               "apiField": "AllCosts.AccruedCosts.Mileage.cost"
             },
             {
-              "label": "Other disbursements Cost",
+              "label": "Other disbursements",
               "apiField": "AllCosts.AccruedCosts.OtherDisbursement.cost"
             },
             {
@@ -557,7 +557,7 @@
             },
             {
               "label": "Letters",
-              "apiField": "AllCosts.AnticipatedCosts.Letters.time"
+              "apiField": "AllCosts.AnticipatedCosts.Letters.total"
             },
             {
               "label": "Cost",
@@ -565,7 +565,7 @@
             },
             {
               "label": "Telephone Calls",
-              "apiField": "AllCosts.AnticipatedCosts.TelephoneCalls.time"
+              "apiField": "AllCosts.AnticipatedCosts.TelephoneCalls.total"
             },
             {
               "label": "Cost",
@@ -573,14 +573,14 @@
             },
             {
               "label": "Mileage",
-              "apiField": "AllCosts.AnticipatedCosts.Mileage.time"
+              "apiField": "AllCosts.AnticipatedCosts.Mileage.total"
             },
             {
               "label": "Cost",
               "apiField": "AllCosts.AnticipatedCosts.Mileage.cost"
             },
             {
-              "label": "Other disbursements Cost",
+              "label": "Other disbursements",
               "apiField": "AllCosts.AnticipatedCosts.OtherDisbursement.cost"
             },
             {
