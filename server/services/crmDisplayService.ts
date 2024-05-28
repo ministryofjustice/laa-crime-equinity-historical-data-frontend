@@ -1,13 +1,15 @@
 import Joi from 'joi'
 import _ from 'lodash'
 import {
+  ConfigField,
   CrmDisplayConfig,
   CrmType,
-  Field,
-  ConfigField,
+  DisplayField,
+  FieldOrSubHeading,
   Navigation,
   NavigationItem,
   Section,
+  SubHeading,
   SubSection,
 } from '@crmDisplay'
 
@@ -21,10 +23,15 @@ const schema = Joi.object({
       title: Joi.string().required(),
       subsections: Joi.array().items({
         title: Joi.string().required(),
-        fields: Joi.array().items({
-          label: Joi.string().required().allow(''),
-          apiField: Joi.string().required().allow(null),
-        }),
+        fields: Joi.array().items(
+          {
+            label: Joi.string().optional().allow(''),
+            apiField: Joi.string().required(),
+          },
+          {
+            subHeading: Joi.string().required(),
+          },
+        ),
       }),
     }),
 })
@@ -91,19 +98,30 @@ export default class CrmDisplayService {
     return sections.find(section => section.sectionId === sectionId) || sections[0]
   }
 
-  private getFields<T>(fields: Array<Field>, crmResponse: T): Array<Field> {
+  private getFields<T>(fields: Array<FieldOrSubHeading>, crmResponse: T): Array<FieldOrSubHeading> {
     return fields
       .map(field => {
-        const { apiField: apiFieldName } = field as ConfigField
-        return {
-          label: field.label,
-          value: this.getApiFieldValue(crmResponse, apiFieldName),
+        if (isConfigField(field)) {
+          // create display field using config & api field value
+          const apiFieldName = field.apiField
+          const displayField: DisplayField = {
+            label: field.label,
+            value: this.getApiFieldValue(crmResponse, apiFieldName),
+          }
+          return displayField
         }
+
+        // otherwise return field as is
+        return field
       })
-      .filter(field => field.value)
+      .filter(field => isSubHeading(field) || field.value)
   }
 
-  private getApiFieldValue<T>(crmResponse: T, propertyName: string): string {
-    return _.get(crmResponse, propertyName) || ''
+  private getApiFieldValue<T>(crmResponse: T, apiFieldName: string): string {
+    return _.get(crmResponse, apiFieldName) || ''
   }
 }
+
+const isConfigField = (field: FieldOrSubHeading): field is ConfigField => (field as ConfigField).apiField !== undefined
+
+const isSubHeading = (field: FieldOrSubHeading): field is SubHeading => (field as SubHeading).subHeading !== undefined

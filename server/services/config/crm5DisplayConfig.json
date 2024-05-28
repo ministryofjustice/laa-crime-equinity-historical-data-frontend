@@ -85,8 +85,7 @@
               "apiField": "CaseDetails.levelOfWork"
             },
             {
-              "label": "Class of work",
-              "apiField": null
+              "subHeading": "Class of work"
             },
             {
               "label": "",
@@ -136,8 +135,7 @@
               "apiField": "ClientDetails.maritalStatus"
             },
             {
-              "label": "Address",
-              "apiField": null
+              "subHeading": "Address"
             },
             {
               "label": "Client has no fixed abode",
@@ -145,27 +143,27 @@
             },
             {
               "label": "Address Line 1",
-              "apiField": "ClientDetails.addressLine1"
+              "apiField": "ClientDetails.address.addressLine1"
             },
             {
               "label": "Address Line 2",
-              "apiField": "ClientDetails.addressLine2"
+              "apiField": "ClientDetails.address.addressLine2"
             },
             {
               "label": "Address Line 3",
-              "apiField": "ClientDetails.addressLine3"
+              "apiField": "ClientDetails.address.addressLine3"
             },
             {
               "label": "Town",
-              "apiField": "ClientDetails.city"
+              "apiField": "ClientDetails.address.city"
             },
             {
               "label": "County",
-              "apiField": "ClientDetails.county"
+              "apiField": "ClientDetails.address.county"
             },
             {
               "label": "Postcode",
-              "apiField": "ClientDetails.postcode"
+              "apiField": "ClientDetails.address.postcode"
             }
           ]
         }
@@ -184,23 +182,23 @@
             },
             {
               "label": "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance or Guarantee State Pension Credit?",
-              "apiField": "ClientDetails.hasIncomeSupport"
+              "apiField": "CapitalDetails.hasIncomeSupport"
             },
             {
               "label": "How many dependants does your client have?",
-              "apiField": "ClientDetails.numOfDependants"
+              "apiField": "CapitalDetails.numOfDependants"
             },
             {
               "label": "Client",
-              "apiField": "ClientDetails.clientSavings"
+              "apiField": "CapitalDetails.clientSavings"
             },
             {
               "label": "Partner",
-              "apiField": "ClientDetails.partnerSavings"
+              "apiField": "CapitalDetails.partnerSavings"
             },
             {
               "label": "Total",
-              "apiField": "ClientDetails.totalSavings"
+              "apiField": "CapitalDetails.totalSavings"
             }
           ]
         }
@@ -218,8 +216,7 @@
               "apiField": "IncomeDetails.hasIncomeSupport"
             },
             {
-              "label": "Give the total weekly income of:",
-              "apiField": null
+              "subHeading": "Give the total weekly income of"
             },
             {
               "label": "Client",
@@ -234,8 +231,7 @@
               "apiField": "IncomeDetails.totalWeeklyIncome"
             },
             {
-              "label": "Allowable deductions",
-              "apiField": null
+              "subHeading": "Allowable deductions"
             },
             {
               "label": "Income tax",
@@ -254,16 +250,23 @@
               "apiField": "IncomeDetails.socialFundDeductions"
             },
             {
-              "label": "Dependent children and other dependants:",
-              "apiField": null
+              "subHeading": "Dependent children and other dependants"
             },
             {
               "label": "Aged 15 or under",
               "apiField": "IncomeDetails.dependantChildrenUnder15"
             },
             {
+              "label": "Amount",
+              "apiField": "IncomeDetails.deductionUnder15"
+            },
+            {
               "label": "Aged 16 or over",
               "apiField": "IncomeDetails.dependantChildrenOver16"
+            },
+            {
+              "label": "Amount",
+              "apiField": "IncomeDetails.deductionOver16"
             },
             {
               "label": "Less Total deductions",
@@ -368,8 +371,7 @@
           "title": "Solicitor's Declaration",
           "fields": [
             {
-              "label": "I confirm that my client has completed and signed the CRM2 Application for Advice and Assistance. I also confirm that the CRM2 Application shall be retained on file and submitted as per usual with the final bill or upon request by the Legal Aid Agency.",
-              "apiField": null
+              "subHeading": "I confirm that my client has completed and signed the CRM2 Application for Advice and Assistance. I also confirm that the CRM2 Application shall be retained on file and submitted as per usual with the final bill or upon request by the Legal Aid Agency."
             },
             {
               "label": "Name",
@@ -501,11 +503,7 @@
               "apiField": "AllCosts.AccruedCosts.Mileage.cost"
             },
             {
-              "label": "Other disbursements",
-              "apiField": null
-            },
-            {
-              "label": "Cost",
+              "label": "Other disbursements Cost",
               "apiField": "AllCosts.AccruedCosts.OtherDisbursement.cost"
             },
             {
@@ -582,16 +580,12 @@
               "apiField": "AllCosts.AnticipatedCosts.Mileage.cost"
             },
             {
-              "label": "Other disbursements",
-              "apiField": null
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AccruedCosts.OtherDisbursement.cost"
+              "label": "Other disbursements Cost",
+              "apiField": "AllCosts.AnticipatedCosts.OtherDisbursement.cost"
             },
             {
               "label": "Total Anticipated Costs",
-              "apiField": "AllCosts.AccruedCosts.TotalCost.cost"
+              "apiField": "AllCosts.AnticipatedCosts.TotalCost.cost"
             },
             {
               "label": "NEW LIMIT REQUEST",
@@ -633,8 +627,7 @@
           "title": "Solicitor's Certification",
           "fields": [
             {
-              "label": "I certify that the information provided is correct.",
-              "apiField": null
+              "subHeading": "I certify that the information provided is correct."
             },
             {
               "label": "Name",

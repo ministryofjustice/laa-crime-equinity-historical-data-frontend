@@ -124,7 +124,30 @@ describe('CRM Display Service', () => {
         sectionId: 'capital-details',
         subsections: [
           {
-            fields: [{ label: 'Is your client under 18 years old?', value: 'No' }],
+            fields: [
+              { label: 'Is your client under 18 years old?', value: 'No' },
+              {
+                label:
+                  "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance or Guarantee State Pension Credit?",
+                value: 'Yes',
+              },
+              {
+                label: 'How many dependants does your client have?',
+                value: 2,
+              },
+              {
+                label: 'Client',
+                value: 60000,
+              },
+              {
+                label: 'Partner',
+                value: 40000,
+              },
+              {
+                label: 'Total',
+                value: 100000,
+              },
+            ],
             title: 'Capital Details',
           },
         ],
@@ -150,7 +173,7 @@ describe('CRM Display Service', () => {
 
       expect(result).toEqual({
         sectionId: 'clients-details',
-        subsections: [{ fields: [], title: "Client's Details" }],
+        subsections: [{ fields: [{ subHeading: 'Address' }], title: "Client's Details" }],
         title: "Client's Details",
       })
     })
