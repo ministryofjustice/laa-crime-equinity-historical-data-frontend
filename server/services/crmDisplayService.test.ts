@@ -4,7 +4,7 @@ import CrmDisplayService from './crmDisplayService'
 describe('CRM Display Service', () => {
   const crm5Response: Crm5Response = {
     usn: 1234567,
-    hasPreviousApplication: 'No',
+    hasPreviousApplication: 'Yes',
     previousApplicationRef: '',
     appealedPrevDecision: 'No',
     appealedPrevDecisionDetails: '',
@@ -44,17 +44,14 @@ describe('CRM Display Service', () => {
 
   describe('getCrmNavigation()', () => {
     it('should return crm navigation for given crm type, sectionId, usn', () => {
-      const result = crmDisplayService.getCrmNavigation('crm5', 1234567, 'capital-details', crm5Response)
+      const result = crmDisplayService.getCrmNavigation('crm5', 1234567, 'proceedings', crm5Response)
 
       expect(result).toEqual({
         items: [
           { href: '/crm5/1234567/general-information', text: 'General Information', active: false },
           { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
           { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
-          { href: '/crm5/1234567/capital-details', text: 'Capital Details', active: true },
-          { href: '/crm5/1234567/income-details', text: 'Income Details', active: false },
-          { href: '/crm5/1234567/proceedings', text: 'Proceedings', active: false },
-          { href: '/crm5/1234567/solicitors-declaration', text: "Solicitor's Declaration", active: false },
+          { href: '/crm5/1234567/proceedings', text: 'Proceedings', active: true },
           { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
           { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
@@ -73,10 +70,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/general-information', text: 'General Information', active: true },
           { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
           { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
-          { href: '/crm5/1234567/capital-details', text: 'Capital Details', active: false },
-          { href: '/crm5/1234567/income-details', text: 'Income Details', active: false },
           { href: '/crm5/1234567/proceedings', text: 'Proceedings', active: false },
-          { href: '/crm5/1234567/solicitors-declaration', text: "Solicitor's Declaration", active: false },
           { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
           { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
@@ -95,6 +89,29 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/general-information', text: 'General Information', active: true },
           { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
           { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
+          { href: '/crm5/1234567/proceedings', text: 'Proceedings', active: false },
+          { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
+          { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
+          { href: '/crm5/1234567/costs', text: 'Costs', active: false },
+          { text: 'Case History', href: '/crm5/1234567/case-history', active: false },
+          { text: "Solicitor's Certification", href: '/crm5/1234567/solicitors-certification', active: false },
+        ],
+        label: 'Side navigation',
+      })
+    })
+
+    it('should return crm navigation for has hasPreviousApplication=No', () => {
+      const customResponse: Crm5Response = {
+        ...crm5Response,
+        hasPreviousApplication: 'No',
+      }
+      const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '', customResponse)
+
+      expect(result).toEqual({
+        items: [
+          { href: '/crm5/1234567/general-information', text: 'General Information', active: true },
+          { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
+          { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
           { href: '/crm5/1234567/capital-details', text: 'Capital Details', active: false },
           { href: '/crm5/1234567/income-details', text: 'Income Details', active: false },
           { href: '/crm5/1234567/proceedings', text: 'Proceedings', active: false },
@@ -102,8 +119,68 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
           { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
-          { text: 'Case History', href: '/crm5/1234567/case-history', active: false },
-          { text: "Solicitor's Certification", href: '/crm5/1234567/solicitors-certification', active: false },
+          { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
+          { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+        ],
+        label: 'Side navigation',
+      })
+    })
+
+    it('should return crm navigation for has CaseDetails.levelOfWork=Advice', () => {
+      const customResponse: Crm5Response = {
+        ...crm5Response,
+        CaseDetails: {
+          levelOfWork: 'Advice',
+          cwCriminalInvestigation: false,
+          cwCcrc: false,
+          cwAppealsReview: false,
+          cwPrisonLaw: true,
+        },
+      }
+      const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '', customResponse)
+
+      expect(result).toEqual({
+        items: [
+          { href: '/crm5/1234567/general-information', text: 'General Information', active: true },
+          { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
+          { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
+          { href: '/crm5/1234567/proceedings', text: 'Proceedings', active: false },
+          { href: '/crm5/1234567/advice-and-assistance', text: 'Advice and Assistance', active: false },
+          { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
+          { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
+          { href: '/crm5/1234567/costs', text: 'Costs', active: false },
+          { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
+          { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+        ],
+        label: 'Side navigation',
+      })
+    })
+
+    it('should return crm navigation for has CaseDetails.levelOfWork=Advocacy', () => {
+      const customResponse: Crm5Response = {
+        ...crm5Response,
+        CaseDetails: {
+          levelOfWork: 'Advocacy',
+          cwCriminalInvestigation: false,
+          cwCcrc: false,
+          cwAppealsReview: false,
+          cwPrisonLaw: true,
+        },
+      }
+      const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '', customResponse)
+
+      expect(result).toEqual({
+        items: [
+          { href: '/crm5/1234567/general-information', text: 'General Information', active: true },
+          { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
+          { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
+          { href: '/crm5/1234567/proceedings', text: 'Proceedings', active: false },
+          { href: '/crm5/1234567/statement-of-case', text: 'Statement of Case', active: false },
+          { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
+          { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
+          { href: '/crm5/1234567/costs', text: 'Costs', active: false },
+          { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
+          { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
         ],
         label: 'Side navigation',
       })
