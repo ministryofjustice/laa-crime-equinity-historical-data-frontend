@@ -502,10 +502,6 @@
             },
             {
               "label": "Other disbursements",
-              "apiField": null
-            },
-            {
-              "label": "Cost",
               "apiField": "AllCosts.AccruedCosts.OtherDisbursement.cost"
             },
             {
@@ -583,10 +579,6 @@
             },
             {
               "label": "Other disbursements",
-              "apiField": null
-            },
-            {
-              "label": "Cost",
               "apiField": "AllCosts.AnticipatedCosts.OtherDisbursement.cost"
             },
             {
