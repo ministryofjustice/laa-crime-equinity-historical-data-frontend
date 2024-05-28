@@ -13,6 +13,7 @@ import {
   SubSection,
 } from '@crmDisplay'
 
+import { CrmResponse } from '@eqApi'
 import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 
 const schema = Joi.object({
@@ -76,7 +77,7 @@ export default class CrmDisplayService {
     }
   }
 
-  getCrmSection<T>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
+  getCrmSection<T extends CrmResponse>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
     const section = this.getSection(sectionId, crmDisplayConfig.sections)
     const subsections: Array<SubSection> = section.subsections.map(subsection => {
@@ -98,7 +99,7 @@ export default class CrmDisplayService {
     return sections.find(section => section.sectionId === sectionId) || sections[0]
   }
 
-  private getFields<T>(fields: Array<FieldOrSubHeading>, crmResponse: T): Array<FieldOrSubHeading> {
+  private getFields<T extends CrmResponse>(fields: Array<FieldOrSubHeading>, crmResponse: T): Array<FieldOrSubHeading> {
     return fields
       .map(field => {
         if (isConfigField(field)) {
@@ -117,7 +118,7 @@ export default class CrmDisplayService {
       .filter(field => isSubHeading(field) || field.value)
   }
 
-  private getApiFieldValue<T>(crmResponse: T, apiFieldName: string): string {
+  private getApiFieldValue<T extends CrmResponse>(crmResponse: T, apiFieldName: string): string {
     return _.get(crmResponse, apiFieldName) || ''
   }
 }
