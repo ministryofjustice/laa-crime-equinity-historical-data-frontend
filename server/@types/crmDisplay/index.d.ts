@@ -12,7 +12,7 @@ type DisplayField = {
   value: string
 }
 
-type FieldOrSubHeading = SubHeading | ConfigField | DisplayField
+type FieldOrSubHeading = ConfigField | DisplayField | SubHeading
 
 type SubSection = {
   title: string
@@ -43,14 +43,14 @@ type Navigation = {
 }
 
 export type {
+  ConfigField,
   CrmDisplayConfig,
   CrmType,
+  DisplayField,
+  FieldOrSubHeading,
   Navigation,
   NavigationItem,
   Section,
-  SubSection,
-  FieldOrSubHeading,
   SubHeading,
-  ConfigField,
-  DisplayField,
+  SubSection,
 }
