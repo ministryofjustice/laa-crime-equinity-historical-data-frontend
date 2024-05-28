@@ -94,7 +94,8 @@ export default class CrmDisplayService {
 
   getCrmSection<T extends CrmResponse>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
-    const section = this.getSection(sectionId, crmDisplayConfig.sections)
+    const section = this.getSection(sectionId, crmDisplayConfig.sections, crmResponse)
+
     const subsections: Array<SubSection> = section.subsections.map(subsection => {
       return { ...subsection, fields: this.getFields(subsection.fields, crmResponse) }
     })
@@ -110,8 +111,12 @@ export default class CrmDisplayService {
     return crmDisplayConfig
   }
 
-  private getSection(sectionId: string, sections: Array<Section>): Section {
-    return sections.find(section => section.sectionId === sectionId) || sections[0]
+  private getSection<T extends CrmResponse>(sectionId: string, sections: Array<Section>, crmResponse: T): Section {
+    const sectionFound = sections.find(section => section.sectionId === sectionId)
+    if (!sectionFound || (sectionFound.condition && !this.conditionIsTrue(sectionFound.condition, crmResponse))) {
+      return sections[0]
+    }
+    return sectionFound
   }
 
   private getFields<T extends CrmResponse>(fields: Array<FieldOrSubHeading>, crmResponse: T): Array<FieldOrSubHeading> {

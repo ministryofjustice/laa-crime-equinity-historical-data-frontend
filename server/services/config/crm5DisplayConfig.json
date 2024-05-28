@@ -291,6 +291,10 @@
     {
       "sectionId": "proceedings",
       "title": "Proceedings",
+      "condition": {
+        "apiField": "CaseDetails.levelOfWork",
+        "value": "Advocacy"
+      },
       "subsections": [
         {
           "title": "Type of proceedings",
