@@ -150,7 +150,7 @@ describe('CRM Display Service', () => {
 
       expect(result).toEqual({
         sectionId: 'clients-details',
-        subsections: [{ fields: [], title: "Client's Details" }],
+        subsections: [{ fields: [{ subHeading: 'Address' }], title: "Client's Details" }],
         title: "Client's Details",
       })
     })

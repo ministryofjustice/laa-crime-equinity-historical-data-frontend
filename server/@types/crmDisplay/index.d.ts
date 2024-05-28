@@ -1,3 +1,7 @@
+type SubHeading = {
+  subHeading: string
+}
+
 type ConfigField = {
   label: string
   apiField: string
@@ -8,11 +12,11 @@ type DisplayField = {
   value: string
 }
 
-type Field = ConfigField | DisplayField
+type FieldOrSubHeading = SubHeading | ConfigField | DisplayField
 
 type SubSection = {
   title: string
-  fields: Array<Field>
+  fields: Array<FieldOrSubHeading>
 }
 
 type Section = {
@@ -38,4 +42,15 @@ type Navigation = {
   items: Array<NavigationItem>
 }
 
-export type { CrmDisplayConfig, CrmType, Navigation, NavigationItem, Section, SubSection, Field, ConfigField }
+export type {
+  CrmDisplayConfig,
+  CrmType,
+  Navigation,
+  NavigationItem,
+  Section,
+  SubSection,
+  FieldOrSubHeading,
+  SubHeading,
+  ConfigField,
+  DisplayField,
+}
