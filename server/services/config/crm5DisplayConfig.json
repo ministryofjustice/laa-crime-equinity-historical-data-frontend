@@ -327,6 +327,10 @@
     {
       "sectionId": "statement-of-case",
       "title": "Statement of Case",
+      "condition": {
+        "apiField": "CaseDetails.levelOfWork",
+        "value": "Advocacy"
+      },
       "subsections": [
         {
           "title": "Statement of Case",
@@ -342,6 +346,10 @@
     {
       "sectionId": "advice-and-assistance",
       "title": "Advice and Assistance",
+      "condition": {
+        "apiField": "CaseDetails.levelOfWork",
+        "value": "Advice"
+      },
       "subsections": [
         {
           "title": "Advice and Assistance",

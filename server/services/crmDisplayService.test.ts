@@ -54,8 +54,6 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/capital-details', text: 'Capital Details', active: true },
           { href: '/crm5/1234567/income-details', text: 'Income Details', active: false },
           { href: '/crm5/1234567/proceedings', text: 'Proceedings', active: false },
-          { href: '/crm5/1234567/statement-of-case', text: 'Statement of Case', active: false },
-          { href: '/crm5/1234567/advice-and-assistance', text: 'Advice and Assistance', active: false },
           { href: '/crm5/1234567/solicitors-declaration', text: "Solicitor's Declaration", active: false },
           { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
           { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
@@ -78,8 +76,6 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/capital-details', text: 'Capital Details', active: false },
           { href: '/crm5/1234567/income-details', text: 'Income Details', active: false },
           { href: '/crm5/1234567/proceedings', text: 'Proceedings', active: false },
-          { href: '/crm5/1234567/statement-of-case', text: 'Statement of Case', active: false },
-          { href: '/crm5/1234567/advice-and-assistance', text: 'Advice and Assistance', active: false },
           { href: '/crm5/1234567/solicitors-declaration', text: "Solicitor's Declaration", active: false },
           { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
           { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
@@ -102,8 +98,6 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/capital-details', text: 'Capital Details', active: false },
           { href: '/crm5/1234567/income-details', text: 'Income Details', active: false },
           { href: '/crm5/1234567/proceedings', text: 'Proceedings', active: false },
-          { href: '/crm5/1234567/statement-of-case', text: 'Statement of Case', active: false },
-          { href: '/crm5/1234567/advice-and-assistance', text: 'Advice and Assistance', active: false },
           { href: '/crm5/1234567/solicitors-declaration', text: "Solicitor's Declaration", active: false },
           { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
           { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
@@ -164,6 +158,10 @@ describe('CRM Display Service', () => {
 
       expect(result).toEqual({
         sectionId: 'advice-and-assistance',
+        condition: {
+          apiField: 'CaseDetails.levelOfWork',
+          value: 'Advice',
+        },
         subsections: [
           { fields: [], title: 'Advice and Assistance' },
           { fields: [], title: 'LAA Advice and Assistance' },
