@@ -16,22 +16,25 @@
                 <div class="govuk-grid-column-two-thirds">
                     <div>
                         {% for subsection in section.subsections %}
-                            <div class="govuk-form-group">
+                            <div class="govuk-form-group govuk-!-margin-bottom-9">
                                 <h2 class="govuk-heading-l">{{ subsection.title }}</h2>
                                 <div class="govuk-summary-list">
                                     {% for field in subsection.fields %}
                                         <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key">{{ field.label }}</dt>
-                                            <dd class="govuk-summary-list__value">{{ field.value }}</dd>
+                                            {% if field.subHeading %}
+                                                <h3 class="govuk-heading-m">{{ field.subHeading }}</h3>
+                                            {% else %}
+                                                <dt class="govuk-summary-list__key">{{ field.label }}</dt>
+                                                <dd class="govuk-summary-list__value">{{ field.value }}</dd>
+                                            {% endif %}
                                         </div>
                                     {% endfor %}
                                 </div>
                             </div>
                         {% endfor %}
-
+                        </div>
                     </div>
                 </div>
-            </div>
 
         </main>
     </div>
