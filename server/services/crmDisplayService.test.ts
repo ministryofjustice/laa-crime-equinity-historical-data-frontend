@@ -27,14 +27,6 @@ describe('CRM Display Service', () => {
       partnerSavings: 40000,
       totalSavings: 100000,
     },
-    AdviceAssistance: {
-      transferFromSolicitor: '',
-      adviceCriteria: '',
-      laaAdviceAssistance: {
-        providedAdvice: '',
-        notes: '',
-      },
-    },
     StatementOfCase: 'Statement Of Case',
     DetailsOfWorkCompleted: 'Some Details of Work Completed',
     DetailsOfApplication: 'Some Details of Application',
@@ -216,6 +208,14 @@ describe('CRM Display Service', () => {
           cwCcrc: false,
           cwAppealsReview: false,
           cwPrisonLaw: true,
+        },
+        AdviceAssistance: {
+          transferFromSolicitor: '',
+          adviceCriteria: '',
+          laaAdviceAssistance: {
+            providedAdvice: '',
+            notes: '',
+          },
         },
       }
       const result = crmDisplayService.getCrmSection('crm5', 'advice-and-assistance', customResponse)
