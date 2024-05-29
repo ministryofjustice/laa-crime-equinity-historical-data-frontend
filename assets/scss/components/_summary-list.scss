@@ -1,0 +1,30 @@
+.govuk-summary-list--custom .govuk-summary-list__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  //padding: 10px 0;
+  .govuk-summary-list__key {
+    flex: 1;
+    min-width: 150px;
+  }
+  .govuk-summary-list__value {
+    flex: 2;
+    min-width: 150px;
+  }
+  .govuk-summary-list__actions {
+    flex: 0 0 auto;
+    min-width: 100px;
+  }
+  @media (max-width: 640px) {
+    .govuk-summary-list__key,
+    .govuk-summary-list__value,
+    .govuk-summary-list__actions {
+      flex: 1 1 100%;
+      text-align: left;
+      margin-bottom: 10px;
+    }
+    .govuk-summary-list__actions {
+      text-align: right;
+    }
+  }
+}

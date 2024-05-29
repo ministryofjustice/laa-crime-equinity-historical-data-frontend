@@ -8,7 +8,7 @@
 
     <div class="govuk-width-container">
         <main class="govuk-main-wrapper">
-            <h1 class="govuk-heading-l">{{ title }}</h1>
+            <h1 class="govuk-heading-xl">{{ title }}</h1>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-third">
                     {{ navigationBar(navigationItems) }}
@@ -18,18 +18,18 @@
                         {% for subsection in section.subsections %}
                             <div class="govuk-form-group govuk-!-margin-bottom-9">
                                 <h2 class="govuk-heading-l">{{ subsection.title }}</h2>
-                                <div class="govuk-summary-list">
+                                <dl class="govuk-summary-list govuk-summary-list--custom">
                                     {% for field in subsection.fields %}
                                         <div class="govuk-summary-list__row">
                                             {% if field.subHeading %}
-                                                <h3 class="govuk-heading-m">{{ field.subHeading }}</h3>
+                                                <h3 class="govuk-heading-m govuk-!-margin-top-6">{{ field.subHeading }}</h3>
                                             {% else %}
                                                 <dt class="govuk-summary-list__key">{{ field.label }}</dt>
                                                 <dd class="govuk-summary-list__value">{{ field.value }}</dd>
                                             {% endif %}
                                         </div>
                                     {% endfor %}
-                                </div>
+                                </dl>
                             </div>
                         {% endfor %}
                         </div>
