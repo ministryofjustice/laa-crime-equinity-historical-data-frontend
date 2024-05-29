@@ -172,9 +172,9 @@
     {
       "sectionId": "capital-details",
       "title": "Capital Details",
-      "condition": {
+      "displayWhen": {
         "apiField": "hasPreviousApplication",
-        "value": "No"
+        "equals": "No"
       },
       "subsections": [
         {
@@ -211,9 +211,9 @@
     {
       "sectionId": "income-details",
       "title": "Income Details",
-      "condition": {
+      "displayWhen": {
         "apiField": "hasPreviousApplication",
-        "value": "No"
+        "equals": "No"
       },
       "subsections": [
         {
@@ -291,9 +291,9 @@
     {
       "sectionId": "proceedings",
       "title": "Proceedings",
-      "condition": {
+      "displayWhen": {
         "apiField": "CaseDetails.levelOfWork",
-        "value": "Advocacy"
+        "equals": "Advocacy"
       },
       "subsections": [
         {
@@ -331,9 +331,9 @@
     {
       "sectionId": "statement-of-case",
       "title": "Statement of Case",
-      "condition": {
+      "displayWhen": {
         "apiField": "CaseDetails.levelOfWork",
-        "value": "Advocacy"
+        "equals": "Advocacy"
       },
       "subsections": [
         {
@@ -350,9 +350,9 @@
     {
       "sectionId": "advice-and-assistance",
       "title": "Advice and Assistance",
-      "condition": {
+      "displayWhen": {
         "apiField": "CaseDetails.levelOfWork",
-        "value": "Advice"
+        "equals": "Advice"
       },
       "subsections": [
         {
@@ -386,9 +386,9 @@
     {
       "sectionId": "solicitors-declaration",
       "title": "Solicitor's Declaration",
-      "condition": {
+      "displayWhen": {
         "apiField": "hasPreviousApplication",
-        "value": "No"
+        "equals": "No"
       },
       "subsections": [
         {

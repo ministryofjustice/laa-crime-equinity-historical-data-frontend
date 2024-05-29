@@ -1,11 +1,11 @@
 import Joi from 'joi'
 import _ from 'lodash'
 import {
-  Condition,
   ConfigField,
   CrmDisplayConfig,
   CrmType,
   DisplayField,
+  DisplayWhen,
   FieldOrSubHeading,
   Navigation,
   NavigationItem,
@@ -23,9 +23,9 @@ const schema = Joi.object({
     .items({
       sectionId: Joi.string().required(),
       title: Joi.string().required(),
-      condition: Joi.object({
+      displayWhen: Joi.object({
         apiField: Joi.string().required(),
-        value: Joi.string().required(),
+        equals: Joi.string().required(),
       }).optional(),
       subsections: Joi.array().items({
         title: Joi.string().required(),
@@ -67,7 +67,7 @@ export default class CrmDisplayService {
     let isAnySectionActive = false
     const items: Array<NavigationItem> = crmDisplayConfig.sections
       .map(section => {
-        if (section.condition && !this.conditionIsTrue(section.condition, crmResponse)) {
+        if (section.displayWhen && !this.conditionIsTrue(section.displayWhen, crmResponse)) {
           return null
         }
         const isActive = section.sectionId === sectionId
@@ -113,7 +113,7 @@ export default class CrmDisplayService {
 
   private getSection<T extends CrmResponse>(sectionId: string, sections: Array<Section>, crmResponse: T): Section {
     const sectionFound = sections.find(section => section.sectionId === sectionId)
-    if (!sectionFound || (sectionFound.condition && !this.conditionIsTrue(sectionFound.condition, crmResponse))) {
+    if (!sectionFound || (sectionFound.displayWhen && !this.conditionIsTrue(sectionFound.displayWhen, crmResponse))) {
       return sections[0]
     }
     return sectionFound
@@ -142,9 +142,9 @@ export default class CrmDisplayService {
     return _.get(crmResponse, apiFieldName) || ''
   }
 
-  private conditionIsTrue<T extends CrmResponse>(condition: Condition, crmResponse: T): boolean {
-    const apiFieldValue = this.getApiFieldValue(crmResponse, condition.apiField)
-    return condition.value === apiFieldValue
+  private conditionIsTrue<T extends CrmResponse>(displayWhen: DisplayWhen, crmResponse: T): boolean {
+    const apiFieldValue = this.getApiFieldValue(crmResponse, displayWhen.apiField)
+    return displayWhen.equals === apiFieldValue
   }
 }
 

@@ -222,9 +222,9 @@ describe('CRM Display Service', () => {
 
       expect(result).toEqual({
         sectionId: 'advice-and-assistance',
-        condition: {
+        displayWhen: {
           apiField: 'CaseDetails.levelOfWork',
-          value: 'Advice',
+          equals: 'Advice',
         },
         subsections: [
           { fields: [], title: 'Advice and Assistance' },

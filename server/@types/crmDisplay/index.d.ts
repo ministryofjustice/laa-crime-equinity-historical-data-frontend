@@ -19,15 +19,15 @@ type SubSection = {
   fields: Array<FieldOrSubHeading>
 }
 
-type Condition = {
+type DisplayWhen = {
   apiField: string
-  value: string
+  equals: string
 }
 
 type Section = {
   sectionId: string
   title: string
-  condition?: Condition
+  displayWhen?: DisplayWhen
   subsections: Array<SubSection>
 }
 
@@ -49,11 +49,11 @@ type Navigation = {
 }
 
 export type {
-  Condition,
   ConfigField,
   CrmDisplayConfig,
   CrmType,
   DisplayField,
+  DisplayWhen,
   FieldOrSubHeading,
   Navigation,
   NavigationItem,
