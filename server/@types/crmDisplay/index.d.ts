@@ -19,9 +19,15 @@ type SubSection = {
   fields: Array<FieldOrSubHeading>
 }
 
+type DisplayWhen = {
+  apiField: string
+  equals: string
+}
+
 type Section = {
   sectionId: string
   title: string
+  displayWhen?: DisplayWhen
   subsections: Array<SubSection>
 }
 
@@ -47,6 +53,7 @@ export type {
   CrmDisplayConfig,
   CrmType,
   DisplayField,
+  DisplayWhen,
   FieldOrSubHeading,
   Navigation,
   NavigationItem,

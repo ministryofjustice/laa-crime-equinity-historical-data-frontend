@@ -1,3 +1,5 @@
+import { CrmResponse } from '@eqApi'
+
 type Firm = {
   firmAddress: string
   firmName: string
@@ -156,7 +158,7 @@ type OfficeUseOnly = {
   decision: string
 }
 
-export type Crm5Response = {
+export interface Crm5Response extends CrmResponse {
   usn: number
   hasPreviousApplication: string
   previousApplicationRef: string

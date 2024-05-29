@@ -1,8 +1,8 @@
-import type { EqApiHeader } from '@eqApi'
+import type { CrmResponse, EqApiHeader } from '@eqApi'
 import RestClient from '../restClient'
 import config from '../../config'
 
-export default class CrmApiClient<T> {
+export default class CrmApiClient<T extends CrmResponse> {
   constructor(
     private readonly headers: Record<EqApiHeader, string>,
     private readonly apiPath: string,

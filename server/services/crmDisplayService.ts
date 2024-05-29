@@ -5,6 +5,7 @@ import {
   CrmDisplayConfig,
   CrmType,
   DisplayField,
+  DisplayWhen,
   FieldOrSubHeading,
   Navigation,
   NavigationItem,
@@ -13,6 +14,7 @@ import {
   SubSection,
 } from '@crmDisplay'
 
+import { CrmResponse } from '@eqApi'
 import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 
 const schema = Joi.object({
@@ -21,6 +23,10 @@ const schema = Joi.object({
     .items({
       sectionId: Joi.string().required(),
       title: Joi.string().required(),
+      displayWhen: Joi.object({
+        apiField: Joi.string().required(),
+        equals: Joi.string().required(),
+      }).optional(),
       subsections: Joi.array().items({
         title: Joi.string().required(),
         fields: Joi.array().items(
@@ -50,21 +56,28 @@ const configMap: Record<CrmType, CrmDisplayConfig> = {
 }
 
 export default class CrmDisplayService {
-  getCrmNavigation(crmType: CrmType, usn: number, sectionId: string): Navigation {
+  getCrmNavigation<T extends CrmResponse>(
+    crmType: CrmType,
+    usn: number,
+    sectionId: string,
+    crmResponse: T,
+  ): Navigation {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
 
     let isAnySectionActive = false
-    const items: Array<NavigationItem> = crmDisplayConfig.sections.map(section => {
-      const isActive = section.sectionId === sectionId
-      if (isActive) {
-        isAnySectionActive = true
-      }
-      return {
-        href: `/${crmType}/${usn}/${section.sectionId}`,
-        text: section.title,
-        active: isActive,
-      }
-    })
+    const items: Array<NavigationItem> = crmDisplayConfig.sections
+      .filter(section => !section.displayWhen || this.conditionIsTrue(section.displayWhen, crmResponse))
+      .map(section => {
+        const isActive = section.sectionId === sectionId
+        if (isActive) {
+          isAnySectionActive = true
+        }
+        return {
+          href: `/${crmType}/${usn}/${section.sectionId}`,
+          text: section.title,
+          active: isActive,
+        }
+      })
 
     if (!isAnySectionActive && items.length > 0) {
       items[0].active = true
@@ -76,9 +89,10 @@ export default class CrmDisplayService {
     }
   }
 
-  getCrmSection<T>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
+  getCrmSection<T extends CrmResponse>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
-    const section = this.getSection(sectionId, crmDisplayConfig.sections)
+    const section = this.getSection(sectionId, crmDisplayConfig.sections, crmResponse)
+
     const subsections: Array<SubSection> = section.subsections.map(subsection => {
       return { ...subsection, fields: this.getFields(subsection.fields, crmResponse) }
     })
@@ -94,11 +108,15 @@ export default class CrmDisplayService {
     return crmDisplayConfig
   }
 
-  private getSection(sectionId: string, sections: Array<Section>): Section {
-    return sections.find(section => section.sectionId === sectionId) || sections[0]
+  private getSection<T extends CrmResponse>(sectionId: string, sections: Array<Section>, crmResponse: T): Section {
+    const sectionFound = sections.find(section => section.sectionId === sectionId)
+    if (!sectionFound || (sectionFound.displayWhen && !this.conditionIsTrue(sectionFound.displayWhen, crmResponse))) {
+      return sections[0]
+    }
+    return sectionFound
   }
 
-  private getFields<T>(fields: Array<FieldOrSubHeading>, crmResponse: T): Array<FieldOrSubHeading> {
+  private getFields<T extends CrmResponse>(fields: Array<FieldOrSubHeading>, crmResponse: T): Array<FieldOrSubHeading> {
     return fields
       .map(field => {
         if (isConfigField(field)) {
@@ -117,8 +135,13 @@ export default class CrmDisplayService {
       .filter(field => isSubHeading(field) || field.value)
   }
 
-  private getApiFieldValue<T>(crmResponse: T, apiFieldName: string): string {
+  private getApiFieldValue<T extends CrmResponse>(crmResponse: T, apiFieldName: string): string {
     return _.get(crmResponse, apiFieldName) || ''
+  }
+
+  private conditionIsTrue<T extends CrmResponse>(displayWhen: DisplayWhen, crmResponse: T): boolean {
+    const apiFieldValue = this.getApiFieldValue(crmResponse, displayWhen.apiField)
+    return displayWhen.equals === apiFieldValue
   }
 }
 
