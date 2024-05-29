@@ -1,4 +1,3 @@
-import Joi from 'joi'
 import _ from 'lodash'
 import {
   ConfigField,
@@ -16,43 +15,11 @@ import {
 
 import { CrmResponse } from '@eqApi'
 import crm5DisplayConfig from './config/crm5DisplayConfig.json'
-
-const schema = Joi.object({
-  sections: Joi.array()
-    .min(1)
-    .items({
-      sectionId: Joi.string().required(),
-      title: Joi.string().required(),
-      displayWhen: Joi.object({
-        apiField: Joi.string().required(),
-        equals: Joi.string().required(),
-      }).optional(),
-      subsections: Joi.array().items({
-        title: Joi.string().required(),
-        fields: Joi.array().items(
-          {
-            label: Joi.string().optional().allow(''),
-            apiField: Joi.string().required(),
-          },
-          {
-            subHeading: Joi.string().required(),
-          },
-        ),
-      }),
-    }),
-})
-
-const getValidConfig = (config: CrmDisplayConfig, crmType: CrmType): CrmDisplayConfig => {
-  const { error } = schema.validate(config)
-  if (error?.details) {
-    throw new Error(`Invalid ${crmType} Display config: ${JSON.stringify(error.details)}`)
-  }
-  return config
-}
+import validateConfig from '../utils/crmDisplayConfigValidation'
 
 const configMap: Record<CrmType, CrmDisplayConfig> = {
   crm4: null, // not supported yet
-  crm5: getValidConfig(crm5DisplayConfig, 'crm5'),
+  crm5: validateConfig(crm5DisplayConfig, 'crm5'),
 }
 
 export default class CrmDisplayService {
