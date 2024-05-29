@@ -97,7 +97,7 @@ describe('CRM Display Service', () => {
       })
     })
 
-    it('should return crm navigation for has hasPreviousApplication=No', () => {
+    it('should return crm navigation for hasPreviousApplication=No', () => {
       const customResponse: Crm5Response = {
         ...crm5Response,
         hasPreviousApplication: 'No',
@@ -122,7 +122,7 @@ describe('CRM Display Service', () => {
       })
     })
 
-    it('should return crm navigation for has CaseDetails.levelOfWork=Advice', () => {
+    it('should return crm navigation for CaseDetails.levelOfWork=Advice', () => {
       const customResponse: Crm5Response = {
         ...crm5Response,
         CaseDetails: {
@@ -151,7 +151,7 @@ describe('CRM Display Service', () => {
       })
     })
 
-    it('should return crm navigation for has CaseDetails.levelOfWork=Advocacy', () => {
+    it('should return crm navigation for CaseDetails.levelOfWork=Advocacy', () => {
       const customResponse: Crm5Response = {
         ...crm5Response,
         CaseDetails: {

@@ -66,10 +66,8 @@ export default class CrmDisplayService {
 
     let isAnySectionActive = false
     const items: Array<NavigationItem> = crmDisplayConfig.sections
+      .filter(section => !section.displayWhen || this.conditionIsTrue(section.displayWhen, crmResponse))
       .map(section => {
-        if (section.displayWhen && !this.conditionIsTrue(section.displayWhen, crmResponse)) {
-          return null
-        }
         const isActive = section.sectionId === sectionId
         if (isActive) {
           isAnySectionActive = true
@@ -80,7 +78,6 @@ export default class CrmDisplayService {
           active: isActive,
         }
       })
-      .filter(Boolean)
 
     if (!isAnySectionActive && items.length > 0) {
       items[0].active = true
