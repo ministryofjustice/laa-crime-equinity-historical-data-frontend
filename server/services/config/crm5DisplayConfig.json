@@ -481,11 +481,13 @@
           "fields": [
             {
               "label": "Attendance Time",
-              "apiField": "AllCosts.AccruedCosts.Attendance.time"
+              "apiField": "AllCosts.AccruedCosts.Attendance.time",
+              "format": "time"
             },
             {
               "label": "Cost",
-              "apiField": "AllCosts.AccruedCosts.Attendance.cost"
+              "apiField": "AllCosts.AccruedCosts.Attendance.cost",
+              "format": "currency"
             },
             {
               "label": "Preparation Time",
