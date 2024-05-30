@@ -16,23 +16,26 @@
                 <div class="govuk-grid-column-two-thirds">
                     <div>
                         {% for subsection in section.subsections %}
-                            <div class="govuk-form-group govuk-!-margin-bottom-9">
-                                <h2 class="govuk-heading-l">{{ subsection.title }}</h2>
+                            <div class="govuk-form-group govuk-!-margin-bottom-8">
+                                <h2 class="govuk-heading-l govuk-!-margin-bottom-6">{{ subsection.title }}</h2>
                                 <dl class="govuk-summary-list govuk-summary-list--custom">
+                                    {% set isFirstItem = true %}
                                     {% for field in subsection.fields %}
-                                        <div class="govuk-summary-list__row">
-                                            {% if field.subHeading %}
-                                                <h3 class="govuk-heading-m govuk-!-margin-top-6">{{ field.subHeading }}</h3>
-                                            {% else %}
+                                        {% if field.subHeading %}
+                                            <div class="govuk-summary-list__row govuk-!-padding-bottom-4{% if not isFirstItem %} govuk-!-margin-top-8{% endif %}">
+                                                <h3 class="govuk-heading-m">{{ field.subHeading }}</h3>
+                                            </div>
+                                        {% else %}
+                                            <div class="govuk-summary-list__row">
                                                 <dt class="govuk-summary-list__key">{{ field.label }}</dt>
                                                 <dd class="govuk-summary-list__value">{{ field.value }}</dd>
-                                            {% endif %}
-                                        </div>
+                                            </div>
+                                        {% endif %}
+                                        {% set isFirstItem = false %}
                                     {% endfor %}
                                 </dl>
                             </div>
                         {% endfor %}
-                        </div>
                     </div>
                 </div>
 
