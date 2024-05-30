@@ -2,10 +2,12 @@ type SubHeading = {
   subHeading: string
 }
 
+type FieldType = 'currency' | 'date'
+
 type ConfigField = {
   label: string
   apiField: string
-  fieldType?: 'date'
+  type?: FieldType
 }
 
 type DisplayField = {

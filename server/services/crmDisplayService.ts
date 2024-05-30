@@ -93,7 +93,7 @@ export default class CrmDisplayService {
           const apiFieldValue = this.getApiFieldValue(crmResponse, apiFieldName)
           const displayField: DisplayField = {
             label: field.label,
-            value: formatField(apiFieldValue, field.fieldType),
+            value: formatField(apiFieldValue, field.type),
           }
           return displayField
         }
