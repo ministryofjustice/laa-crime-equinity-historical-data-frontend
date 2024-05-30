@@ -1,3 +1,5 @@
+import { CrmResponse } from '@eqApi'
+
 type Firm = {
   urn: string
   firmAddress: string
@@ -118,7 +120,7 @@ type Solicitor = {
   certification: Certification
 }
 
-export type Crm4Response = {
+export interface Crm4Response extends CrmResponse {
   greaterValue: boolean
   postMortemExamination: string
   CaseDetails?: CaseDetails

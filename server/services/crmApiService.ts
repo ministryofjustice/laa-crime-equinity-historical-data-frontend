@@ -1,6 +1,7 @@
+import { CrmResponse } from '@eqApi'
 import CrmApiClient from '../data/api/crmApiClient'
 
-export default class CrmApiService<T> {
+export default class CrmApiService<T extends CrmResponse> {
   constructor(private readonly crmApiClient: CrmApiClient<T>) {}
 
   async getCrm(usn: number): Promise<T> {
