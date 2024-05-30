@@ -2,7 +2,7 @@ type SubHeading = {
   subHeading: string
 }
 
-type FieldType = 'currency' | 'date'
+type FieldType = 'currency' | 'date' | 'time'
 
 type ConfigField = {
   label: string

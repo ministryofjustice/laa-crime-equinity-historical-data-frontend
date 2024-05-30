@@ -13,6 +13,8 @@ const formatField = (value: string, type: FieldType): string => {
       return formatAsCurrency(value)
     case 'date':
       return formatAsDate(value)
+    case 'time':
+      return formatAsTime(value)
     default:
       return value
   }
@@ -26,6 +28,11 @@ const formatAsCurrency = (value: string) => {
 
 const formatAsDate = (value: string) => {
   return format(value, 'dd MM yyyy')
+}
+
+const formatAsTime = (value: string) => {
+  const timeAsDate = new Date(`${new Date().toDateString()} ${value}`)
+  return format(timeAsDate, 'HH:mm')
 }
 
 export default formatField

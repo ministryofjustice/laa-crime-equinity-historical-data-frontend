@@ -16,6 +16,11 @@ describe('CRM Display Field Formatter', () => {
     expect(result).toEqual('14 02 2024')
   })
 
+  it('should format time', () => {
+    const result = formatField('15:32:11', 'time')
+    expect(result).toEqual('15:32')
+  })
+
   it.each([[undefined], [null], ['']])('should not format "%s"', (input: string) => {
     expect(formatField(input, 'date')).toEqual(input)
   })
