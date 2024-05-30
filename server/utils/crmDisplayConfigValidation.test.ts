@@ -30,17 +30,17 @@ describe('CRM Display Config Validation', () => {
                 {
                   label: 'Some Currency',
                   apiField: 'someCurrencyField',
-                  type: 'currency',
+                  format: 'currency',
                 },
                 {
                   label: 'Some Date',
                   apiField: 'someDateField',
-                  type: 'date',
+                  format: 'date',
                 },
                 {
                   label: 'Some Time',
                   apiField: 'someTimeField',
-                  type: 'time',
+                  format: 'time',
                 },
               ],
             },
@@ -76,17 +76,17 @@ describe('CRM Display Config Validation', () => {
                 {
                   label: 'Some Currency',
                   apiField: 'someCurrencyField',
-                  type: 'currency',
+                  format: 'currency',
                 },
                 {
                   label: 'Some Date',
                   apiField: 'someDateField',
-                  type: 'date',
+                  format: 'date',
                 },
                 {
                   label: 'Some Time',
                   apiField: 'someTimeField',
-                  type: 'time',
+                  format: 'time',
                 },
               ],
               title: 'General Information',

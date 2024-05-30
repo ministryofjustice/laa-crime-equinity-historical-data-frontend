@@ -1,14 +1,14 @@
 import { format } from 'date-fns'
-import { FieldType } from '@crmDisplay'
+import { FormatType } from '@crmDisplay'
 
 const currencyFormat = new Intl.NumberFormat('en-GB', {
   style: 'currency',
   currency: 'GBP',
 })
 
-const formatField = (value: string, type: FieldType): string => {
+const formatField = (value: string, formatType: FormatType): string => {
   if (!value) return value
-  switch (type) {
+  switch (formatType) {
     case 'currency':
       return formatAsCurrency(value)
     case 'date':

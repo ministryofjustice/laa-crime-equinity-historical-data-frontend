@@ -129,7 +129,7 @@
             {
               "label": "Date of birth",
               "apiField": "ClientDetails.dateOfBirth",
-              "type": "date"
+              "format": "date"
             },
             {
               "label": "Marital status",
@@ -196,17 +196,17 @@
             {
               "label": "Client",
               "apiField": "CapitalDetails.clientSavings",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "Partner",
               "apiField": "CapitalDetails.partnerSavings",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "Total",
               "apiField": "CapitalDetails.totalSavings",
-              "type": "currency"
+              "format": "currency"
             }
           ]
         }
@@ -233,17 +233,17 @@
             {
               "label": "Client",
               "apiField": "IncomeDetails.weeklyClientIncome",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "Partner",
               "apiField": "IncomeDetails.weeklyPartnerIncome",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "Total",
               "apiField": "IncomeDetails.totalWeeklyIncome",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "subHeading": "Allowable deductions"
@@ -251,22 +251,22 @@
             {
               "label": "Income tax",
               "apiField": "IncomeDetails.incomeTaxDeductions",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "National Insurance contributions",
               "apiField": "IncomeDetails.niDeductions",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "Partner",
               "apiField": "IncomeDetails.partnerDeductions",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "Attendance allowance, disability living allowance, constant attendance allowance and any payment made out of the Social Fund",
               "apiField": "IncomeDetails.socialFundDeductions",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "subHeading": "Dependent children and other dependants"
@@ -278,7 +278,7 @@
             {
               "label": "Amount",
               "apiField": "IncomeDetails.deductionUnder15",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "Aged 16 or over",
@@ -287,17 +287,17 @@
             {
               "label": "Amount",
               "apiField": "IncomeDetails.deductionOver16",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "Less Total deductions",
               "apiField": "IncomeDetails.totalDeductions",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "Total weekly disposable income",
               "apiField": "IncomeDetails.totalWeeklyIncome",
-              "type": "currency"
+              "format": "currency"
             }
           ]
         }
@@ -334,7 +334,7 @@
             {
               "label": "Date of next hearing",
               "apiField": "Proceedings.DetailsOfProceedings.dateOfNextHearing",
-              "type": "date"
+              "format": "date"
             },
             {
               "label": "Has counsel been instructed?",
@@ -420,7 +420,7 @@
             {
               "label": "Date",
               "apiField": "Solicitor.declaration.date",
-              "type": "date"
+              "format": "date"
             }
           ]
         }
@@ -546,12 +546,12 @@
             {
               "label": "Other disbursements",
               "apiField": "AllCosts.AccruedCosts.OtherDisbursement.cost",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "Total Costs To Date",
               "apiField": "AllCosts.AccruedCosts.TotalCost.cost",
-              "type": "currency"
+              "format": "currency"
             }
           ]
         },
@@ -625,17 +625,17 @@
             {
               "label": "Other disbursements",
               "apiField": "AllCosts.AnticipatedCosts.OtherDisbursement.cost",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "Total Anticipated Costs",
               "apiField": "AllCosts.AnticipatedCosts.TotalCost.cost",
-              "type": "currency"
+              "format": "currency"
             },
             {
               "label": "NEW LIMIT REQUEST",
               "apiField": "AllCosts.NewLimitRequest.cost",
-              "type": "currency"
+              "format": "currency"
             }
           ]
         }
@@ -682,7 +682,7 @@
             {
               "label": "Date",
               "apiField": "Solicitor.certification.date",
-              "type": "date"
+              "format": "date"
             }
           ]
         }
