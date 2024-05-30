@@ -5,6 +5,7 @@ type SubHeading = {
 type ConfigField = {
   label: string
   apiField: string
+  fieldType?: 'date'
 }
 
 type DisplayField = {
@@ -55,6 +56,7 @@ export type {
   DisplayField,
   DisplayWhen,
   FieldOrSubHeading,
+  FieldType,
   Navigation,
   NavigationItem,
   Section,

@@ -128,7 +128,8 @@
             },
             {
               "label": "Date of birth",
-              "apiField": "ClientDetails.dateOfBirth"
+              "apiField": "ClientDetails.dateOfBirth",
+              "fieldType": "date"
             },
             {
               "label": "Marital status",

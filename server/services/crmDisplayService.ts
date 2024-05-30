@@ -16,10 +16,11 @@ import {
 import { CrmResponse } from '@eqApi'
 import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 import validateConfig from '../utils/crmDisplayConfigValidation'
+import formatField from '../utils/crmDisplayFieldFormatter'
 
 const configMap: Record<CrmType, CrmDisplayConfig> = {
   crm4: null, // not supported yet
-  crm5: validateConfig(crm5DisplayConfig, 'crm5'),
+  crm5: validateConfig(crm5DisplayConfig as CrmDisplayConfig, 'crm5'),
 }
 
 export default class CrmDisplayService {
@@ -89,9 +90,10 @@ export default class CrmDisplayService {
         if (isConfigField(field)) {
           // create display field using config & api field value
           const apiFieldName = field.apiField
+          const apiFieldValue = this.getApiFieldValue(crmResponse, apiFieldName)
           const displayField: DisplayField = {
             label: field.label,
-            value: this.getApiFieldValue(crmResponse, apiFieldName),
+            value: formatField(apiFieldValue, field.fieldType),
           }
           return displayField
         }

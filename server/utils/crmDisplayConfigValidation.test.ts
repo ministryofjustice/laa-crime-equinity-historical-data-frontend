@@ -1,7 +1,7 @@
 import { CrmDisplayConfig } from '@crmDisplay'
 import validateConfig from './crmDisplayConfigValidation'
 
-describe('Crm Display Config Validation', () => {
+describe('CRM Display Config Validation', () => {
   it('should validate config', () => {
     const config: CrmDisplayConfig = {
       sections: [
