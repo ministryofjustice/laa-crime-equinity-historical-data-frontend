@@ -29,4 +29,14 @@ describe('CRM Display Field Formatter', () => {
     const result = formatField('blah', 'currency')
     expect(result).toEqual('blah')
   })
+
+  it('should not format date if not a valid date', () => {
+    const result = formatField('blah', 'date')
+    expect(result).toEqual('blah')
+  })
+
+  it('should not format time if not a valid time', () => {
+    const result = formatField('blah', 'time')
+    expect(result).toEqual('blah')
+  })
 })

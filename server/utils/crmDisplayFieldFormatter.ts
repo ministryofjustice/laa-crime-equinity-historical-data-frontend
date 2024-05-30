@@ -27,11 +27,14 @@ const formatAsCurrency = (value: string) => {
 }
 
 const formatAsDate = (value: string) => {
-  return format(value, 'dd MM yyyy')
+  const date = Date.parse(value)
+  if (Number.isNaN(date)) return value
+  return format(date, 'dd MM yyyy')
 }
 
 const formatAsTime = (value: string) => {
-  const timeAsDate = new Date(`${new Date().toDateString()} ${value}`)
+  const timeAsDate = Date.parse(`${new Date().toDateString()} ${value}`)
+  if (Number.isNaN(timeAsDate)) return value
   return format(timeAsDate, 'HH:mm')
 }
 
