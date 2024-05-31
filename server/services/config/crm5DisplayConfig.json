@@ -129,7 +129,7 @@
             {
               "label": "Date of birth",
               "apiField": "ClientDetails.dateOfBirth",
-              "format": "date"
+              "type": "date"
             },
             {
               "label": "Marital status",
@@ -196,17 +196,17 @@
             {
               "label": "Client",
               "apiField": "CapitalDetails.clientSavings",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "Partner",
               "apiField": "CapitalDetails.partnerSavings",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "Total",
               "apiField": "CapitalDetails.totalSavings",
-              "format": "currency"
+              "type": "currency"
             }
           ]
         }
@@ -233,17 +233,17 @@
             {
               "label": "Client",
               "apiField": "IncomeDetails.weeklyClientIncome",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "Partner",
               "apiField": "IncomeDetails.weeklyPartnerIncome",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "Total",
               "apiField": "IncomeDetails.totalWeeklyIncome",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "subHeading": "Allowable deductions"
@@ -251,22 +251,22 @@
             {
               "label": "Income tax",
               "apiField": "IncomeDetails.incomeTaxDeductions",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "National Insurance contributions",
               "apiField": "IncomeDetails.niDeductions",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "Partner",
               "apiField": "IncomeDetails.partnerDeductions",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "Attendance allowance, disability living allowance, constant attendance allowance and any payment made out of the Social Fund",
               "apiField": "IncomeDetails.socialFundDeductions",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "subHeading": "Dependent children and other dependants"
@@ -278,7 +278,7 @@
             {
               "label": "Amount",
               "apiField": "IncomeDetails.deductionUnder15",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "Aged 16 or over",
@@ -287,17 +287,17 @@
             {
               "label": "Amount",
               "apiField": "IncomeDetails.deductionOver16",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "Less Total deductions",
               "apiField": "IncomeDetails.totalDeductions",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "Total weekly disposable income",
               "apiField": "IncomeDetails.totalWeeklyIncome",
-              "format": "currency"
+              "type": "currency"
             }
           ]
         }
@@ -334,7 +334,7 @@
             {
               "label": "Date of next hearing",
               "apiField": "Proceedings.DetailsOfProceedings.dateOfNextHearing",
-              "format": "date"
+              "type": "date"
             },
             {
               "label": "Has counsel been instructed?",
@@ -420,7 +420,7 @@
             {
               "label": "Date",
               "apiField": "Solicitor.declaration.date",
-              "format": "date"
+              "type": "date"
             }
           ]
         }
@@ -482,52 +482,52 @@
             {
               "label": "Attendance Time",
               "apiField": "AllCosts.AccruedCosts.Attendance",
-              "customType": "timeAndCost"
+              "type": "timeAndCost"
             },
             {
               "label": "Preparation Time",
               "apiField": "AllCosts.AccruedCosts.Preparation",
-              "customType": "timeAndCost"
+              "type": "timeAndCost"
             },
             {
               "label": "Advocacy Time",
               "apiField": "AllCosts.AccruedCosts.Advocacy",
-              "customType": "timeAndCost"
+              "type": "timeAndCost"
             },
             {
               "label": "Travel Time",
               "apiField": "AllCosts.AccruedCosts.Travel",
-              "customType": "timeAndCost"
+              "type": "timeAndCost"
             },
             {
               "label": "Waiting Time",
               "apiField": "AllCosts.AccruedCosts.Waiting",
-              "customType": "timeAndCost"
+              "type": "timeAndCost"
             },
             {
               "label": "Letters",
               "apiField": "AllCosts.AccruedCosts.Letters",
-              "customType": "totalAndCost"
+              "type": "totalAndCost"
             },
             {
               "label": "Telephone Calls",
               "apiField": "AllCosts.AccruedCosts.TelephoneCalls",
-              "customType": "totalAndCost"
+              "type": "totalAndCost"
             },
             {
               "label": "Mileage",
               "apiField": "AllCosts.AccruedCosts.Mileage",
-              "customType": "totalAndCost"
+              "type": "totalAndCost"
             },
             {
               "label": "Other disbursements",
               "apiField": "AllCosts.AccruedCosts.OtherDisbursement.cost",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "Total Costs To Date",
               "apiField": "AllCosts.AccruedCosts.TotalCost.cost",
-              "format": "currency"
+              "type": "currency"
             }
           ]
         },
@@ -537,57 +537,57 @@
             {
               "label": "Attendance Time",
               "apiField": "AllCosts.AnticipatedCosts.Attendance",
-              "customType": "timeAndCost"
+              "type": "timeAndCost"
             },
             {
               "label": "Preparation Time",
               "apiField": "AllCosts.AnticipatedCosts.Preparation",
-              "customType": "timeAndCost"
+              "type": "timeAndCost"
             },
             {
               "label": "Advocacy Time",
               "apiField": "AllCosts.AnticipatedCosts.Advocacy",
-              "customType": "timeAndCost"
+              "type": "timeAndCost"
             },
             {
               "label": "Travel Time",
               "apiField": "AllCosts.AnticipatedCosts.Travel",
-              "customType": "timeAndCost"
+              "type": "timeAndCost"
             },
             {
               "label": "Waiting Time",
               "apiField": "AllCosts.AnticipatedCosts.Waiting",
-              "customType": "timeAndCost"
+              "type": "timeAndCost"
             },
             {
               "label": "Letters",
               "apiField": "AllCosts.AnticipatedCosts.Letters",
-              "customType": "totalAndCost"
+              "type": "totalAndCost"
             },
             {
               "label": "Telephone Calls",
               "apiField": "AllCosts.AnticipatedCosts.TelephoneCalls",
-              "customType": "totalAndCost"
+              "type": "totalAndCost"
             },
             {
               "label": "Mileage",
               "apiField": "AllCosts.AnticipatedCosts.Mileage",
-              "customType": "totalAndCost"
+              "type": "totalAndCost"
             },
             {
               "label": "Other disbursements",
               "apiField": "AllCosts.AnticipatedCosts.OtherDisbursement.cost",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "Total Anticipated Costs",
               "apiField": "AllCosts.AnticipatedCosts.TotalCost.cost",
-              "format": "currency"
+              "type": "currency"
             },
             {
               "label": "NEW LIMIT REQUEST",
               "apiField": "AllCosts.NewLimitRequest.cost",
-              "format": "currency"
+              "type": "currency"
             }
           ]
         }
@@ -634,7 +634,7 @@
             {
               "label": "Date",
               "apiField": "Solicitor.certification.date",
-              "format": "date"
+              "type": "date"
             }
           ]
         }

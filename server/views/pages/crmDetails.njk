@@ -1,5 +1,6 @@
 {% extends "../partials/layout.njk" %}
 {% from "../components/navigationBar.njk" import navigationBar %}
+{% from "../components/formField.njk" import formField %}
 {% from "../components/timeAndCost.njk" import timeAndCost %}
 {% from "../components/totalAndCost.njk" import totalAndCost %}
 
@@ -28,31 +29,21 @@
                                             <h3 class="govuk-heading-m govuk-!-static-padding-top-5 govuk-!-static-margin-bottom-1">{{ field.subHeading }}</h3>
                                         </div>
                                     {% else %}
-                                        {% if field.customType === 'timeAndCost' %}
+                                        {% if field.type === 'timeAndCost' %}
                                             {{ timeAndCost(field) }}
-                                        {% elif field.customType === 'totalAndCost' %}
+                                        {% elif field.type === 'totalAndCost' %}
                                             {{ totalAndCost(field) }}
                                         {% else %}
-                                            <div class="govuk-grid-column-one-half">
-                                                <div class="govuk-form-group">
-                                                    <label class="govuk-label"><strong>{{ field.label }}</strong></label>
-                                                </div>
-                                            </div>
-                                            <div class="govuk-grid-column-one-half">
-                                                <div class="govuk-form-group">
-                                                    <span class="govuk-body">{{ field.value }}</span>
-                                                </div>
-                                            </div>
+                                            {{ formField(field) }}
                                         {% endif %}
                                     {% endif %}
                                 </div>
                             {% endfor %}
-                            {% endfor %}
-
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
-
+            </div>
         </main>
     </div>
 {% endblock %}
