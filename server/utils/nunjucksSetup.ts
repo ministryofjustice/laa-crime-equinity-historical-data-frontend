@@ -5,6 +5,7 @@ import express from 'express'
 import { initialiseName } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
+import { formatTime, formatCurrency } from './crmDisplayFieldFormatter'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -41,4 +42,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   )
 
   njkEnv.addFilter('initialiseName', initialiseName)
+  njkEnv.addFilter('formatTime', formatTime)
+  njkEnv.addFilter('formatCurrency', formatCurrency)
 }

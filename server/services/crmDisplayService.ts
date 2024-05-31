@@ -91,9 +91,18 @@ export default class CrmDisplayService {
           // create display field using config & api field value
           const apiFieldName = field.apiField
           const apiFieldValue = this.getApiFieldValue(crmResponse, apiFieldName)
-          const displayField: DisplayField = {
-            label: field.label,
-            value: formatField(apiFieldValue, field.format),
+          let displayField: DisplayField
+          if (field.customType) {
+            displayField = {
+              label: field.label,
+              value: apiFieldValue,
+              customType: field.customType,
+            }
+          } else {
+            displayField = {
+              label: field.label,
+              value: formatField(apiFieldValue, field.format),
+            }
           }
           return displayField
         }

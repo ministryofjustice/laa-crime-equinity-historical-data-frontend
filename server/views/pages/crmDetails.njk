@@ -1,5 +1,7 @@
 {% extends "../partials/layout.njk" %}
 {% from "../components/navigationBar.njk" import navigationBar %}
+{% from "../components/timeAndCost.njk" import timeAndCost %}
+{% from "../components/totalAndCost.njk" import totalAndCost %}
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -26,16 +28,22 @@
                                             <h3 class="govuk-heading-m govuk-!-static-padding-top-5 govuk-!-static-margin-bottom-1">{{ field.subHeading }}</h3>
                                         </div>
                                     {% else %}
-                                        <div class="govuk-grid-column-one-half">
-                                            <div class="govuk-form-group">
-                                                <label class="govuk-label"><strong>{{ field.label }}</strong></label>
+                                        {% if field.customType === 'timeAndCost' %}
+                                            {{ timeAndCost(field) }}
+                                        {% elif field.customType === 'totalAndCost' %}
+                                            {{ totalAndCost(field) }}
+                                        {% else %}
+                                            <div class="govuk-grid-column-one-half">
+                                                <div class="govuk-form-group">
+                                                    <label class="govuk-label"><strong>{{ field.label }}</strong></label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="govuk-grid-column-one-half">
-                                            <div class="govuk-form-group">
-                                                <span class="govuk-body">{{ field.value }}</span>
+                                            <div class="govuk-grid-column-one-half">
+                                                <div class="govuk-form-group">
+                                                    <span class="govuk-body">{{ field.value }}</span>
+                                                </div>
                                             </div>
-                                        </div>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             {% endfor %}

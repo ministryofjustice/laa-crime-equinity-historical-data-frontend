@@ -42,6 +42,11 @@ describe('CRM Display Config Validation', () => {
                   apiField: 'someTimeField',
                   format: 'time',
                 },
+                {
+                  label: 'Some Time and Cost',
+                  apiField: 'someTimeAndCostField',
+                  customType: 'timeAndCost',
+                },
               ],
             },
           ],
@@ -51,51 +56,7 @@ describe('CRM Display Config Validation', () => {
 
     const result = validateConfig(config, 'crm5')
 
-    expect(result).toEqual({
-      sections: [
-        {
-          sectionId: 'general-information',
-          subsections: [
-            {
-              fields: [
-                {
-                  label: 'Has a previous application for an extension been made?',
-                  apiField: 'hasPreviousApplication',
-                },
-                {
-                  label: 'Most recent application reference',
-                  apiField: 'previousApplicationRef',
-                },
-                {
-                  subHeading: 'Some subHeading',
-                },
-                {
-                  label: '',
-                  apiField: 'someApiField',
-                },
-                {
-                  label: 'Some Currency',
-                  apiField: 'someCurrencyField',
-                  format: 'currency',
-                },
-                {
-                  label: 'Some Date',
-                  apiField: 'someDateField',
-                  format: 'date',
-                },
-                {
-                  label: 'Some Time',
-                  apiField: 'someTimeField',
-                  format: 'time',
-                },
-              ],
-              title: 'General Information',
-            },
-          ],
-          title: 'General Information',
-        },
-      ],
-    })
+    expect(result).toEqual(config)
   })
 
   it('should return error for empty sections', () => {
