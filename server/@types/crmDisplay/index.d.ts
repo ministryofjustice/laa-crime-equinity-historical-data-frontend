@@ -2,17 +2,18 @@ type SubHeading = {
   subHeading: string
 }
 
-type FormatType = 'currency' | 'date' | 'time'
+type FieldType = 'currency' | 'date' | 'time'
 
 type ConfigField = {
   label: string
   apiField: string
-  format?: FormatType
+  type?: FieldType
 }
 
 type DisplayField = {
   label: string
   value: string
+  type?: FieldType
 }
 
 type FieldOrSubHeading = ConfigField | DisplayField | SubHeading
@@ -58,7 +59,7 @@ export type {
   DisplayField,
   DisplayWhen,
   FieldOrSubHeading,
-  FormatType,
+  FieldType,
   Navigation,
   NavigationItem,
   Section,

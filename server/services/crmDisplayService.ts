@@ -16,7 +16,6 @@ import {
 import { CrmResponse } from '@eqApi'
 import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 import validateConfig from '../utils/crmDisplayConfigValidation'
-import formatField from '../utils/crmDisplayFieldFormatter'
 
 const configMap: Record<CrmType, CrmDisplayConfig> = {
   crm4: null, // not supported yet
@@ -93,7 +92,8 @@ export default class CrmDisplayService {
           const apiFieldValue = this.getApiFieldValue(crmResponse, apiFieldName)
           const displayField: DisplayField = {
             label: field.label,
-            value: formatField(apiFieldValue, field.format),
+            value: apiFieldValue,
+            type: field.type,
           }
           return displayField
         }

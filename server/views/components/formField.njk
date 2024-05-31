@@ -1,0 +1,22 @@
+{% macro formField(field) %}
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+            <label class="govuk-label"><strong>{{ field.label }}</strong></label>
+        </div>
+    </div>
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+            <span class="govuk-body">
+                {% if field.type === 'currency' %}
+                    {{ field.value | formatCurrency }}
+                {% elif field.type === 'date' %}
+                    {{ field.value | formatDate }}
+                {% elif field.type === 'time' %}
+                    {{ field.value | formatTime }}
+                {% else %}
+                    {{ field.value }}
+                {% endif %}
+            </span>
+        </div>
+    </div>
+{% endmacro %}
