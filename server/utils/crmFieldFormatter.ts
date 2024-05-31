@@ -14,7 +14,7 @@ export const formatCurrency = (value: string): string => {
 export const formatDate = (value: string): string => {
   const date = Date.parse(value)
   if (Number.isNaN(date)) return value
-  return format(date, 'dd MM yyyy')
+  return format(date, 'd M yyyy')
 }
 
 export const formatTime = (value: string): string => {

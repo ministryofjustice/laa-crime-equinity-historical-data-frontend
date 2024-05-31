@@ -20,8 +20,13 @@ describe('CRM Display Field Formatter', () => {
 
   describe('formatDate', () => {
     it('should format date', () => {
-      const result = formatDate('2024-02-14T00:00:00.000+00:00')
-      expect(result).toEqual('14 02 2024')
+      const result = formatDate('2024-11-14T00:00:00.000+00:00')
+      expect(result).toEqual('14 11 2024')
+    })
+
+    it('should format date without leading zeros', () => {
+      const result = formatDate('2024-02-01T00:00:00.000+00:00')
+      expect(result).toEqual('1 2 2024')
     })
 
     it('should not format date if not a valid date', () => {
