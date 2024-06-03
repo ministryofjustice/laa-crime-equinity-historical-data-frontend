@@ -1,5 +1,6 @@
 {% extends "../partials/layout.njk" %}
-{%- from "../components/navigationBar/macro.njk" import navigationBar -%}
+{% from "../components/navigationBar.njk" import navigationBar %}
+{% from "../components/formField.njk" import formField %}
 
 {% set pageTitle = applicationName + " - " + crmType + ": " + title %}
 {% set mainClasses = "app-container govuk-body" %}
