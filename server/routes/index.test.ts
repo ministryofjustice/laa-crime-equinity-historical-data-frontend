@@ -221,7 +221,7 @@ describe('routes', () => {
         .get('/crm5/1234567')
         .expect('Content-Type', /html/)
         .expect(res => {
-          expect(res.text).toContain('CRM5')
+          expect(res.text).toContain('CRM 5')
         })
     })
   })

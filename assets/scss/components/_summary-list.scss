@@ -2,6 +2,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  h3 {
+    color:  $govuk-secondary-text-colour;
+  }
   .govuk-summary-list__key {
     flex: 1;
   }
@@ -23,4 +26,8 @@
       text-align: right;
     }
   }
+}
+
+h2.govuk-summary-card__title {
+  font-size: 2rem;
 }
