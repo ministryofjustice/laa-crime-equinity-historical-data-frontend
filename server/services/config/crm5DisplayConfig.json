@@ -89,6 +89,10 @@
             },
             {
               "label": "",
+              "apiField": "CaseDetails.cwCriminalProceeding"
+            },
+            {
+              "label": "",
               "apiField": "CaseDetails.cwCriminalInvestigation"
             },
             {
@@ -173,9 +177,13 @@
     {
       "sectionId": "capital-details",
       "title": "Capital Details",
-      "displayWhen": {
+      "showWhen": {
         "apiField": "hasPreviousApplication",
         "equals": "No"
+      },
+      "hideWhen": {
+        "apiField": "CaseDetails.cwCriminalProceeding",
+        "equals": "true"
       },
       "subsections": [
         {
@@ -215,9 +223,13 @@
     {
       "sectionId": "income-details",
       "title": "Income Details",
-      "displayWhen": {
+      "showWhen": {
         "apiField": "hasPreviousApplication",
         "equals": "No"
+      },
+      "hideWhen": {
+        "apiField": "CaseDetails.cwCriminalProceeding",
+        "equals": "true"
       },
       "subsections": [
         {
@@ -306,7 +318,7 @@
     {
       "sectionId": "proceedings",
       "title": "Proceedings",
-      "displayWhen": {
+      "showWhen": {
         "apiField": "CaseDetails.levelOfWork",
         "equals": "Advocacy"
       },
@@ -347,7 +359,7 @@
     {
       "sectionId": "statement-of-case",
       "title": "Statement of Case",
-      "displayWhen": {
+      "showWhen": {
         "apiField": "CaseDetails.levelOfWork",
         "equals": "Advocacy"
       },
@@ -366,7 +378,7 @@
     {
       "sectionId": "advice-and-assistance",
       "title": "Advice and Assistance",
-      "displayWhen": {
+      "showWhen": {
         "apiField": "CaseDetails.levelOfWork",
         "equals": "Advice"
       },
@@ -402,7 +414,7 @@
     {
       "sectionId": "solicitors-declaration",
       "title": "Solicitor's Declaration",
-      "displayWhen": {
+      "showWhen": {
         "apiField": "hasPreviousApplication",
         "equals": "No"
       },

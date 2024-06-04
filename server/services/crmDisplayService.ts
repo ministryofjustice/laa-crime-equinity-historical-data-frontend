@@ -4,11 +4,12 @@ import {
   CrmDisplayConfig,
   CrmType,
   DisplayField,
-  DisplayWhen,
   FieldOrSubHeading,
+  HideWhen,
   Navigation,
   NavigationItem,
   Section,
+  ShowWhen,
   SubHeading,
   SubSection,
 } from '@crmDisplay'
@@ -33,7 +34,7 @@ export default class CrmDisplayService {
 
     let isAnySectionActive = false
     const items: Array<NavigationItem> = crmDisplayConfig.sections
-      .filter(section => !section.displayWhen || this.conditionIsTrue(section.displayWhen, crmResponse))
+      .filter(section => this.showOrHideSection(section, crmResponse))
       .map(section => {
         const isActive = section.sectionId === sectionId
         if (isActive) {
@@ -77,7 +78,7 @@ export default class CrmDisplayService {
 
   private getSection<T extends CrmResponse>(sectionId: string, sections: Array<Section>, crmResponse: T): Section {
     const sectionFound = sections.find(section => section.sectionId === sectionId)
-    if (!sectionFound || (sectionFound.displayWhen && !this.conditionIsTrue(sectionFound.displayWhen, crmResponse))) {
+    if (!sectionFound || !this.showOrHideSection(sectionFound, crmResponse)) {
       return sections[0]
     }
     return sectionFound
@@ -108,9 +109,16 @@ export default class CrmDisplayService {
     return _.get(crmResponse, apiFieldName) || ''
   }
 
-  private conditionIsTrue<T extends CrmResponse>(displayWhen: DisplayWhen, crmResponse: T): boolean {
-    const apiFieldValue = this.getApiFieldValue(crmResponse, displayWhen.apiField)
-    return displayWhen.equals === apiFieldValue
+  private showOrHideSection<T extends CrmResponse>(section: Section, crmResponse: T): boolean {
+    if (section.hideWhen && this.conditionIsTrue(section.hideWhen, crmResponse)) {
+      return false
+    }
+    return !section.showWhen || this.conditionIsTrue(section.showWhen, crmResponse)
+  }
+
+  private conditionIsTrue<T extends CrmResponse>(condition: HideWhen | ShowWhen, crmResponse: T): boolean {
+    const apiFieldValue = this.getApiFieldValue(crmResponse, condition.apiField)
+    return condition.equals === apiFieldValue
   }
 }
 

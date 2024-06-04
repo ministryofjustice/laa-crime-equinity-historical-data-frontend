@@ -7,7 +7,11 @@ const schema = Joi.object({
     .items({
       sectionId: Joi.string().required(),
       title: Joi.string().required(),
-      displayWhen: Joi.object({
+      showWhen: Joi.object({
+        apiField: Joi.string().required(),
+        equals: Joi.string().required(),
+      }).optional(),
+      hideWhen: Joi.object({
         apiField: Joi.string().required(),
         equals: Joi.string().required(),
       }).optional(),
