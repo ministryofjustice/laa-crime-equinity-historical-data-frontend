@@ -1,18 +1,34 @@
+{#{% macro timeAndCost(field) %}#}
+{#    {% set timeAndCost = field.value %}#}
+{#<div class="govuk-summary-list__row">#}
+{#    <dt class="govuk-summary-list__key">{{ field.label }}</dt>#}
+
+
+{#    <div class="govuk-grid-column-one-quarter">#}
+
+{#            <span class="govuk-body">{{ timeAndCost.time | formatTime }}</span>#}
+
+{#    </div>#}
+{#    <div class="govuk-grid-column-one-quarter">#}
+
+{#            <span class="govuk-body">{{ timeAndCost.cost | formatCurrency }}</span>#}
+
+{#    </div>#}
+{#</div>#}
+{#{% endmacro %}#}
 {% macro timeAndCost(field) %}
     {% set timeAndCost = field.value %}
-    <div class="govuk-grid-column-one-quarter">
-        <div class="govuk-form-group">
-            <label class="govuk-label"><strong>{{ field.label }}</strong></label>
-        </div>
-    </div>
-    <div class="govuk-grid-column-one-quarter">
-        <div class="govuk-form-group">
-            <span class="govuk-body">{{ timeAndCost.time | formatTime }}</span>
-        </div>
-    </div>
-    <div class="govuk-grid-column-one-quarter">
-        <div class="govuk-form-group">
-            <span class="govuk-body">{{ timeAndCost.cost | formatCurrency }}</span>
-        </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">{{ field.label }}</dt>
+        <dd class="govuk-summary-list__value">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-third">
+                    <span class="govuk-body">{{ timeAndCost.time | formatTime }}</span>
+                </div>
+                <div class="govuk-grid-column-one-third">
+                    <span class="govuk-body">{{ timeAndCost.cost | formatCurrency }}</span>
+                </div>
+            </div>
+        </dd>
     </div>
 {% endmacro %}

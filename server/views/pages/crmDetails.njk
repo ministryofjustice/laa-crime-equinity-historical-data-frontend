@@ -18,12 +18,12 @@
                     {{ navigationBar(navigationItems) }}
                 </div>
                 <div class="govuk-grid-column-two-thirds govuk-!-padding-top-4">
-                        {% for subsection in section.subsections %}
-                            <div class="govuk-form-group govuk-summary-card  govuk-!-margin-bottom-8">
-                                <div class="govuk-summary-card__title-wrapper">
-                                    <h2 class="govuk-summary-card__title govuk-heading-l">{{ subsection.title }}</h2>
-                                </div>
-                                <div class="govuk-summary-card__content">
+                    {% for subsection in section.subsections %}
+                        <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-8">
+                            <div class="govuk-summary-card__title-wrapper">
+                                <h2 class="govuk-summary-card__title govuk-heading-l">{{ subsection.title }}</h2>
+                            </div>
+                            <div class="govuk-summary-card__content">
                                 <dl class="govuk-summary-list govuk-summary-list--custom">
                                     {% set isFirstItem = true %}
                                     {% for field in subsection.fields %}
@@ -32,14 +32,20 @@
                                                 <h3 class="govuk-heading-m">{{ field.subHeading }}</h3>
                                             </div>
                                         {% else %}
-                                            {{ formField(field) }}
+                                            {% if field.type == 'timeAndCost' %}
+                                                {{ timeAndCost(field) }}
+                                                {% elif field.type == 'totalAndCost' %}
+                                                {{ totalAndCost(field) }}
+                                            {% else %}
+                                                {{ formField(field) }}
+                                            {% endif %}
+                                            {% set isFirstItem = false %}
                                         {% endif %}
-                                        {% set isFirstItem = false %}
                                     {% endfor %}
                                 </dl>
-                                </div>
                             </div>
-                        {% endfor %}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </main>
