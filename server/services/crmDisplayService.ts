@@ -118,7 +118,7 @@ export default class CrmDisplayService {
 
   private conditionIsTrue<T extends CrmResponse>(condition: HideWhen | ShowWhen, crmResponse: T): boolean {
     const apiFieldValue = this.getApiFieldValue(crmResponse, condition.apiField)
-    return condition.equals === apiFieldValue
+    return condition.equals === String(apiFieldValue)
   }
 }
 
