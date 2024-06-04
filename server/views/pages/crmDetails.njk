@@ -1,6 +1,8 @@
 {% extends "../partials/layout.njk" %}
 {% from "../components/navigationBar.njk" import navigationBar %}
 {% from "../components/formField.njk" import formField %}
+{% from "../components/timeAndCost.njk" import timeAndCost %}
+{% from "../components/totalAndCost.njk" import totalAndCost %}
 
 {% set pageTitle = applicationName + " - " + crmType + ": " + title %}
 {% set mainClasses = "app-container govuk-body" %}

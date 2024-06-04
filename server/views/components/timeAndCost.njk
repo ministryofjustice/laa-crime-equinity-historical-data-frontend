@@ -1,0 +1,18 @@
+{% macro timeAndCost(field) %}
+    {% set timeAndCost = field.value %}
+    <div class="govuk-grid-column-one-quarter">
+        <div class="govuk-form-group">
+            <label class="govuk-label"><strong>{{ field.label }}</strong></label>
+        </div>
+    </div>
+    <div class="govuk-grid-column-one-quarter">
+        <div class="govuk-form-group">
+            <span class="govuk-body">{{ timeAndCost.time | formatTime }}</span>
+        </div>
+    </div>
+    <div class="govuk-grid-column-one-quarter">
+        <div class="govuk-form-group">
+            <span class="govuk-body">{{ timeAndCost.cost | formatCurrency }}</span>
+        </div>
+    </div>
+{% endmacro %}

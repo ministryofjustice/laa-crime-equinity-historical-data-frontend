@@ -98,8 +98,13 @@ type CourtAppealFunding = {
   expertReport: string
 }
 
-type TimedAndCost = {
+export type TimeAndCost = {
   time: string
+  cost: number
+}
+
+export type TotalAndCost = {
+  total: string
   cost: number
 }
 
@@ -108,14 +113,14 @@ type Cost = {
 }
 
 type AccruedCosts = {
-  Attendance: TimedAndCost
-  Preparation: TimedAndCost
-  Advocacy: TimedAndCost
-  Travel: TimedAndCost
-  Waiting: TimedAndCost
-  Letters: TimedAndCost
-  TelephoneCalls: TimedAndCost
-  Mileage: TimedAndCost
+  Attendance: TimeAndCost
+  Preparation: TimeAndCost
+  Advocacy: TimeAndCost
+  Travel: TimeAndCost
+  Waiting: TimeAndCost
+  Letters: TotalAndCost
+  TelephoneCalls: TotalAndCost
+  Mileage: TotalAndCost
   OtherDisbursement: Cost
   TotalCost: Cost
 }

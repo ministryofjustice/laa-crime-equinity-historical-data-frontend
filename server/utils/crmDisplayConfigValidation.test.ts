@@ -42,6 +42,11 @@ describe('CRM Display Config Validation', () => {
                   apiField: 'someTimeField',
                   type: 'time',
                 },
+                {
+                  label: 'Some Time and Cost',
+                  apiField: 'someTimeAndCostField',
+                  type: 'timeAndCost',
+                },
               ],
             },
           ],
