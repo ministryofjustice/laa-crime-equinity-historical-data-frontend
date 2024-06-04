@@ -1,8 +1,10 @@
+import { TimeAndCost, TotalAndCost } from '@crm5'
+
 type SubHeading = {
   subHeading: string
 }
 
-type FieldType = 'currency' | 'date' | 'time'
+type FieldType = 'currency' | 'date' | 'time' | 'timeAndCost' | 'totalAndCost'
 
 type ConfigField = {
   label: string
@@ -12,7 +14,7 @@ type ConfigField = {
 
 type DisplayField = {
   label: string
-  value: string
+  value: string | TimeAndCost | TotalAndCost
   type?: FieldType
 }
 

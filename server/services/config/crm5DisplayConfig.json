@@ -493,69 +493,43 @@
           "fields": [
             {
               "label": "Attendance Time",
-              "apiField": "AllCosts.AccruedCosts.Attendance.time",
-              "type": "time"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AccruedCosts.Attendance.cost",
-              "type": "currency"
+              "apiField": "AllCosts.AccruedCosts.Attendance",
+              "type": "timeAndCost"
             },
             {
               "label": "Preparation Time",
-              "apiField": "AllCosts.AccruedCosts.Preparation.time"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AccruedCosts.Preparation.cost"
+              "apiField": "AllCosts.AccruedCosts.Preparation",
+              "type": "timeAndCost"
             },
             {
               "label": "Advocacy Time",
-              "apiField": "AllCosts.AccruedCosts.Advocacy.time"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AccruedCosts.Advocacy.cost"
+              "apiField": "AllCosts.AccruedCosts.Advocacy",
+              "type": "timeAndCost"
             },
             {
               "label": "Travel Time",
-              "apiField": "AllCosts.AccruedCosts.Travel.time"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AccruedCosts.Travel.cost"
+              "apiField": "AllCosts.AccruedCosts.Travel",
+              "type": "timeAndCost"
             },
             {
               "label": "Waiting Time",
-              "apiField": "AllCosts.AccruedCosts.Waiting.time"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AccruedCosts.Waiting.cost"
+              "apiField": "AllCosts.AccruedCosts.Waiting",
+              "type": "timeAndCost"
             },
             {
               "label": "Letters",
-              "apiField": "AllCosts.AccruedCosts.Letters.total"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AccruedCosts.Letters.cost"
+              "apiField": "AllCosts.AccruedCosts.Letters",
+              "type": "totalAndCost"
             },
             {
               "label": "Telephone Calls",
-              "apiField": "AllCosts.AccruedCosts.TelephoneCalls.total"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AccruedCosts.TelephoneCalls.cost"
+              "apiField": "AllCosts.AccruedCosts.TelephoneCalls",
+              "type": "totalAndCost"
             },
             {
               "label": "Mileage",
-              "apiField": "AllCosts.AccruedCosts.Mileage.total"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AccruedCosts.Mileage.cost"
+              "apiField": "AllCosts.AccruedCosts.Mileage",
+              "type": "totalAndCost"
             },
             {
               "label": "Other disbursements",
@@ -574,69 +548,43 @@
           "fields": [
             {
               "label": "Attendance Time",
-              "apiField": "AllCosts.AnticipatedCosts.Attendance.time",
-              "type": "time"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AnticipatedCosts.Attendance.cost",
-              "type": "currency"
+              "apiField": "AllCosts.AnticipatedCosts.Attendance",
+              "type": "timeAndCost"
             },
             {
               "label": "Preparation Time",
-              "apiField": "AllCosts.AnticipatedCosts.Preparation.time"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AnticipatedCosts.Preparation.cost"
+              "apiField": "AllCosts.AnticipatedCosts.Preparation",
+              "type": "timeAndCost"
             },
             {
               "label": "Advocacy Time",
-              "apiField": "AllCosts.AnticipatedCosts.Advocacy.time"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AnticipatedCosts.Advocacy.cost"
+              "apiField": "AllCosts.AnticipatedCosts.Advocacy",
+              "type": "timeAndCost"
             },
             {
               "label": "Travel Time",
-              "apiField": "AllCosts.AnticipatedCosts.Travel.time"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AnticipatedCosts.Travel.cost"
+              "apiField": "AllCosts.AnticipatedCosts.Travel",
+              "type": "timeAndCost"
             },
             {
               "label": "Waiting Time",
-              "apiField": "AllCosts.AnticipatedCosts.Waiting.time"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AnticipatedCosts.Waiting.cost"
+              "apiField": "AllCosts.AnticipatedCosts.Waiting",
+              "type": "timeAndCost"
             },
             {
               "label": "Letters",
-              "apiField": "AllCosts.AnticipatedCosts.Letters.total"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AnticipatedCosts.Letters.cost"
+              "apiField": "AllCosts.AnticipatedCosts.Letters",
+              "type": "totalAndCost"
             },
             {
               "label": "Telephone Calls",
-              "apiField": "AllCosts.AnticipatedCosts.TelephoneCalls.total"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AnticipatedCosts.TelephoneCalls.cost"
+              "apiField": "AllCosts.AnticipatedCosts.TelephoneCalls",
+              "type": "totalAndCost"
             },
             {
               "label": "Mileage",
-              "apiField": "AllCosts.AnticipatedCosts.Mileage.total"
-            },
-            {
-              "label": "Cost",
-              "apiField": "AllCosts.AnticipatedCosts.Mileage.cost"
+              "apiField": "AllCosts.AnticipatedCosts.Mileage",
+              "type": "totalAndCost"
             },
             {
               "label": "Other disbursements",
