@@ -175,6 +175,37 @@ describe('CRM Display Service', () => {
       })
     })
 
+    it('should return crm navigation for CaseDetails.cwCriminalProceeding=true', () => {
+      const customResponse: Crm5Response = {
+        ...crm5Response,
+        CaseDetails: {
+          levelOfWork: 'Advocacy',
+          cwCriminalProceeding: true, // (hideWhen condition has precedence
+          cwCriminalInvestigation: false,
+          cwCcrc: false,
+          cwAppealsReview: false,
+          cwPrisonLaw: true,
+        },
+      }
+      const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '', customResponse)
+
+      expect(result).toEqual({
+        items: [
+          { href: '/crm5/1234567/general-information', text: 'General Information', active: true },
+          { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
+          { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
+          { href: '/crm5/1234567/proceedings', text: 'Proceedings', active: false },
+          { href: '/crm5/1234567/statement-of-case', text: 'Statement of Case', active: false },
+          { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
+          { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
+          { href: '/crm5/1234567/costs', text: 'Costs', active: false },
+          { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
+          { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+        ],
+        label: 'Side navigation',
+      })
+    })
+
     it('should return crm navigation for hasPreviousApplication="No" and CaseDetails.cwCriminalProceeding=true', () => {
       const customResponse: Crm5Response = {
         ...crm5Response,
@@ -270,7 +301,7 @@ describe('CRM Display Service', () => {
       })
     })
 
-    it('should handle crm section which no data in crm response', () => {
+    it('should handle crm section with no data in crm response', () => {
       const result = crmDisplayService.getCrmSection('crm5', 'clients-details', crm5Response)
 
       expect(result).toEqual({
