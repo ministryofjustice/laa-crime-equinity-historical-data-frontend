@@ -16,7 +16,13 @@ export default class Crm5Controller {
       const crm5Response = await this.crm5Service.getCrm(usn)
       const navigation = this.crmDisplayService.getCrmNavigation('crm5', usn, sectionId, crm5Response)
       const section = this.crmDisplayService.getCrmSection('crm5', sectionId, crm5Response)
-      res.render('pages/crmDetails', { title: 'CRM5', navigationItems: navigation, section })
+      res.render('pages/crmDetails', {
+        title: 'Application For Extension Of Upper Limit',
+        navigationItems: navigation,
+        usn,
+        crmType: 'CRM 5',
+        section,
+      })
     }
   }
 }

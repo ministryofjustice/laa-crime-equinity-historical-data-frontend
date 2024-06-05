@@ -109,7 +109,9 @@ describe('CRM5 Controller', () => {
     await requestHandler(request, response, next)
 
     expect(response.render).toHaveBeenCalledWith('pages/crmDetails', {
-      title: 'CRM5',
+      title: 'Application For Extension Of Upper Limit',
+      usn: 1234567,
+      crmType: 'CRM 5',
       navigationItems: {
         label: 'Side navigation',
         items: [
