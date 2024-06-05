@@ -11,7 +11,7 @@
 
     <div class="govuk-width-container">
         <main class="govuk-main-wrapper">
-            <span class="govuk-caption-l govuk-!-padding-bottom-1">eForm: {{ crmType }} | Case number: {{ usn }}</span>
+            <span class="govuk-caption-l">eForm: {{ crmType }} | Case number: {{ usn }}</span>
             <h1 class="govuk-heading-l">{{ title }}</h1>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-third ">
@@ -19,17 +19,16 @@
                 </div>
                 <div class="govuk-grid-column-two-thirds govuk-!-padding-top-4">
                     {% for subsection in section.subsections %}
-                        <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-8">
+                        <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
                             <div class="govuk-summary-card__title-wrapper">
                                 <h2 class="govuk-summary-card__title govuk-!-font-size-27">{{ subsection.title }}</h2>
                             </div>
                             <div class="govuk-summary-card__content">
-                                <dl class="govuk-summary-list govuk-summary-list--custom">
-                                    {% set isFirstItem = true %}
+                                <dl class="govuk-summary-list">
                                     {% for field in subsection.fields %}
                                         {% if field.subHeading %}
-                                            <div class="govuk-summary-list__row govuk-!-padding-bottom-2 govuk-!-padding-top-3{% if not isFirstItem %} govuk-!-padding-top-6{% endif %}">
-                                                <h3 class="govuk-heading-m">{{ field.subHeading }}</h3>
+                                            <div class="govuk-summary-list__row">
+                                                <h3 class=" ">{{ field.subHeading }}</h3>
                                             </div>
                                         {% else %}
                                             {% if field.type == 'timeAndCost' %}
@@ -39,7 +38,6 @@
                                             {% else %}
                                                 {{ formField(field) }}
                                             {% endif %}
-                                            {% set isFirstItem = false %}
                                         {% endif %}
                                     {% endfor %}
                                 </dl>
