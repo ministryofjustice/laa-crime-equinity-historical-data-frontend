@@ -12,6 +12,7 @@ type Firm = {
 
 type CaseDetails = {
   levelOfWork: string
+  cwCriminalProceeding: boolean
   cwCriminalInvestigation: boolean
   cwCcrc: boolean
   cwAppealsReview: boolean
