@@ -1,0 +1,75 @@
+{
+  "sections": [
+    {
+      "sectionId": "general-information",
+      "title": "General Information",
+      "subsections": [
+        {
+          "title": "General Information",
+          "fields": [
+            {
+              "label": "Is the total authority for which you are applying more than or equal to £100?",
+              "apiField": "greaterValue"
+            },
+            {
+              "label": "Is your application in relation to a Post Mortem examination?",
+              "apiField": "postMortemExamination"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "case-details",
+      "title": "Case Details",
+      "subsections": [
+        {
+          "title": "Firm Details",
+          "fields": [
+            {
+              "label": "URN",
+              "apiField": "CaseDetails.Firm.urn"
+            },
+            {
+              "label": "Name of Firm",
+              "apiField": "CaseDetails.Firm.firmName"
+            },
+            {
+              "label": "Address / DX",
+              "apiField": "CaseDetails.Firm.firmAddress"
+            },
+            {
+              "label": "Provider Number",
+              "apiField": "CaseDetails.Firm.firmSupplierNo"
+            },
+            {
+              "label": "Account No.",
+              "apiField": "CaseDetails.Firm.firmSupplierName"
+            },
+            {
+              "label": "Tel. No",
+              "apiField": "CaseDetails.Firm.firmPhone"
+            },
+            {
+              "label": "Contact Name",
+              "apiField": "CaseDetails.Firm.firmContactName"
+            }
+          ]
+        },
+        {
+          "title": "Solicitor's Details",
+          "fields": [
+            {
+              "label": "Name of Solicitor or Fellow of the Institute of Legal Executives instructed",
+              "apiField": "CaseDetails.SolicitorDetails.solicitorName"
+            },
+            {
+              "label": "Solicitor's reference",
+              "apiField": "CaseDetails.SolicitorDetails.solicitorReference"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

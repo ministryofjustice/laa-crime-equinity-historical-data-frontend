@@ -9,7 +9,7 @@ jest.mock('../../services/crmApiService')
 jest.mock('../../services/crmDisplayService')
 
 describe('CRM5 Controller', () => {
-  let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
+  let mockCrmApiService: jest.Mocked<CrmApiService<Crm5Response>>
   let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
 
   let request: DeepMocked<Request>
@@ -19,7 +19,7 @@ describe('CRM5 Controller', () => {
   beforeEach(() => {
     request = createMock<Request>({})
     response = createMock<Response>({})
-    mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
+    mockCrmApiService = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
     mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
   })
 
@@ -46,18 +46,21 @@ describe('CRM5 Controller', () => {
       DetailsOfApplication: 'Some Details of Application',
     }
 
-    mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
-    mockCrmDisplayService.getCrmNavigation.mockReturnValue({
+    mockCrmApiService.getCrm.mockResolvedValue(crm5Response)
+
+    const crmNavigation = {
       label: 'Side navigation',
       items: [
         {
           text: 'General Information',
-          href: '1',
+          href: 'general-information',
           active: true,
         },
       ],
-    })
-    mockCrmDisplayService.getCrmSection.mockReturnValue({
+    }
+    mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
+
+    const crmSection = {
       sectionId: 'general-information',
       title: 'General Information',
       subsections: [
@@ -74,32 +77,13 @@ describe('CRM5 Controller', () => {
               apiField: 'previousApplicationRef',
               value: '',
             },
-            {
-              label: 'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
-              apiField: 'appealedPrevDecision',
-              value: 'No',
-            },
-            {
-              label: 'Please give details',
-              apiField: 'appealedPrevDecisionDetails',
-              value: '',
-            },
-            {
-              label: 'Urgent?',
-              apiField: 'urgent',
-              value: 'Yes',
-            },
-            {
-              label: 'Reason for urgency',
-              apiField: 'urgencyReason',
-              value: 'Urgent',
-            },
           ],
         },
       ],
-    })
+    }
+    mockCrmDisplayService.getCrmSection.mockReturnValue(crmSection)
 
-    const crm5Controller = new Crm5Controller(mockCrm5Service, mockCrmDisplayService)
+    const crm5Controller = new Crm5Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm5Controller.show()
     request.params = {
       usn: '1234567',
@@ -112,58 +96,8 @@ describe('CRM5 Controller', () => {
       title: 'Application For Extension Of Upper Limit',
       usn: 1234567,
       crmType: 'CRM 5',
-      navigationItems: {
-        label: 'Side navigation',
-        items: [
-          {
-            text: 'General Information',
-            href: '1',
-            active: true,
-          },
-        ],
-      },
-      section: {
-        sectionId: 'general-information',
-        title: 'General Information',
-        subsections: [
-          {
-            title: 'General Information',
-            fields: [
-              {
-                label: 'Has a previous application for an extension been made?',
-                apiField: 'hasPreviousApplication',
-                value: 'No',
-              },
-              {
-                label: 'Most recent application reference',
-                apiField: 'previousApplicationRef',
-                value: '',
-              },
-              {
-                label:
-                  'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
-                apiField: 'appealedPrevDecision',
-                value: 'No',
-              },
-              {
-                label: 'Please give details',
-                apiField: 'appealedPrevDecisionDetails',
-                value: '',
-              },
-              {
-                label: 'Urgent?',
-                apiField: 'urgent',
-                value: 'Yes',
-              },
-              {
-                label: 'Reason for urgency',
-                apiField: 'urgencyReason',
-                value: 'Urgent',
-              },
-            ],
-          },
-        ],
-      },
+      navigationItems: crmNavigation,
+      section: crmSection,
     })
   })
 })

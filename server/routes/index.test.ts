@@ -158,7 +158,7 @@ describe('routes', () => {
         .get('/crm4/1234567')
         .expect('Content-Type', /html/)
         .expect(res => {
-          expect(res.text).toContain('CRM4')
+          expect(res.text).toContain('eForm: CRM 4 | Case number: 1234567')
         })
     })
   })
@@ -166,7 +166,7 @@ describe('routes', () => {
   describe('GET /crm5', () => {
     it('should render crm5 page', () => {
       const crm5Response: Crm5Response = {
-        usn: 1234567,
+        usn: 2345678,
         hasPreviousApplication: 'No',
         previousApplicationRef: '',
         appealedPrevDecision: 'No',
@@ -218,10 +218,10 @@ describe('routes', () => {
       })
 
       return request(app)
-        .get('/crm5/1234567')
+        .get('/crm5/2345678')
         .expect('Content-Type', /html/)
         .expect(res => {
-          expect(res.text).toContain('CRM 5')
+          expect(res.text).toContain('eForm: CRM 5 | Case number: 2345678')
         })
     })
   })
