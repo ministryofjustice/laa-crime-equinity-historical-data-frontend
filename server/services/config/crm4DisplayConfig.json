@@ -219,11 +219,13 @@
             },
             {
               "label": "Hourly Rate",
-              "apiField": "ExpenditureDetails.Travel.rate"
+              "apiField": "ExpenditureDetails.Travel.rate",
+              "type": "currency"
             },
             {
               "label": "Total Cost of Travel",
-              "apiField": "ExpenditureDetails.Travel.total"
+              "apiField": "ExpenditureDetails.Travel.total",
+              "type": "currency"
             }
           ]
         },
@@ -232,7 +234,8 @@
           "fields": [
             {
               "label": "Total Authority",
-              "apiField": "ExpenditureDetails.Authority"
+              "apiField": "ExpenditureDetails.Authority",
+              "type": "currency"
             }
           ]
         }
