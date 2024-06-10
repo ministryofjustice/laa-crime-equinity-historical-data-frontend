@@ -4,7 +4,6 @@ import { Crm4Response } from '@crm4'
 import Crm4Controller from './crm4Controller'
 import CrmApiService from '../../services/crmApiService'
 import CrmDisplayService from '../../services/crmDisplayService'
-import crm from './index'
 
 jest.mock('../../services/crmApiService')
 jest.mock('../../services/crmDisplayService')

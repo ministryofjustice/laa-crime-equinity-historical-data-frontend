@@ -68,6 +68,271 @@
               "apiField": "CaseDetails.SolicitorDetails.solicitorReference"
             }
           ]
+        },
+        {
+          "title": "Client's Details",
+          "fields": [
+            {
+              "label": "Is this a Prison Law matter?",
+              "apiField": "CaseDetails.ClientDetails.prisonLaw"
+            },
+            {
+              "label": "Rep order no. / case no.",
+              "apiField": "CaseDetails.ClientDetails.???"
+            },
+            {
+              "label": "Date of Rep order",
+              "apiField": "CaseDetails.ClientDetails.???"
+            },
+            {
+              "label": "UFN",
+              "apiField": "CaseDetails.ClientDetails.ufn"
+            },
+            {
+              "label": "MAAT number",
+              "apiField": "CaseDetails.ClientDetails.maatNumber"
+            },
+            {
+              "label": "Surname",
+              "apiField": "CaseDetails.ClientDetails.surname"
+            },
+            {
+              "label": "Forename",
+              "apiField": "CaseDetails.ClientDetails.firstName"
+            },
+            {
+              "label": "Date Of Birth",
+              "apiField": "CaseDetails.ClientDetails.dateOfBirth",
+              "type": "date"
+            }
+          ]
+        },
+        {
+          "title": "Details of Proceedings",
+          "fields": [
+            {
+              "label": "Is Your Client Detained?",
+              "apiField": "CaseDetails.ProceedingDetails.isClientDetained"
+            },
+            {
+              "label": "Court Type",
+              "apiField": "CaseDetails.ProceedingDetails.courtType"
+            },
+            {
+              "label": "Main Offence",
+              "apiField": "CaseDetails.ProceedingDetails.mainOffence"
+            },
+            {
+              "label": "Likely or Actual Plea",
+              "apiField": "CaseDetails.ProceedingDetails.actualPlea"
+            },
+            {
+              "label": "Date of Next Hearing",
+              "apiField": "CaseDetails.ProceedingDetails.dateOfHearing",
+              "type": "date"
+            },
+            {
+              "label": "Purpose of Next Hearing",
+              "apiField": "CaseDetails.ProceedingDetails.???",
+              "type": "date"
+            }
+          ]
+        },
+        {
+          "title": "POCA",
+          "fields": [
+            {
+              "label": "Is this case subject to POCA?",
+              "apiField": "CaseDetails.isPOCA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "expenditure-details",
+      "title": "Expenditure Details",
+      "subsections": [
+        {
+          "title": "Expenditure Details",
+          "fields": [
+            {
+              "label": "Type of Expenditure",
+              "apiField": "ExpenditureDetails.Details.expenditureType"
+            },
+            {
+              "label": "Have you already been granted Prior Authority for this case under the same category of expenditure?",
+              "apiField": "ExpenditureDetails.Details.priorAuthority"
+            },
+            {
+              "label": "Name of Expert",
+              "apiField": "ExpenditureDetails.Details.expertName"
+            },
+            {
+              "label": "Company Name",
+              "apiField": "ExpenditureDetails.Details.companyName"
+            },
+            {
+              "label": "Type / Status of Expert",
+              "apiField": "ExpenditureDetails.Details.statusExpert"
+            },
+            {
+              "label": "Postcode of Expert",
+              "apiField": "ExpenditureDetails.Details.postCodeExpert"
+            }
+          ]
+        },
+        {
+          "title": "Preparation",
+          "fields": [
+            {
+              "label": "Preparation Hours",
+              "apiField": "ExpenditureDetails.Preparation.hours"
+            },
+            {
+              "label": "Hourly Rate",
+              "apiField": "ExpenditureDetails.Preparation.hourlyRate",
+              "type": "currency"
+            },
+            {
+              "label": "Total",
+              "apiField": "ExpenditureDetails.Preparation.total",
+              "type": "currency"
+            }
+          ]
+        },
+        {
+          "title": "Additional Expenditure",
+          "fields": [
+            {
+              "label": "",
+              "apiField": "ExpenditureDetails.AdditionalExpenditure.???"
+            }
+          ]
+        },
+        {
+          "title": "Travel",
+          "fields": [
+            {
+              "label": "No. of Hours",
+              "apiField": "ExpenditureDetails.Travel.hours"
+            },
+            {
+              "label": "Hourly Rate",
+              "apiField": "ExpenditureDetails.Travel.rate"
+            },
+            {
+              "label": "Total Cost of Travel",
+              "apiField": "ExpenditureDetails.Travel.total"
+            }
+          ]
+        },
+        {
+          "title": "Authority",
+          "fields": [
+            {
+              "label": "Total Authority",
+              "apiField": "ExpenditureDetails.Authority"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "alternative-quotes",
+      "title": "Alternative Quotes",
+      "subsections": [
+        {
+          "title": "Alternative Quotes",
+          "fields": [
+            {
+              "label": "Have you obtained any alternative quotes?",
+              "apiField": "AlternativeQuotes.alternativeQuote"
+            },
+            {
+              "label": "How many alternative quotes have been obtained?",
+              "apiField": "AlternativeQuotes.numberOfQuotes"
+            }
+          ]
+        },
+        {
+          "title": "Quote 1",
+          "fields": [
+            {
+              "label": "",
+              "apiField": "AlternativeQuotes.Quotes.???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "prior-authority-details",
+      "title": "Prior Authority Details",
+      "subsections": [
+        {
+          "title": "Prior Authority Details",
+          "fields": [
+            {
+              "label": "Tell us what authority you are seeking and why it is required. If you wish to obtain a medical report, state whether as to fitness to plead and/or plea and/or disposal.",
+              "apiField": "PriorAuthorityDetails.authorityDetails"
+            },
+            {
+              "label": "Give a brief summary of the prosecution case. You may attach the copy advance disclosure or extracts.",
+              "apiField": "PriorAuthorityDetails.defenceMitigation"
+            },
+            {
+              "label": "Give a summary of the defence or mitigation. Attach a copy of your client's statement and details of any previous convictions, if available.",
+              "apiField": "PriorAuthorityDetails.prosecutionSummary"
+            }
+          ]
+        },
+        {
+          "title": "Details of Application to Instruct QC Without a Junior",
+          "fields": [
+            {
+              "label": "Please give details of and reasons for the application",
+              "apiField": "PriorAuthorityDetails.qcDetails"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "additional-information",
+      "title": "Additional Information",
+      "subsections": [
+        {
+          "title": "Additional Information",
+          "fields": [
+            {
+              "label": "Please include any additional information pertinent to this submission or use to complete entries where there wasn't sufficient room for your answer.",
+              "apiField": "AdditionalInfo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "solicitors-certification",
+      "title": "Solicitor's Certification",
+      "subsections": [
+        {
+          "title": "Solicitor's Certification",
+          "fields": [
+            {
+              "subHeading": "I certify that the information provided is correct."
+            },
+            {
+              "label": "Name",
+              "apiField": "Solicitor.certification.name"
+            },
+            {
+              "label": "Date",
+              "apiField": "Solicitor.certification.date",
+              "type": "date"
+            }
+          ]
         }
       ]
     }
