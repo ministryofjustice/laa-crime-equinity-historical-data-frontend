@@ -6,6 +6,7 @@ import CrmApiService from '../../services/crmApiService'
 import CrmDisplayService from '../../services/crmDisplayService'
 
 jest.mock('../../services/crmApiService')
+jest.mock('../../services/crmDisplayService')
 
 describe('CRM4 Controller', () => {
   let mockCrmApiService: jest.Mocked<CrmApiService<Crm4Response>>
@@ -57,21 +58,58 @@ describe('CRM4 Controller', () => {
         Authority: 200.0,
       },
     }
-
     mockCrmApiService.getCrm.mockResolvedValue(crm4Response)
+
+    const crmNavigation = {
+      label: 'Side navigation',
+      items: [
+        {
+          text: 'General Information',
+          href: 'general-information',
+          active: true,
+        },
+      ],
+    }
+    mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
+
+    const crmSection = {
+      sectionId: 'general-information',
+      title: 'General Information',
+      subsections: [
+        {
+          title: 'General Information',
+          fields: [
+            {
+              label: 'Has a previous application for an extension been made?',
+              apiField: 'hasPreviousApplication',
+              value: 'No',
+            },
+            {
+              label: 'Most recent application reference',
+              apiField: 'previousApplicationRef',
+              value: '',
+            },
+          ],
+        },
+      ],
+    }
+    mockCrmDisplayService.getCrmSection.mockReturnValue(crmSection)
 
     const crm4Controller = new Crm4Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm4Controller.show()
     request.params = {
       usn: '123456789',
+      sectionId: 'general-information',
     }
 
     await requestHandler(request, response, next)
 
     expect(response.render).toHaveBeenCalledWith('pages/crmDetails', {
-      title: 'CRM4',
-      navigationItems: {},
-      section: {},
+      title: 'Application for Prior Authority to Incur Disbursements in Criminal Cases',
+      usn: 123456789,
+      crmType: 'CRM 4',
+      navigationItems: crmNavigation,
+      section: crmSection,
     })
   })
 })

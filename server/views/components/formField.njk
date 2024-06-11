@@ -11,9 +11,9 @@
                         <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0">
                             {% if field.type === 'currency' %}
                                 {{ field.value | formatCurrency }}
-                                {% elif field.type === 'date' %}
+                            {% elif field.type === 'date' %}
                                 {{ field.value | formatDate }}
-                                {% elif field.type === 'time' %}
+                            {% elif field.type === 'time' %}
                                 {{ field.value | formatTime }}
                             {% else %}
                                 {{ field.value }}
@@ -37,9 +37,9 @@
                         <div class="govuk-body govuk-!-padding-top-2 govuk-!-margin-bottom-0">
                             {% if field.type === 'currency' %}
                                 {{ field.value | formatCurrency }}
-                                {% elif field.type === 'date' %}
+                            {% elif field.type === 'date' %}
                                 {{ field.value | formatDate }}
-                                {% elif field.type === 'time' %}
+                            {% elif field.type === 'time' %}
                                 {{ field.value | formatTime }}
                             {% else %}
                                 {{ field.value }}
@@ -58,9 +58,9 @@
                 <dd class="govuk-summary-list__value">
                     {% if field.type === 'currency' %}
                         {{ field.value | formatCurrency }}
-                        {% elif field.type === 'date' %}
+                    {% elif field.type === 'date' %}
                         {{ field.value | formatDate }}
-                        {% elif field.type === 'time' %}
+                    {% elif field.type === 'time' %}
                         {{ field.value | formatTime }}
                     {% else %}
                         {{ field.value }}
