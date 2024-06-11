@@ -1,16 +1,48 @@
-{% macro timeAndCost(field) %}
+{% macro timeAndCost(field, isFirstRow = false, isTotalRow = false) %}
     {% set timeAndCost = field.value %}
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">{{ field.label }}</dt>
-        <dd class="govuk-summary-list__value">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-third">
-                    <span class="govuk-body">{{ timeAndCost.time | formatTime }}</span>
+    {% if isFirstRow %}
+        <div class="govuk-summary-list__row ">
+            <dt class="govuk-summary-list__key"></dt>
+            <dd class="govuk-summary-list__value ">
+                <div class="govuk-grid-row custom-cost-header">
+                    <div class="govuk-grid-column-one-half">
+                        <div class="govuk-body"></div>
+                    </div>
+                    <div class="govuk-grid-column-one-half">
+                        <div><h3>Cost</h3></div>
+                    </div>
                 </div>
-                <div class="govuk-grid-column-one-third">
-                    <span class="govuk-body">{{ timeAndCost.cost | formatCurrency }}</span>
+            </dd>
+        </div>
+    {% endif %}
+    {% if isTotalRow %}
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">{{ field.label }}</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-one-half">
+                        <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0"> </div>
+                    </div>
+                    <div class="govuk-grid-column-one-half">
+                        <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0">{{ timeAndCost.cost | formatCurrency }}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </dd>
-    </div>
+            </dd>
+        </div>
+    {% else %}
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">{{ field.label }}</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-one-half">
+                        <div class="govuk-body govuk-!-padding-top-2 govuk-!-margin-bottom-0">{{ timeAndCost.time | formatTime }}</div>
+                    </div>
+                    <div class="govuk-grid-column-one-half">
+                        <div class="govuk-body govuk-!-padding-top-2 govuk-!-margin-bottom-0">{{ timeAndCost.cost | formatCurrency }}</div>
+                    </div>
+                </div>
+            </dd>
+        </div>
+    {% endif %}
 {% endmacro %}
