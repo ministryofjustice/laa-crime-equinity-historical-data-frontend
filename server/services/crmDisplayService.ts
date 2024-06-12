@@ -15,11 +15,12 @@ import {
 } from '@crmDisplay'
 
 import { CrmResponse } from '@eqApi'
+import crm4DisplayConfig from './config/crm4DisplayConfig.json'
 import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 import validateConfig from '../utils/crmDisplayConfigValidation'
 
 const configMap: Record<CrmType, CrmDisplayConfig> = {
-  crm4: null, // not supported yet
+  crm4: validateConfig(crm4DisplayConfig as CrmDisplayConfig, 'crm4'),
   crm5: validateConfig(crm5DisplayConfig as CrmDisplayConfig, 'crm5'),
 }
 
