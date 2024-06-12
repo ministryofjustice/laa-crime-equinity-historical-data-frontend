@@ -65,7 +65,7 @@ type Travel = {
   total: number
 }
 
-type AdditionalExpenditure = {
+export type AdditionalExpenditure = {
   description: string
   justification: string
   quantity: number
@@ -115,6 +115,7 @@ type Certification = {
   date: string
   name: string
 }
+
 type Solicitor = {
   declaration: true
   certification: Certification

@@ -1,0 +1,7 @@
+{% from "./crm4AdditionalExpenditure.njk" import crm4AdditionalExpenditure %}
+
+{% macro customDisplay(params) %}
+    {% if params.name == 'crm4AdditionalExpenditure' %}
+        {{ crm4AdditionalExpenditure(params.value) }}
+    {% endif %}
+{% endmacro %}

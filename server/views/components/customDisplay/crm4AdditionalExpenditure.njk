@@ -1,0 +1,29 @@
+{%- from "govuk/components/table/macro.njk" import govukTable -%}
+{% macro crm4AdditionalExpenditure(data) %}
+
+    {% set tableData = {
+        head: [
+            { text: "Description"},
+            { text: "Justification" },
+            { text: "Quantity" },
+            { text: "Rate" },
+            { text: "Total" }
+        ],
+        rows: []
+    } %}
+
+    {% for item in data %}
+        {%- set tableRow = [
+            { text: item.description | safe },
+            { text: item.justification | safe },
+            { text: item.quantity | safe },
+            { text: item.rate | safe | formatCurrency },
+            { text: item.total | safe | formatCurrency }
+        ] -%}
+        {% set list = tableData.rows.push(tableRow) %}
+    {%  endfor %}
+
+<div>
+    {{ govukTable(tableData) }}
+</div>
+{% endmacro %}

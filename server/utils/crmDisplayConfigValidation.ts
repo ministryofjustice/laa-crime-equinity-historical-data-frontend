@@ -19,18 +19,22 @@ const schema = Joi.object({
         .min(1)
         .items({
           title: Joi.string().required(),
-          fields: Joi.array()
-            .min(1)
-            .items(
-              {
-                label: Joi.string().optional().allow(''),
-                apiField: Joi.string().required(),
-                type: Joi.string().valid('currency', 'date', 'time', 'timeAndCost', 'totalAndCost').optional(),
-              },
-              {
-                subHeading: Joi.string().required(),
-              },
-            ),
+          fields: Joi.array().items(
+            {
+              label: Joi.string().optional().allow(''),
+              apiField: Joi.string().required(),
+              type: Joi.string()
+                .valid('currency', 'date', 'time', 'timeAndCost', 'totalAndCost', 'crm4AdditionalExpenditure')
+                .optional(),
+            },
+            {
+              subHeading: Joi.string().required(),
+            },
+          ),
+          customDisplay: {
+            name: Joi.string().required(),
+            apiField: Joi.string().required(),
+          },
         }),
     }),
 })

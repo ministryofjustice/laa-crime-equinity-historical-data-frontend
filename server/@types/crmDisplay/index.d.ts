@@ -1,4 +1,5 @@
 import { TimeAndCost, TotalAndCost } from '@crm5'
+import { AdditionalExpenditure } from '@crm4'
 
 type SubHeading = {
   subHeading: string
@@ -18,11 +19,20 @@ type DisplayField = {
   type?: FieldType
 }
 
-type FieldOrSubHeading = ConfigField | DisplayField | SubHeading
+type CustomDisplayType = 'crm4AdditionalExpenditure'
+
+type CustomDisplay = {
+  name: CustomDisplayType
+  apiField: string
+  value?: string | Array<AdditionalExpenditure>
+}
+
+type FieldOrSubHeading = ConfigField | DisplayField | CustomDisplay | SubHeading
 
 type SubSection = {
   title: string
   fields: Array<FieldOrSubHeading>
+  customDisplay?: CustomDisplay
 }
 
 type ShowWhen = {
@@ -64,6 +74,7 @@ export type {
   ConfigField,
   CrmDisplayConfig,
   CrmType,
+  CustomDisplay,
   DisplayField,
   FieldOrSubHeading,
   FieldType,

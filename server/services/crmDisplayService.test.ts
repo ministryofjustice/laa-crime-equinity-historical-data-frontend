@@ -217,6 +217,7 @@ describe('CRM Display Service', () => {
         sectionId: 'general-information',
         subsections: [
           {
+            customDisplay: null,
             fields: [
               { label: 'Has a previous application for an extension been made?', value: 'Yes' },
               {
@@ -263,8 +264,8 @@ describe('CRM Display Service', () => {
           equals: 'Advice',
         },
         subsections: [
-          { fields: [], title: 'Advice and Assistance' },
-          { fields: [], title: 'LAA Advice and Assistance' },
+          { customDisplay: null, fields: [], title: 'Advice and Assistance' },
+          { customDisplay: null, fields: [], title: 'LAA Advice and Assistance' },
         ],
         title: 'Advice and Assistance',
       })
@@ -275,7 +276,7 @@ describe('CRM Display Service', () => {
 
       expect(result).toEqual({
         sectionId: 'clients-details',
-        subsections: [{ fields: [{ subHeading: 'Address' }], title: "Client's Details" }],
+        subsections: [{ customDisplay: null, fields: [{ subHeading: 'Address' }], title: "Client's Details" }],
         title: "Client's Details",
       })
     })
@@ -299,6 +300,7 @@ describe('CRM Display Service', () => {
         },
         subsections: [
           {
+            customDisplay: null,
             fields: [
               {
                 label: 'Is your client under 18 years old?',
@@ -354,6 +356,7 @@ describe('CRM Display Service', () => {
         sectionId: 'general-information',
         subsections: [
           {
+            customDisplay: null,
             fields: [
               { label: 'Has a previous application for an extension been made?', value: 'Yes' },
               {
@@ -378,6 +381,7 @@ describe('CRM Display Service', () => {
         sectionId: 'general-information',
         subsections: [
           {
+            customDisplay: null,
             fields: [
               { label: 'Has a previous application for an extension been made?', value: 'Yes' },
               {

@@ -3,6 +3,7 @@
 {% from "../components/formField.njk" import formField %}
 {% from "../components/timeAndCost.njk" import timeAndCost %}
 {% from "../components/totalAndCost.njk" import totalAndCost %}
+{% from "../components/customDisplay/customDisplay.njk" import customDisplay %}
 
 {% set pageTitle = applicationName + " - " + crmType + ": " + title %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -25,6 +26,9 @@
                             </div>
                             <div class="govuk-summary-card__content">
                                 <dl class="govuk-summary-list">
+                                    {% if subsection.customDisplay %}
+                                        {{ customDisplay(subsection.customDisplay) }}
+                                    {% endif %}
                                     {% for field in subsection.fields %}
                                         {% if field.subHeading %}
                                             <div class="govuk-summary-list__row">
