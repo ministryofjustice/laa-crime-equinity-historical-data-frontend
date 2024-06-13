@@ -4,12 +4,12 @@ Given('the user is on the Historical Data page', () => {
   cy.visit('/')
 })
 
-When('the user selects "Historical data eForm" link', () => {
-  cy.contains('Historical data eForm').click()
+When('the user selects {string} link', linkText => {
+  cy.contains(`${linkText}`).click()
 })
 
-When('the user selects "CRM5" from the CRM type dropdown and clicks search', () => {
-  cy.get('select[name="type"]').select('CRM 5')
+When('the user selects {string} from the CRM type dropdown and clicks search', crmType => {
+  cy.get('#type').select(`${crmType}`)
   cy.get('button[type="submit"]').click()
 })
 
