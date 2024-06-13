@@ -14,21 +14,6 @@ export default class Crm4Controller {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm4Response = await this.crm4Service.getCrm(usn)
-      crm4Response.ExpenditureDetails.AdditionalExpenditure = []
-      crm4Response.ExpenditureDetails.AdditionalExpenditure.push({
-        description: 'Solicitor',
-        justification: 'Fees',
-        quantity: 1,
-        rate: 1000,
-        total: 1000,
-      })
-      crm4Response.ExpenditureDetails.AdditionalExpenditure.push({
-        description: 'Solicitor Again',
-        justification: 'Fees',
-        quantity: 2,
-        rate: 2000,
-        total: 2000,
-      })
       const navigation = this.crmDisplayService.getCrmNavigation('crm4', usn, sectionId, crm4Response)
       const section = this.crmDisplayService.getCrmSection('crm4', sectionId, crm4Response)
       res.render('pages/crmDetails', {

@@ -23,7 +23,5 @@
         {% set list = tableData.rows.push(tableRow) %}
     {%  endfor %}
 
-<div>
     {{ govukTable(tableData) }}
-</div>
 {% endmacro %}

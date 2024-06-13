@@ -25,56 +25,57 @@
                                 <h2 class="govuk-summary-card__title govuk-!-font-size-27">{{ subsection.title }}</h2>
                             </div>
                             <div class="govuk-summary-card__content">
-                                <dl class="govuk-summary-list">
-                                    {% if subsection.customDisplay %}
-                                        {{ customDisplay(subsection.customDisplay) }}
-                                    {% endif %}
-                                    {% for field in subsection.fields %}
-                                        {% if field.subHeading %}
-                                            <div class="govuk-summary-list__row">
-                                                <h3 class="">{{ field.subHeading }}</h3>
-                                            </div>
+                        {% if subsection.customDisplay %}
+                            {{ customDisplay(subsection.customDisplay) }}
+                        {% else %}
+                            <dl class="govuk-summary-list">
+                                {% for field in subsection.fields %}
+                                    {% if field.subHeading %}
+                                        <div class="govuk-summary-list__row">
+                                            <h3 class="">{{ field.subHeading }}</h3>
+                                        </div>
+                                    {% else %}
+                                        {% if loop.first %}
+                                            {% if field.type == 'timeAndCost' %}
+                                                {{ timeAndCost(field, true) }}
+                                                {% elif field.type == 'totalAndCost' %}
+                                                {{ totalAndCost(field, true) }}
+                                            {% else %}
+                                                {{ formField(field) }}
+                                            {% endif %}
                                         {% else %}
-                                            {% if loop.first %}
+                                            {% if loop.last %}
                                                 {% if field.type == 'timeAndCost' %}
-                                                    {{ timeAndCost(field, true) }}
+                                                    {{ timeAndCost(field, false, true) }}
                                                     {% elif field.type == 'totalAndCost' %}
-                                                    {{ totalAndCost(field, true) }}
+                                                    {{ totalAndCost(field, false, true) }}
                                                 {% else %}
-                                                    {{ formField(field) }}
+                                                    {{ formField(field, true, section.sectionId == 'costs') }}
                                                 {% endif %}
                                             {% else %}
-                                                {% if loop.last %}
+                                                {% if section.sectionId == 'costs' %}
                                                     {% if field.type == 'timeAndCost' %}
-                                                        {{ timeAndCost(field, false, true) }}
+                                                        {{ timeAndCost(field) }}
                                                         {% elif field.type == 'totalAndCost' %}
-                                                        {{ totalAndCost(field, false, true) }}
+                                                        {{ totalAndCost(field) }}
                                                     {% else %}
-                                                        {{ formField(field, true, section.sectionId == 'costs') }}
+                                                        {{ formField(field, false, true) }}
                                                     {% endif %}
                                                 {% else %}
-                                                    {% if section.sectionId == 'costs' %}
-                                                        {% if field.type == 'timeAndCost' %}
-                                                            {{ timeAndCost(field) }}
-                                                            {% elif field.type == 'totalAndCost' %}
-                                                            {{ totalAndCost(field) }}
-                                                        {% else %}
-                                                            {{ formField(field, false, true) }}
-                                                        {% endif %}
+                                                    {% if field.type == 'timeAndCost' %}
+                                                        {{ timeAndCost(field) }}
+                                                        {% elif field.type == 'totalAndCost' %}
+                                                        {{ totalAndCost(field) }}
                                                     {% else %}
-                                                        {% if field.type == 'timeAndCost' %}
-                                                            {{ timeAndCost(field) }}
-                                                            {% elif field.type == 'totalAndCost' %}
-                                                            {{ totalAndCost(field) }}
-                                                        {% else %}
-                                                            {{ formField(field) }}
-                                                        {% endif %}
+                                                        {{ formField(field) }}
                                                     {% endif %}
                                                 {% endif %}
                                             {% endif %}
                                         {% endif %}
-                                    {% endfor %}
-                                </dl>
+                                    {% endif %}
+                                {% endfor %}
+                                    </dl>
+                        {% endif %}
                             </div>
                         </div>
                     {% endfor %}
