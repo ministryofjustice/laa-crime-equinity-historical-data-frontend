@@ -33,7 +33,7 @@ export default defineConfig({
       })
       return config
     },
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'http://localhost:3007',
     excludeSpecPattern: '**/!(*.cy).ts',
     specPattern: 'integration_tests/e2e/**/*.{js,jsx,ts,tsx,feature}',
     supportFile: 'integration_tests/support/index.ts',
