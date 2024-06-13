@@ -3,6 +3,7 @@ import {
   ConfigField,
   CrmDisplayConfig,
   CrmType,
+  CustomDisplay,
   DisplayField,
   FieldOrSubHeading,
   HideWhen,
@@ -63,8 +64,13 @@ export default class CrmDisplayService {
     const section = this.getSection(sectionId, crmDisplayConfig.sections, crmResponse)
 
     const subsections: Array<SubSection> = section.subsections.map(subsection => {
-      return { ...subsection, fields: this.getFields(subsection.fields, crmResponse) }
+      return {
+        ...subsection,
+        fields: this.getFields(subsection.fields, crmResponse),
+        customDisplay: this.getCustomDisplay(subsection.customDisplay, crmResponse),
+      }
     })
+
     return {
       ...section,
       subsections,
@@ -90,11 +96,9 @@ export default class CrmDisplayService {
       .map(field => {
         if (isConfigField(field)) {
           // create display field using config & api field value
-          const apiFieldName = field.apiField
-          const apiFieldValue = this.getApiFieldValue(crmResponse, apiFieldName)
           const displayField: DisplayField = {
             label: field.label,
-            value: apiFieldValue,
+            value: this.getApiFieldValue(crmResponse, field.apiField),
             type: field.type,
           }
           return displayField
@@ -104,6 +108,16 @@ export default class CrmDisplayService {
         return field
       })
       .filter(field => isSubHeading(field) || field.value)
+  }
+
+  private getCustomDisplay<T extends CrmResponse>(customDisplay: CustomDisplay, crmResponse: T): CustomDisplay {
+    if (customDisplay) {
+      return {
+        ...customDisplay,
+        value: this.getApiFieldValue(crmResponse, customDisplay.apiField),
+      }
+    }
+    return undefined
   }
 
   private getApiFieldValue<T extends CrmResponse>(crmResponse: T, apiFieldName: string): string {

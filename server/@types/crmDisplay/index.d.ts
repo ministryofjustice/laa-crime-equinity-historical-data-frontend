@@ -18,11 +18,20 @@ type DisplayField = {
   type?: FieldType
 }
 
+type CustomDisplayType = 'crm4AdditionalExpenditure'
+
+type CustomDisplay = {
+  name: CustomDisplayType
+  apiField: string
+  value?: string
+}
+
 type FieldOrSubHeading = ConfigField | DisplayField | SubHeading
 
 type SubSection = {
   title: string
   fields: Array<FieldOrSubHeading>
+  customDisplay?: CustomDisplay
 }
 
 type ShowWhen = {
@@ -64,6 +73,7 @@ export type {
   ConfigField,
   CrmDisplayConfig,
   CrmType,
+  CustomDisplay,
   DisplayField,
   FieldOrSubHeading,
   FieldType,

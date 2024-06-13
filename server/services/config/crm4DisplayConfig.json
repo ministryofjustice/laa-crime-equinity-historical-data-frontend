@@ -203,12 +203,11 @@
         },
         {
           "title": "Additional Expenditure",
-          "fields": [
-            {
-              "label": "",
-              "apiField": "ExpenditureDetails.AdditionalExpenditure.???"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm4AdditionalExpenditure",
+            "apiField": "ExpenditureDetails.AdditionalExpenditure"
+          },
+          "fields": []
         },
         {
           "title": "Travel",

@@ -115,6 +115,7 @@ type Certification = {
   date: string
   name: string
 }
+
 type Solicitor = {
   declaration: true
   certification: Certification
