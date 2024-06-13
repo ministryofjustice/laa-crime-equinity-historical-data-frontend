@@ -1,59 +1,18 @@
 import { CrmDisplayConfig } from '@crmDisplay'
 import validateConfig from './crmDisplayConfigValidation'
+import crm4DisplayConfig from '../services/config/crm4DisplayConfig.json'
+import crm5DisplayConfig from '../services/config/crm5DisplayConfig.json'
 
 describe('CRM Display Config Validation', () => {
-  it('should validate config', () => {
-    const config: CrmDisplayConfig = {
-      sections: [
-        {
-          sectionId: 'general-information',
-          title: 'General Information',
-          subsections: [
-            {
-              title: 'General Information',
-              fields: [
-                {
-                  label: 'Has a previous application for an extension been made?',
-                  apiField: 'hasPreviousApplication',
-                },
-                {
-                  label: 'Most recent application reference',
-                  apiField: 'previousApplicationRef',
-                },
-                {
-                  subHeading: 'Some subHeading',
-                },
-                {
-                  label: '',
-                  apiField: 'someApiField',
-                },
-                {
-                  label: 'Some Currency',
-                  apiField: 'someCurrencyField',
-                  type: 'currency',
-                },
-                {
-                  label: 'Some Date',
-                  apiField: 'someDateField',
-                  type: 'date',
-                },
-                {
-                  label: 'Some Time',
-                  apiField: 'someTimeField',
-                  type: 'time',
-                },
-                {
-                  label: 'Some Time and Cost',
-                  apiField: 'someTimeAndCostField',
-                  type: 'timeAndCost',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    }
+  it('should validate CRM4 config', () => {
+    const config = crm4DisplayConfig as CrmDisplayConfig
+    const result = validateConfig(config, 'crm5')
 
+    expect(result).toEqual(config)
+  })
+
+  it('should validate CRM5 config', () => {
+    const config = crm5DisplayConfig as CrmDisplayConfig
     const result = validateConfig(config, 'crm5')
 
     expect(result).toEqual(config)

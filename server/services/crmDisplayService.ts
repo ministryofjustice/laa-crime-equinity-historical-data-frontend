@@ -117,7 +117,7 @@ export default class CrmDisplayService {
         value: this.getApiFieldValue(crmResponse, customDisplay.apiField),
       }
     }
-    return null
+    return undefined
   }
 
   private getApiFieldValue<T extends CrmResponse>(crmResponse: T, apiFieldName: string): string {

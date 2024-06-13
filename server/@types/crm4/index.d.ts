@@ -65,7 +65,7 @@ type Travel = {
   total: number
 }
 
-export type AdditionalExpenditure = {
+type AdditionalExpenditure = {
   description: string
   justification: string
   quantity: number

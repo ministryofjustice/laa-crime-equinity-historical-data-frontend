@@ -1,5 +1,4 @@
 import { TimeAndCost, TotalAndCost } from '@crm5'
-import { AdditionalExpenditure } from '@crm4'
 
 type SubHeading = {
   subHeading: string
@@ -24,10 +23,10 @@ type CustomDisplayType = 'crm4AdditionalExpenditure'
 type CustomDisplay = {
   name: CustomDisplayType
   apiField: string
-  value?: string | Array<AdditionalExpenditure>
+  value?: string
 }
 
-type FieldOrSubHeading = ConfigField | DisplayField | CustomDisplay | SubHeading
+type FieldOrSubHeading = ConfigField | DisplayField | SubHeading
 
 type SubSection = {
   title: string
