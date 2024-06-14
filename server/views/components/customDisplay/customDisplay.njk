@@ -1,7 +1,14 @@
 {% from "./crm4AdditionalExpenditure.njk" import crm4AdditionalExpenditure %}
+{% from "./crm4AlternativeQuotes.njk" import crm4AlternativeQuotes %}
 
 {% macro customDisplay(params) %}
-    {% if params.name == 'crm4AdditionalExpenditure' %}
-        {{ crm4AdditionalExpenditure(params.value) }}
+    {%  set title = params.title %}
+    {%  set customDisplay = params.customDisplay %}
+
+    {% if customDisplay.name == 'crm4AdditionalExpenditure' %}
+        {{ crm4AdditionalExpenditure(title, customDisplay.value) }}
+    {% elif customDisplay.name == 'crm4AlternativeQuotes' %}
+        {{ crm4AlternativeQuotes(title, customDisplay.value) }}
     {% endif %}
+
 {% endmacro %}
