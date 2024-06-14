@@ -92,22 +92,25 @@ export default class CrmDisplayService {
   }
 
   private getFields<T extends CrmResponse>(fields: Array<FieldOrSubHeading>, crmResponse: T): Array<FieldOrSubHeading> {
-    return fields
-      .map(field => {
-        if (isConfigField(field)) {
-          // create display field using config & api field value
-          const displayField: DisplayField = {
-            label: field.label,
-            value: this.getApiFieldValue(crmResponse, field.apiField),
-            type: field.type,
+    if (fields) {
+      return fields
+        .map(field => {
+          if (isConfigField(field)) {
+            // create display field using config & api field value
+            const displayField: DisplayField = {
+              label: field.label,
+              value: this.getApiFieldValue(crmResponse, field.apiField),
+              type: field.type,
+            }
+            return displayField
           }
-          return displayField
-        }
 
-        // otherwise return field as is
-        return field
-      })
-      .filter(field => isSubHeading(field) || field.value)
+          // otherwise return field as is
+          return field
+        })
+        .filter(field => isSubHeading(field) || field.value)
+    }
+    return undefined
   }
 
   private getCustomDisplay<T extends CrmResponse>(customDisplay: CustomDisplay, crmResponse: T): CustomDisplay {

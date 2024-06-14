@@ -30,7 +30,7 @@ type FieldOrSubHeading = ConfigField | DisplayField | SubHeading
 
 type SubSection = {
   title: string
-  fields: Array<FieldOrSubHeading>
+  fields?: Array<FieldOrSubHeading>
   customDisplay?: CustomDisplay
 }
 
