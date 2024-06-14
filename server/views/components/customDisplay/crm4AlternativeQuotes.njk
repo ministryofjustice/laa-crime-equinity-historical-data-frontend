@@ -1,51 +1,31 @@
-{% from "../../components/formField.njk" import formField %}
+{% from "../formField.njk" import formField %}
+{% from "../crmSubsection.njk" import crmSubsection %}
 
-{% macro crm4AlternativeQuotes(title, data) %}
+{% macro crm4AlternativeQuotes(data) %}
 
-    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
-        <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title govuk-!-font-size-27">Alternative Quotes</h2>
-        </div>
-        <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
-                {% set fields = [
-                    { label: "Have you obtained any alternative quotes?", value: data.alternativeQuote },
-                    { label: "How many alternative quotes have been obtained?", value: data.numberOfQuotes}
-                ] %}
-                {% for field in fields %}
-                    {{ formField(field) }}
-                {%  endfor %}
-            </dl>
-        </div>
-    </div>
-
-{% set quotes = data.Quotes %}
-
-{% for quote in quotes %}
+    {# render Alternative Quotes subsection #}
     {% set fields = [
-        { label: "Company Name", value: quote.companyName },
-        { label: "Name Of Expert", value: quote.expertName },
-        { label: "Contact Phone", value: quote.contactPhone },
-        { label: "Cost Basis", value: quote.costBasis },
-        { label: "Additional Items Description", value: quote.additionalItemDesc },
-        { label: "Additional Items Amount", value: quote.additionalItemAmount },
-        { label: "Travel Hours", value: quote.travelHours | formatTime },
-        { label: "Travel Hourly Rate", value: quote.travelHourlyRate },
-        { label: "Total", value: quote.quoteTotal | formatCurrency }
+        { label: "Have you obtained any alternative quotes?", value: data.alternativeQuote },
+        { label: "How many alternative quotes have been obtained?", value: data.numberOfQuotes}
     ] %}
+    {{ crmSubsection('Alternative Quotes', fields) }}
 
-    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
-        <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title govuk-!-font-size-27">Quote {{ loop.index }}</h2>
-        </div>
-        <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
-                {% for field in fields %}
-                    {{ formField(field) }}
-                {%  endfor %}
-            </dl>
-        </div>
-    </div>
-{% endfor %}
+    {# render Alternative Quotes subsection #}
+    {% set quotes = data.Quotes %}
+    {% for quote in quotes %}
+        {% set fields = [
+            { label: "Company Name", value: quote.companyName },
+            { label: "Name Of Expert", value: quote.expertName },
+            { label: "Contact Phone", value: quote.contactPhone },
+            { label: "Cost Basis", value: quote.costBasis },
+            { label: "Additional Items Description", value: quote.additionalItemDesc },
+            { label: "Additional Items Amount", value: quote.additionalItemAmount },
+            { label: "Travel Hours", value: quote.travelHours | formatTime },
+            { label: "Travel Hourly Rate", value: quote.travelHourlyRate },
+            { label: "Total", value: quote.quoteTotal | formatCurrency }
+        ] %}
+        {% set title = 'Quote ' + loop.index %}
+        {{ crmSubsection(title, fields) }}
+    {% endfor %}
 
 {% endmacro %}

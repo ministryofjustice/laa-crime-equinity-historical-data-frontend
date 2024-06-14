@@ -6,9 +6,9 @@
     {%  set customDisplay = params.customDisplay %}
 
     {% if customDisplay.name == 'crm4AdditionalExpenditure' %}
-        {{ crm4AdditionalExpenditure(title, customDisplay.value) }}
+        {{ crm4AdditionalExpenditure(customDisplay.value) }}
     {% elif customDisplay.name == 'crm4AlternativeQuotes' %}
-        {{ crm4AlternativeQuotes(title, customDisplay.value) }}
+        {{ crm4AlternativeQuotes(customDisplay.value) }}
     {% endif %}
 
 {% endmacro %}
