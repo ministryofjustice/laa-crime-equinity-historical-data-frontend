@@ -1,11 +1,51 @@
+{% from "../../components/formField.njk" import formField %}
+
 {% macro crm4AlternativeQuotes(title, data) %}
 
-<div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
-    <div class="govuk-summary-card__title-wrapper">
-        <h2 class="govuk-summary-card__title govuk-!-font-size-27">{{ title }}</h2>
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title govuk-!-font-size-27">Alternative Quotes</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                {% set fields = [
+                    { label: "Have you obtained any alternative quotes?", value: data.alternativeQuote },
+                    { label: "How many alternative quotes have been obtained?", value: data.numberOfQuotes}
+                ] %}
+                {% for field in fields %}
+                    {{ formField(field) }}
+                {%  endfor %}
+            </dl>
+        </div>
     </div>
-    <div class="govuk-summary-card__content">
+
+{% set quotes = data.Quotes %}
+
+{% for quote in quotes %}
+    {% set fields = [
+        { label: "Company Name", value: quote.companyName },
+        { label: "Name Of Expert", value: quote.expertName },
+        { label: "Contact Phone", value: quote.contactPhone },
+        { label: "Cost Basis", value: quote.costBasis },
+        { label: "Additional Items Description", value: quote.additionalItemDesc },
+        { label: "Additional Items Amount", value: quote.additionalItemAmount },
+        { label: "Travel Hours", value: quote.travelHours | formatTime },
+        { label: "Travel Hourly Rate", value: quote.travelHourlyRate },
+        { label: "Total", value: quote.quoteTotal | formatCurrency }
+    ] %}
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title govuk-!-font-size-27">Quote {{ loop.index }}</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                {% for field in fields %}
+                    {{ formField(field) }}
+                {%  endfor %}
+            </dl>
+        </div>
     </div>
-</div>
+{% endfor %}
 
 {% endmacro %}
