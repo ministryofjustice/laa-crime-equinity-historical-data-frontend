@@ -38,7 +38,7 @@
                                                 {% if loop.first %}
                                                     {% if field.type == 'timeAndCost' %}
                                                         {{ timeAndCost(field, true) }}
-                                                        {% elif field.type == 'totalAndCost' %}
+                                                    {% elif field.type == 'totalAndCost' %}
                                                         {{ totalAndCost(field, true) }}
                                                     {% else %}
                                                         {{ formField(field) }}
@@ -47,28 +47,18 @@
                                                     {% if loop.last %}
                                                         {% if field.type == 'timeAndCost' %}
                                                             {{ timeAndCost(field, false, true) }}
-                                                            {% elif field.type == 'totalAndCost' %}
+                                                        {% elif field.type == 'totalAndCost' %}
                                                             {{ totalAndCost(field, false, true) }}
                                                         {% else %}
-                                                            {{ formField(field, true, section.sectionId == 'costs') }}
+                                                            {{ formField(field, section.sectionId == 'costs') }}
                                                         {% endif %}
                                                     {% else %}
-                                                        {% if section.sectionId == 'costs' %}
-                                                            {% if field.type == 'timeAndCost' %}
-                                                                {{ timeAndCost(field) }}
-                                                                {% elif field.type == 'totalAndCost' %}
-                                                                {{ totalAndCost(field) }}
-                                                            {% else %}
-                                                                {{ formField(field, false, true) }}
-                                                            {% endif %}
+                                                        {% if field.type == 'timeAndCost' %}
+                                                            {{ timeAndCost(field) }}
+                                                        {% elif field.type == 'totalAndCost' %}
+                                                            {{ totalAndCost(field) }}
                                                         {% else %}
-                                                            {% if field.type == 'timeAndCost' %}
-                                                                {{ timeAndCost(field) }}
-                                                                {% elif field.type == 'totalAndCost' %}
-                                                                {{ totalAndCost(field) }}
-                                                            {% else %}
-                                                                {{ formField(field) }}
-                                                            {% endif %}
+                                                            {{ formField(field, section.sectionId == 'costs') }}
                                                         {% endif %}
                                                     {% endif %}
                                                 {% endif %}

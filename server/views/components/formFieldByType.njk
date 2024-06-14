@@ -1,0 +1,11 @@
+{% macro formFieldByType(field) %}
+    {% if field.type === 'currency' %}
+        {{ field.value | formatCurrency }}
+        {% elif field.type === 'date' %}
+        {{ field.value | formatDate }}
+        {% elif field.type === 'time' %}
+        {{ field.value | formatTime }}
+    {% else %}
+        {{ field.value }}
+    {% endif %}
+{% endmacro %}
