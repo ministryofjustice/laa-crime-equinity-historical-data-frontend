@@ -11,7 +11,7 @@ import {
   Section,
   ShowWhen,
   SubHeading,
-  SubSection,
+  Subsection,
 } from '@crmDisplay'
 
 import { CrmResponse } from '@eqApi'
@@ -62,7 +62,7 @@ export default class CrmDisplayService {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
     const section = this.getSection(sectionId, crmDisplayConfig.sections, crmResponse)
 
-    const subsections: Array<SubSection> = section.subsections.map(subsection => {
+    const subsections: Array<Subsection> = section.subsections.map(subsection => {
       return {
         ...subsection,
         fields: this.getFields(subsection.fields, crmResponse),

@@ -23,7 +23,7 @@ type CustomDisplay = {
 
 type FieldOrSubHeading = ConfigField | SubHeading
 
-type SubSection = {
+type Subsection = {
   title: string
   fields?: Array<FieldOrSubHeading>
   customDisplay?: CustomDisplay
@@ -44,7 +44,7 @@ type Section = {
   title: string
   showWhen?: ShowWhen
   hideWhen?: HideWhen
-  subsections: Array<SubSection>
+  subsections: Array<Subsection>
 }
 
 type CrmType = 'crm4' | 'crm5'
@@ -77,5 +77,5 @@ export type {
   Section,
   ShowWhen,
   SubHeading,
-  SubSection,
+  Subsection,
 }
