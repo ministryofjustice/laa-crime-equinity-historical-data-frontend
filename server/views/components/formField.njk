@@ -1,5 +1,3 @@
-{% from "./formFieldByType.njk" import formFieldByType %}
-
 {% macro formField(field, isCostsSection = false) %}
     {% if isCostsSection %}
         <div class="govuk-summary-list__row">
@@ -29,5 +27,17 @@
                 </dd>
             </div>
         </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro formFieldByType(field) %}
+    {% if field.type === 'currency' %}
+        {{ field.value | formatCurrency }}
+        {% elif field.type === 'date' %}
+        {{ field.value | formatDate }}
+        {% elif field.type === 'time' %}
+        {{ field.value | formatTime }}
+    {% else %}
+        {{ field.value }}
     {% endif %}
 {% endmacro %}

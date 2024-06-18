@@ -1,4 +1,4 @@
-{% from "../../crmSubsection.njk" import crmSubsection %}
+{% from "../../formSubsection.njk" import formSubsection %}
 
 {% macro crm4AdditionalExpenditure(data) %}
 
@@ -24,7 +24,7 @@
         {% set list = tableData.rows.push(tableRow) %}
     {%  endfor %}
 
-    {{ crmSubsection('Additional Expenditure', tableData, true) }}
+    {{ formSubsection('Additional Expenditure', tableData, true) }}
 
 {% endmacro %}
 
