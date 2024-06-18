@@ -21,7 +21,7 @@
             <div class="govuk-grid-column-two-thirds govuk-!-padding-top-4">
                 {% for subsection in section.subsections %}
                     {% if subsection.customDisplay %}
-                        {{ customDisplay(subsection) }}
+                        {{ customDisplay(subsection.customDisplay) }}
                     {% else %}
                         <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
                             <div class="govuk-summary-card__title-wrapper">
