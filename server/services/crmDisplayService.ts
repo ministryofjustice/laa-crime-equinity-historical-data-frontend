@@ -4,7 +4,6 @@ import {
   CrmDisplayConfig,
   CrmType,
   CustomDisplay,
-  DisplayField,
   FieldOrSubHeading,
   HideWhen,
   Navigation,
@@ -96,13 +95,11 @@ export default class CrmDisplayService {
       return fields
         .map(field => {
           if (isConfigField(field)) {
-            // create display field using config & api field value
-            const displayField: DisplayField = {
-              label: field.label,
+            // populate config file with api field value
+            return {
+              ...field,
               value: this.getApiFieldValue(crmResponse, field.apiField),
-              type: field.type,
             }
-            return displayField
           }
 
           // otherwise return field as is

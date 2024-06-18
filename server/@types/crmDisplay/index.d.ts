@@ -10,12 +10,7 @@ type ConfigField = {
   label: string
   apiField: string
   type?: FieldType
-}
-
-type DisplayField = {
-  label: string
-  value: string | TimeAndCost | TotalAndCost
-  type?: FieldType
+  value?: string | TimeAndCost | TotalAndCost
 }
 
 type CustomDisplayType = 'crm4AdditionalExpenditure'
@@ -26,7 +21,7 @@ type CustomDisplay = {
   value?: string
 }
 
-type FieldOrSubHeading = ConfigField | DisplayField | SubHeading
+type FieldOrSubHeading = ConfigField | SubHeading
 
 type SubSection = {
   title: string
@@ -74,7 +69,6 @@ export type {
   CrmDisplayConfig,
   CrmType,
   CustomDisplay,
-  DisplayField,
   FieldOrSubHeading,
   FieldType,
   HideWhen,
