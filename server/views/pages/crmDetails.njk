@@ -4,6 +4,7 @@
 {% from "../components/timeAndCost.njk" import timeAndCost %}
 {% from "../components/totalAndCost.njk" import totalAndCost %}
 {% from "../components/customDisplay/customDisplay.njk" import customDisplay %}
+{% from "../components/backLink.njk" import customBackLink %}
 
 {% set pageTitle = applicationName + " - " + crmType + ": " + title %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -12,6 +13,7 @@
 
     <div class="govuk-width-container">
         <main class="govuk-main-wrapper">
+            {{ customBackLink(backUrl) }}
             <span class="govuk-caption-l">eForm: {{ crmType }} | Case number: {{ usn }}</span>
             <h1 class="govuk-heading-l">{{ title }}</h1>
             <div class="govuk-grid-row">

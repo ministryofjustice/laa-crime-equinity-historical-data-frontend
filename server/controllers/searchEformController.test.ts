@@ -24,7 +24,10 @@ describe('Search Eform Controller', () => {
     const requestHandler = searchEformController.show()
     await requestHandler(request, response, next)
 
-    expect(response.render).toHaveBeenCalledWith('pages/searchEform')
+    expect(response.render).toHaveBeenCalledWith('pages/searchEform', {
+      results: [],
+      formValues: {},
+    })
   })
 
   it('should render eform with search results', async () => {
@@ -80,6 +83,16 @@ describe('Search Eform Controller', () => {
             number: 1,
           },
         ],
+      },
+      formValues: {
+        clientDOB: undefined,
+        clientName: undefined,
+        endDate: undefined,
+        page: '1',
+        startDate: undefined,
+        supplierAccountNumber: undefined,
+        type: undefined,
+        usn: '123456789',
       },
     })
 
