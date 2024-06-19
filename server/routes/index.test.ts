@@ -2,6 +2,7 @@ import type { Express } from 'express'
 import request from 'supertest'
 import { Crm4Response } from '@crm4'
 import { Crm5Response } from '@crm5'
+import { Crm7Response } from '@crm7'
 import { SearchResponse } from '@searchEform'
 import { appWithAllRoutes } from './testutils/appSetup'
 import CrmApiService from '../services/crmApiService'
@@ -16,18 +17,21 @@ let app: Express
 
 let mockCrm4Service: jest.Mocked<CrmApiService<Crm4Response>>
 let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
+let mockCrm7Service: jest.Mocked<CrmApiService<Crm7Response>>
 let mockSearchEformService: jest.Mocked<SearchEformService>
 let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
 
 beforeEach(() => {
   mockCrm4Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm4Response>>
   mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
+  mockCrm7Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm7Response>>
   mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
   mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
   app = appWithAllRoutes({
     services: {
       crm4Service: mockCrm4Service,
       crm5Service: mockCrm5Service,
+      crm7Service: mockCrm7Service,
       searchEformService: mockSearchEformService,
       crmDisplayService: mockCrmDisplayService,
     },
@@ -222,6 +226,34 @@ describe('routes', () => {
         .expect('Content-Type', /html/)
         .expect(res => {
           expect(res.text).toContain('eForm: CRM 5 | Case number: 2345678')
+        })
+    })
+  })
+
+  describe('GET /crm7', () => {
+    it('should render crm7 page', () => {
+      const crm7Response: Crm7Response = {
+        formDetails: {
+          usn: 3456789,
+          solicitorDetails: {
+            firmName: 'Some Firm',
+            address: '1 Some Lane',
+            providerAccount: '1234AB',
+            telephone: '123456789',
+            contactName: 'Some Contact',
+            solicitorName: 'Some Solicitor',
+            solicitorReference: '123456789',
+          },
+          decisionOfficeUseOnly: 'No',
+        },
+      }
+      mockCrm7Service.getCrm.mockResolvedValue(crm7Response)
+
+      return request(app)
+        .get('/crm7/3456789')
+        .expect('Content-Type', /html/)
+        .expect(res => {
+          expect(res.text).toContain('eForm: CRM 7 | Case number: 3456789')
         })
     })
   })
