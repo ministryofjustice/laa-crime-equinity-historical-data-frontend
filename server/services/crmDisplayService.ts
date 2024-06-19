@@ -22,6 +22,7 @@ import validateConfig from '../utils/crmDisplayConfigValidation'
 const configMap: Record<CrmType, CrmDisplayConfig> = {
   crm4: validateConfig(crm4DisplayConfig as CrmDisplayConfig, 'crm4'),
   crm5: validateConfig(crm5DisplayConfig as CrmDisplayConfig, 'crm5'),
+  crm7: null, // @TODO: EMP-355 full page display
 }
 
 export default class CrmDisplayService {

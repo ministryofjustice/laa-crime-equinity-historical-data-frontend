@@ -98,7 +98,7 @@ export interface Crm4Response extends CrmResponse {
     }
     AdditionalInfo?: string
     Solicitor?: {
-      declaration: true
+      declaration: boolean
       certification: {
         date: string
         name: string
