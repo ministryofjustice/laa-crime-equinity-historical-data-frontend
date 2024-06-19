@@ -116,7 +116,7 @@ type Certification = {
 }
 
 type Solicitor = {
-  declaration: true
+  declaration: boolean
   certification: Certification
 }
 

@@ -233,15 +233,18 @@ describe('routes', () => {
   describe('GET /crm7', () => {
     it('should render crm7 page', () => {
       const crm7Response: Crm7Response = {
-        usn: 3456789,
-        solicitorDetails: {
-          firmName: 'Some Firm',
-          address: '1 Some Lane',
-          providerAccount: '1234AB',
-          telephone: '123456789',
-          contactName: 'Some Contact',
-          solicitorName: 'Some Solicitor',
-          solicitorReference: '123456789',
+        formDetails: {
+          usn: 3456789,
+          solicitorDetails: {
+            firmName: 'Some Firm',
+            address: '1 Some Lane',
+            providerAccount: '1234AB',
+            telephone: '123456789',
+            contactName: 'Some Contact',
+            solicitorName: 'Some Solicitor',
+            solicitorReference: '123456789',
+          },
+          decisionOfficeUseOnly: 'No',
         },
       }
       mockCrm7Service.getCrm.mockResolvedValue(crm7Response)
