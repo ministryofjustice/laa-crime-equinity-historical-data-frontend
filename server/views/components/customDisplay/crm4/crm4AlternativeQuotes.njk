@@ -1,0 +1,31 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formSubsection.njk" import formSubsection %}
+
+{% macro crm4AlternativeQuotes(data) %}
+
+    {# Render "Alternative Quotes" subsection #}
+    {% set fields = [
+        { label: "Have you obtained any alternative quotes?", value: data.alternativeQuote },
+        { label: "How many alternative quotes have been obtained?", value: data.numberOfQuotes}
+    ] %}
+    {{ formSubsection('Alternative Quotes', fields) }}
+
+    {# Render "Quotes" subsection #}
+    {% set quotes = data.Quotes %}
+    {% for quote in quotes %}
+        {% set fields = [
+            { label: "Company Name", value: quote.companyName },
+            { label: "Name Of Expert", value: quote.expertName },
+            { label: "Contact Phone", value: quote.contactPhone },
+            { label: "Cost Basis", value: quote.costBasis },
+            { label: "Additional Items Description", value: quote.additionalItemDesc },
+            { label: "Additional Items Amount", value: quote.additionalItemAmount },
+            { label: "Travel Hours", value: quote.travelHours, type: "currency"},
+            { label: "Travel Hourly Rate", value: quote.travelHourlyRate },
+            { label: "Total", value: quote.quoteTotal, type: "currency" }
+        ] %}
+        {% set title = 'Quote ' + loop.index %}
+        {{ formSubsection(title, fields) }}
+    {% endfor %}
+
+{% endmacro %}

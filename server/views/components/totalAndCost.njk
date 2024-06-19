@@ -15,33 +15,23 @@
             </dd>
         </div>
     {% endif %}
-    {% if isTotalRow %}
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">{{ field.label }}</dt>
-            <dd class="govuk-summary-list__value">
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-one-half">
-                        <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0"> </div>
-                    </div>
-                    <div class="govuk-grid-column-one-half">
-                        <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0">{{ totalAndCost.cost | formatCurrency }}</div>
-                    </div>
-                </div>
-            </dd>
-        </div>
-    {% else %}
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">{{ field.label }}</dt>
-            <dd class="govuk-summary-list__value">
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-one-half">
-                        <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0">{{ totalAndCost.total }}</div>
-                    </div>
-                    <div class="govuk-grid-column-one-half">
-                        <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0">{{ totalAndCost.cost | formatCurrency }}</div>
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">{{ field.label }}</dt>
+        <dd class="govuk-summary-list__value">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-half">
+                    <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0">
+                        {% if not isTotalRow %}
+                            {{ totalAndCost.total }}
+                        {% endif %}
                     </div>
                 </div>
-            </dd>
-        </div>
-    {% endif %}
+                <div class="govuk-grid-column-one-half">
+                    <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0">{{ totalAndCost.cost | formatCurrency }}</div>
+                </div>
+            </div>
+        </dd>
+    </div>
+
 {% endmacro %}

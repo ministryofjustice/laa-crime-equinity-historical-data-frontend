@@ -206,8 +206,7 @@
           "customDisplay": {
             "name": "crm4AdditionalExpenditure",
             "apiField": "ExpenditureDetails.AdditionalExpenditure"
-          },
-          "fields": []
+          }
         },
         {
           "title": "Travel",
@@ -246,25 +245,10 @@
       "subsections": [
         {
           "title": "Alternative Quotes",
-          "fields": [
-            {
-              "label": "Have you obtained any alternative quotes?",
-              "apiField": "AlternativeQuotes.alternativeQuote"
-            },
-            {
-              "label": "How many alternative quotes have been obtained?",
-              "apiField": "AlternativeQuotes.numberOfQuotes"
-            }
-          ]
-        },
-        {
-          "title": "Quote 1",
-          "fields": [
-            {
-              "label": "",
-              "apiField": "AlternativeQuotes.Quotes.???"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm4AlternativeQuotes",
+            "apiField": "AlternativeQuotes"
+          }
         }
       ]
     },

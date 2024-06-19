@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from 'express'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import { Crm5Response } from '@crm5'
+import { Navigation, Section } from '@crmDisplay'
 import Crm5Controller from './crm5Controller'
 import CrmApiService from '../../services/crmApiService'
 import CrmDisplayService from '../../services/crmDisplayService'
@@ -48,7 +49,7 @@ describe('CRM5 Controller', () => {
 
     mockCrmApiService.getCrm.mockResolvedValue(crm5Response)
 
-    const crmNavigation = {
+    const crmNavigation: Navigation = {
       label: 'Side navigation',
       items: [
         {
@@ -60,7 +61,7 @@ describe('CRM5 Controller', () => {
     }
     mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
 
-    const crmSection = {
+    const crmSection: Section = {
       sectionId: 'general-information',
       title: 'General Information',
       subsections: [

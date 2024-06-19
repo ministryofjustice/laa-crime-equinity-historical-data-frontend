@@ -1,4 +1,5 @@
 import { Crm5Response } from '@crm5'
+import { Section } from '@crmDisplay'
 import CrmDisplayService from './crmDisplayService'
 
 describe('CRM Display Service', () => {
@@ -210,28 +211,34 @@ describe('CRM Display Service', () => {
   })
 
   describe('getCrmSection()', () => {
+    const generalInformationSection: Section = {
+      sectionId: 'general-information',
+      subsections: [
+        {
+          fields: [
+            {
+              label: 'Has a previous application for an extension been made?',
+              value: 'Yes',
+              apiField: 'hasPreviousApplication',
+            },
+            {
+              label: 'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
+              value: 'No',
+              apiField: 'appealedPrevDecision',
+            },
+            { label: 'Urgent?', value: 'Yes', apiField: 'urgent' },
+            { label: 'Reason for urgency', value: 'Urgent', apiField: 'urgencyReason' },
+          ],
+          title: 'General Information',
+        },
+      ],
+      title: 'General Information',
+    }
+
     it('should return crm section for given CRM type, sectionId, usn', () => {
       const result = crmDisplayService.getCrmSection('crm5', 'general-information', crm5Response)
 
-      expect(result).toEqual({
-        sectionId: 'general-information',
-        subsections: [
-          {
-            fields: [
-              { label: 'Has a previous application for an extension been made?', value: 'Yes' },
-              {
-                label:
-                  'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
-                value: 'No',
-              },
-              { label: 'Urgent?', value: 'Yes' },
-              { label: 'Reason for urgency', value: 'Urgent' },
-            ],
-            title: 'General Information',
-          },
-        ],
-        title: 'General Information',
-      })
+      expect(result).toEqual(generalInformationSection)
     })
 
     it('should handle empty fields', () => {
@@ -303,30 +310,36 @@ describe('CRM Display Service', () => {
               {
                 label: 'Is your client under 18 years old?',
                 value: 'No',
+                apiField: 'CapitalDetails.isUnder18',
               },
               {
                 label:
                   "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance or Guarantee State Pension Credit?",
                 value: 'Yes',
+                apiField: 'CapitalDetails.hasIncomeSupport',
               },
               {
                 label: 'How many dependants does your client have?',
                 value: 2,
+                apiField: 'CapitalDetails.numOfDependants',
               },
               {
                 label: 'Client',
                 type: 'currency',
                 value: 60000,
+                apiField: 'CapitalDetails.clientSavings',
               },
               {
                 label: 'Partner',
                 type: 'currency',
                 value: 40000,
+                apiField: 'CapitalDetails.partnerSavings',
               },
               {
                 label: 'Total',
                 type: 'currency',
                 value: 100000,
+                apiField: 'CapitalDetails.totalSavings',
               },
             ],
             title: 'Capital Details',
@@ -350,49 +363,13 @@ describe('CRM Display Service', () => {
       }
       const result = crmDisplayService.getCrmSection('crm5', 'capital-details', customResponse)
 
-      expect(result).toEqual({
-        sectionId: 'general-information',
-        subsections: [
-          {
-            fields: [
-              { label: 'Has a previous application for an extension been made?', value: 'Yes' },
-              {
-                label:
-                  'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
-                value: 'No',
-              },
-              { label: 'Urgent?', value: 'Yes' },
-              { label: 'Reason for urgency', value: 'Urgent' },
-            ],
-            title: 'General Information',
-          },
-        ],
-        title: 'General Information',
-      })
+      expect(result).toEqual(generalInformationSection)
     })
 
     it('should return first section if condition not met for given section', () => {
       const result = crmDisplayService.getCrmSection('crm5', 'capital-details', crm5Response)
 
-      expect(result).toEqual({
-        sectionId: 'general-information',
-        subsections: [
-          {
-            fields: [
-              { label: 'Has a previous application for an extension been made?', value: 'Yes' },
-              {
-                label:
-                  'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
-                value: 'No',
-              },
-              { label: 'Urgent?', value: 'Yes' },
-              { label: 'Reason for urgency', value: 'Urgent' },
-            ],
-            title: 'General Information',
-          },
-        ],
-        title: 'General Information',
-      })
+      expect(result).toEqual(generalInformationSection)
     })
   })
 })

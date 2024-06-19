@@ -1,49 +1,16 @@
-{% macro formField(field, isLastRow = false, isCostsSection = false) %}
-    {% if isLastRow and isCostsSection %}
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">{{ field.label }}</dt>
-            <dd class="govuk-summary-list__value">
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-one-half">
-                        <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0"> </div>
-                    </div>
-                    <div class="govuk-grid-column-one-half">
-                        <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0">
-                            {% if field.type === 'currency' %}
-                                {{ field.value | formatCurrency }}
-                            {% elif field.type === 'date' %}
-                                {{ field.value | formatDate }}
-                            {% elif field.type === 'time' %}
-                                {{ field.value | formatTime }}
-                            {% else %}
-                                {{ field.value }}
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </dd>
-        </div>
-    {% elif isCostsSection %}
+{% macro formField(field, isCostsSection = false) %}
+    {% if isCostsSection %}
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">{{ field.label }}</dt>
             <dd class="govuk-summary-list__value">
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-one-half">
                         <div class="govuk-body govuk-!-padding-top-2 govuk-!-margin-bottom-0">
-
                         </div>
                     </div>
                     <div class="govuk-grid-column-one-half">
                         <div class="govuk-body govuk-!-padding-top-2 govuk-!-margin-bottom-0">
-                            {% if field.type === 'currency' %}
-                                {{ field.value | formatCurrency }}
-                            {% elif field.type === 'date' %}
-                                {{ field.value | formatDate }}
-                            {% elif field.type === 'time' %}
-                                {{ field.value | formatTime }}
-                            {% else %}
-                                {{ field.value }}
-                            {% endif %}
+                            {{ formFieldByType(field) }}
                         </div>
                     </div>
                 </div>
@@ -56,17 +23,21 @@
             </div>
             <div class="govuk-grid-column-one-half">
                 <dd class="govuk-summary-list__value">
-                    {% if field.type === 'currency' %}
-                        {{ field.value | formatCurrency }}
-                    {% elif field.type === 'date' %}
-                        {{ field.value | formatDate }}
-                    {% elif field.type === 'time' %}
-                        {{ field.value | formatTime }}
-                    {% else %}
-                        {{ field.value }}
-                    {% endif %}
+                    {{ formFieldByType(field) }}
                 </dd>
             </div>
         </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro formFieldByType(field) %}
+    {% if field.type === 'currency' %}
+        {{ field.value | formatCurrency }}
+        {% elif field.type === 'date' %}
+        {{ field.value | formatDate }}
+        {% elif field.type === 'time' %}
+        {{ field.value | formatTime }}
+    {% else %}
+        {{ field.value }}
     {% endif %}
 {% endmacro %}
