@@ -1,5 +1,4 @@
 import type { SearchRequest, SearchResponse, SearchResult } from '@searchEform'
-import { CrmType } from '@crmDisplay'
 import SearchApiClient from '../data/api/searchApiClient'
 import logger from '../../logger'
 
@@ -44,7 +43,7 @@ const getCrmLink = (result: SearchResult) => {
   return urlPath ? `/${urlPath}/${result.usn}` : ''
 }
 
-const crmTypeToUrlPath: Record<string, CrmType> = {
+const crmTypeToUrlPath: Record<string, string> = {
   CRM4: 'crm4',
   CRM5: 'crm5',
   CRM7: 'crm7',
