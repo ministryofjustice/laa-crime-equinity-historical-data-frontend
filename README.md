@@ -1,6 +1,6 @@
 # Equiniti historical data frontend
 [![repo standards badge](https://img.shields.io/badge/endpoint.svg?&style=flat&logo=github&url=https%3A%2F%2Foperations-engineering-reports.cloud-platform.service.justice.gov.uk%2Fapi%2Fv1%2Fcompliant_public_repositories%2Fhmpps-template-typescript)](https://operations-engineering-reports.cloud-platform.service.justice.gov.uk/public-github-repositories.html#hmpps-template-typescript "Link to report")
-[![CircleCI](https://circleci.com/gh/ministryofjustice/hmpps-template-typescript/tree/main.svg?style=svg)](https://app.circleci.com/pipelines/github/ministryofjustice/laa-crime-equinity-historical-data-frontend)
+[![CircleCI](https://circleci.com/gh/ministryofjustice/laa-crime-equinity-historical-data-frontend/tree/main.svg?style=svg)](https://app.circleci.com/pipelines/github/ministryofjustice/laa-crime-equinity-historical-data-frontend)
 
 # Instructions
 

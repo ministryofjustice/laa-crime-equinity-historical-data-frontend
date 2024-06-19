@@ -1,0 +1,23 @@
+{%- from "govuk/components/table/macro.njk" import govukTable -%}
+{% from "./formField.njk" import formField %}
+
+{% macro formSubsection(title, data, isTableData = false) %}
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title govuk-!-font-size-27">{{ title }}</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            {% if isTableData %}
+                {{ govukTable(data) }}
+            {% else %}
+                <dl class="govuk-summary-list">
+                    {% for field in data %}
+                        {{ formField(field) }}
+                    {% endfor %}
+                </dl>
+            {% endif %}
+        </div>
+    </div>
+
+{% endmacro %}

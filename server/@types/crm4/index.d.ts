@@ -88,9 +88,8 @@ type Quote = {
   costBasis: string
   preparationHours: number
   hourlyRate: number
-  // typos to be fixed in BE code
-  addtionalItemDesc: string
-  addtionalItemAmount: number
+  additionalItemDesc: string
+  additionalItemAmount: number
   travelHours: string
   travelHourlyRate: number
   quoteTotal: number

@@ -11,25 +11,24 @@
 
 {% block content %}
 
-    <div class="govuk-width-container">
-        <main class="govuk-main-wrapper">
-            {{ customBackLink(backUrl) }}
-            <span class="govuk-caption-l">eForm: {{ crmType }} | Case number: {{ usn }}</span>
-            <h1 class="govuk-heading-l">{{ title }}</h1>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-third ">
-                    {{ navigationBar(navigationItems) }}
-                </div>
-                <div class="govuk-grid-column-two-thirds govuk-!-padding-top-4">
-                    {% for subsection in section.subsections %}
+<div class="govuk-width-container">
+    <main class="govuk-main-wrapper">
+        <span class="govuk-caption-l">eForm: {{ crmType }} | Case number: {{ usn }}</span>
+        <h1 class="govuk-heading-l">{{ title }}</h1>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third ">
+                {{ navigationBar(navigationItems) }}
+            </div>
+            <div class="govuk-grid-column-two-thirds govuk-!-padding-top-4">
+                {% for subsection in section.subsections %}
+                    {% if subsection.customDisplay %}
+                        {{ customDisplay(subsection.customDisplay) }}
+                    {% else %}
                         <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
                             <div class="govuk-summary-card__title-wrapper">
                                 <h2 class="govuk-summary-card__title govuk-!-font-size-27">{{ subsection.title }}</h2>
                             </div>
                             <div class="govuk-summary-card__content">
-                                {% if subsection.customDisplay %}
-                                    {{ customDisplay(subsection.customDisplay) }}
-                                {% else %}
                                 <dl class="govuk-summary-list">
                                     {% for field in subsection.fields %}
                                         {% if field.subHeading %}
@@ -40,49 +39,37 @@
                                             {% if loop.first %}
                                                 {% if field.type == 'timeAndCost' %}
                                                     {{ timeAndCost(field, true) }}
-                                                    {% elif field.type == 'totalAndCost' %}
+                                                {% elif field.type == 'totalAndCost' %}
                                                     {{ totalAndCost(field, true) }}
                                                 {% else %}
                                                     {{ formField(field) }}
                                                 {% endif %}
-                                            {% else %}
-                                                {% if loop.last %}
-                                                    {% if field.type == 'timeAndCost' %}
-                                                        {{ timeAndCost(field, false, true) }}
-                                                        {% elif field.type == 'totalAndCost' %}
-                                                        {{ totalAndCost(field, false, true) }}
-                                                    {% else %}
-                                                        {{ formField(field, true, section.sectionId == 'costs') }}
-                                                    {% endif %}
+                                            {% elif loop.last %}
+                                                {% if field.type == 'timeAndCost' %}
+                                                    {{ timeAndCost(field, false, true) }}
+                                                {% elif field.type == 'totalAndCost' %}
+                                                    {{ totalAndCost(field, false, true) }}
                                                 {% else %}
-                                                    {% if section.sectionId == 'costs' %}
-                                                        {% if field.type == 'timeAndCost' %}
-                                                            {{ timeAndCost(field) }}
-                                                            {% elif field.type == 'totalAndCost' %}
-                                                            {{ totalAndCost(field) }}
-                                                        {% else %}
-                                                            {{ formField(field, false, true) }}
-                                                        {% endif %}
-                                                    {% else %}
-                                                        {% if field.type == 'timeAndCost' %}
-                                                            {{ timeAndCost(field) }}
-                                                            {% elif field.type == 'totalAndCost' %}
-                                                            {{ totalAndCost(field) }}
-                                                        {% else %}
-                                                            {{ formField(field) }}
-                                                        {% endif %}
-                                                    {% endif %}
+                                                    {{ formField(field, section.sectionId == 'costs') }}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if field.type == 'timeAndCost' %}
+                                                    {{ timeAndCost(field) }}
+                                                {% elif field.type == 'totalAndCost' %}
+                                                    {{ totalAndCost(field) }}
+                                                {% else %}
+                                                    {{ formField(field, section.sectionId == 'costs') }}
                                                 {% endif %}
                                             {% endif %}
                                         {% endif %}
                                     {% endfor %}
                                 </dl>
-                                {% endif %}
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
+</div>
 {% endblock %}

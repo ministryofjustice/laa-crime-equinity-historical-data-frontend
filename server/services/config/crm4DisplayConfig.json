@@ -78,11 +78,12 @@
             },
             {
               "label": "Rep order no. / case no.",
-              "apiField": "CaseDetails.ClientDetails.???"
+              "apiField": "CaseDetails.ClientDetails.repOrderNumber"
             },
             {
               "label": "Date of Rep order",
-              "apiField": "CaseDetails.ClientDetails.???"
+              "apiField": "CaseDetails.ClientDetails.repOrderDate",
+              "type": "date"
             },
             {
               "label": "UFN",
@@ -133,8 +134,7 @@
             },
             {
               "label": "Purpose of Next Hearing",
-              "apiField": "CaseDetails.ProceedingDetails.???",
-              "type": "date"
+              "apiField": "CaseDetails.ProceedingDetails.purposeOfHearing"
             }
           ]
         },
@@ -206,8 +206,7 @@
           "customDisplay": {
             "name": "crm4AdditionalExpenditure",
             "apiField": "ExpenditureDetails.AdditionalExpenditure"
-          },
-          "fields": []
+          }
         },
         {
           "title": "Travel",
@@ -246,25 +245,10 @@
       "subsections": [
         {
           "title": "Alternative Quotes",
-          "fields": [
-            {
-              "label": "Have you obtained any alternative quotes?",
-              "apiField": "AlternativeQuotes.alternativeQuote"
-            },
-            {
-              "label": "How many alternative quotes have been obtained?",
-              "apiField": "AlternativeQuotes.numberOfQuotes"
-            }
-          ]
-        },
-        {
-          "title": "Quote 1",
-          "fields": [
-            {
-              "label": "",
-              "apiField": "AlternativeQuotes.Quotes.???"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm4AlternativeQuotes",
+            "apiField": "AlternativeQuotes"
+          }
         }
       ]
     },
