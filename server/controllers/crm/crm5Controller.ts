@@ -1,4 +1,4 @@
-import type { RequestHandler } from 'express'
+import type { Request, RequestHandler, Response } from 'express'
 import { Crm5Response } from '@crm5'
 import CrmApiService from '../../services/crmApiService'
 import CrmDisplayService from '../../services/crmDisplayService'
@@ -11,7 +11,7 @@ export default class Crm5Controller {
   ) {}
 
   show(): RequestHandler {
-    return async (req, res) => {
+    return async (req: Request, res: Response) => {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm5Response = await this.crm5Service.getCrm(usn)
