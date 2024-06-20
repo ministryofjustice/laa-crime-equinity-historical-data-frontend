@@ -46,7 +46,7 @@
               "apiField": "summary.isLocatedInDesignatedArea"
             },
             {
-              "label": "Stage reached:",
+              "label": "Stage reached",
               "apiField": "summary.stateReached"
             },
             {
@@ -56,6 +56,74 @@
             {
               "label": "Matter Type",
               "apiField": "summary.matterType"
+            }
+          ]
+        },
+        {
+          "title": "Equal Opportunities",
+          "fields": [
+            {
+              "label": "Equal Opportunities Monitoring 1",
+              "apiField": "summary.equalOpportunities.monitoring1"
+            },
+            {
+              "label": "Equal Opportunities Monitoring 2",
+              "apiField": "summary.equalOpportunities.monitoring2"
+            },
+            {
+              "label": "Equal Opportunities Monitoring 3",
+              "apiField": "summary.equalOpportunities.monitoring3"
+            },
+            {
+              "label": "Date class of work closed",
+              "apiField": "summary.equalOpportunities.dateClassOfWorkClosed",
+              "type": "date"
+            },
+            {
+              "label": "Number of defendants represented",
+              "apiField": "summary.equalOpportunities.numberDefendantsRepresented"
+            },
+            {
+              "label": "Number of court attendances",
+              "apiField": "summary.equalOpportunities.numberCourtAttendances"
+            },
+            {
+              "label": "Court Identifier",
+              "apiField": "summary.equalOpportunities.courtIdentifier"
+            },
+            {
+              "label": "Youth Court",
+              "apiField": "summary.equalOpportunities.isYouthCourt"
+            }
+          ]
+        },
+        {
+          "title": "Office Use Only",
+          "fields": [
+            {
+              "label": "Is your office and/or the court in which the case was heard located in a Designated Area?",
+              "apiField": "summary.officeUse.isLocatedInDesignatedArea"
+            },
+            {
+              "label": "Stage reached",
+              "apiField": "summary.officeUse.stateReached"
+            },
+            {
+              "label": "Equal Opportunities Code",
+              "apiField": "summary.officeUse.equalOpportunitiesCode"
+            },
+            {
+              "label": "Profit Costs",
+              "apiField": "summary.officeUse.profitCost",
+              "type": "currency"
+            },
+            {
+              "label": "Disbursements",
+              "apiField": "summary.officeUse.disbursements"
+            },
+            {
+              "label": "Travel Cost",
+              "apiField": "summary.officeUse.travelCost"
             }
           ]
         }
