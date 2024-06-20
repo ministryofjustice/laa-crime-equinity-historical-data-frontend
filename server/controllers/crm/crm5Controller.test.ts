@@ -102,4 +102,90 @@ describe('CRM5 Controller', () => {
       backUrl: '/search-eform',
     })
   })
+
+  it('should set the back URL correctly when navigating back', async () => {
+    const crm5Response: Crm5Response = {
+      usn: 1234567,
+      hasPreviousApplication: 'No',
+      previousApplicationRef: '',
+      appealedPrevDecision: 'No',
+      appealedPrevDecisionDetails: '',
+      urgent: 'Yes',
+      urgencyReason: 'Urgent',
+      Firm: {
+        firmAddress: '1 Some Lane',
+        firmName: 'ABC Firm',
+        firmPhone: '123456789',
+        firmSupplierNo: '1234AB',
+        firmContactName: 'Some Firm',
+        firmSolicitorName: 'Some Solicitor',
+        firmSolicitorRef: 'Ref1',
+      },
+      StatementOfCase: 'Statement Of Case',
+      DetailsOfWorkCompleted: 'Some Details of Work Completed',
+      DetailsOfApplication: 'Some Details of Application',
+    }
+
+    mockCrmApiService.getCrm.mockResolvedValue(crm5Response)
+
+    const crmNavigation: Navigation = {
+      label: 'Side navigation',
+      items: [
+        {
+          text: 'General Information',
+          href: 'general-information',
+          active: true,
+        },
+      ],
+    }
+    mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
+
+    const crmSection: Section = {
+      sectionId: 'general-information',
+      title: 'General Information',
+      subsections: [
+        {
+          title: 'General Information',
+          fields: [
+            {
+              label: 'Has a previous application for an extension been made?',
+              apiField: 'hasPreviousApplication',
+              value: 'No',
+            },
+            {
+              label: 'Most recent application reference',
+              apiField: 'previousApplicationRef',
+              value: '',
+            },
+          ],
+        },
+      ],
+    }
+    mockCrmDisplayService.getCrmSection.mockReturnValue(crmSection)
+
+    const crm5Controller = new Crm5Controller(mockCrmApiService, mockCrmDisplayService)
+    const requestHandler = crm5Controller.show()
+
+    request.params = {
+      usn: '1234567',
+      sectionId: 'general-information',
+    }
+    request.session.history = []
+    await requestHandler(request, response, next)
+
+    request.query = { fromBack: 'true' } // Ensure the fromBack parameter is correctly set
+    request.session.history = ['/crm5/1234567/general-information', '/crm5/1234567/firm-details']
+    request.params.sectionId = 'firm-details'
+
+    await requestHandler(request, response, next)
+
+    expect(response.render).toHaveBeenCalledWith('pages/crmDetails', {
+      title: 'Application For Extension Of Upper Limit',
+      usn: 1234567,
+      crmType: 'CRM 5',
+      navigationItems: crmNavigation,
+      section: crmSection,
+      backUrl: '/crm5/1234567/general-information?fromBack=true',
+    })
+  })
 })

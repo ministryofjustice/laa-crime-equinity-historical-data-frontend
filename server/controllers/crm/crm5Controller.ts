@@ -18,7 +18,7 @@ export default class Crm5Controller {
       const section = this.crmDisplayService.getCrmSection('crm5', sectionId, crm5Response)
 
       const history = req.session.history || []
-      const currentUrl = `/crm5/${usn}/${sectionId || 'general-information'}`
+      const currentUrl = `/crm5/${usn}/${sectionId || ''}`
 
       if (req.query.fromBack) {
         if (history.length > 1) {
