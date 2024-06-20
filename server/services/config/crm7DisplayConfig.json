@@ -1,0 +1,65 @@
+{
+  "sections": [
+    {
+      "sectionId": "summary-of-claim",
+      "title": "Summary of Claim",
+      "subsections": [
+        {
+          "title": "Summary of Claim",
+          "fields": [
+            {
+              "label": "Client Surname",
+              "apiField": "summary.clientSurname"
+            },
+            {
+              "label": "Client First Name",
+              "apiField": "summary.clientFirstName"
+            },
+            {
+              "label": "Client Date of Birth",
+              "apiField": "summary.clientDateOfBirth",
+              "type": "date"
+            },
+            {
+              "label": "Unique File Number (UFN)",
+              "apiField": "summary.ufn"
+            },
+            {
+              "label": "MAAT Number",
+              "apiField": "summary.maatNumber"
+            },
+            {
+              "label": "Rep Order No.",
+              "apiField": "summary.representationOrderNumber"
+            },
+            {
+              "label": "Rep Order Date",
+              "apiField": "summary.representationOrderDate",
+              "type": "date"
+            },
+            {
+              "label": "Please indicate whether you will attach your Representation Order electronically, or if you are submitting by Post / DX:",
+              "apiField": "summary.representationOrderSubmitMode"
+            },
+            {
+              "label": "Is your office and/or the court in which the case was heard located in a Designated Area?",
+              "apiField": "summary.isLocatedInDesignatedArea"
+            },
+            {
+              "label": "Stage reached:",
+              "apiField": "summary.stateReached"
+            },
+            {
+              "label": "Outcome Code",
+              "apiField": "summary.outcomeCode"
+            },
+            {
+              "label": "Matter Type",
+              "apiField": "summary.matterType"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
