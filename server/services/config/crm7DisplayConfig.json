@@ -201,7 +201,7 @@
             },
             {
               "label": "Please submit the indictment with this claim. Please indicate whether you will attach it electronically or if you are submitting it by Post / DX.",
-              "apiField": "caseDetails.???"
+              "apiField": "caseDetails.indictmentAttachment"
             },
             {
               "label": "Were any wasted costs orders made in this case?",
@@ -260,6 +260,264 @@
             {
               "label": "Please give details",
               "apiField": "nonStandardFeeClaim.additionalDetails"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "case-disposal",
+      "title": "Case Disposal",
+      "subsections": [
+        {
+          "title": "Case Disposal",
+          "fields": [
+            {
+              "label": "Please select the category your claim falls within",
+              "apiField": "caseDisposal.category"
+            }
+          ]
+        },
+        {
+          "title": "Category 1",
+          "fields": []
+        }
+      ]
+    },
+    {
+      "sectionId": "claim-details",
+      "title": "Claim Details",
+      "subsections": [
+        {
+          "title": "Claim Details",
+          "fields": [
+            {
+              "label": "Was counsel instructed (Assigned)?",
+              "apiField": "claimDetails.wasCounselAssigned"
+            },
+            {
+              "label": "Was counsel instructed (Unassigned - maximum fee principle applied)?",
+              "apiField": "claimDetails.wasCounselUnassigned"
+            },
+            {
+              "label": "Was an agent instructed?",
+              "apiField": "claimDetails.wasAgentInstructed"
+            },
+            {
+              "label": "Where applicable, please give the approximate number of pages for prosecution evidence",
+              "apiField": "claimDetails.prosecutionEvidencePages"
+            },
+            {
+              "label": "Where applicable, please give the approximate number of pages for defence statements",
+              "apiField": "claimDetails.defenceStatementPages"
+            },
+            {
+              "label": "Number of defence witnesses",
+              "apiField": "claimDetails.defenceWitnesses"
+            },
+            {
+              "label": "Does this bill represent a supplemental claim?",
+              "apiField": "claimDetails.isSupplementalClaim"
+            },
+            {
+              "label": "Please provide copies of the previous claims. Please indicate whether you will attach these electronically or if you are submitting by Post / DX.",
+              "apiField": "claimDetails.supplementalClaimAttachments"
+            },
+            {
+              "label": "Was any preparation time spent watching/listening to taped evidence?",
+              "apiField": "claimDetails.wasTimeSpentOnTapedEvidence"
+            },
+            {
+              "label": "Please tell us the total running time of the tape(s)",
+              "apiField": "claimDetails.tapedEvidenceTime"
+            },
+            {
+              "label": "Has the case been remitted back to the Magistrates by the Crown Court?",
+              "apiField": "claimDetails.isRemittedBackToMagistrates"
+            },
+            {
+              "label": "Please tell us the date the case was remitted back to the Magistrates court.",
+              "apiField": "claimDetails.dateRemittedBackToMagistrates"
+            },
+            {
+              "label": "Please provide a copy of any related Crown Court claim and any notice of provisional assessment. Please indicate whether you will attach this electronically or if you are submitting by Post / DX.",
+              "apiField": "claimDetails.crownCourtAttachments"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "pre-order-work",
+      "title": "Pre Order Work",
+      "subsections": [
+        {
+          "title": "Pre Order Work",
+          "fields": [
+            {
+              "label": "Are you claiming for any work which precedes the date of grant shown on the order?",
+              "apiField": "preOrderWork.isClaimBeforeGrantDate"
+            },
+            {
+              "label": "Please give the date when the application was submitted",
+              "apiField": "preOrderWork.dateSubmitted"
+            },
+            {
+              "label": "What was the date of the 1st court hearing?",
+              "apiField": "preOrderWork.firstCourtHearingDate"
+            },
+            {
+              "label": "Please give the date on which the application was received by the court.",
+              "apiField": "preOrderWork.dateReceivedByCourt"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "schedule-of-time-spent",
+      "title": "Schedule Of Time Spent",
+      "subsections": [
+        {
+          "title": "Schedule Of Time Spent",
+          "fields": []
+        }
+      ]
+    },
+    {
+      "sectionId": "claim-for-costs",
+      "title": "Claim for Costs",
+      "subsections": [
+        {
+          "title": "Letters and Telephone Calls",
+          "fields": []
+        }
+      ]
+    },
+    {
+      "sectionId": "disbursements",
+      "title": "Disbursements",
+      "subsections": [
+        {
+          "title": "Disbursements",
+          "fields": []
+        }
+      ]
+    },
+    {
+      "sectionId": "claim-totals",
+      "title": "Claim Totals",
+      "subsections": [
+        {
+          "title": "Claim Totals",
+          "fields": [
+            {
+              "label": "Deductions",
+              "apiField": "claimTotals.deductions"
+            },
+            {
+              "label": "Profit Costs Net",
+              "apiField": "claimTotals.total.profit.net"
+            },
+            {
+              "label": "Profit Costs VAT rate",
+              "apiField": "claimTotals.total.profit.vat"
+            },
+            {
+              "label": "Profit Costs Total",
+              "apiField": "claimTotals.total.profit.total"
+            },
+            {
+              "label": "Disbursements",
+              "apiField": "claimTotals.disbursements"
+            }
+          ]
+        },
+        {
+          "title": "Claim Totals - Office Use Only",
+          "fields": [
+            {
+              "label": "Profit Costs Net Allowed",
+              "apiField": "claimTotals.officeUse.profit.net"
+            },
+            {
+              "label": "Profit Costs Allowed VAT rate",
+              "apiField": "claimTotals.officeUse.profit.vat"
+            },
+            {
+              "label": "Profit Costs Total Allowed",
+              "apiField": "claimTotals.officeUse.profit.total"
+            },
+            {
+              "label": "Disbursements Allowed",
+              "apiField": "claimTotals.officeUse.disbursements"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "coversheet",
+      "title": "Coversheet",
+      "subsections": [
+        {
+          "title": "Submitting Items by Post / DX",
+          "fields": [
+            {
+              "label": "Please click the button below to print the coversheet. Then return all information together with the cover sheet.",
+              "apiField": "coversheet"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "case-information",
+      "title": "Case Information",
+      "subsections": [
+        {
+          "title": "Relevant Case Information",
+          "fields": [
+            {
+              "label": "Information given here may expedite payment. Please give details of any relevant factors in support of time spent on the case and details in support of a claim for enhanced rates. In addition, where relevant, please record when and why a number of linked cases are billed as one fee, or a number of linked cases are billed as separate fees.",
+              "apiField": "caseInformation.relevantDetails"
+            }
+          ]
+        },
+        {
+          "title": "Solicitor Certification",
+          "fields": [
+            {
+              "label": "Name",
+              "apiField": "caseInformation.solicitorCertification.name"
+            },
+            {
+              "label": "Date",
+              "apiField": "caseInformation.solicitorCertification.date"
+            }
+          ]
+        },
+        {
+          "title": "Additional Information",
+          "fields": [
+            {
+              "label": "Please include any additional information pertinent to this submission or use to complete entries where there wasn't sufficient room for your answer. (Please show clearly what these details relate to on the form).",
+              "apiField": "caseInformation.additionalInfo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "office-use-only",
+      "title": "Office Use Only",
+      "subsections": [
+        {
+          "title": "Quality Control",
+          "fields": [
+            {
+              "label": "Decision",
+              "apiField": "decisionOfficeUseOnly"
             }
           ]
         }
