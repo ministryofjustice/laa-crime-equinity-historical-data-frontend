@@ -5,12 +5,11 @@ function manageBackLink(req: Request, currentUrl: string): string {
 
   if (req.query.fromBack) {
     if (history.length > 1) {
-      history.pop() // Remove the current URL
+      history.pop()
     }
   } else if (history.length === 0 || history[history.length - 1] !== currentUrl) {
     history.push(currentUrl)
   }
-
   req.session.history = history
 
   let backUrl = '/search-eform'
