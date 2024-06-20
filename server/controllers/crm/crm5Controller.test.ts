@@ -173,7 +173,7 @@ describe('CRM5 Controller', () => {
     request.session.history = []
     await requestHandler(request, response, next)
 
-    request.query = { fromBack: 'true' } // Ensure the fromBack parameter is correctly set
+    request.query = { fromBack: 'true' }
     request.session.history = ['/crm5/1234567/general-information', '/crm5/1234567/firm-details']
     request.params.sectionId = 'firm-details'
 
