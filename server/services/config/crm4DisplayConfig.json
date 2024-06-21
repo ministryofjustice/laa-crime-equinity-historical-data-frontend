@@ -35,8 +35,12 @@
               "apiField": "CaseDetails.Firm.firmName"
             },
             {
-              "label": "Address / DX",
+              "label": "Address",
               "apiField": "CaseDetails.Firm.firmAddress"
+            },
+            {
+              "label": "DX",
+              "apiField": "CaseDetails.Firm.firmDx"
             },
             {
               "label": "Provider Number",
