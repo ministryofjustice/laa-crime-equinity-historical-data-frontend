@@ -15,7 +15,12 @@ export default class SearchEformController {
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
       if (!req.query.page) {
-        res.render(VIEW_PATH)
+        const searchResults = req.session.searchResults || []
+        const formValues = req.session.formValues || {}
+        res.render(VIEW_PATH, {
+          results: searchResults,
+          formValues,
+        })
       } else {
         // render page with search results
         const queryParams: Record<string, string> = {
@@ -46,10 +51,17 @@ export default class SearchEformController {
             // render with search results
             const { results, paging } = searchResponse
             const baseUrl = `/search-eform?${buildQueryString(searchRequest)}&`
+            // Reset session history when a new search is performed
+            req.session.history = []
+            // Store search results and form values in session
+            req.session.searchResults = results
+            req.session.formValues = queryParams
+
             res.render(VIEW_PATH, {
               results,
               itemsTotal: paging.itemsTotal,
               pagination: getPagination(paging.number + 1, paging.total, baseUrl),
+              formValues: queryParams,
             })
           }
         }
@@ -68,6 +80,10 @@ export default class SearchEformController {
         endDate: req.body.endDate,
       }
       const queryString = buildQueryString(formValues)
+      // Reset session history when a new search is performed
+      req.session.history = []
+      req.session.searchResults = [] // Clear previous search results
+      req.session.formValues = formValues // Store form values in session
       res.redirect(302, `/search-eform?page=1${queryString ? `&${queryString}` : ''}`)
     }
   }
