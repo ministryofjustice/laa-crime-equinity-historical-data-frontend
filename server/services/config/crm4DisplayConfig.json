@@ -120,8 +120,20 @@
               "apiField": "CaseDetails.ProceedingDetails.isClientDetained"
             },
             {
+              "label": "If Yes, please advise where",
+              "apiField": "CaseDetails.ProceedingDetails.detainedDetails"
+            },
+            {
               "label": "Court Type",
               "apiField": "CaseDetails.ProceedingDetails.courtType"
+            },
+            {
+              "label": "Have you accessed the Psychiatric Liaison Service provided within the Central Criminal Court?",
+              "apiField": "CaseDetails.ProceedingDetails.psychiatricLiaison"
+            },
+            {
+              "label": "If no, please provide a reason for not doing so",
+              "apiField": "CaseDetails.ProceedingDetails.psychiatricDetails"
             },
             {
               "label": "Main Offence",
