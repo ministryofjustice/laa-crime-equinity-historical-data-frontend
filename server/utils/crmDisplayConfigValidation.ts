@@ -23,7 +23,7 @@ const schema = Joi.object({
             {
               label: Joi.string().optional().allow(''),
               apiField: Joi.string().required(),
-              type: Joi.string().valid('currency', 'date', 'time', 'timeAndCost', 'totalAndCost').optional(),
+              type: Joi.string().valid('currency', 'date', 'time', 'percent', 'timeAndCost', 'totalAndCost').optional(),
             },
             {
               subHeading: Joi.string().required(),

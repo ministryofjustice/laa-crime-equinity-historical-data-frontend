@@ -185,7 +185,8 @@
             },
             {
               "label": "Date offence commited",
-              "apiField": "caseDetails.dateOffenceCommited"
+              "apiField": "caseDetails.dateOffenceCommited",
+              "type": "date"
             },
             {
               "label": "Is this a Serious Fraud Case or are there elements of Serious Fraud?",
@@ -197,7 +198,8 @@
             },
             {
               "label": "Please give the date the charge was laid",
-              "apiField": "caseDetails.dateChargeLaid"
+              "apiField": "caseDetails.dateChargeLaid",
+              "type": "date"
             },
             {
               "label": "Please submit the indictment with this claim. Please indicate whether you will attach it electronically or if you are submitting it by Post / DX.",
@@ -255,7 +257,8 @@
             },
             {
               "label": "Date Order withdrawn",
-              "apiField": "nonStandardFeeClaim.dateWithdrawn"
+              "apiField": "nonStandardFeeClaim.dateWithdrawn",
+              "type": "date"
             },
             {
               "label": "Please give details",
@@ -360,15 +363,18 @@
             },
             {
               "label": "Please give the date when the application was submitted",
-              "apiField": "preOrderWork.dateSubmitted"
+              "apiField": "preOrderWork.dateSubmitted",
+              "type": "date"
             },
             {
               "label": "What was the date of the 1st court hearing?",
-              "apiField": "preOrderWork.firstCourtHearingDate"
+              "apiField": "preOrderWork.firstCourtHearingDate",
+              "type": "date"
             },
             {
               "label": "Please give the date on which the application was received by the court.",
-              "apiField": "preOrderWork.dateReceivedByCourt"
+              "apiField": "preOrderWork.dateReceivedByCourt",
+              "type": "date"
             }
           ]
         }
@@ -421,11 +427,13 @@
             },
             {
               "label": "Profit Costs VAT rate",
-              "apiField": "claimTotals.total.profit.vat"
+              "apiField": "claimTotals.total.profit.vat",
+              "type": "percent"
             },
             {
               "label": "Profit Costs Total",
-              "apiField": "claimTotals.total.profit.total"
+              "apiField": "claimTotals.total.profit.total",
+              "type": "currency"
             },
             {
               "label": "Disbursements",
@@ -442,11 +450,13 @@
             },
             {
               "label": "Profit Costs Allowed VAT rate",
-              "apiField": "claimTotals.officeUse.profit.vat"
+              "apiField": "claimTotals.officeUse.profit.vat",
+              "type": "percent"
             },
             {
               "label": "Profit Costs Total Allowed",
-              "apiField": "claimTotals.officeUse.profit.total"
+              "apiField": "claimTotals.officeUse.profit.total",
+              "type": "currency"
             },
             {
               "label": "Disbursements Allowed",
