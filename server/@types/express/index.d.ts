@@ -1,3 +1,4 @@
+import { SearchResult } from '@searchEform'
 import type { UserDetails } from '../../services/userService'
 
 export default {}
@@ -7,6 +8,9 @@ declare module 'express-session' {
   interface SessionData {
     returnTo: string
     nowInMinutes: number
+    history: string[]
+    searchResults: SearchResult[]
+    formValues: Record<string, string>
   }
 }
 

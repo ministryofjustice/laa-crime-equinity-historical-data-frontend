@@ -2,6 +2,7 @@ import type { Request, RequestHandler, Response } from 'express'
 import { Crm4Response } from '@crm4'
 import CrmApiService from '../../services/crmApiService'
 import CrmDisplayService from '../../services/crmDisplayService'
+import manageBackLink from '../../utils/crmBackLink'
 
 export default class Crm4Controller {
   constructor(
@@ -10,18 +11,23 @@ export default class Crm4Controller {
   ) {}
 
   show(): RequestHandler {
-    return async (req: Request, res: Response): Promise<void> => {
+    return async (req: Request, res: Response) => {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm4Response = await this.crm4Service.getCrm(usn)
       const navigation = this.crmDisplayService.getCrmNavigation('crm4', usn, sectionId, crm4Response)
       const section = this.crmDisplayService.getCrmSection('crm4', sectionId, crm4Response)
+
+      const currentUrl = `/crm4/${usn}/${sectionId || 'general-information'}`
+      const backUrl = manageBackLink(req, currentUrl)
+
       res.render('pages/crmDetails', {
         title: 'Application for Prior Authority to Incur Disbursements in Criminal Cases',
         navigationItems: navigation,
         usn,
         crmType: 'CRM 4',
         section,
+        backUrl,
       })
     }
   }
