@@ -123,37 +123,39 @@ describe('routes', () => {
   describe('GET /crm4', () => {
     it('should render crm4 page', () => {
       const crm4Response: Crm4Response = {
-        greaterValue: true,
-        postMortemExamination: 'No',
-        ExpenditureDetails: {
-          Details: {
-            expenditureType: 'a Psychiatrist',
-            priorAuthority: 'No',
-            expertName: 'tyjtjtjt',
-            companyName: '',
-            statusExpert: '',
-            postCodeExpert: 'e1',
-          },
-          Preparation: {
-            hours: '4',
-            hourlyRate: 50,
-            total: 200,
-          },
-          AdditionalExpenditure: [
-            {
-              description: 'some description',
-              justification: 'required',
-              quantity: 0,
+        formDetails: {
+          greaterValue: true,
+          postMortemExamination: 'No',
+          ExpenditureDetails: {
+            Details: {
+              expenditureType: 'a Psychiatrist',
+              priorAuthority: 'No',
+              expertName: 'tyjtjtjt',
+              companyName: '',
+              statusExpert: '',
+              postCodeExpert: 'e1',
+            },
+            Preparation: {
+              hours: '4',
+              hourlyRate: 50,
+              total: 200,
+            },
+            AdditionalExpenditure: [
+              {
+                description: 'some description',
+                justification: 'required',
+                quantity: 0,
+                rate: 0,
+                total: 0,
+              },
+            ],
+            Travel: {
+              hours: '0',
               rate: 0,
               total: 0,
             },
-          ],
-          Travel: {
-            hours: '0',
-            rate: 0,
-            total: 0,
+            Authority: 200.0,
           },
-          Authority: 200.0,
         },
       }
       mockCrm4Service.getCrm.mockResolvedValue(crm4Response)
@@ -170,25 +172,27 @@ describe('routes', () => {
   describe('GET /crm5', () => {
     it('should render crm5 page', () => {
       const crm5Response: Crm5Response = {
-        usn: 2345678,
-        hasPreviousApplication: 'No',
-        previousApplicationRef: '',
-        appealedPrevDecision: 'No',
-        appealedPrevDecisionDetails: '',
-        urgent: 'Yes',
-        urgencyReason: 'Urgent',
-        Firm: {
-          firmAddress: '1 Some Lane',
-          firmName: 'ABC Firm',
-          firmPhone: '123456789',
-          firmSupplierNo: '1234AB',
-          firmContactName: 'Some Firm',
-          firmSolicitorName: 'Some Solicitor',
-          firmSolicitorRef: 'Ref1',
+        formDetails: {
+          usn: 2345678,
+          hasPreviousApplication: 'No',
+          previousApplicationRef: '',
+          appealedPrevDecision: 'No',
+          appealedPrevDecisionDetails: '',
+          urgent: 'Yes',
+          urgencyReason: 'Urgent',
+          Firm: {
+            firmAddress: '1 Some Lane',
+            firmName: 'ABC Firm',
+            firmPhone: '123456789',
+            firmSupplierNo: '1234AB',
+            firmContactName: 'Some Firm',
+            firmSolicitorName: 'Some Solicitor',
+            firmSolicitorRef: 'Ref1',
+          },
+          StatementOfCase: 'Statement Of Case',
+          DetailsOfWorkCompleted: 'Some Details of Work Completed',
+          DetailsOfApplication: 'Some Details of Application',
         },
-        StatementOfCase: 'Statement Of Case',
-        DetailsOfWorkCompleted: 'Some Details of Work Completed',
-        DetailsOfApplication: 'Some Details of Application',
       }
       mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
       mockCrmDisplayService.getCrmNavigation.mockReturnValue({

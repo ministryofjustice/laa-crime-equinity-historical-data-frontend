@@ -4,33 +4,35 @@ import CrmDisplayService from './crmDisplayService'
 
 describe('CRM Display Service', () => {
   const crm5Response: Crm5Response = {
-    usn: 1234567,
-    hasPreviousApplication: 'Yes',
-    previousApplicationRef: '',
-    appealedPrevDecision: 'No',
-    appealedPrevDecisionDetails: '',
-    urgent: 'Yes',
-    urgencyReason: 'Urgent',
-    Firm: {
-      firmAddress: '1 Some Lane',
-      firmName: 'ABC Firm',
-      firmPhone: '123456789',
-      firmSupplierNo: '1234AB',
-      firmContactName: 'Some Firm',
-      firmSolicitorName: 'Some Solicitor',
-      firmSolicitorRef: 'Ref1',
+    formDetails: {
+      usn: 1234567,
+      hasPreviousApplication: 'Yes',
+      previousApplicationRef: '',
+      appealedPrevDecision: 'No',
+      appealedPrevDecisionDetails: '',
+      urgent: 'Yes',
+      urgencyReason: 'Urgent',
+      Firm: {
+        firmAddress: '1 Some Lane',
+        firmName: 'ABC Firm',
+        firmPhone: '123456789',
+        firmSupplierNo: '1234AB',
+        firmContactName: 'Some Firm',
+        firmSolicitorName: 'Some Solicitor',
+        firmSolicitorRef: 'Ref1',
+      },
+      CapitalDetails: {
+        hasIncomeSupport: 'Yes',
+        isUnder18: 'No',
+        numOfDependants: 2,
+        clientSavings: 60000,
+        partnerSavings: 40000,
+        totalSavings: 100000,
+      },
+      StatementOfCase: 'Statement Of Case',
+      DetailsOfWorkCompleted: 'Some Details of Work Completed',
+      DetailsOfApplication: 'Some Details of Application',
     },
-    CapitalDetails: {
-      hasIncomeSupport: 'Yes',
-      isUnder18: 'No',
-      numOfDependants: 2,
-      clientSavings: 60000,
-      partnerSavings: 40000,
-      totalSavings: 100000,
-    },
-    StatementOfCase: 'Statement Of Case',
-    DetailsOfWorkCompleted: 'Some Details of Work Completed',
-    DetailsOfApplication: 'Some Details of Application',
   }
 
   const crmDisplayService = new CrmDisplayService()
@@ -92,9 +94,12 @@ describe('CRM Display Service', () => {
 
     it('should return crm navigation for hasPreviousApplication=No', () => {
       const customResponse: Crm5Response = {
-        ...crm5Response,
-        hasPreviousApplication: 'No',
+        formDetails: {
+          ...crm5Response.formDetails,
+          hasPreviousApplication: 'No',
+        },
       }
+
       const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '', customResponse)
 
       expect(result).toEqual({
@@ -117,17 +122,20 @@ describe('CRM Display Service', () => {
 
     it('should return crm navigation for CaseDetails.cwCriminalProceeding=true', () => {
       const customResponse: Crm5Response = {
-        ...crm5Response,
-        hasPreviousApplication: 'No',
-        CaseDetails: {
-          levelOfWork: 'Advocacy',
-          cwCriminalProceeding: true,
-          cwCriminalInvestigation: false,
-          cwCcrc: false,
-          cwAppealsReview: false,
-          cwPrisonLaw: true,
+        formDetails: {
+          ...crm5Response.formDetails,
+          hasPreviousApplication: 'No',
+          CaseDetails: {
+            levelOfWork: 'Advocacy',
+            cwCriminalProceeding: true,
+            cwCriminalInvestigation: false,
+            cwCcrc: false,
+            cwAppealsReview: false,
+            cwPrisonLaw: true,
+          },
         },
       }
+
       const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '', customResponse)
 
       expect(result).toEqual({
@@ -150,16 +158,19 @@ describe('CRM Display Service', () => {
 
     it('should return crm navigation for CaseDetails.levelOfWork=Advice', () => {
       const customResponse: Crm5Response = {
-        ...crm5Response,
-        CaseDetails: {
-          levelOfWork: 'Advice',
-          cwCriminalProceeding: false,
-          cwCriminalInvestigation: false,
-          cwCcrc: false,
-          cwAppealsReview: false,
-          cwPrisonLaw: true,
+        formDetails: {
+          ...crm5Response.formDetails,
+          CaseDetails: {
+            levelOfWork: 'Advice',
+            cwCriminalProceeding: false,
+            cwCriminalInvestigation: false,
+            cwCcrc: false,
+            cwAppealsReview: false,
+            cwPrisonLaw: true,
+          },
         },
       }
+
       const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '', customResponse)
 
       expect(result).toEqual({
@@ -180,16 +191,19 @@ describe('CRM Display Service', () => {
 
     it('should return crm navigation for CaseDetails.levelOfWork=Advocacy', () => {
       const customResponse: Crm5Response = {
-        ...crm5Response,
-        CaseDetails: {
-          levelOfWork: 'Advocacy',
-          cwCriminalProceeding: false,
-          cwCriminalInvestigation: false,
-          cwCcrc: false,
-          cwAppealsReview: false,
-          cwPrisonLaw: true,
+        formDetails: {
+          ...crm5Response.formDetails,
+          CaseDetails: {
+            levelOfWork: 'Advocacy',
+            cwCriminalProceeding: false,
+            cwCriminalInvestigation: false,
+            cwCcrc: false,
+            cwAppealsReview: false,
+            cwPrisonLaw: true,
+          },
         },
       }
+
       const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '', customResponse)
 
       expect(result).toEqual({
@@ -243,24 +257,27 @@ describe('CRM Display Service', () => {
 
     it('should handle empty fields', () => {
       const customResponse: Crm5Response = {
-        ...crm5Response,
-        CaseDetails: {
-          levelOfWork: 'Advice',
-          cwCriminalProceeding: false,
-          cwCriminalInvestigation: false,
-          cwCcrc: false,
-          cwAppealsReview: false,
-          cwPrisonLaw: true,
-        },
-        AdviceAssistance: {
-          transferFromSolicitor: '',
-          adviceCriteria: '',
-          laaAdviceAssistance: {
-            providedAdvice: '',
-            notes: '',
+        formDetails: {
+          ...crm5Response.formDetails,
+          CaseDetails: {
+            levelOfWork: 'Advice',
+            cwCriminalProceeding: false,
+            cwCriminalInvestigation: false,
+            cwCcrc: false,
+            cwAppealsReview: false,
+            cwPrisonLaw: true,
+          },
+          AdviceAssistance: {
+            transferFromSolicitor: '',
+            adviceCriteria: '',
+            laaAdviceAssistance: {
+              providedAdvice: '',
+              notes: '',
+            },
           },
         },
       }
+
       const result = crmDisplayService.getCrmSection('crm5', 'advice-and-assistance', customResponse)
 
       expect(result).toEqual({
@@ -289,9 +306,12 @@ describe('CRM Display Service', () => {
 
     it('should return crm section if showWhen condition met', () => {
       const customResponse: Crm5Response = {
-        ...crm5Response,
-        hasPreviousApplication: 'No',
+        formDetails: {
+          ...crm5Response.formDetails,
+          hasPreviousApplication: 'No',
+        },
       }
+
       const result = crmDisplayService.getCrmSection('crm5', 'capital-details', customResponse)
 
       expect(result).toEqual({
@@ -351,16 +371,19 @@ describe('CRM Display Service', () => {
 
     it('should return first section if hideWhen condition met', () => {
       const customResponse: Crm5Response = {
-        ...crm5Response,
-        CaseDetails: {
-          levelOfWork: 'Advocacy',
-          cwCriminalProceeding: true,
-          cwCriminalInvestigation: false,
-          cwCcrc: false,
-          cwAppealsReview: false,
-          cwPrisonLaw: true,
+        formDetails: {
+          ...crm5Response.formDetails,
+          CaseDetails: {
+            levelOfWork: 'Advocacy',
+            cwCriminalProceeding: true,
+            cwCriminalInvestigation: false,
+            cwCcrc: false,
+            cwAppealsReview: false,
+            cwPrisonLaw: true,
+          },
         },
       }
+
       const result = crmDisplayService.getCrmSection('crm5', 'capital-details', customResponse)
 
       expect(result).toEqual(generalInformationSection)
