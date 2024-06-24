@@ -35,9 +35,8 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpStaticResources())
   nunjucksSetup(app, services.applicationInfo)
   app.use(setUpCsrf())
-
+  // app.use(pdfRenderer(new GotenbergClient(config.apis.gotenberg.apiUrl)))
   app.use('/', routes(controllers(services)))
-
   app.use((req, res, next) => next(createError(404, 'Not found')))
   app.use(errorHandler(process.env.NODE_ENV === 'production'))
 
