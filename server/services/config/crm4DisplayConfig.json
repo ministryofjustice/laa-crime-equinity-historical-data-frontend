@@ -35,8 +35,12 @@
               "apiField": "CaseDetails.Firm.firmName"
             },
             {
-              "label": "Address / DX",
+              "label": "Address",
               "apiField": "CaseDetails.Firm.firmAddress"
+            },
+            {
+              "label": "DX",
+              "apiField": "CaseDetails.Firm.firmDx"
             },
             {
               "label": "Provider Number",
@@ -116,8 +120,20 @@
               "apiField": "CaseDetails.ProceedingDetails.isClientDetained"
             },
             {
+              "label": "If Yes, please advise where",
+              "apiField": "CaseDetails.ProceedingDetails.detainedDetails"
+            },
+            {
               "label": "Court Type",
               "apiField": "CaseDetails.ProceedingDetails.courtType"
+            },
+            {
+              "label": "Have you accessed the Psychiatric Liaison Service provided within the Central Criminal Court?",
+              "apiField": "CaseDetails.ProceedingDetails.psychiatricLiaison"
+            },
+            {
+              "label": "If no, please provide a reason for not doing so",
+              "apiField": "CaseDetails.ProceedingDetails.psychiatricDetails"
             },
             {
               "label": "Main Offence",
@@ -187,7 +203,8 @@
           "fields": [
             {
               "label": "Preparation Hours",
-              "apiField": "ExpenditureDetails.Preparation.hours"
+              "apiField": "ExpenditureDetails.Preparation.hours",
+              "type": "time"
             },
             {
               "label": "Hourly Rate",
@@ -213,7 +230,8 @@
           "fields": [
             {
               "label": "No. of Hours",
-              "apiField": "ExpenditureDetails.Travel.hours"
+              "apiField": "ExpenditureDetails.Travel.hours",
+              "type": "time"
             },
             {
               "label": "Hourly Rate",
