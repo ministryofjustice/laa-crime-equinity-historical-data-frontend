@@ -107,25 +107,27 @@ describe('CRM5 Controller', () => {
 
   it('should set the back URL correctly when navigating back', async () => {
     const crm5Response: Crm5Response = {
-      usn: 1234567,
-      hasPreviousApplication: 'No',
-      previousApplicationRef: '',
-      appealedPrevDecision: 'No',
-      appealedPrevDecisionDetails: '',
-      urgent: 'Yes',
-      urgencyReason: 'Urgent',
-      Firm: {
-        firmAddress: '1 Some Lane',
-        firmName: 'ABC Firm',
-        firmPhone: '123456789',
-        firmSupplierNo: '1234AB',
-        firmContactName: 'Some Firm',
-        firmSolicitorName: 'Some Solicitor',
-        firmSolicitorRef: 'Ref1',
+      formDetails: {
+        usn: 1234567,
+        hasPreviousApplication: 'No',
+        previousApplicationRef: '',
+        appealedPrevDecision: 'No',
+        appealedPrevDecisionDetails: '',
+        urgent: 'Yes',
+        urgencyReason: 'Urgent',
+        Firm: {
+          firmAddress: '1 Some Lane',
+          firmName: 'ABC Firm',
+          firmPhone: '123456789',
+          firmSupplierNo: '1234AB',
+          firmContactName: 'Some Firm',
+          firmSolicitorName: 'Some Solicitor',
+          firmSolicitorRef: 'Ref1',
+        },
+        StatementOfCase: 'Statement Of Case',
+        DetailsOfWorkCompleted: 'Some Details of Work Completed',
+        DetailsOfApplication: 'Some Details of Application',
       },
-      StatementOfCase: 'Statement Of Case',
-      DetailsOfWorkCompleted: 'Some Details of Work Completed',
-      DetailsOfApplication: 'Some Details of Application',
     }
 
     mockCrmApiService.getCrm.mockResolvedValue(crm5Response)
