@@ -18,10 +18,12 @@
             { label: "Name Of Expert", value: quote.expertName },
             { label: "Contact Phone", value: quote.contactPhone },
             { label: "Cost Basis", value: quote.costBasis },
+            { label: "Preparation Hours", value: quote.preparationHours, type: "time" },
+            { label: "Preparation Hourly Rate", value: quote.hourlyRate, type: "currency" },
             { label: "Additional Items Description", value: quote.additionalItemDesc },
-            { label: "Additional Items Amount", value: quote.additionalItemAmount },
-            { label: "Travel Hours", value: quote.travelHours, type: "currency"},
-            { label: "Travel Hourly Rate", value: quote.travelHourlyRate },
+            { label: "Additional Items Amount", value: quote.additionalItemAmount,  type: "currency" },
+            { label: "Travel Hours", value: quote.travelHours, type: "time" },
+            { label: "Travel Hourly Rate", value: quote.travelHourlyRate, type: "currency"  },
             { label: "Total", value: quote.quoteTotal, type: "currency" }
         ] %}
         {% set title = 'Quote ' + loop.index %}
