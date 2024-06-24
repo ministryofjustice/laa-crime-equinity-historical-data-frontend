@@ -203,7 +203,8 @@
           "fields": [
             {
               "label": "Preparation Hours",
-              "apiField": "ExpenditureDetails.Preparation.hours"
+              "apiField": "ExpenditureDetails.Preparation.hours",
+              "type": "time"
             },
             {
               "label": "Hourly Rate",
@@ -229,7 +230,8 @@
           "fields": [
             {
               "label": "No. of Hours",
-              "apiField": "ExpenditureDetails.Travel.hours"
+              "apiField": "ExpenditureDetails.Travel.hours",
+              "type": "time"
             },
             {
               "label": "Hourly Rate",
