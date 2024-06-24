@@ -27,24 +27,26 @@ describe('CRM API Service', () => {
 
 const successResponse = (): Crm5Response => {
   return {
-    usn: 1234567,
-    hasPreviousApplication: 'No',
-    previousApplicationRef: '',
-    appealedPrevDecision: 'No',
-    appealedPrevDecisionDetails: '',
-    urgent: 'Yes',
-    urgencyReason: 'Urgent',
-    Firm: {
-      firmAddress: '1 Some Lane',
-      firmName: 'ABC Firm',
-      firmPhone: '123456789',
-      firmSupplierNo: '1234AB',
-      firmContactName: 'Some Firm',
-      firmSolicitorName: 'Some Solicitor',
-      firmSolicitorRef: 'Ref1',
+    formDetails: {
+      usn: 1234567,
+      hasPreviousApplication: 'No',
+      previousApplicationRef: '',
+      appealedPrevDecision: 'No',
+      appealedPrevDecisionDetails: '',
+      urgent: 'Yes',
+      urgencyReason: 'Urgent',
+      Firm: {
+        firmAddress: '1 Some Lane',
+        firmName: 'ABC Firm',
+        firmPhone: '123456789',
+        firmSupplierNo: '1234AB',
+        firmContactName: 'Some Firm',
+        firmSolicitorName: 'Some Solicitor',
+        firmSolicitorRef: 'Ref1',
+      },
+      StatementOfCase: 'Statement Of Case',
+      DetailsOfWorkCompleted: 'Some Details of Work Completed',
+      DetailsOfApplication: 'Some Details of Application',
     },
-    StatementOfCase: 'Statement Of Case',
-    DetailsOfWorkCompleted: 'Some Details of Work Completed',
-    DetailsOfApplication: 'Some Details of Application',
   }
 }
