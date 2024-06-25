@@ -459,7 +459,7 @@
             },
             {
               "label": "Waiting Costs Net",
-              "apiField": "claimTotals.total.profit.net"
+              "apiField": "claimTotals.total.waiting.net"
             },
             {
               "label": "Waiting Costs VAT rate",
