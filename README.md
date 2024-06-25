@@ -20,6 +20,7 @@ The easiest way to run the app is to use docker compose to create the service an
 ### Dependencies
 The app will requires (soon):
 * redis - session store and token caching
+* gotenberg - PDF generator
 
 ### Running the app for development
 
