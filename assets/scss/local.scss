@@ -1,3 +1,23 @@
+@import "node_modules/govuk-frontend/dist/govuk/settings/colours-applied";
+
 .govuk-main-wrapper {
   min-height: 600px;
+}
+
+.govuk-brand-colour {
+  color: $govuk-brand-colour;
+}
+
+.govuk-vertical-align-middle {
+  vertical-align: middle;
+}
+
+.govuk-min-height {
+  min-height: 1em;
+}
+
+@media (min-width: 48em) {
+  .govuk-custom-no-padding-left-desktop {
+    @include govuk-responsive-padding(0, "left");
+  }
 }
