@@ -1,0 +1,38 @@
+.govuk-table-responsive {
+  overflow-x: auto;
+}
+
+@media (max-width: 40.0625em) {
+  .govuk-table thead {
+    display: none;
+  }
+
+  .govuk-table__row {
+    display: block;
+    margin-bottom: 1em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.5em;
+  }
+
+  .govuk-table__cell {
+    display: block;
+    text-align: left;
+    padding: 0.5em 0;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 0.5em;
+  }
+
+  .govuk-table__cell::before {
+    content: attr(data-header);
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    text-align: left;
+  }
+
+  .govuk-table__cell:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+}
