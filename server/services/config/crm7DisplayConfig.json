@@ -124,6 +124,10 @@
             {
               "label": "Travel Cost",
               "apiField": "summary.officeUse.travelCost"
+            },
+            {
+              "label": "Waiting Cost",
+              "apiField": "summary.officeUse.waitingCost"
             }
           ]
         }
@@ -138,7 +142,7 @@
           "fields": [
             {
               "label": "Name of Firm",
-              "apiField": "solicitorDetails.firm"
+              "apiField": "solicitorDetails.firmName"
             },
             {
               "label": "Address / DX",
@@ -497,6 +501,9 @@
         {
           "title": "Solicitor Certification",
           "fields": [
+            {
+              "subHeading": "I certify, on behalf of the payee, that the information provided is correct. This work has not been and will not be the subject of any other claim for remuneration from the Criminal Legal Aid."
+            },
             {
               "label": "Name",
               "apiField": "caseInformation.solicitorCertification.name"
