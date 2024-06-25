@@ -1,34 +1,34 @@
 {% macro timeAndCost(field, isFirstRow = false, isTotalRow = false) %}
     {% set timeAndCost = field.value %}
     {% if isFirstRow %}
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key"></dt>
+        <div class="govuk-summary-list__row govuk-summary-list__row--cost">
+            <dt class="govuk-summary-list__key govuk-vertical-align-middle"></dt>
             <dd class="govuk-summary-list__value ">
-                <div class="govuk-grid-row custom-cost-header">
+                <div class="govuk-grid-row">
                     <div class="govuk-grid-column-one-half">
                         <div class="govuk-body"></div>
                     </div>
                     <div class="govuk-grid-column-one-half">
-                        <div><h3>Cost</h3></div>
+                        <div><strong>Cost</strong></div>
                     </div>
                 </div>
             </dd>
         </div>
     {% endif %}
 
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">{{ field.label }}</dt>
+    <div class="govuk-summary-list__row ">
+        <dt class="govuk-summary-list__key govuk-vertical-align-middle">{{ field.label }}</dt>
         <dd class="govuk-summary-list__value">
-            <div class="govuk-grid-row">
+            <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
-                    <div class="govuk-body govuk-!-padding-top-2 govuk-!-margin-bottom-0">
+                    <div class="govuk-body govuk-min-height  govuk-!-margin-bottom-0">
                         {% if not isTotalRow %}
                             {{ timeAndCost.time | formatTime }}
                         {% endif %}
                     </div>
                 </div>
                 <div class="govuk-grid-column-one-half">
-                    <div class="govuk-body govuk-!-padding-top-2 govuk-!-margin-bottom-0">{{ timeAndCost.cost | formatCurrency }}</div>
+                    <div class="govuk-body govuk-!-margin-bottom-0">{{ timeAndCost.cost | formatCurrency }}</div>
                 </div>
             </div>
         </dd>

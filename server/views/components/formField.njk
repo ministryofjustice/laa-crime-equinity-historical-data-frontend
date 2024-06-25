@@ -1,16 +1,18 @@
 {% macro formField(field, isCostsSection = false) %}
     {% if isCostsSection %}
         <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">{{ field.label }}</dt>
+            <dt class="govuk-summary-list__key govuk-brand-colour govuk-vertical-align-middle">{{ field.label }}</dt>
             <dd class="govuk-summary-list__value">
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-one-half">
-                        <div class="govuk-body govuk-!-padding-top-2 govuk-!-margin-bottom-0">
+                        <div class="govuk-body govuk-min-height govuk-!-static-margin-bottom-0">
                         </div>
                     </div>
                     <div class="govuk-grid-column-one-half">
-                        <div class="govuk-body govuk-!-padding-top-2 govuk-!-margin-bottom-0">
+                        <div class="govuk-body govuk-!-static-margin-bottom-0 govuk-brand-colour ">
+                            <strong>
                             {{ formFieldByType(field) }}
+                            </strong>
                         </div>
                     </div>
                 </div>
@@ -18,7 +20,7 @@
         </div>
     {% else %}
         <div class="govuk-summary-list__row govuk-grid-row">
-            <div class="govuk-grid-column-one-half">
+            <div class="govuk-grid-column-one-half govuk-custom-no-padding-left-desktop">
                 <dt class="govuk-summary-list__key">{{ field.label }}</dt>
             </div>
             <div class="govuk-grid-column-one-half">

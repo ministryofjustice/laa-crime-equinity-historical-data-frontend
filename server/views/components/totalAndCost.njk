@@ -2,7 +2,7 @@
     {% set totalAndCost = field.value %}
     {% if isFirstRow %}
         <div class="govuk-summary-list__row custom-cost-header">
-            <dt class="govuk-summary-list__key"></dt>
+            <dt class="govuk-summary-list__key govuk-vertical-align-middle"></dt>
             <dd class="govuk-summary-list__value">
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-one-half">
@@ -17,18 +17,18 @@
     {% endif %}
 
     <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">{{ field.label }}</dt>
+        <dt class="govuk-summary-list__key govuk-vertical-align-middle">{{ field.label }}</dt>
         <dd class="govuk-summary-list__value">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-half">
-                    <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0">
+                    <div class="govuk-body govuk-min-height govuk-!-static-margin-bottom-0">
                         {% if not isTotalRow %}
                             {{ totalAndCost.total }}
                         {% endif %}
                     </div>
                 </div>
                 <div class="govuk-grid-column-one-half">
-                    <div class="govuk-body govuk-!-padding-top-2 govuk-!-static-margin-bottom-0">{{ totalAndCost.cost | formatCurrency }}</div>
+                    <div class="govuk-body govuk-!-static-margin-bottom-0">{{ totalAndCost.cost | formatCurrency }}</div>
                 </div>
             </div>
         </dd>
