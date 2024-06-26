@@ -278,16 +278,10 @@
       "subsections": [
         {
           "title": "Case Disposal",
-          "fields": [
-            {
-              "label": "Please select the category your claim falls within",
-              "apiField": "caseDisposal.category"
-            }
-          ]
-        },
-        {
-          "title": "Category 1",
-          "fields": []
+          "customDisplay": {
+            "name": "crm7CaseDisposal",
+            "apiField": "caseDisposal"
+          }
         }
       ]
     },
