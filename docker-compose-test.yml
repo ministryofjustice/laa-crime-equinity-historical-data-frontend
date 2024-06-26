@@ -13,7 +13,7 @@ services:
   gotenberg:
     image: gotenberg/gotenberg:7.7.0
     networks:
-      - hmpps_int
+      - laa_int
     container_name: gotenberg_int
     ports:
       - "3001:3001"
