@@ -1,0 +1,14 @@
+{% from "../formField.njk" import formField %}
+{% from "../formSubsection.njk" import formSubsection %}
+
+{% macro crmEvidence(data) %}
+
+    {% set fields = [] %}
+
+    {% for item in data %}
+        {% set list = fields.push({ label: item.name, value: "view", type: 'link' }) %}
+    {% endfor %}
+
+    {{ formSubsection('Evidence', fields) }}
+
+{% endmacro %}x

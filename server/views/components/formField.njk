@@ -39,6 +39,8 @@
         {{ field.value | formatDate }}
         {% elif field.type === 'time' %}
         {{ field.value | formatTime }}
+        {% elif field.type === 'link' %}
+        <a href="#" class="govuk-link">{{ field.value }}</a>
     {% else %}
         {{ field.value }}
     {% endif %}

@@ -51,6 +51,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+          { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
         ],
         label: 'Side navigation',
       })
@@ -69,6 +70,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+          { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
         ],
         label: 'Side navigation',
       })
@@ -87,6 +89,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
           { text: 'Case History', href: '/crm5/1234567/case-history', active: false },
           { text: "Solicitor's Certification", href: '/crm5/1234567/solicitors-certification', active: false },
+          { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
         ],
         label: 'Side navigation',
       })
@@ -115,6 +118,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+          { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
         ],
         label: 'Side navigation',
       })
@@ -151,6 +155,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+          { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
         ],
         label: 'Side navigation',
       })
@@ -184,6 +189,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+          { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
         ],
         label: 'Side navigation',
       })
@@ -218,6 +224,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+          { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
         ],
         label: 'Side navigation',
       })
