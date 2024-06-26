@@ -16,16 +16,16 @@ services:
       - laa_int
     container_name: gotenberg_int
     ports:
-      - "3001:3001"
+      - "3100:3100"
     command:
       - "gotenberg"
-      - "--api-port=3001"
+      - "--api-port=3100"
       - "--chromium-ignore-certificate-errors"
       - "--api-timeout=30s"
       - "--pdfengines-engines=pdftk"
       - "--uno-listener-restart-threshold=0" #disables uno listener
     restart: always
     healthcheck:
-      test: [ 'CMD', 'curl', '-f', 'http://localhost:3001/health' ]
+      test: [ 'CMD', 'curl', '-f', 'http://localhost:3100/health' ]
 networks:
   laa_int:
