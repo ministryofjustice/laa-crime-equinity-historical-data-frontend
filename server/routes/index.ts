@@ -9,6 +9,7 @@ export default function routes({
   crm4Controller,
   crm5Controller,
   crm7Controller,
+  downloadEvidenceController,
 }: Controllers): Router {
   const router = Router()
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -32,5 +33,6 @@ export default function routes({
     res.render('pages/generateReport')
   })
 
+  get('/download-evidence', downloadEvidenceController.download())
   return router
 }

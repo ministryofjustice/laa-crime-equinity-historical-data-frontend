@@ -35,12 +35,12 @@
 {% macro formFieldByType(field) %}
     {% if field.type === 'currency' %}
         {{ field.value | formatCurrency }}
-        {% elif field.type === 'date' %}
+    {% elif field.type === 'date' %}
         {{ field.value | formatDate }}
-        {% elif field.type === 'time' %}
+    {% elif field.type === 'time' %}
         {{ field.value | formatTime }}
-        {% elif field.type === 'link' %}
-        <a href="#" class="govuk-link">{{ field.value }}</a>
+    {% elif field.type === 'link' %}
+        <a href="{{ field.value.href }}?fileName=3910.att" class="govuk-link">{{ field.value.text }}</a>
     {% else %}
         {{ field.value }}
     {% endif %}
