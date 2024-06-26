@@ -15,11 +15,11 @@
 
     {% for item in data %}
         {%- set tableRow = [
-            { text: item.description | safe },
-            { text: item.justification | safe },
-            { text: item.quantity | safe },
-            { text: item.rate | safe | formatCurrency },
-            { text: item.total | safe | formatCurrency }
+            { text: item.description | safe, attributes: { 'data-header': 'Description' } },
+            { text: item.justification | safe, attributes: { 'data-header': 'Justification' } },
+            { text: item.quantity | safe, attributes: { 'data-header': 'Quantity' } },
+            { text: item.rate | safe | formatCurrency, attributes: { 'data-header': 'Rate' } },
+            { text: item.total | safe | formatCurrency, attributes: { 'data-header': 'Total' } }
         ] -%}
         {% set list = tableData.rows.push(tableRow) %}
     {%  endfor %}
