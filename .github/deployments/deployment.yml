@@ -43,3 +43,14 @@ spec:
               secretKeyRef:
                 name: appsecret
                 key: EQ_SEARCH_API_URL
+          - name: EQ_API_URL
+            valueFrom:
+              secretKeyRef:
+                name: appsecret
+                key: EQ_API_URL 
+          - name: SDS_API_URL
+            valueFrom:
+              secretKeyRef:
+                name: appsecret
+                key: SDS_API_URL
+          
