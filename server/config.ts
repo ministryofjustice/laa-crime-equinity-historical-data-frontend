@@ -36,31 +36,31 @@ export interface ApiConfig {
 }
 
 export default {
-  buildNumber: get('BUILD_NUMBER', '1_0_0'),
-  productId: get('PRODUCT_ID', 'UNASSIGNED'),
-  gitRef: get('GIT_REF', 'xxxxxxxxxxxxxxxxxxx'),
-  branchName: get('GIT_BRANCH', 'main'),
+  buildNumber: get('BUILD_NUMBER', '1_0_0', { requireInProduction: false }),
+  productId: get('PRODUCT_ID', 'UNASSIGNED', { requireInProduction: false }),
+  gitRef: get('GIT_REF', 'xxxxxxxxxxxxxxxxxxx', { requireInProduction: false }),
+  branchName: get('GIT_BRANCH', 'main', { requireInProduction: false }),
   production,
   https: production,
   staticResourceCacheDuration: '1h',
   redis: {
-    enabled: get('REDIS_ENABLED', 'false'),
-    host: get('REDIS_HOST', 'localhost'),
+    enabled: get('REDIS_ENABLED', 'false', { requireInProduction: false }),
+    host: get('REDIS_HOST', 'localhost', { requireInProduction: false }),
     port: parseInt(process.env.REDIS_PORT, 10) || 6379,
     password: process.env.REDIS_AUTH_TOKEN,
     tls_enabled: get('REDIS_TLS_ENABLED', 'false'),
   },
   apis: {
     eqApi: {
-      url: get('EQ_SEARCH_API_URL', 'http://localhost:8089', requiredInProduction),
+      url: get('EQ_SEARCH_API_URL', 'http://localhost:8089', { requireInProduction: false }),
       timeout: {
         response: Number(get('EQ_API_TIMEOUT_RESPONSE', 10000)),
         deadline: Number(get('EQ_API_TIMEOUT_DEADLINE', 10000)),
       },
       agent: new AgentConfig(Number(get('EQ_API_TIMEOUT_RESPONSE', 10000))),
       headers: {
-        clientId: get('EQ_API_CLIENT_ID', 'xxx', requiredInProduction),
-        secret: get('EQ_API_SECRET', 'xxx', requiredInProduction),
+        clientId: get('EQ_API_CLIENT_ID', 'xxx', { requireInProduction: false }),
+        secret: get('EQ_API_SECRET', 'xxx', { requireInProduction: false }),
       },
     },
     sdsApi: {
@@ -73,10 +73,10 @@ export default {
     },
   },
   session: {
-    secret: get('SESSION_SECRET', 'app-insecure-default-session'),
+    secret: get('SESSION_SECRET', 'app-insecure-default-session', { requireInProduction: false }),
     expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 120)),
   },
-  domain: get('INGRESS_URL', 'http://localhost:3000'),
+  domain: get('INGRESS_URL', 'http://localhost:3000', { requireInProduction: false }),
   // The fallback should be empty. It will become when all environments will be setup.
   environmentName: get('ENVIRONMENT_NAME', 'Local'),
 }

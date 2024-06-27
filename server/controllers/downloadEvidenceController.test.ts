@@ -17,7 +17,7 @@ describe('downloadEvidenceController', () => {
     mockDownloadEvidenceService = new DownloadEvidenceService(null) as jest.Mocked<DownloadEvidenceService>
   })
 
-  it('should download the request evidence file', async () => {
+  it('should download the requested evidence file', async () => {
     mockDownloadEvidenceService.getEvidenceFileUrl.mockResolvedValue('https://test.com/some-file.txt')
 
     const downloadEvidenceController = new DownloadEvidenceController(mockDownloadEvidenceService)
