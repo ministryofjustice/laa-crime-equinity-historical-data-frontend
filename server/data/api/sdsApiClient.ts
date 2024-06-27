@@ -1,6 +1,9 @@
 import RestClient from '../restClient'
 import config from '../../config'
-import { type SdsResponse } from '../../services/downloadEvidenceService'
+
+export type SdsResponse = {
+  fileURL: string
+}
 
 export default class SdsApiClient {
   private static restClient(token: string): RestClient {

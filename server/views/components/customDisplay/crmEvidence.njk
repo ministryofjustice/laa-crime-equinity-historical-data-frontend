@@ -6,7 +6,8 @@
     {% set fields = [] %}
 
     {% for item in data %}
-        {% set list = fields.push({ label: item.name, value: { href: "/download-evidence?fileName=README", text: "download" } , type: 'link' }) %}
+        {% set linkUrl = "/download-evidence?fileName=" + item.key %}
+        {% set list = fields.push({ label: item.name, value: { href: linkUrl, text: "download" } , type: 'link' }) %}
     {% endfor %}
 
     {{ formSubsection('Evidence', fields) }}

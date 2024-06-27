@@ -59,12 +59,12 @@ export default {
       },
       agent: new AgentConfig(Number(get('EQ_API_TIMEOUT_RESPONSE', 10000))),
       headers: {
-        clientId: get('EQ_API_CLIENT_ID', null, requiredInProduction),
-        secret: get('EQ_API_SECRET', null, requiredInProduction),
+        clientId: get('EQ_API_CLIENT_ID', 'xxx', requiredInProduction),
+        secret: get('EQ_API_SECRET', 'xxx', requiredInProduction),
       },
     },
     sdsApi: {
-      url: get('SDS_API_URL', null, requiredInProduction),
+      url: get('SDS_API_URL', 'http://localhost:9000', requiredInProduction),
       timeout: {
         response: Number(get('SDS_API_TIMEOUT_RESPONSE', 10000)),
         deadline: Number(get('SDS_API_TIMEOUT_DEADLINE', 10000)),
