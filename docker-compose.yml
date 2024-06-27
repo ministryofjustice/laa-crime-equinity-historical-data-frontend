@@ -21,6 +21,24 @@ services:
       - SESSION_SECRET=somesecretvalue
       - INGRESS_URL=http://localhost:3000
 
+  gotenberg:
+    image: gotenberg/gotenberg:7.7.0
+    networks:
+      - laa
+    container_name: gotenberg
+    ports:
+      - "3100:3100"
+    command:
+      - "gotenberg"
+      - "--api-port=3100"
+      - "--chromium-ignore-certificate-errors"
+      - "--api-timeout=30s"
+      - "--pdfengines-engines=pdftk"
+      - "--uno-listener-restart-threshold=0" #disables uno listener
+    restart: always
+    healthcheck:
+      test: [ 'CMD', 'curl', '-f', 'http://localhost:3100/health' ]
+
 networks:
   laa:
     

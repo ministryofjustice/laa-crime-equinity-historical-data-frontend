@@ -17,12 +17,13 @@ import {
 import { CrmResponse } from '@eqApi'
 import crm4DisplayConfig from './config/crm4DisplayConfig.json'
 import crm5DisplayConfig from './config/crm5DisplayConfig.json'
+import crm7DisplayConfig from './config/crm7DisplayConfig.json'
 import validateConfig from '../utils/crmDisplayConfigValidation'
 
 const configMap: Record<CrmType, CrmDisplayConfig> = {
   crm4: validateConfig(crm4DisplayConfig as CrmDisplayConfig, 'crm4'),
   crm5: validateConfig(crm5DisplayConfig as CrmDisplayConfig, 'crm5'),
-  crm7: null, // @TODO: EMP-355 full page display
+  crm7: validateConfig(crm7DisplayConfig as CrmDisplayConfig, 'crm7'),
 }
 
 export default class CrmDisplayService {

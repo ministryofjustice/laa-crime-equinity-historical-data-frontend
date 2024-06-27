@@ -1,0 +1,28 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formSubsection.njk" import formSubsection %}
+
+{% macro crm7CaseDisposal(data) %}
+
+    {# Render "Case Disposal" subsection #}
+    {% set fields = [
+        { label: "Please select the category your claim falls within", value: data.category}
+    ] %}
+    {{ formSubsection('Case Disposal', fields) }}
+
+    {% if data.category == 'Category 1' %}
+        {% set fieldValue = data.option.type1 %}
+    {% elif  data.category == 'Category 2' %}
+        {% set fieldValue = data.option.type2 %}
+    {% elif data.category == 'Category 3' %}
+        {% set fieldValue = data.option.type3 %}
+    {% else %}
+        {% set fieldValue = '' %}
+    {% endif %}
+
+    {# Render "Category" subsection #}
+    {% set fields = [
+        { label: "Please select relevant option", value: fieldValue}
+    ] %}
+    {{ formSubsection(data.category, fields) }}
+
+{% endmacro %}
