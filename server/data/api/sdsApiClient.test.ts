@@ -21,11 +21,11 @@ describe('SDS Api Client', () => {
     }
     fakeRestClient
       .get('/retrieve_file')
-      .query({ file_key: 'some-file' })
+      .query({ file_key: 'some-file.txt' })
       .matchHeader('authorization', 'Bearer no_auth')
       .reply(200, sdsResponse)
 
-    const result = await sdsApiClient.retrieveFile('some-file')
+    const result = await sdsApiClient.retrieveFile('some-file.txt')
 
     expect(result).toEqual({ fileURL: 'https://test.com/some-file.txt' })
   })
