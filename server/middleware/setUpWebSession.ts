@@ -7,8 +7,9 @@ import config from '../config'
 import logger from '../../logger'
 
 export default function setUpWebSession(): Router {
+  // @TODO: EMP-379 set up redis store
   let store: Store
-  if (config.redis.enabled) {
+  if (config.redis.enabled === 'true') {
     const client = createRedisClient()
     client.connect().catch((err: Error) => logger.error(`Error connecting to Redis`, err))
     store = new RedisStore({ client })

@@ -42,7 +42,7 @@ afterEach(() => {
   jest.resetAllMocks()
 })
 
-xdescribe('routes', () => {
+describe('routes', () => {
   describe('GET /', () => {
     it('should render index page', () => {
       return request(app)

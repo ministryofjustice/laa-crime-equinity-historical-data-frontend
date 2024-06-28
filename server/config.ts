@@ -43,6 +43,9 @@ export default {
   production,
   https: production,
   staticResourceCacheDuration: '1h',
+  sso: {
+    enabled: get('SSO_ENABLED', 'false'),
+  },
   redis: {
     enabled: get('REDIS_ENABLED', 'false'), // @TODO: EMP-379 set requiredInProduction
     host: get('REDIS_HOST', 'localhost'),

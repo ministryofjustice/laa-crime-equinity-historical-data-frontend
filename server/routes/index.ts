@@ -2,6 +2,7 @@ import { type RequestHandler, Router } from 'express'
 
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import { Controllers } from '../controllers'
+import config from '../config'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function routes({
@@ -12,6 +13,10 @@ export default function routes({
 }: Controllers): Router {
   // custom middleware to check auth state
   function isAuthenticated(req, res, next) {
+    if (config.sso.enabled === 'false') {
+      return next()
+    }
+
     if (!req.session.isAuthenticated) {
       return res.redirect('/auth') // redirect to sign-in route
     }
