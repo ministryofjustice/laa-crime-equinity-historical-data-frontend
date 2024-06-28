@@ -66,6 +66,14 @@ export default {
         secret: get('EQ_API_SECRET', 'xxx', requiredInProduction),
       },
     },
+    sdsApi: {
+      url: get('SDS_API_URL', 'http://localhost:9000', requiredInProduction),
+      timeout: {
+        response: Number(get('SDS_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('SDS_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('SDS_API_TIMEOUT_RESPONSE', 10000))),
+    },
   },
   session: {
     secret: get('SESSION_SECRET', 'app-insecure-default-session'),

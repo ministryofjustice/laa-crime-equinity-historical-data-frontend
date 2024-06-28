@@ -10,6 +10,7 @@ export default function routes({
   crm4Controller,
   crm5Controller,
   crm7Controller,
+  downloadEvidenceController,
 }: Controllers): Router {
   // custom middleware to check auth state
   function isAuthenticated(req, res, next) {
@@ -49,5 +50,6 @@ export default function routes({
     res.render('pages/generateReport')
   })
 
+  get('/download-evidence', downloadEvidenceController.download())
   return router
 }

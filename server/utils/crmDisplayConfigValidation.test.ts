@@ -2,6 +2,7 @@ import { CrmDisplayConfig } from '@crmDisplay'
 import validateConfig from './crmDisplayConfigValidation'
 import crm4DisplayConfig from '../services/config/crm4DisplayConfig.json'
 import crm5DisplayConfig from '../services/config/crm5DisplayConfig.json'
+import crm7DisplayConfig from '../services/config/crm7DisplayConfig.json'
 
 describe('CRM Display Config Validation', () => {
   it('should validate CRM4 config', () => {
@@ -14,6 +15,13 @@ describe('CRM Display Config Validation', () => {
   it('should validate CRM5 config', () => {
     const config = crm5DisplayConfig as CrmDisplayConfig
     const result = validateConfig(config, 'crm5')
+
+    expect(result).toEqual(config)
+  })
+
+  it('should validate CRM7 config', () => {
+    const config = crm7DisplayConfig as CrmDisplayConfig
+    const result = validateConfig(config, 'crm7')
 
     expect(result).toEqual(config)
   })
