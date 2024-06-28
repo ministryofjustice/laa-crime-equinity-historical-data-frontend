@@ -1,0 +1,15 @@
+{% from "../formField.njk" import formField %}
+{% from "../formSubsection.njk" import formSubsection %}
+
+{% macro crmEvidence(data) %}
+
+    {% set fields = [] %}
+
+    {% for item in data %}
+        {% set linkUrl = "/download-evidence?fileName=" + item.key %}
+        {% set list = fields.push({ label: item.name, value: { href: linkUrl, text: "download" } , type: 'link' }) %}
+    {% endfor %}
+
+    {{ formSubsection('Evidence', fields) }}
+
+{% endmacro %}

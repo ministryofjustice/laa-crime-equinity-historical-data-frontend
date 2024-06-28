@@ -123,8 +123,7 @@ export default class CrmDisplayService {
   }
 
   private getApiFieldValue<T extends CrmResponse>(crmResponse: T, apiFieldName: string): string {
-    const path = `formDetails.${apiFieldName}`
-    return _.get(crmResponse, path) || ''
+    return _.get(crmResponse, `formDetails.${apiFieldName}`) || _.get(crmResponse, apiFieldName) || ''
   }
 
   private showOrHideSection<T extends CrmResponse>(section: Section, crmResponse: T): boolean {

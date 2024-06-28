@@ -589,6 +589,19 @@
           ]
         }
       ]
+    },
+    {
+      "sectionId": "evidence",
+      "title": "Evidence",
+      "subsections": [
+        {
+          "title": "Evidence",
+          "customDisplay": {
+            "name": "crmEvidence",
+            "apiField": "evidenceFiles.files"
+          }
+        }
+      ]
     }
   ]
 }

@@ -9,8 +9,10 @@ import { Crm7Response } from '@crm7'
 import { EqApiHeader } from '@eqApi'
 import { initialiseAppInsights, buildAppInsightsClient } from '../utils/azureAppInsights'
 import applicationInfoSupplier from '../applicationInfo'
-import SearchApiClient from './api/searchApiClient'
 import CrmApiClient from './api/crmApiClient'
+import SdsApiClient from './api/sdsApiClient'
+import SearchApiClient from './api/searchApiClient'
+
 import config from '../config'
 
 const applicationInfo = applicationInfoSupplier()
@@ -26,10 +28,11 @@ const eqiApiHeaders: Record<EqApiHeader, string> = {
 
 export const dataAccess = () => ({
   applicationInfo,
-  searchApiClient: new SearchApiClient(eqiApiHeaders),
   crm4ApiClient: new CrmApiClient<Crm4Response>(eqiApiHeaders, 'crm4'),
   crm5ApiClient: new CrmApiClient<Crm5Response>(eqiApiHeaders, 'crm5'),
   crm7ApiClient: new CrmApiClient<Crm7Response>(eqiApiHeaders, 'crm7'),
+  sdsApiClient: new SdsApiClient(),
+  searchApiClient: new SearchApiClient(eqiApiHeaders),
 })
 
 export type DataAccess = ReturnType<typeof dataAccess>
