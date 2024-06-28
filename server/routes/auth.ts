@@ -11,7 +11,7 @@ export default function routes(): Router {
 
   get('/', (req, res, next) => {
     res.render('auth/index', {
-      title: 'LAA Login',
+      title: 'Equiniti historical data',
       isAuthenticated: req.session.isAuthenticated,
       username: req.session.account?.username,
       name: req.session.account?.name,

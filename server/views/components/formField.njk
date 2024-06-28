@@ -42,7 +42,7 @@
     {% elif field.type === 'percent' %}
         {{ field.value }}%
     {% elif field.type === 'link' %}
-        <a href="{{ field.value.href }}" class="govuk-link">{{ field.value.text }}</a>
+        <a href="{{ field.value.href }}" class="govuk-link govuk-link--no-visited-state">{{ field.value.text }}</a>
     {% else %}
         {{ field.value }}
     {% endif %}
