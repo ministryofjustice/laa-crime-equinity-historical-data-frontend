@@ -15,6 +15,7 @@ import setUpWebSecurity from './middleware/setUpWebSecurity'
 import setUpWebSession from './middleware/setUpWebSession'
 
 import routes from './routes'
+import authRoutes from './routes/auth'
 
 import type { Services } from './services'
 import { controllers } from './controllers'
@@ -34,6 +35,7 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpWebRequestParsing())
   app.use(setUpStaticResources())
   nunjucksSetup(app, services.applicationInfo)
+  app.use('/auth', authRoutes())
   app.use(setUpCsrf())
   // app.use(pdfRenderer(new GotenbergClient(config.apis.gotenberg.apiUrl)))
   app.use('/', routes(controllers(services)))

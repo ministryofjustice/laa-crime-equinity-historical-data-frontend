@@ -29,13 +29,11 @@
                 </button>
                 <ul id="navigation" class="govuk-header__navigation-list">
                     <li class="govuk-header__navigation-item govuk-header__navigation-item--active">
-                        <a class="govuk-header__link" href="#">
-                            Jane Doe
-                        </a>
+                            {{ username }}
                     </li>
                     <li class="govuk-header__navigation-item">
                          {% if isAuthenticated %}
-                        <a class="govuk-header__link" href="#">
+                        <a class="govuk-header__link" href="/auth/signout">
                             
                             Sign out
                         

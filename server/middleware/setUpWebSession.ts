@@ -21,9 +21,9 @@ export default function setUpWebSession(): Router {
     session({
       store,
       name: 'equiniti-historical-data.session',
-      cookie: { secure: config.https, sameSite: 'lax', maxAge: config.session.expiryMinutes * 60 * 1000 },
-      secret: config.session.secret,
-      resave: false, // redis implements touch so shouldn't need this
+      cookie: { maxAge: config.session.expiryMinutes * 60 * 1000, secure: config.https },
+      secret: process.env.EXPRESS_SESSION_SECRET,
+      resave: false,
       saveUninitialized: false,
       rolling: true,
     }),
