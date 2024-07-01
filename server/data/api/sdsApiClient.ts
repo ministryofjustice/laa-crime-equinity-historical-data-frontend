@@ -10,11 +10,11 @@ export default class SdsApiClient {
     return new RestClient('SDS API Client', config.apis.sdsApi, token)
   }
 
-  async retrieveFile(fileName: string): Promise<SdsResponse> {
+  async retrieveFile(fileKey: string): Promise<SdsResponse> {
     return SdsApiClient.restClient('no_auth').get<SdsResponse>({
       path: '/retrieve_file',
       query: {
-        file_key: fileName,
+        file_key: fileKey,
       },
     })
   }
