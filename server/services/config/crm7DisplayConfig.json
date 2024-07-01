@@ -404,7 +404,10 @@
       "subsections": [
         {
           "title": "Disbursements",
-          "fields": []
+          "customDisplay": {
+            "name": "crm7Disbursements",
+            "apiField": "disbursement"
+          }
         }
       ]
     },
