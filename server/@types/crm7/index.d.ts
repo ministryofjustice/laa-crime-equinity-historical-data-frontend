@@ -1,14 +1,5 @@
 import { CrmResponse } from '@eqApi'
 
-type Disbursement = {
-  disbursement: string
-  details: string
-  miles: number
-  netValue: number
-  vatRate: number
-  vatValue: number
-  total: number
-}
 type NetVatAndTotal = {
   net: number
   vat: number
@@ -190,7 +181,17 @@ export interface Crm7Response extends CrmResponse {
       }
     }
     disbursement?: {
-      disbursements: Disbursement[]
+      disbursements: [
+        {
+          disbursement: string
+          details: string
+          miles: number
+          netValue: number
+          vatRate: number
+          vatValue: number
+          total: number
+        },
+      ]
       totals: NetVatAndTotal
       invoiceAttachments: string
       officeUse: NetVatAndTotal

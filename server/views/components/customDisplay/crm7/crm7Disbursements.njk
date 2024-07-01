@@ -31,21 +31,21 @@
 
     {{ formSubsection('Disbursements', tableData, true) }}
 
-    {# Render "Totals" subsection #}
+    {# Render "Disbusements Total" subsection #}
     {% set fields = [
         { label: "Total Net", value: data.totals.net | formatCurrency},
         { label: "Total VAT", value: data.totals.vat | formatCurrency},
-        { label: "Grand Total", value: data.totals.total | formatCurrency}
+        { label: "Grand Total", value: data.totals.total | formatCurrency, class: "govuk-brand-colour govuk-!-font-weight-bold"}
 
     ] %}
-    {{ formSubsection('Totals', fields) }}
+    {{ formSubsection('Disbursements total', fields) }}
 
 
     {# Render "Offibce Usde Only" subsection #}
     {% set fields = [
         { label: "Total Net", value: data.officeUse.net | formatCurrency},
         { label: "Total VAT", value: data.officeUse.vat | formatCurrency},
-        { label: "Grand Total", value: data.officeUse.total | formatCurrency}
+        { label: "Grand Total", value: data.officeUse.total | formatCurrency, class: "govuk-brand-colour govuk-!-font-weight-bold"}
     ] %}
     {{ formSubsection('Office Use', fields) }}
 
