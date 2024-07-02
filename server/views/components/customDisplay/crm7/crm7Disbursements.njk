@@ -31,7 +31,7 @@
 
     {{ formSubsection('Disbursements', tableData, true) }}
 
-    {# Render "Disbusements Total" subsection #}
+    {# Render "Disbursements Total" subsection #}
     {% set fields = [
         { label: "Total Net", value: data.totals.net | formatCurrency},
         { label: "Total VAT", value: data.totals.vat | formatCurrency},
@@ -41,7 +41,7 @@
     {{ formSubsection('Disbursements total', fields) }}
 
 
-    {# Render "Offibce Usde Only" subsection #}
+    {# Render "Office Use Only" subsection #}
     {% set fields = [
         { label: "Total Net", value: data.officeUse.net | formatCurrency},
         { label: "Total VAT", value: data.officeUse.vat | formatCurrency},
