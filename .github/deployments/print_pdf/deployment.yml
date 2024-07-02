@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${APP_NAME}-print-pdf-deployment
+  namespace: ${CP_NAMESPACE}
+  labels:
+    app: laa-crime-equinity-historical-data-frontend-print-pdf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: laa-crime-equinity-historical-data-frontend-print-pdf # this should match the selector in service.yml
+  template:
+    metadata:
+      labels:
+        app: laa-crime-equinity-historical-data-frontend-print-pdf # this should match the selector in service.yml
+    spec:
+      containers:
+        - name: print-pdf-frontend
+          image: ${IMAGE_NAME}
+          ports:
+            - containerPort: 3100
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop: [ "ALL" ]
