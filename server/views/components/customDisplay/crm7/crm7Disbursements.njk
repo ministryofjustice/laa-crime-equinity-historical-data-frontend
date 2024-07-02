@@ -1,0 +1,52 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formSubsection.njk" import formSubsection %}
+
+{% macro crm7Disbursements(data) %}
+
+    {% set tableData = {
+        head: [
+            { text: "Disbursement"},
+            { text: "Details" },
+            { text: "Miles" },
+            { text: "Net Value" },
+            { text: "VAT Rate" },
+            { text: "VAT Value" },
+            { text: "Total" }
+        ],
+        rows: []
+    } %}
+
+    {% for item in data.disbursements %}
+        {%- set tableRow = [
+            { text: item.disbursement | safe, attributes: { 'data-header': 'Disbursement' } },
+            { text: item.details | safe, attributes: { 'data-header': 'Details' } },
+            { text: item.miles | safe, attributes: { 'data-header': 'Miles' } },
+            { text: item.netValue | safe | formatCurrency, attributes: { 'data-header': 'Net Value' } },
+            { text: item.vatRate | safe, attributes: { 'data-header': 'VAT Rate' } },
+            { text: item.vatValue | safe | formatCurrency, attributes: { 'data-header': 'VAT Value' } },
+            { text: item.total | safe | formatCurrency, attributes: { 'data-header': 'Total' } }
+        ] -%}
+        {% set list = tableData.rows.push(tableRow) %}
+    {% endfor %}
+
+    {{ formSubsection('Disbursements', tableData, true) }}
+
+    {# Render "Disbursements Total" subsection #}
+    {% set fields = [
+        { label: "Total Net", value: data.totals.net | formatCurrency},
+        { label: "Total VAT", value: data.totals.vat | formatCurrency},
+        { label: "Grand Total", value: data.totals.total | formatCurrency, class: "govuk-brand-colour govuk-!-font-weight-bold"}
+
+    ] %}
+    {{ formSubsection('Disbursements total', fields) }}
+
+
+    {# Render "Office Use Only" subsection #}
+    {% set fields = [
+        { label: "Total Net", value: data.officeUse.net | formatCurrency},
+        { label: "Total VAT", value: data.officeUse.vat | formatCurrency},
+        { label: "Grand Total", value: data.officeUse.total | formatCurrency, class: "govuk-brand-colour govuk-!-font-weight-bold"}
+    ] %}
+    {{ formSubsection('Office Use', fields) }}
+
+{% endmacro %}
