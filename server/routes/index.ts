@@ -16,7 +16,7 @@ export default function routes({
 
   router.use((req: Request, res: Response, next: NextFunction): void => {
     // custom middleware to check auth state
-    if (config.sso.enabled === 'false') {
+    if (!config.sso.enabled) {
       return next()
     }
 

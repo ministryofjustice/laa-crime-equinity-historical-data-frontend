@@ -1,10 +1,18 @@
-import { type Request, type RequestHandler, type Response, Router } from 'express'
+import { type NextFunction, type Request, type RequestHandler, type Response, Router } from 'express'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import authProvider from '../auth/authProvider'
 import { REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } from '../auth/authConfig'
+import config from '../config'
 
 export default function routes(): Router {
   const router = Router()
+
+  router.use((req: Request, res: Response, next: NextFunction): void => {
+    if (!config.sso.enabled) {
+      return res.redirect('/')
+    }
+    return next()
+  })
 
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (routePath: string, handler: RequestHandler) => router.post(routePath, asyncMiddleware(handler))

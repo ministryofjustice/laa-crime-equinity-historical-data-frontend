@@ -4,6 +4,14 @@ import { appWithAllRoutes } from './testutils/appSetup'
 
 let app: Express
 
+jest.mock('../config', () => {
+  return {
+    sso: {
+      enabled: true,
+    },
+  }
+})
+
 beforeEach(() => {
   app = appWithAllRoutes({})
 })
@@ -13,18 +21,6 @@ describe('auth', () => {
     it('should render index page', () => {
       return request(app)
         .get('/auth')
-        .expect('Content-Type', /html/)
-        .expect(res => {
-          expect(res.text).toContain('Equiniti Historical Data')
-          expect(res.text).toContain('Sign in')
-        })
-    })
-  })
-
-  xdescribe('GET /auth', () => {
-    it('should render index page', () => {
-      return request(app)
-        .get('/auth/signin')
         .expect('Content-Type', /html/)
         .expect(res => {
           expect(res.text).toContain('Equiniti Historical Data')

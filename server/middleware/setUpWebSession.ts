@@ -7,20 +7,21 @@ import config from '../config'
 import logger from '../../logger'
 
 export default function setUpWebSession(): Router {
-  // @TODO: EMP-379 set up redis store
-  // let store: Store
-  // if (config.redis.enabled === 'true') {
-  //   const client = createRedisClient()
-  //   client.connect().catch((err: Error) => logger.error(`Error connecting to Redis`, err))
-  //   store = new RedisStore({ client })
-  // } else {
-  //   store = new MemoryStore()
-  // }
+  let store: Store
+  if (config.redis.enabled) {
+    logger.info('Attempting connection to Redis')
+    const client = createRedisClient()
+    client.connect().catch((err: Error) => logger.error(`Error connecting to Redis`, err))
+    store = new RedisStore({ client })
+    logger.info('Redis connection successful')
+  } else {
+    store = new MemoryStore()
+  }
 
   const router = express.Router()
   router.use(
     session({
-      // store,
+      store,
       name: 'equiniti-historical-data.session',
       cookie: { maxAge: config.session.expiryMinutes * 60 * 1000, secure: config.https },
       secret: process.env.EXPRESS_SESSION_SECRET,
