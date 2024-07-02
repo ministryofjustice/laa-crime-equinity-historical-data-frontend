@@ -18,7 +18,7 @@ beforeEach(() => {
 
 describe('auth', () => {
   describe('GET /auth', () => {
-    it('should render index page', () => {
+    it('should render auth index page', () => {
       return request(app)
         .get('/auth')
         .expect('Content-Type', /html/)

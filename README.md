@@ -13,8 +13,8 @@ Please raise any questions or queries there. Contributions welcome!
 ## Running the application
 
 ### Dependencies
-The app will requires:
-* redis - session store and token caching
+The app requires:
+* redis - session store and token caching (optional - use REDIS_ENABLED=true in .env to enable usage)
 * gotenberg - PDF generator
 
 ### Running the application dependencies

@@ -1,4 +1,5 @@
 import { Configuration } from '@azure/msal-node/src/config/Configuration'
+import config from '../config'
 import logger from '../../logger'
 
 /**
@@ -8,9 +9,9 @@ import logger from '../../logger'
  */
 const msalConfig: Configuration = {
   auth: {
-    clientId: process.env.CLIENT_ID, // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
-    authority: process.env.CLOUD_INSTANCE + process.env.TENANT_ID, // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
-    clientSecret: process.env.CLIENT_SECRET, // Client secret generated from the app registration in Azure portal
+    clientId: config.sso.clientId, // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
+    authority: config.sso.cloudInstance + config.sso.tenantId, // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
+    clientSecret: config.sso.clientSecret, // Client secret generated from the app registration in Azure portal
   },
   system: {
     loggerOptions: {
