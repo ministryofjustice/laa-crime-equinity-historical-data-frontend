@@ -6,7 +6,7 @@
     {% set fields = [] %}
 
     {% for item in data %}
-        {% set linkUrl = "/download-evidence?fileKey=" + item.key + "&fileName=" + item.name %}
+        {% set linkUrl = "/download-evidence?fileKey=" + (item.key | urlencode) + "&fileName=" + (item.name | urlencode) %}
         {% set list = fields.push({ label: item.name, value: { href: linkUrl, text: "download" } , type: 'link' }) %}
     {% endfor %}
 

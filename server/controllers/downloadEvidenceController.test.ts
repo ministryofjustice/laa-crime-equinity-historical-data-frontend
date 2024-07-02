@@ -42,6 +42,7 @@ describe('downloadEvidenceController', () => {
 
     await requestHandler(request, response, next)
 
+    expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=some-file.txt')
     expect(response.send).toHaveBeenCalledWith(downloadData)
 
     expect(mockDownloadEvidenceService.getEvidenceFileUrl).toHaveBeenCalledWith('0000.att')
