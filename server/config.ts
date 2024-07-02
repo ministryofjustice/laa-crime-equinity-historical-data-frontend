@@ -47,7 +47,7 @@ export default {
     enabled: get('SSO_ENABLED', 'false', requiredInProduction) === 'true',
     cloudInstance: get('CLOUD_INSTANCE', 'https://login.microsoftonline.com/', requiredInProduction),
     clientId: get('CLIENT_ID', 'xxx', requiredInProduction),
-    clientSecret: get('CLIENT_ID', 'xxx', requiredInProduction),
+    clientSecret: get('CLIENT_SECRET', 'xxx', requiredInProduction),
     tenantId: get('TENANT_ID', 'xxx', requiredInProduction),
   },
   redis: {
