@@ -1,4 +1,4 @@
-import { type RequestHandler, Router } from 'express'
+import { type Request, type RequestHandler, type Response, Router } from 'express'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import authProvider from '../auth/authProvider'
 import { REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } from '../auth/authConfig'
@@ -9,7 +9,7 @@ export default function routes(): Router {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (routePath: string, handler: RequestHandler) => router.post(routePath, asyncMiddleware(handler))
 
-  get('/', (req, res, next) => {
+  get('/', (req: Request, res: Response): void => {
     res.render('auth/index', {
       title: 'Equiniti historical data',
       isAuthenticated: req.session.isAuthenticated,

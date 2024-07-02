@@ -1,4 +1,4 @@
-import { type RequestHandler, Router } from 'express'
+import { type NextFunction, type Request, type RequestHandler, type Response, Router } from 'express'
 
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import { Controllers } from '../controllers'
@@ -12,8 +12,10 @@ export default function routes({
   crm7Controller,
   downloadEvidenceController,
 }: Controllers): Router {
-  // custom middleware to check auth state
-  function isAuthenticated(req, res, next) {
+  const router = Router()
+
+  router.use((req: Request, res: Response, next: NextFunction): void => {
+    // custom middleware to check auth state
     if (config.sso.enabled === 'false') {
       return next()
     }
@@ -25,14 +27,12 @@ export default function routes({
     res.locals.username = req.session.account?.name
     res.locals.isAuthenticated = req.session.isAuthenticated
     return next()
-  }
+  })
 
-  const router = Router()
-  const get = (path: string | string[], handler: RequestHandler) =>
-    router.get(path, isAuthenticated, asyncMiddleware(handler))
+  const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (routePath: string, handler: RequestHandler) => router.post(routePath, asyncMiddleware(handler))
 
-  get('/', (req, res, next) => {
+  get('/', (req: Request, res: Response) => {
     res.render('pages/index')
   })
 
@@ -46,7 +46,7 @@ export default function routes({
 
   get('/crm7/:usn/:sectionId?', crm7Controller.show())
 
-  get('/generate-report', (req, res, next) => {
+  get('/generate-report', (req: Request, res: Response): void => {
     res.render('pages/generateReport')
   })
 

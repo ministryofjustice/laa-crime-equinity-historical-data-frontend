@@ -2,8 +2,9 @@ import axios from 'axios'
 import msal from '@azure/msal-node'
 import { Configuration } from '@azure/msal-node/src/config/Configuration'
 import type { Request, Response, NextFunction } from 'express'
-import { AuthorizationUrlRequest } from '@azure/msal-node/src/request/AuthorizationUrlRequest'
 import { AuthorizationCodeRequest } from '@azure/msal-node/src/request/AuthorizationCodeRequest'
+import { AuthorizationUrlRequest } from '@azure/msal-node/src/request/AuthorizationUrlRequest'
+import { CloudDiscoveryMetadata } from '@azure/msal-common/src/authority/CloudDiscoveryMetadata'
 import { msalConfig } from './authConfig'
 
 type Options = {
@@ -23,7 +24,7 @@ class AuthProvider {
   }
 
   login(options: Options = {}) {
-    return async (req: Request, res: Response, next: NextFunction) => {
+    return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
       /**
        * MSAL Node library allows you to pass your custom state as state parameter in the Request object.
        * The state parameter can also be used to encode information of the app's state before redirect.
@@ -82,7 +83,7 @@ class AuthProvider {
   }
 
   acquireToken(options: Options = {}) {
-    return async (req: Request, res: Response, next: NextFunction) => {
+    return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
       try {
         const msalInstance = this.getMsalInstance(this.authConfig)
 
@@ -126,7 +127,7 @@ class AuthProvider {
   }
 
   handleRedirect() {
-    return async (req: Request, res: Response, next: NextFunction) => {
+    return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
       if (!req.body || !req.body.state) {
         return next(new Error('Error: response not found'))
       }
@@ -160,7 +161,7 @@ class AuthProvider {
   }
 
   logout(options: Options = {}) {
-    return async (req: Request, res: Response) => {
+    return async (req: Request, res: Response): Promise<void> => {
       /**
        * Construct a logout URI and redirect the user to end the
        * session with Azure AD. For more information, visit:
@@ -240,7 +241,7 @@ class AuthProvider {
    * Retrieves cloud discovery metadata from the /discovery/instance endpoint
    * @returns
    */
-  async getCloudDiscoveryMetadata(authority: string) {
+  async getCloudDiscoveryMetadata(authority: string): Promise<CloudDiscoveryMetadata> {
     const endpoint = 'https://login.microsoftonline.com/common/discovery/instance'
 
     const response = await axios.get(endpoint, {
@@ -257,7 +258,7 @@ class AuthProvider {
    * Retrieves oidc metadata from the openid endpoint
    * @returns
    */
-  async getAuthorityMetadata(authority: string) {
+  async getAuthorityMetadata(authority: string): Promise<CloudDiscoveryMetadata> {
     const endpoint = `${authority}/v2.0/.well-known/openid-configuration`
 
     const response = await axios.get(endpoint)

@@ -8,6 +8,7 @@ import errorHandler from '../../errorHandler'
 import type { ApplicationInfo } from '../../applicationInfo'
 import type { Services } from '../../services'
 import { controllers } from '../../controllers'
+import authRoutes from '../auth'
 
 const testAppInfo: ApplicationInfo = {
   applicationName: 'test',
@@ -32,6 +33,7 @@ function appSetup(services: Services, production: boolean): Express {
   })
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
+  app.use('/auth', authRoutes())
   app.use(routes(controllers(services)))
   app.use((req, res, next) => next(new NotFound()))
   app.use(errorHandler(production))
