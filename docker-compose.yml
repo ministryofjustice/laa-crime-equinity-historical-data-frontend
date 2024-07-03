@@ -1,5 +1,27 @@
 version: '3.1'
 services:
+# @TODO: EMP-271
+#  app:
+#    build:
+#      context: .
+#      args:
+#        BUILD_NUMBER: "1.0.0"
+#        GIT_REF: "a1b2c3"
+#        GIT_BRANCH: main
+#    networks:
+#      - laa
+#    ports:
+#      - "3000:3000"
+#    environment:
+#      - PRODUCT_ID=UNASSIGNED
+#      - REDIS_ENABLED=false
+#      # These 2 are meant to be removed when all environment and Redis will be setup
+#      - REDIS_HOST=localhost
+#      - ENVIRONMENT_NAME=dev
+#      # These will need to match new creds in the seed auth service auth
+#      - SESSION_SECRET=somesecretvalue
+#      - INGRESS_URL=http://localhost:3000
+
   gotenberg:
     image: gotenberg/gotenberg:7.7.0
     networks:
