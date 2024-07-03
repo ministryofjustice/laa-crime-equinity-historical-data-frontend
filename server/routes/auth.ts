@@ -1,4 +1,5 @@
 import { type NextFunction, type Request, type RequestHandler, type Response, Router } from 'express'
+import createError from 'http-errors'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import authProvider from '../auth/authProvider'
 import { REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } from '../auth/authConfig'
@@ -9,7 +10,7 @@ export default function routes(): Router {
 
   router.use((req: Request, res: Response, next: NextFunction): void => {
     if (!config.sso.enabled) {
-      return res.redirect('/')
+      return next(createError(404, 'Not found'))
     }
     return next()
   })
