@@ -20,12 +20,10 @@ export default function routes({
       return next()
     }
 
-    if (!req.session.isAuthenticated) {
-      return res.redirect('/auth') // redirect to sign-in route
+    if (req.session.isAuthenticated) {
+      res.locals.username = req.session.account?.name
+      res.locals.isAuthenticated = req.session.isAuthenticated
     }
-
-    res.locals.username = req.session.account?.name
-    res.locals.isAuthenticated = req.session.isAuthenticated
     return next()
   })
 
