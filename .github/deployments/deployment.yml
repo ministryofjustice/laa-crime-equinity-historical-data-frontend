@@ -49,12 +49,12 @@ spec:
                 name: appsecret
                 key: SDS_API_URL
           - name: REDIS_ENABLED
-            value: "true"
+            value: "false"
           - name: REDIS_HOST
             valueFrom:
               secretKeyRef:
-                name: elasticache-redis
-                key: primary_endpoint_address
+                name: appsecret
+                key: REDIS_HOST
           - name: REDIS_AUTH_TOKEN
             valueFrom:
               secretKeyRef:
