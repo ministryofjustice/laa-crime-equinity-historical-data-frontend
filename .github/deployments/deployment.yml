@@ -55,6 +55,11 @@ spec:
               secretKeyRef:
                 name: appsecret
                 key: REDIS_HOST
+          - name: REDIS_AUTH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: elasticache-redis
+                key: auth_token
           - name: SSO_ENABLED
             value: "true"
           - name: CLOUD_INSTANCE
