@@ -11,7 +11,7 @@ export default class Crm5Controller {
   ) {}
 
   show(): RequestHandler {
-    return async (req: Request, res: Response) => {
+    return async (req: Request, res: Response): Promise<void> => {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm5Response = await this.crm5Service.getCrm(usn)
