@@ -1,4 +1,4 @@
-import { CrmResponse } from '@eqApi'
+import { CrmResponse, EvidenceFiles } from '@eqApi'
 
 export interface Crm4Response extends CrmResponse {
   formDetails: {
@@ -108,4 +108,5 @@ export interface Crm4Response extends CrmResponse {
       decision: string
     }
   }
+  evidenceFiles: EvidenceFiles
 }

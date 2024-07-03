@@ -39,6 +39,9 @@ describe('CRM7 Controller', () => {
         },
         decisionOfficeUseOnly: 'No',
       },
+      evidenceFiles: {
+        files: [],
+      },
     }
     mockCrmApiService.getCrm.mockResolvedValue(crm7Response)
 

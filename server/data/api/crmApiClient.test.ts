@@ -45,6 +45,9 @@ describe('CRM Api Client', () => {
         DetailsOfWorkCompleted: 'Some Details of Work Completed',
         DetailsOfApplication: 'Some Details of Application',
       },
+      evidenceFiles: {
+        files: [],
+      },
     }
 
     fakeRestClient

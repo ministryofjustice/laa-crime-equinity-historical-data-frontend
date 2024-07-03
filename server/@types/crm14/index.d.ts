@@ -1,10 +1,4 @@
-import { CrmResponse } from '@eqApi'
-
-type EvidenceFile = {
-  key: string
-  type: string
-  name: string
-}
+import { CrmResponse, EvidenceFiles } from '@eqApi'
 
 export interface Crm14Response extends CrmResponse {
   formDetails: {
@@ -243,7 +237,5 @@ export interface Crm14Response extends CrmResponse {
     privacyAgree: boolean
     submit: string
   }
-  evidenceFiles: {
-    files: Array<EvidenceFile>
-  }
+  evidenceFiles: EvidenceFiles
 }
