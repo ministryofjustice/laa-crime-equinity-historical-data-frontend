@@ -49,7 +49,7 @@ spec:
                 name: appsecret
                 key: SDS_API_URL
           - name: REDIS_ENABLED
-            value: "true"
+            value: "false"
           - name: REDIS_HOST
             valueFrom:
               secretKeyRef:
@@ -61,7 +61,10 @@ spec:
                 name: elasticache-redis
                 key: auth_token
           - name: SSO_ENABLED
-            value: "true"
+            valueFrom:
+              secretKeyRef:
+                name: appsecret
+                key: SSO_ENABLED
           - name: CLOUD_INSTANCE
             valueFrom:
               secretKeyRef:
