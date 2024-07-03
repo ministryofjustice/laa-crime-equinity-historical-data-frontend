@@ -50,6 +50,8 @@ spec:
                 key: SDS_API_URL
           - name: REDIS_ENABLED
             value: "true"
+          - name: SSO_ENABLED
+            value: "true"
           - name: CLOUD_INSTANCE
             valueFrom:
               secretKeyRef:
