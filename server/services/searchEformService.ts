@@ -47,4 +47,5 @@ const crmTypeToUrlPath: Record<string, string> = {
   CRM4: 'crm4',
   CRM5: 'crm5',
   CRM7: 'crm7',
+  CRM14: 'crm14',
 }

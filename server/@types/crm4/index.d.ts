@@ -1,5 +1,11 @@
 import { CrmResponse } from '@eqApi'
 
+type EvidenceFile = {
+  key: string
+  type: string
+  name: string
+}
+
 export interface Crm4Response extends CrmResponse {
   formDetails: {
     greaterValue: boolean

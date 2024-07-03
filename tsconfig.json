@@ -23,6 +23,7 @@
       "@crm4": ["./server/@types/crm4/index.d.ts"],
       "@crm5": ["./server/@types/crm5/index.d.ts"],
       "@crm7": ["./server/@types/crm7/index.d.ts"],
+      "@crm14": ["./server/@types/crm14/index.d.ts"],
       "@crmDisplay": ["./server/@types/crmDisplay/index.d.ts"],
       "@eqApi": ["./server/@types/eqApi/index.d.ts"],
       "@searchEform": ["./server/@types/searchEform/index.d.ts"]

@@ -9,6 +9,7 @@ export default function routes({
   crm4Controller,
   crm5Controller,
   crm7Controller,
+  crm14Controller,
   downloadEvidenceController,
 }: Controllers): Router {
   const router = Router()
@@ -28,6 +29,8 @@ export default function routes({
   get('/crm5/:usn/:sectionId?', crm5Controller.show())
 
   get('/crm7/:usn/:sectionId?', crm7Controller.show())
+
+  get('/crm14/:usn/:sectionId?', crm14Controller.show())
 
   get('/generate-report', (req, res, next) => {
     res.render('pages/generateReport')
