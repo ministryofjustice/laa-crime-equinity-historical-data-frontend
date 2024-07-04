@@ -10,17 +10,18 @@ This bootstrap is community managed by the mojdt `#typescript` Slack channel.
 Please raise any questions or queries there. Contributions welcome!
 
 
-## Running the app
+## Running the application
+
+### Dependencies
+The app requires:
+* redis - session store and token caching (optional - use REDIS_ENABLED=true in .env to enable usage)
+* gotenberg - PDF generator
+
+### Running the application dependencies
 The easiest way to run the app is to use docker compose to create the service and all dependencies. 
 
 `docker compose pull`
-
 `docker compose up`
-
-### Dependencies
-The app will requires (soon):
-* redis - session store and token caching
-* gotenberg - PDF generator
 
 ### Running the app for development
 

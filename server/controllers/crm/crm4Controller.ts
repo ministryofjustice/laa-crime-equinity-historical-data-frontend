@@ -11,7 +11,7 @@ export default class Crm4Controller {
   ) {}
 
   show(): RequestHandler {
-    return async (req: Request, res: Response) => {
+    return async (req: Request, res: Response): Promise<void> => {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm4Response = await this.crm4Service.getCrm(usn)

@@ -43,8 +43,15 @@ export default {
   production,
   https: production,
   staticResourceCacheDuration: '1h',
+  sso: {
+    enabled: get('SSO_ENABLED', 'false', requiredInProduction) === 'true',
+    cloudInstance: get('CLOUD_INSTANCE', 'https://login.microsoftonline.com/', requiredInProduction),
+    clientId: get('CLIENT_ID', 'xxx', requiredInProduction),
+    clientSecret: get('CLIENT_SECRET', 'xxx', requiredInProduction),
+    tenantId: get('TENANT_ID', 'xxx', requiredInProduction),
+  },
   redis: {
-    enabled: get('REDIS_ENABLED', 'false'),
+    enabled: get('REDIS_ENABLED', 'false', requiredInProduction) === 'true',
     host: get('REDIS_HOST', 'localhost'),
     port: parseInt(process.env.REDIS_PORT, 10) || 6379,
     password: process.env.REDIS_AUTH_TOKEN,
@@ -74,7 +81,7 @@ export default {
   },
   session: {
     secret: get('SESSION_SECRET', 'app-insecure-default-session'),
-    expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 120)),
+    expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 60)),
   },
   domain: get('INGRESS_URL', 'http://localhost:3000'),
   // The fallback should be empty. It will become when all environments will be setup.
