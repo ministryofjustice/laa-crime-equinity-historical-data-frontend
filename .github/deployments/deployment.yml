@@ -53,6 +53,11 @@ spec:
               secretKeyRef:
                 name: appsecret
                 key: REDIS_ENABLED
+          - name: REDIS_TLS_ENABLED
+            valueFrom:
+              secretKeyRef:
+                name: appsecret
+                key: REDIS_TLS_ENABLED
           - name: REDIS_HOST
             valueFrom:
               secretKeyRef:
