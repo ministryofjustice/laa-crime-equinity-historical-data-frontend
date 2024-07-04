@@ -1,0 +1,111 @@
+{
+  "sections": [
+    {
+      "sectionId": "legal-rep-use",
+      "title": "Legal Rep Use",
+      "subsections": [
+        {
+          "title": "Date Stamp",
+          "fields": [
+            {
+              "label": "USN",
+              "apiField": "legalRepresentativeUse.dateStamp.usn"
+            },
+            {
+              "label": "Date",
+              "apiField": "legalRepresentativeUse.dateStamp.date",
+              "type": "date"
+            },
+            {
+              "label": "Time",
+              "apiField": "legalRepresentativeUse.dateStamp.time",
+              "type": "time"
+            },
+            {
+              "label": "Client name",
+              "apiField": "legalRepresentativeUse.dateStamp.clientName"
+            },
+            {
+              "label": "Client date of birth",
+              "apiField": "legalRepresentativeUse.dateStamp.clientDateOfBirth",
+              "type": "date"
+            }
+          ]
+        },
+        {
+          "title": "For the Legal Representative's use",
+          "fields": [
+            {
+              "label": "USN",
+              "apiField": "legalRepresentativeUse.legalRepUse.usn"
+            },
+            {
+              "label": "URN",
+              "apiField": "legalRepresentativeUse.legalRepUse.urn"
+            },
+            {
+              "label": "Please select",
+              "apiField": "legalRepresentativeUse.legalRepUse.applicationType"
+            },
+            {
+              "label": "Is this application subject to the usual means / passported test?",
+              "apiField": "legalRepresentativeUse.legalRepUse.meansTested"
+            },
+            {
+              "label": "Case Type",
+              "apiField": "legalRepresentativeUse.legalRepUse.caseType"
+            },
+            {
+              "label": "The court where the case commenced",
+              "apiField": "legalRepresentativeUse.legalRepUse.originatingCourt"
+            },
+            {
+              "label": "The court hearing the case",
+              "apiField": "legalRepresentativeUse.legalRepUse.courtName"
+            },
+            {
+              "label": "Is this a Priority Case?",
+              "apiField": "legalRepresentativeUse.legalRepUse.isPriorityCase"
+            },
+            {
+              "subHeading": "Please select at least ONE type of Priority Case"
+            },
+            {
+              "label": "Custody",
+              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.custody"
+            },
+            {
+              "label": "Vulnerable",
+              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.vulnerable"
+            },
+            {
+              "label": "Youth",
+              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.youth"
+            },
+            {
+              "label": "Late application in the Crown Court for trial",
+              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.lateApplication"
+            },
+            {
+              "label": "Hearing date imminent",
+              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.imminentHearing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "evidence",
+      "title": "Evidence",
+      "subsections": [
+        {
+          "title": "Evidence",
+          "customDisplay": {
+            "name": "crmEvidence",
+            "apiField": "evidenceFiles.files"
+          }
+        }
+      ]
+    }
+  ]
+}
