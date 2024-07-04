@@ -20,7 +20,7 @@ describe('CRM14 Controller', () => {
     mockCrmApiService = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm14Response>>
   })
 
-  it('should render CRM7 page', async () => {
+  it('should render CRM14 page', async () => {
     const crm14Response: Crm14Response = {
       formDetails: {
         privateCompany: 'No',
