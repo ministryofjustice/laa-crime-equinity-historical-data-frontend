@@ -25,7 +25,6 @@ declare module 'express-session' {
     accessToken: string
     idToken: string
     isAuthenticated: boolean
-    store: Store
   }
 }
 
