@@ -6,6 +6,7 @@
 import { Crm4Response } from '@crm4'
 import { Crm5Response } from '@crm5'
 import { Crm7Response } from '@crm7'
+import { Crm14Response } from '@crm14'
 import { EqApiHeader } from '@eqApi'
 import { initialiseAppInsights, buildAppInsightsClient } from '../utils/azureAppInsights'
 import applicationInfoSupplier from '../applicationInfo'
@@ -31,6 +32,7 @@ export const dataAccess = () => ({
   crm4ApiClient: new CrmApiClient<Crm4Response>(eqiApiHeaders, 'crm4'),
   crm5ApiClient: new CrmApiClient<Crm5Response>(eqiApiHeaders, 'crm5'),
   crm7ApiClient: new CrmApiClient<Crm7Response>(eqiApiHeaders, 'crm7'),
+  crm14ApiClient: new CrmApiClient<Crm14Response>(eqiApiHeaders, 'crm14'),
   sdsApiClient: new SdsApiClient(),
   searchApiClient: new SearchApiClient(eqiApiHeaders),
 })

@@ -47,6 +47,9 @@ describe('CRM5 Controller', () => {
         DetailsOfWorkCompleted: 'Some Details of Work Completed',
         DetailsOfApplication: 'Some Details of Application',
       },
+      evidenceFiles: {
+        files: [],
+      },
     }
 
     mockCrmApiService.getCrm.mockResolvedValue(crm5Response)

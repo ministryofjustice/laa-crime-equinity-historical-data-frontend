@@ -33,6 +33,9 @@ describe('CRM Display Service', () => {
       DetailsOfWorkCompleted: 'Some Details of Work Completed',
       DetailsOfApplication: 'Some Details of Application',
     },
+    evidenceFiles: {
+      files: [],
+    },
   }
 
   const crmDisplayService = new CrmDisplayService()
@@ -101,6 +104,9 @@ describe('CRM Display Service', () => {
           ...crm5Response.formDetails,
           hasPreviousApplication: 'No',
         },
+        evidenceFiles: {
+          files: [],
+        },
       }
 
       const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '', customResponse)
@@ -138,6 +144,9 @@ describe('CRM Display Service', () => {
             cwPrisonLaw: true,
           },
         },
+        evidenceFiles: {
+          files: [],
+        },
       }
 
       const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '', customResponse)
@@ -174,6 +183,9 @@ describe('CRM Display Service', () => {
             cwPrisonLaw: true,
           },
         },
+        evidenceFiles: {
+          files: [],
+        },
       }
 
       const result = crmDisplayService.getCrmNavigation('crm5', 1234567, '', customResponse)
@@ -207,6 +219,9 @@ describe('CRM Display Service', () => {
             cwAppealsReview: false,
             cwPrisonLaw: true,
           },
+        },
+        evidenceFiles: {
+          files: [],
         },
       }
 
@@ -283,6 +298,9 @@ describe('CRM Display Service', () => {
             },
           },
         },
+        evidenceFiles: {
+          files: [],
+        },
       }
 
       const result = crmDisplayService.getCrmSection('crm5', 'advice-and-assistance', customResponse)
@@ -316,6 +334,9 @@ describe('CRM Display Service', () => {
         formDetails: {
           ...crm5Response.formDetails,
           hasPreviousApplication: 'No',
+        },
+        evidenceFiles: {
+          files: [],
         },
       }
 
@@ -388,6 +409,9 @@ describe('CRM Display Service', () => {
             cwAppealsReview: false,
             cwPrisonLaw: true,
           },
+        },
+        evidenceFiles: {
+          files: [],
         },
       }
 

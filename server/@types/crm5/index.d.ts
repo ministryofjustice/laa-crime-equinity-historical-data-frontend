@@ -1,4 +1,4 @@
-import { CrmResponse } from '@eqApi'
+import { CrmResponse, EvidenceFiles } from '@eqApi'
 
 export type TimeAndCost = {
   time: string
@@ -155,4 +155,5 @@ export interface Crm5Response extends CrmResponse {
     DetailsOfWorkCompleted: string
     DetailsOfApplication: string
   }
+  evidenceFiles: EvidenceFiles
 }

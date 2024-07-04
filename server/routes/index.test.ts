@@ -3,6 +3,7 @@ import request from 'supertest'
 import { Crm4Response } from '@crm4'
 import { Crm5Response } from '@crm5'
 import { Crm7Response } from '@crm7'
+import { Crm14Response } from '@crm14'
 import { SearchResponse } from '@searchEform'
 import { appWithAllRoutes } from './testutils/appSetup'
 import CrmApiService from '../services/crmApiService'
@@ -18,6 +19,7 @@ let app: Express
 let mockCrm4Service: jest.Mocked<CrmApiService<Crm4Response>>
 let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
 let mockCrm7Service: jest.Mocked<CrmApiService<Crm7Response>>
+let mockCrm14Service: jest.Mocked<CrmApiService<Crm14Response>>
 let mockSearchEformService: jest.Mocked<SearchEformService>
 let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
 
@@ -25,6 +27,7 @@ beforeEach(() => {
   mockCrm4Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm4Response>>
   mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
   mockCrm7Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm7Response>>
+  mockCrm14Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm14Response>>
   mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
   mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
   app = appWithAllRoutes({
@@ -32,6 +35,7 @@ beforeEach(() => {
       crm4Service: mockCrm4Service,
       crm5Service: mockCrm5Service,
       crm7Service: mockCrm7Service,
+      crm14Service: mockCrm14Service,
       searchEformService: mockSearchEformService,
       crmDisplayService: mockCrmDisplayService,
     },
@@ -157,6 +161,9 @@ describe('routes', () => {
             Authority: 200.0,
           },
         },
+        evidenceFiles: {
+          files: [],
+        },
       }
       mockCrm4Service.getCrm.mockResolvedValue(crm4Response)
 
@@ -192,6 +199,9 @@ describe('routes', () => {
           StatementOfCase: 'Statement Of Case',
           DetailsOfWorkCompleted: 'Some Details of Work Completed',
           DetailsOfApplication: 'Some Details of Application',
+        },
+        evidenceFiles: {
+          files: [],
         },
       }
       mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
@@ -250,6 +260,9 @@ describe('routes', () => {
           },
           decisionOfficeUseOnly: 'No',
         },
+        evidenceFiles: {
+          files: [],
+        },
       }
       mockCrm7Service.getCrm.mockResolvedValue(crm7Response)
 
@@ -258,6 +271,57 @@ describe('routes', () => {
         .expect('Content-Type', /html/)
         .expect(res => {
           expect(res.text).toContain('eForm: CRM 7 | Case number: 3456789')
+        })
+    })
+  })
+
+  describe('GET /crm14', () => {
+    it('should render crm14 page', () => {
+      const crm14Response: Crm14Response = {
+        formDetails: {
+          privateCompany: 'No',
+          partnerPrivateCompany: '',
+          legalRepresentativeUse: {
+            dateStamp: {
+              usn: 123456789,
+              date: '2022-08-18T00:00:00.000+00:00',
+              time: '19:45:00',
+              clientName: 'Jane Doe',
+              clientDateOfBirth: '1969-02-02T00:00:00.000+00:00',
+            },
+            legalRepUse: {
+              usn: 123456789,
+              urn: '',
+              applicationType: 'Some application',
+              meansTested: 'Yes',
+              caseType: '',
+              originatingCourt: '',
+              courtName: '',
+              isPriorityCase: '',
+              priorityCaseType: {
+                custody: true,
+                vulnerable: true,
+                youth: true,
+                lateApplication: true,
+                imminentHearing: true,
+              },
+              dateOfTrial: '',
+            },
+          },
+          privacyAgree: true,
+          submit: 'Complete',
+        },
+        evidenceFiles: {
+          files: [],
+        },
+      }
+      mockCrm14Service.getCrm.mockResolvedValue(crm14Response)
+
+      return request(app)
+        .get('/crm14/4567890')
+        .expect('Content-Type', /html/)
+        .expect(res => {
+          expect(res.text).toContain('eForm: CRM 14 | Case number: 4567890')
         })
     })
   })

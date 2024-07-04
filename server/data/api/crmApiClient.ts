@@ -2,7 +2,7 @@ import type { CrmResponse, EqApiHeader } from '@eqApi'
 import RestClient from '../restClient'
 import config from '../../config'
 
-type CrmApiPath = 'crm4' | 'crm5' | 'crm7'
+type CrmApiPath = 'crm4' | 'crm5' | 'crm7' | 'crm14'
 
 export default class CrmApiClient<T extends CrmResponse> {
   constructor(

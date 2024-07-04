@@ -60,6 +60,9 @@ describe('CRM4 Controller', () => {
           Authority: 200.0,
         },
       },
+      evidenceFiles: {
+        files: [],
+      },
     }
     mockCrmApiService.getCrm.mockResolvedValue(crm4Response)
 

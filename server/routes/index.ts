@@ -10,6 +10,7 @@ export default function routes({
   crm4Controller,
   crm5Controller,
   crm7Controller,
+  crm14Controller,
   downloadEvidenceController,
 }: Controllers): Router {
   const router = Router()
@@ -34,7 +35,7 @@ export default function routes({
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (routePath: string, handler: RequestHandler) => router.post(routePath, asyncMiddleware(handler))
 
-  get('/', (req: Request, res: Response) => {
+  get('/', (req: Request, res: Response): void => {
     res.render('pages/index')
   })
 
@@ -48,10 +49,13 @@ export default function routes({
 
   get('/crm7/:usn/:sectionId?', crm7Controller.show())
 
+  get('/crm14/:usn/:sectionId?', crm14Controller.show())
+
   get('/generate-report', (req: Request, res: Response): void => {
     res.render('pages/generateReport')
   })
 
   get('/download-evidence', downloadEvidenceController.download())
+
   return router
 }

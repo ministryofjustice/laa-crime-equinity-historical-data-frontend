@@ -1,4 +1,4 @@
-import { CrmResponse } from '@eqApi'
+import { CrmResponse, EvidenceFiles } from '@eqApi'
 
 type NetVatAndTotal = {
   net: number
@@ -222,4 +222,5 @@ export interface Crm7Response extends CrmResponse {
     }
     decisionOfficeUseOnly: string
   }
+  evidenceFiles: EvidenceFiles
 }
