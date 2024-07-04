@@ -6,9 +6,9 @@
     {# Render "Letters and Telephone Calls" subsection #}
     {% set tableData = {
         head: [
-            { text: ""},
+            { text: "" },
             { text: "Number" },
-            { text: "Item rate £p" },
+            { text: "Item rate £:p" },
             { text: "Uplift Claimed?" },
             { text: "Costs" }
         ],
@@ -26,25 +26,26 @@
                 { text: data.totals.telephoneCalls.rate | formatCurrency },
                 { text: data.totals.telephoneCalls.uplift | formatPercentage },
                 { text: data.totals.telephoneCalls.cost | formatCurrency }
+            ],
+            [
+                { text: "Total Letters and Telephone Calls Costs:", isHeader: true, colspan: "4" },
+                { text: data.totals.total | formatCurrency, colspan: "1" }
+            ],
+            [
+                { text: "Solicitor's Core Costs", isHeader: true, colspan: "4" },
+                { text: data.totals.solicitorCost | formatCurrency, colspan: "1" }
             ]
         ]
     } %}
 
     {{ formSubsection('Letters and Telephone Calls', tableData, true) }}
 
-    {# Render "Total Letters and Telephone Calls Costs" subsection #}
-    {% set fields = [
-        { label: "Total Letters and Telephone Calls Costs:", value: data.totals.total | formatCurrency },
-        { label: "Solicitor's Core Costs", value: data.totals.solicitorCost | formatCurrency }
-    ] %}
-    {{ formSubsection('Total Letters and Telephone Calls Costs', fields) }}
-
     {# Render "For Office Use Only" subsection #}
     {% set tableDataOfficeUse = {
         head: [
             { text: "" },
             { text: "Allowed Number" },
-            { text: "Item rate £p" },
+            { text: "Item rate £:p" },
             { text: "Allowed % Uplift" },
             { text: "Allowed Costs" }
         ],
@@ -62,18 +63,22 @@
                 { text: data.officeOnly.telephoneCalls.rate | formatCurrency },
                 { text: data.officeOnly.telephoneCalls.uplift | formatPercentage },
                 { text: data.officeOnly.telephoneCalls.cost | formatCurrency }
+            ],
+            [
+                { text: "Total Letters and Telephone Calls Costs:", isHeader: true, colspan: "4" },
+                { text: data.officeOnly.total | formatCurrency, colspan: "1" }
+            ],
+            [
+                { text: "Solicitor's Core Costs", isHeader: true, colspan: "4" },
+                { text: data.officeOnly.solicitorCost | formatCurrency, colspan: "1" }
+            ],
+            [
+                { text: "Assessment reasons", isHeader: true, colspan: "4" },
+                { text: data.assessmentReasons, colspan: "1" }
             ]
         ]
     } %}
 
     {{ formSubsection('For Office Use Only', tableDataOfficeUse, true) }}
-
-    {# Render "Total Letters and Telephone Calls Costs" subsection for office use #}
-    {% set fieldsOfficeUse = [
-        { label: "Total Letters and Telephone Calls Costs:", value: data.officeOnly.total | formatCurrency },
-        { label: "Solicitor's Core Costs", value: data.officeOnly.solicitorCost | formatCurrency },
-        { label: "Assessment reasons", value: data.assessmentReasons }
-    ] %}
-    {{ formSubsection('Total Letters and Telephone Calls Costs', fieldsOfficeUse) }}
 
 {% endmacro %}

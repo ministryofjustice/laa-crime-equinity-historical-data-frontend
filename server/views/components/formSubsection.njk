@@ -23,9 +23,9 @@
                             <tr class="govuk-table__row">
                                 {% for cell in row %}
                                     {% if loop.index == 1 %}
-                                        <th class="govuk-table__header" scope="row">{{ cell.text }}</th>
+                                        <th class="govuk-table__header" scope="row" {% if cell.colspan %}colspan="{{ cell.colspan }}"{% endif %}>{{ cell.text }}</th>
                                     {% else %}
-                                        <td class="govuk-table__cell">{{ cell.text }}</td>
+                                        <td class="govuk-table__cell" {% if cell.colspan %}colspan="{{ cell.colspan }}"{% endif %}>{{ cell.text }}</td>
                                     {% endif %}
                                 {% endfor %}
                             </tr>
