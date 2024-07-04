@@ -10,7 +10,28 @@
         <div class="govuk-summary-card__content">
             {% if isTableData %}
                 <div class="govuk-table-responsive">
-                    {{ govukTable(data) }}
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                        <tr class="govuk-table__row">
+                            {% for head in data.head %}
+                                <th class="govuk-table__header" scope="col">{{ head.text }}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                        {% for row in data.rows %}
+                            <tr class="govuk-table__row">
+                                {% for cell in row %}
+                                    {% if loop.index == 1 %}
+                                        <th class="govuk-table__header" scope="row">{{ cell.text }}</th>
+                                    {% else %}
+                                        <td class="govuk-table__cell">{{ cell.text }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             {% else %}
                 <dl class="govuk-summary-list">
