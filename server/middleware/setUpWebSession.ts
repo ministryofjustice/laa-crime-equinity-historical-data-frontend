@@ -7,23 +7,25 @@ import config from '../config'
 import logger from '../../logger'
 
 export default function setUpWebSession(): Router {
-  // let store: Store
-  /*  if (config.redis.enabled) {
+  let store: Store
+  if (config.redis.enabled) {
+    logger.info('Attempting connection to Redis')
     const client = createRedisClient()
     client.connect().catch((err: Error) => logger.error(`Error connecting to Redis`, err))
     store = new RedisStore({ client })
-  } else { */
-  // store = new MemoryStore()
-  // }
+    logger.info('Redis connection successful')
+  } else {
+    store = new MemoryStore()
+  }
 
   const router = express.Router()
   router.use(
     session({
-      // store,
+      store,
       name: 'equiniti-historical-data.session',
-      cookie: { secure: config.https, sameSite: 'lax', maxAge: config.session.expiryMinutes * 60 * 1000 },
-      secret: config.session.secret,
-      resave: false, // redis implements touch so shouldn't need this
+      cookie: { maxAge: config.session.expiryMinutes * 60 * 1000, secure: config.https },
+      secret: process.env.EXPRESS_SESSION_SECRET,
+      resave: false,
       saveUninitialized: false,
       rolling: true,
     }),

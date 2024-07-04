@@ -1,7 +1,8 @@
-import { type RequestHandler, Router } from 'express'
+import { type NextFunction, type Request, type RequestHandler, type Response, Router } from 'express'
 
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import { Controllers } from '../controllers'
+import config from '../config'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function routes({
@@ -13,10 +14,28 @@ export default function routes({
   downloadEvidenceController,
 }: Controllers): Router {
   const router = Router()
+
+  router.use((req: Request, res: Response, next: NextFunction): void => {
+    // custom middleware to check auth state
+    if (!config.sso.enabled) {
+      return next()
+    }
+
+    if (!req.session.isAuthenticated) {
+      return res.redirect('/auth') // redirect to sign-in route
+    }
+
+    if (req.session.isAuthenticated) {
+      res.locals.username = req.session.account?.name
+      res.locals.isAuthenticated = req.session.isAuthenticated
+    }
+    return next()
+  })
+
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (routePath: string, handler: RequestHandler) => router.post(routePath, asyncMiddleware(handler))
 
-  get('/', (req, res, next) => {
+  get('/', (req: Request, res: Response) => {
     res.render('pages/index')
   })
 
@@ -37,5 +56,6 @@ export default function routes({
   })
 
   get('/download-evidence', downloadEvidenceController.download())
+
   return router
 }

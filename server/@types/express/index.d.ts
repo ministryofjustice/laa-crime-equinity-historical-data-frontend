@@ -3,6 +3,12 @@ import type { UserDetails } from '../../services/userService'
 
 export default {}
 
+interface PkceCodes {
+  verifier: string
+  challenge: string
+  challengeMethod: string
+}
+
 declare module 'express-session' {
   // Declare that the session will potentially contain these additional fields
   interface SessionData {
@@ -11,6 +17,14 @@ declare module 'express-session' {
     history: string[]
     searchResults: SearchResult[]
     formValues: Record<string, string>
+    pkceCodes: PkceCodes
+    authCodeUrlRequest: AuthorizationUrlRequest
+    authCodeRequest: AuthorizationCodeRequest
+    tokenCache: string
+    account: AccountInfo
+    accessToken: string
+    idToken: string
+    isAuthenticated: boolean
   }
 }
 
