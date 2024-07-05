@@ -48,6 +48,17 @@
               "apiField": "legalRepresentativeUse.legalRepUse.applicationType"
             },
             {
+              "subHeading": "Previous application details"
+            },
+            {
+              "label": "USN",
+              "apiField": "legalRepresentativeUse.legalRepUse.???"
+            },
+            {
+              "label": "MAAT ID",
+              "apiField": "legalRepresentativeUse.legalRepUse.???"
+            },
+            {
               "label": "Is this application subject to the usual means / passported test?",
               "apiField": "legalRepresentativeUse.legalRepUse.meansTested"
             },
@@ -68,7 +79,7 @@
               "apiField": "legalRepresentativeUse.legalRepUse.isPriorityCase"
             },
             {
-              "subHeading": "Please select at least ONE type of Priority Case"
+              "subHeading": "Please select at least ONE type of Priority Case:"
             },
             {
               "label": "Custody",
@@ -89,6 +100,177 @@
             {
               "label": "Hearing date imminent",
               "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.imminentHearing"
+            },
+            {
+              "label": "Date of trial",
+              "apiField": "legalRepresentativeUse.legalRepUse.dateOfTrial"
+            },
+            {
+              "label": "Appeal Lodged Date",
+              "apiField": "legalRepresentativeUse.legalRepUse.???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "about-you-1",
+      "title": "About You: 1",
+      "subsections": [
+        {
+          "title": "About You: 1",
+          "fields": [
+            {
+              "label": "Title",
+              "apiField": "aboutYouPart1.aboutYou.title"
+            },
+            {
+              "label": "Forename",
+              "apiField": "aboutYouPart1.aboutYou.clientForeName"
+            },
+            {
+              "label": "Other names",
+              "apiField": "aboutYouPart1.aboutYou.clientOtherNames"
+            },
+            {
+              "label": "Surname or family name",
+              "apiField": "aboutYouPart1.aboutYou.clientSurname"
+            },
+            {
+              "label": "Date of birth",
+              "apiField": "aboutYouPart1.aboutYou.clientDateOfBirth",
+              "type": "date"
+            },
+            {
+              "label": "National Insurance Number",
+              "apiField": "aboutYouPart1.aboutYou.nationalInsurance"
+            },
+            {
+              "label": "Application Registration Card (ARC) Number",
+              "apiField": "aboutYouPart1.aboutYou.applicationRegistrationCard"
+            },
+            {
+              "label": "Do you require all correspondence concerning your Application to be in Welsh?",
+              "apiField": "aboutYouPart1.aboutYou.welshCorrespondence"
+            }
+          ]
+        },
+        {
+          "title": "Contacting You",
+          "fields": [
+            {
+              "label": "Do you have a usual home address?",
+              "apiField": "aboutYouPart1.hasHomeAddress"
+            },
+            {
+              "label": "Address line 1",
+              "apiField": "aboutYouPart1.contactDetails.homeAddress.addressLine1"
+            },
+            {
+              "label": "Address line 2",
+              "apiField": "aboutYouPart1.contactDetails.homeAddress.addressLine2"
+            },
+            {
+              "label": "Address line 3",
+              "apiField": "aboutYouPart1.contactDetails.homeAddress.addressLine3"
+            },
+            {
+              "label": "Postcode",
+              "apiField": "aboutYouPart1.contactDetails.homeAddress.postcode"
+            },
+            {
+              "label": "To what address should we write to you?",
+              "apiField": "aboutYouPart1.contactDetails.correspondenceType"
+            },
+            {
+              "label": "Address line 1",
+              "apiField": "aboutYouPart1.contactDetails.correspondenceAddress.addressLine1"
+            },
+            {
+              "label": "Address line 2",
+              "apiField": "aboutYouPart1.contactDetails.correspondenceAddress.addressLine2"
+            },
+            {
+              "label": "Address line 3",
+              "apiField": "aboutYouPart1.contactDetails.correspondenceAddress.addressLine3"
+            },
+            {
+              "label": "Postcode",
+              "apiField": "aboutYouPart1.contactDetails.homeAddress.postcode"
+            },
+            {
+              "label": "Your email address",
+              "apiField": "aboutYouPart1.contactDetails.emailId"
+            },
+            {
+              "label": "Your telephone number (landline)",
+              "apiField": "aboutYouPart1.contactDetails.phoneNumber"
+            },
+            {
+              "label": "Mobile phone number",
+              "apiField": "aboutYouPart1.contactDetails.mobileNumber"
+            },
+            {
+              "label": "Work phone number",
+              "apiField": "aboutYouPart1.contactDetails.workPhoneNumber"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "about-you-2",
+      "title": "About You: 2",
+      "subsections": [
+        {
+          "title": "About You: 2",
+          "fields": [
+            {
+              "label": "Your usual home address is",
+              "apiField": "aboutYouPart2.homeAddressType"
+            },
+            {
+              "label": "Your relationship to the homeowner",
+              "apiField": "aboutYouPart2.relationshipToHomeOwner"
+            },
+            {
+              "label": "Are you under 18 years old?",
+              "apiField": "aboutYouPart2.under18"
+            },
+            {
+              "label": "Are you charged with an adult?",
+              "apiField": "aboutYouPart2.???"
+            },
+            {
+              "label": "Do you have a partner?",
+              "apiField": "aboutYouPart2.havePartner"
+            },
+            {
+              "label": "You are",
+              "apiField": "aboutYouPart2.maritalStatus"
+            },
+            {
+              "label": "Date of separation",
+              "apiField": "aboutYouPart2.???"
+            },
+            {
+              "label": "You are and your partner are",
+              "apiField": "aboutYouPart2.???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "about-your-partner",
+      "title": "About Your Partner",
+      "subsections": [
+        {
+          "title": "Your Partner's Details",
+          "fields": [
+            {
+              "label": "Do you have a usual home address?",
+              "apiField": "aboutYouPart1.hasHomeAddress"
             }
           ]
         }
