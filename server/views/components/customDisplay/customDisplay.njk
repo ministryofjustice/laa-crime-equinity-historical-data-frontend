@@ -3,6 +3,7 @@
 {% from "./crm4/crm4AlternativeQuotes.njk" import crm4AlternativeQuotes %}
 {% from "./crm7/crm7CaseDisposal.njk" import crm7CaseDisposal %}
 {% from "./crm7/crm7Disbursements.njk" import crm7Disbursements %}
+{% from "./crm7/crm7ClaimForCosts.njk" import crm7ClaimForCosts %}
 
 {% macro customDisplay(params) %}
     {% if params.name == 'crmEvidence' %}
@@ -15,6 +16,8 @@
         {{ crm7CaseDisposal(params.value) }}
     {% elif params.name == 'crm7Disbursements' %}
         {{ crm7Disbursements(params.value) }}
+    {% elif params.name == 'crm7ClaimForCosts' %}
+        {{ crm7ClaimForCosts(params.value) }}
     {% endif %}
 
 {% endmacro %}
