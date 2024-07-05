@@ -28,12 +28,12 @@
                 { text: data.totals.telephoneCalls.cost | formatCurrency }
             ],
             [
-                { text: "Total Letters and Telephone Calls Costs:", isHeader: true, colspan: "4" },
-                { text: data.totals.total | formatCurrency, colspan: "1" }
+                { text: "Total Letters and Telephone Calls Costs:", isHeader: true, colspan: "4", class: "govuk-brand-colour"},
+                { text: data.totals.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold" }
             ],
             [
-                { text: "Solicitor's Core Costs", isHeader: true, colspan: "4" },
-                { text: data.totals.solicitorCost | formatCurrency, colspan: "1" }
+                { text: "Solicitor's Core Costs", isHeader: true, colspan: "4", class: "govuk-brand-colour" },
+                { text: data.totals.solicitorCost | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold" }
             ]
         ]
     } %}
@@ -65,12 +65,12 @@
                 { text: data.officeOnly.telephoneCalls.cost | formatCurrency }
             ],
             [
-                { text: "Total Letters and Telephone Calls Costs:", isHeader: true, colspan: "4" },
-                { text: data.officeOnly.total | formatCurrency, colspan: "1" }
+                { text: "Total Letters and Telephone Calls Costs:", isHeader: true, colspan: "4", class: "govuk-brand-colour" },
+                { text: data.officeOnly.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold" }
             ],
             [
-                { text: "Solicitor's Core Costs", isHeader: true, colspan: "4" },
-                { text: data.officeOnly.solicitorCost | formatCurrency, colspan: "1" }
+                { text: "Solicitor's Core Costs", isHeader: true, colspan: "4", class: "govuk-brand-colour" },
+                { text: data.officeOnly.solicitorCost | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold" }
             ],
             [
                 { text: "Assessment reasons", isHeader: true, colspan: "4" },
