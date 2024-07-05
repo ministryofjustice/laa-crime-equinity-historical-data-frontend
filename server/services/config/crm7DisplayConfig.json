@@ -394,7 +394,10 @@
       "subsections": [
         {
           "title": "Letters and Telephone Calls",
-          "fields": []
+          "customDisplay": {
+            "name": "crm7ClaimForCosts",
+            "apiField": "claimOfCosts.lettersAndPhoneCalls"
+          }
         }
       ]
     },

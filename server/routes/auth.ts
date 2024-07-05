@@ -18,15 +18,6 @@ export default function routes(): Router {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (routePath: string, handler: RequestHandler) => router.post(routePath, asyncMiddleware(handler))
 
-  get('/', (req: Request, res: Response): void => {
-    res.render('auth/index', {
-      title: 'Equiniti historical data',
-      isAuthenticated: req.session.isAuthenticated,
-      username: req.session.account?.username,
-      name: req.session.account?.name,
-    })
-  })
-
   get(
     '/signin',
     authProvider.login({

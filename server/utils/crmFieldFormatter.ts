@@ -22,3 +22,9 @@ export const formatTime = (value: string): string => {
   if (Number.isNaN(timeAsDate)) return value
   return format(timeAsDate, 'HH:mm')
 }
+
+export const formatPercentage = (value: string): string => {
+  const number = Number(value)
+  if (Number.isNaN(number)) return value
+  return `${number}%`
+}

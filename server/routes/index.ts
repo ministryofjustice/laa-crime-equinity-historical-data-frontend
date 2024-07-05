@@ -22,7 +22,7 @@ export default function routes({
     }
 
     if (!req.session.isAuthenticated) {
-      return res.redirect('/auth') // redirect to sign-in route
+      return res.redirect('/auth/signin') // redirect to sign-in route
     }
 
     if (req.session.isAuthenticated) {

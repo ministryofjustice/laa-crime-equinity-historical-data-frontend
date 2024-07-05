@@ -1,0 +1,84 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formSubsection.njk" import formSubsection %}
+
+{% macro crm7ClaimForCosts(data) %}
+
+    {# Render "Letters and Telephone Calls" subsection #}
+    {% set tableData = {
+        head: [
+            { text: "" },
+            { text: "Number" },
+            { text: "Item rate £:p" },
+            { text: "Uplift Claimed?" },
+            { text: "Costs" }
+        ],
+        rows: [
+            [
+                { text: "Letters Written", isHeader: true },
+                { text: data.totals.letters.number },
+                { text: data.totals.letters.rate | formatCurrency },
+                { text: data.totals.letters.uplift | formatPercentage },
+                { text: data.totals.letters.cost | formatCurrency }
+            ],
+            [
+                { text: "Telephone Calls", isHeader: true },
+                { text: data.totals.telephoneCalls.number },
+                { text: data.totals.telephoneCalls.rate | formatCurrency },
+                { text: data.totals.telephoneCalls.uplift | formatPercentage },
+                { text: data.totals.telephoneCalls.cost | formatCurrency }
+            ],
+            [
+                { text: "Total Letters and Telephone Calls Costs:", isHeader: true, colspan: "4", class: "govuk-brand-colour"},
+                { text: data.totals.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold" }
+            ],
+            [
+                { text: "Solicitor's Core Costs", isHeader: true, colspan: "4", class: "govuk-brand-colour" },
+                { text: data.totals.solicitorCost | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold" }
+            ]
+        ]
+    } %}
+
+    {{ formSubsection('Letters and Telephone Calls', tableData, true) }}
+
+    {# Render "For Office Use Only" subsection #}
+    {% set tableDataOfficeUse = {
+        head: [
+            { text: "" },
+            { text: "Allowed Number" },
+            { text: "Item rate £:p" },
+            { text: "Allowed % Uplift" },
+            { text: "Allowed Costs" }
+        ],
+        rows: [
+            [
+                { text: "Letters Written", isHeader: true },
+                { text: data.officeOnly.letters.number },
+                { text: data.officeOnly.letters.rate | formatCurrency },
+                { text: data.officeOnly.letters.uplift | formatPercentage },
+                { text: data.officeOnly.letters.cost | formatCurrency }
+            ],
+            [
+                { text: "Telephone Calls", isHeader: true },
+                { text: data.officeOnly.telephoneCalls.number },
+                { text: data.officeOnly.telephoneCalls.rate | formatCurrency },
+                { text: data.officeOnly.telephoneCalls.uplift | formatPercentage },
+                { text: data.officeOnly.telephoneCalls.cost | formatCurrency }
+            ],
+            [
+                { text: "Total Letters and Telephone Calls Costs:", isHeader: true, colspan: "4", class: "govuk-brand-colour" },
+                { text: data.officeOnly.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold" }
+            ],
+            [
+                { text: "Solicitor's Core Costs", isHeader: true, colspan: "4", class: "govuk-brand-colour" },
+                { text: data.officeOnly.solicitorCost | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold" }
+            ],
+            [
+                { text: "Assessment reasons", isHeader: true, colspan: "4" },
+                { text: data.assessmentReasons, colspan: "1" }
+            ]
+        ]
+    } %}
+
+    {{ formSubsection('For Office Use Only', tableDataOfficeUse, true) }}
+
+{% endmacro %}

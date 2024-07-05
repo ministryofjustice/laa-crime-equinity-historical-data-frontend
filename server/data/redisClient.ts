@@ -25,6 +25,10 @@ export const createRedisClient = (): RedisClient => {
   })
 
   client.on('error', (e: Error) => logger.error('Redis client error', e))
+  client.on('connect', () => {
+    logger.debug('Redis connect event was fired')
+  })
+  client.on('ready', () => logger.debug('Redis ready event was fired'))
 
   return client
 }

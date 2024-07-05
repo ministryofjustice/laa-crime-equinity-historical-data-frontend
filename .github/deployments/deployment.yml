@@ -49,7 +49,15 @@ spec:
                 name: appsecret
                 key: SDS_API_URL
           - name: REDIS_ENABLED
-            value: "true"
+            valueFrom:
+              secretKeyRef:
+                name: appsecret
+                key: REDIS_ENABLED
+          - name: REDIS_TLS_ENABLED
+            valueFrom:
+              secretKeyRef:
+                name: appsecret
+                key: REDIS_TLS_ENABLED
           - name: REDIS_HOST
             valueFrom:
               secretKeyRef:
@@ -95,11 +103,6 @@ spec:
               secretKeyRef:
                 name: appsecret
                 key: POST_LOGOUT_REDIRECT_URI
-          - name: GRAPH_API_ENDPOINT
-            valueFrom:
-              secretKeyRef:
-                name: appsecret
-                key: GRAPH_API_ENDPOINT
           - name: EXPRESS_SESSION_SECRET
             valueFrom:
               secretKeyRef:
