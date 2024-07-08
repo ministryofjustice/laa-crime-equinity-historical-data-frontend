@@ -106,6 +106,7 @@ describe('Search Eform Controller', () => {
       usn: '123456789',
       page: 0,
       pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
     })
   })
 
@@ -237,6 +238,7 @@ describe('Search Eform Controller', () => {
       usn: '8888888',
       page: 0,
       pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
     })
   })
 

@@ -10,7 +10,7 @@ export default class Crm14Controller {
     return async (req: Request, res: Response): Promise<void> => {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
-      const crm14Response = await this.crm14Service.getCrm(usn)
+      const crm14Response = await this.crm14Service.getCrm(usn, '1,4,5,6')
 
       const currentUrl = `/crm14/${usn}/${sectionId || 'legal-rep-use'}`
       const backUrl = manageBackLink(req, currentUrl)

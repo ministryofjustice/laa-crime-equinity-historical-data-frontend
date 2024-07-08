@@ -14,7 +14,7 @@ export default class Crm4Controller {
     return async (req: Request, res: Response): Promise<void> => {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
-      const crm4Response = await this.crm4Service.getCrm(usn)
+      const crm4Response = await this.crm4Service.getCrm(usn, '1,4,5,6')
       const navigation = this.crmDisplayService.getCrmNavigation('crm4', usn, sectionId, crm4Response)
       const section = this.crmDisplayService.getCrmSection('crm4', sectionId, crm4Response)
 

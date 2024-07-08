@@ -50,7 +50,7 @@ export default class SearchEformController {
           } else {
             // render with search results
             const { results, paging } = searchResponse
-            const baseUrl = `/search-eform?${buildQueryString(searchRequest)}&`
+            const baseUrl = `/search-eform?${buildQueryString(queryParams)}&`
             // Reset session history when a new search is performed
             req.session.history = []
             // Store search results and form values in session
@@ -127,6 +127,7 @@ const buildSearchRequest = (queryParams: Record<string, string>): SearchRequest 
     endDate: undefinedIfEmpty(queryParams.endDate),
     page: Number(queryParams.page) - 1, // search api page number starts from 0
     pageSize: SEARCH_PAGE_SIZE,
+    profileAcceptedTypes: '1,4,5,6',
   }
 }
 

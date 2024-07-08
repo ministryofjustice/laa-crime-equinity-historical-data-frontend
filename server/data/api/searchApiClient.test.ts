@@ -56,7 +56,12 @@ describe('EQ Search Api Client', () => {
       .matchHeader('authorization', 'Bearer no_auth')
       .reply(200, searchResponse)
 
-    const result = await searchApiClient.search({ usn: '1234567', page: 0, pageSize: 10 })
+    const result = await searchApiClient.search({
+      usn: '1234567',
+      page: 0,
+      pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
+    })
 
     expect(result).toEqual(searchResponse)
   })
@@ -90,6 +95,7 @@ describe('EQ Search Api Client', () => {
       clientName: 'Jane Doe',
       page: 0,
       pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
     })
 
     expect(result).toEqual(searchResponse)
@@ -141,6 +147,7 @@ describe('EQ Search Api Client', () => {
       supplierAccountNumber: '1234AB',
       page: 0,
       pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
     })
 
     expect(result).toEqual(searchResponse)

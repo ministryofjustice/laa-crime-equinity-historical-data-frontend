@@ -13,7 +13,10 @@ export default class SearchApiClient {
   async search(searchRequest: SearchRequest): Promise<SearchResponse> {
     return SearchApiClient.restClient('no_auth').get<SearchResponse>({
       path: '/api/internal/v1/equinity/search/',
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        profileAcceptedTypes: searchRequest.profileAcceptedTypes,
+      },
       query: {
         usn: searchRequest.usn,
         type: searchRequest.type,
