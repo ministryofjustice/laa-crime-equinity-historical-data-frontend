@@ -103,11 +103,13 @@
             },
             {
               "label": "Date of trial",
-              "apiField": "legalRepresentativeUse.legalRepUse.dateOfTrial"
+              "apiField": "legalRepresentativeUse.legalRepUse.dateOfTrial",
+              "type": "date"
             },
             {
               "label": "Appeal Lodged Date",
-              "apiField": "legalRepresentativeUse.legalRepUse.???"
+              "apiField": "legalRepresentativeUse.legalRepUse.???",
+              "type": "date"
             }
           ]
         }
@@ -269,22 +271,82 @@
           "title": "Your Partner's Details",
           "fields": [
             {
-              "label": "Do you have a usual home address?",
+              "label": "Title",
+              "apiField": "aboutYouPartner.partnerDetails.title"
+            },
+            {
+              "label": "Other Title",
+              "apiField": "aboutYouPartner.partnerDetails.otherTitle"
+            },
+            {
+              "label": "Forename",
+              "apiField": "aboutYouPartner.partnerDetails.clientForeName"
+            },
+            {
+              "label": "Other names",
+              "apiField": "aboutYouPartner.partnerDetails.clientOtherNames"
+            },
+            {
+              "label": "Surname or family name",
+              "apiField": "aboutYouPartner.partnerDetails.clientSurname"
+            },
+            {
+              "label": "Date of birth",
+              "apiField": "aboutYouPartner.partnerDetails.clientDateOfBirth"
+            },
+            {
+              "label": "National Insurance Number",
+              "apiField": "aboutYouPartner.partnerDetails.nationalInsurance"
+            },
+            {
+              "label": "Application Registration Card (ARC) Number",
+              "apiField": "aboutYouPartner.partnerDetails.applicationRegistrationCard"
+            },
+            {
+              "label": "Is your partner a victim, prosecution witness or a co-defendant in the case for which you require legal aid?",
+              "apiField": "aboutYouPartner.coDefendant"
+            },
+            {
+              "label": "Please specify",
               "apiField": "aboutYouPart1.hasHomeAddress"
+            },
+            {
+              "label": "Does your partner have a conflict of interest?",
+              "apiField": "aboutYouPart1.conflictOfInterest"
+            },
+            {
+              "label": "Is your partner's usual home address different from yours?",
+              "apiField": "aboutYouPart1.partnerDifferentHome"
+            },
+            {
+              "label": "Address line 1",
+              "apiField": "aboutYouPart1.homeAddress.addressLine1"
+            },
+            {
+              "label": "Address line 2",
+              "apiField": "aboutYouPart1.homeAddress.addressLine2"
+            },
+            {
+              "label": "Address line 3",
+              "apiField": "aboutYouPart1.homeAddress.addressLine3"
+            },
+            {
+              "label": "Postcode",
+              "apiField": "aboutYouPart1.homeAddress.postCode"
             }
           ]
         }
       ]
     },
     {
-      "sectionId": "evidence",
-      "title": "Evidence",
+      "sectionId": "interests-of-justice",
+      "title": "Interests of Justice",
       "subsections": [
         {
-          "title": "Evidence",
+          "title": "Interests of Justice",
           "customDisplay": {
-            "name": "crmEvidence",
-            "apiField": "evidenceFiles.files"
+            "name": "crm14InterestsOfJustice",
+            "apiField": "interestOfJusticePart1"
           }
         }
       ]

@@ -1,0 +1,79 @@
+{% from "../../formSubsection.njk" import formSubsection %}
+{% from "../../formField.njk" import formField %}
+{% from "../../formTable.njk" import formTable %}
+
+{% macro crm14InterestsOfJustice(data) %}
+
+    {% set tableData = {
+        head: [
+            { text: "Charge"},
+            { text: "Date of Offence" },
+            { text: "" },
+            { text: "" },
+            { text: "" }
+        ],
+        rows: []
+    } %}
+
+    {% for item in data.chargesBrought %}
+        {%- set tableRow = [
+            { text: item.charge | safe, attributes: { 'data-header': 'Charge' } },
+            { text: item.whenOffence | safe, attributes: { 'data-header': 'Date of Offence' } },
+            { text: item.offenceDateOn | safe | formatDate, attributes: { 'data-header': '' } },
+            { text: item.offenceDateBetweenStart | safe | formatDate, attributes: { 'data-header': '' } },
+            { text: item.offenceDateBetweenEnd | safe | formatDate, attributes: { 'data-header': '' } }
+        ] -%}
+        {% set list = tableData.rows.push(tableRow) %}
+    {% endfor %}
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Interests of Justice</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <p class="govuk-summary-list__key">What charges have been brought against you?</p>
+            {{ formTable(tableData) }}
+
+            {% set fields = [
+                { label: "The type of offence with which you are charged", value: data.offenceType },
+                { label: "Do you have any co-defendants in this case?", value: data.anyDefendants },
+                { label: "Please supply their name(s)", value: data.defendantDetails },
+                { label: "Is there any reason why you and your co-defendants cannot be represented by the same solicitor?", value: data.notSameSolicitor },
+                { label: "Please supply the reason(s)", value: data.notSameSolicitorReason },
+                { label: "Are there any other criminal cases or charges against you or your partner which are still in progress?", value: data.otherCases }
+            ] %}
+            <dl class="govuk-summary-list">
+                {% for field in fields %}
+                    {{ formField(field) }}
+                {% endfor %}
+            </dl>
+
+            {% if data.otherCases == 'Yes' %}
+                <p class="govuk-summary-list__key">You</p>
+                {% set fieldsYou = [
+                    { label: "The charges", value: data.otherCaseCharges.you.charges },
+                    { label: "The Court hearing the case", value: data.otherCaseCharges.you.court },
+                    { label: "Date of the next hearing", value: data.otherCaseCharges.you.nextHearing, type: "date" }
+                ] %}
+                <dl class="govuk-summary-list">
+                    {% for field in fieldsYou %}
+                        {{ formField(field) }}
+                    {% endfor %}
+                </dl>
+
+            {% endif %}
+
+            {% set fields2 = [
+                { label: "Which Court is hearing the case for which you need legal aid?", value: data.laCourt },
+                { label: "Date of the hearing", value: data.laCourtNextHearing,  type: "date" },
+                { label: "Have proceedings already concluded?", value: data.proceedingsConcluded },
+                { label: "If magistrates proceedings have concluded before the date stamp on this form, you should provide a note in the box below including", value: data.proceedingsConcludedNotes }
+            ] %}
+            <dl class="govuk-summary-list">
+                {% for field in fields2 %}
+                    {{ formField(field) }}
+                {% endfor %}
+            </dl>
+        </div>
+    </div>
+{% endmacro %}
