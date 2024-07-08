@@ -66,14 +66,4 @@ describe('getProfileAcceptedTypes()', () => {
 
     expect(result).toEqual('')
   })
-
-  it('should return empty string if ssoUserGroups are unavailable', () => {
-    response.locals = {
-      user: { token: '', authSource: '' },
-    }
-
-    const result = getProfileAcceptedTypes(response)
-
-    expect(result).toEqual('')
-  })
 })

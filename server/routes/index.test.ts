@@ -13,9 +13,6 @@ import CrmDisplayService from '../services/crmDisplayService'
 jest.mock('../services/crmApiService')
 jest.mock('../services/searchEformService')
 jest.mock('../services/crmDisplayService')
-// jest.mock('../utils/userProfileGroups', () => {
-//   return jest.fn().mockReturnValue('1,4,5,6')
-// })
 
 let app: Express
 

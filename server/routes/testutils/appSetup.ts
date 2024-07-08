@@ -33,7 +33,6 @@ function appSetup(services: Services, production: boolean): Express {
     req.session.isAuthenticated = true
     req.session.account = {}
     req.session.account.name = 'Jane Doe'
-    req.session.account.idTokenClaims = { groups: [] }
     next()
   })
   app.use(express.json())
