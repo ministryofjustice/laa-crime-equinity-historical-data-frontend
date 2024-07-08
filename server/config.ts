@@ -44,11 +44,11 @@ export default {
   https: production,
   staticResourceCacheDuration: '1h',
   sso: {
-    enabled: get('SSO_ENABLED', 'false', requiredInProduction) === 'true',
     cloudInstance: get('CLOUD_INSTANCE', 'https://login.microsoftonline.com/', requiredInProduction),
     clientId: get('CLIENT_ID', 'xxx', requiredInProduction),
     clientSecret: get('CLIENT_SECRET', 'xxx', requiredInProduction),
     tenantId: get('TENANT_ID', 'xxx', requiredInProduction),
+    allowedUserProfileGroups: get('ALLOWED_USER_PROFILE_GROUPS', '{}', requiredInProduction),
   },
   redis: {
     enabled: get('REDIS_ENABLED', 'false', requiredInProduction) === 'true',

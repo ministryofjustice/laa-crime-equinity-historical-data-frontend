@@ -8,6 +8,9 @@ import CrmDisplayService from '../../services/crmDisplayService'
 
 jest.mock('../../services/crmApiService')
 jest.mock('../../services/crmDisplayService')
+jest.mock('../../utils/userProfileGroups', () => {
+  return jest.fn().mockReturnValue('1,4,5,6')
+})
 
 describe('CRM5 Controller', () => {
   let mockCrmApiService: jest.Mocked<CrmApiService<Crm5Response>>

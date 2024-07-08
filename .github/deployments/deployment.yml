@@ -68,11 +68,6 @@ spec:
               secretKeyRef:
                 name: elasticache-redis
                 key: auth_token
-          - name: SSO_ENABLED
-            valueFrom:
-              secretKeyRef:
-                name: appsecret
-                key: SSO_ENABLED
           - name: CLOUD_INSTANCE
             valueFrom:
               secretKeyRef:
@@ -108,4 +103,8 @@ spec:
               secretKeyRef:
                 name: appsecret
                 key: EXPRESS_SESSION_SECRET
-          
+          - name: ALLOWED_USER_PROFILE_GROUPS
+            valueFrom:
+              secretKeyRef:
+                name: appsecret
+                key: ALLOWED_USER_PROFILE_GROUPS

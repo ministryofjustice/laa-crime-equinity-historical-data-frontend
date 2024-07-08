@@ -29,6 +29,11 @@ function appSetup(services: Services, production: boolean): Express {
   app.use(cookieSession({ keys: [''] }))
   app.use((req, res, next) => {
     req.flash = flashProvider
+    // set user as authenticated
+    req.session.isAuthenticated = true
+    req.session.account = {}
+    req.session.account.name = 'Jane Doe'
+    req.session.account.idTokenClaims = { groups: [] }
     next()
   })
   app.use(express.json())

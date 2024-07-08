@@ -6,6 +6,9 @@ import Crm14Controller from './crm14Controller'
 
 jest.mock('../../services/crmApiService')
 jest.mock('../../services/crmDisplayService')
+jest.mock('../../utils/userProfileGroups', () => {
+  return jest.fn().mockReturnValue('1,4,5,6')
+})
 
 describe('CRM14 Controller', () => {
   let mockCrmApiService: jest.Mocked<CrmApiService<Crm14Response>>
