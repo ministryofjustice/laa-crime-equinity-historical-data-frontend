@@ -3,6 +3,7 @@ import { Crm4Response } from '@crm4'
 import CrmApiService from '../../services/crmApiService'
 import CrmDisplayService from '../../services/crmDisplayService'
 import manageBackLink from '../../utils/crmBackLink'
+import getProfileAcceptedTypes from '../../utils/userProfileGroups'
 
 export default class Crm4Controller {
   constructor(
@@ -14,7 +15,7 @@ export default class Crm4Controller {
     return async (req: Request, res: Response): Promise<void> => {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
-      const crm4Response = await this.crm4Service.getCrm(usn)
+      const crm4Response = await this.crm4Service.getCrm(usn, getProfileAcceptedTypes(res))
       const navigation = this.crmDisplayService.getCrmNavigation('crm4', usn, sectionId, crm4Response)
       const section = this.crmDisplayService.getCrmSection('crm4', sectionId, crm4Response)
 

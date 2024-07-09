@@ -4,6 +4,7 @@ import SearchEformService from '../services/searchEformService'
 import validateSearchQuery, { SearchValidationErrors } from '../utils/searchEformValidation'
 import getPagination from '../utils/pagination'
 import { buildQueryString } from '../utils/utils'
+import getProfileAcceptedTypes from '../utils/userProfileGroups'
 
 const SEARCH_PAGE_SIZE = 10
 
@@ -40,7 +41,7 @@ export default class SearchEformController {
           res.render(VIEW_PATH, { results: [], errors: validationErrors, formValues: queryParams })
         } else {
           // perform search
-          const searchRequest = buildSearchRequest(queryParams)
+          const searchRequest = buildSearchRequest(queryParams, getProfileAcceptedTypes(res))
           const searchResponse = await this.searchEformService.search(searchRequest)
 
           if (searchResponse.error) {
@@ -50,7 +51,7 @@ export default class SearchEformController {
           } else {
             // render with search results
             const { results, paging } = searchResponse
-            const baseUrl = `/search-eform?${buildQueryString(searchRequest)}&`
+            const baseUrl = `/search-eform?${buildQueryString(queryParams)}&`
             // Reset session history when a new search is performed
             req.session.history = []
             // Store search results and form values in session
@@ -116,7 +117,7 @@ const getErrorMessage = (errorStatus: number): string => {
   }
 }
 
-const buildSearchRequest = (queryParams: Record<string, string>): SearchRequest => {
+const buildSearchRequest = (queryParams: Record<string, string>, profileAcceptedTypes: string): SearchRequest => {
   return {
     usn: undefinedIfEmpty(queryParams.usn),
     type: undefinedIfEmpty(queryParams.type) && Number(queryParams.type),
@@ -127,6 +128,7 @@ const buildSearchRequest = (queryParams: Record<string, string>): SearchRequest 
     endDate: undefinedIfEmpty(queryParams.endDate),
     page: Number(queryParams.page) - 1, // search api page number starts from 0
     pageSize: SEARCH_PAGE_SIZE,
+    profileAcceptedTypes,
   }
 }
 

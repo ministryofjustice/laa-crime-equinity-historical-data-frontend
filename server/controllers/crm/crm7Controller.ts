@@ -3,6 +3,7 @@ import { Crm7Response } from '@crm7'
 import CrmApiService from '../../services/crmApiService'
 import CrmDisplayService from '../../services/crmDisplayService'
 import manageBackLink from '../../utils/crmBackLink'
+import getProfileAcceptedTypes from '../../utils/userProfileGroups'
 
 export default class Crm7Controller {
   constructor(
@@ -14,7 +15,7 @@ export default class Crm7Controller {
     return async (req: Request, res: Response): Promise<void> => {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
-      const crm7Response = await this.crm7Service.getCrm(usn)
+      const crm7Response = await this.crm7Service.getCrm(usn, getProfileAcceptedTypes(res))
 
       const mergedScheduleCostsData = {
         ...crm7Response.formDetails.scheduleOfTimeSpent,

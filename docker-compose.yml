@@ -44,7 +44,7 @@ services:
     container_name: redis
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-    image: redis:6.2
+    image: redis:7.0
     networks:
       - laa
     ports:

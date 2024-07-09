@@ -18,10 +18,10 @@ describe('CRM API Service', () => {
 
     const crm5Service = new CrmApiService(mockCrm5ApiClient)
 
-    const result = await crm5Service.getCrm(1234567)
+    const result = await crm5Service.getCrm(1234567, '1,4,5,6')
 
     expect(result).toEqual(expectedResponse)
-    expect(mockCrm5ApiClient.getCrm).toHaveBeenCalledWith(1234567)
+    expect(mockCrm5ApiClient.getCrm).toHaveBeenCalledWith(1234567, '1,4,5,6')
   })
 })
 
