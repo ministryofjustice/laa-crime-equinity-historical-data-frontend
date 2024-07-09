@@ -3,14 +3,14 @@ import type { Response } from 'express'
 import config from '../config'
 
 function getProfileAcceptedTypes(res: Response): string {
+  const ssoUserGroups = res.locals.ssoUserGroups || []
   const allowedUserProfileGroups = config.sso.allowedUserProfileGroups.split(',')
 
-  const ssoUserGroups = res.locals.ssoUserGroups || []
   return allowedUserProfileGroups
     .map(group => {
-      const parts = group.split(':')
-      if (ssoUserGroups.includes(parts[0])) {
-        return parts[1]
+      const [groupId, crmTypeId] = group.split(':')
+      if (ssoUserGroups.includes(groupId)) {
+        return crmTypeId
       }
       return null
     })
