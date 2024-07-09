@@ -48,7 +48,7 @@ export default {
     clientId: get('CLIENT_ID', 'xxx', requiredInProduction),
     clientSecret: get('CLIENT_SECRET', 'xxx', requiredInProduction),
     tenantId: get('TENANT_ID', 'xxx', requiredInProduction),
-    allowedUserProfileGroups: get('ALLOWED_USER_PROFILE_GROUPS', '{}', requiredInProduction),
+    allowedUserProfileGroups: get('ALLOWED_USER_PROFILE_GROUPS', '', requiredInProduction),
   },
   redis: {
     enabled: get('REDIS_ENABLED', 'false', requiredInProduction) === 'true',
