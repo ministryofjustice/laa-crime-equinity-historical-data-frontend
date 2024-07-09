@@ -384,7 +384,10 @@
       "subsections": [
         {
           "title": "Schedule Of Time Spent",
-          "fields": []
+          "customDisplay": {
+            "name": "crm7ScheduleOfTime",
+            "apiField": "mergedScheduleCostsData"
+          }
         }
       ]
     },
@@ -566,7 +569,8 @@
             },
             {
               "label": "Date",
-              "apiField": "caseInformation.solicitorCertification.date"
+              "apiField": "caseInformation.solicitorCertification.date",
+              "type": "date"
             }
           ]
         },

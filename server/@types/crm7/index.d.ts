@@ -14,6 +14,24 @@ type NumberRateAndCost = {
 }
 
 export interface Crm7Response extends CrmResponse {
+  mergedScheduleCostsData: {
+    schedule: ScheduleItem[]
+    officeUse: Totals
+    costTotals: CostTotals
+    timeTotals: TimeTotals
+    totals: Totals
+    lettersAndPhoneCalls: {
+      totals: { letters: NumberRateAndCost; telephoneCalls: NumberRateAndCost; total: number; solicitorCost: number }
+      officeOnly: {
+        letters: NumberRateAndCost
+        telephoneCalls: NumberRateAndCost
+        total: number
+        solicitorCost: number
+      }
+      assessmentReasons: string
+    }
+    laaAdjustments: LaaAdjustmentItem[]
+  }
   formDetails: {
     usn: number
     summary?: {
@@ -114,56 +132,18 @@ export interface Crm7Response extends CrmResponse {
       dateReceivedByCourt: string
     }
     scheduleOfTimeSpent?: {
-      schedule: [
-        {
-          line: number
-          feeEarnerInitials: string
-          date: string
-          costType: string
-          time: string
-          hearingTypeCode: string
-          personAttendedCode: string
-          hourlyRate: number
-          basicClaim: number
-          uplift: number
-          claim: number
-        },
-      ]
-      laaAdjustments: [
-        {
-          line: number
-          time: string
-          hourlyRate: number
-          basicClaim: number
-          uplift: number
-          claim: number
-          comments: string
-        },
-      ]
+      schedule: ScheduleItem[]
+      laaAdjustments: LaaAdjustmentItem[]
+      timeTotals: TimeTotals
+      costTotals: CostTotals
+      totals: Totals
+      officeUse: Totals
     }
     claimOfCosts?: {
-      timeTotals: {
-        travel: string
-        waiting: string
-        attendance: string
-        preparation: string
-        advocacy: string
-      }
-      costTotals: {
-        travel: string
-        waiting: string
-        attendance: string
-        preparation: string
-        advocacy: string
-      }
-      totals: {
-        basic: number
-        total: number
-      }
-      officeUse: {
-        basic: number
-        total: number
-      }
+      timeTotals: TimeTotals
+      costTotals: CostTotals
+      totals: Totals
+      officeUse: Totals
       lettersAndPhoneCalls: {
         totals: {
           letters: NumberRateAndCost
@@ -223,4 +203,49 @@ export interface Crm7Response extends CrmResponse {
     decisionOfficeUseOnly: string
   }
   evidenceFiles: EvidenceFiles
+}
+
+interface ScheduleItem {
+  line: number
+  feeEarnerInitials: string
+  date: string
+  costType: string
+  time: string
+  hearingTypeCode: string
+  personAttendedCode: string
+  hourlyRate: number
+  basicClaim: number
+  uplift: number
+  claim: number
+}
+
+interface LaaAdjustmentItem {
+  line: number
+  time: string
+  hourlyRate: number
+  basicClaim: number
+  uplift: number
+  claim: number
+  comments: string
+}
+
+interface TimeTotals {
+  travel: string
+  waiting: string
+  attendance: string
+  preparation: string
+  advocacy: string
+}
+
+interface CostTotals {
+  travel: string
+  waiting: string
+  attendance: string
+  preparation: string
+  advocacy: string
+}
+
+interface Totals {
+  basic: number
+  total: number
 }

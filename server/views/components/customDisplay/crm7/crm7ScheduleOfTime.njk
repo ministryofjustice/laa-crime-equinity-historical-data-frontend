@@ -1,0 +1,95 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formSubsection.njk" import formSubsection %}
+
+{% macro crm7ScheduleOfTime(data) %}
+     Render "Schedule Of Time Spent" subsection
+    {% set scheduleData = {
+        head: [
+            { text: "Line" },
+            { text: "Fee Earner Initials" },
+            { text: "Date" },
+            { text: "Cost Type" },
+            { text: "Time" },
+            { text: "Hearing Type Code(s)" },
+            { text: "Person(s) Attended Code(s)" },
+            { text: "Hourly Rate" },
+            { text: "Basic Claim" },
+            { text: "% Uplift" },
+            { text: "Claim" }
+        ],
+        rows: []
+    } %}
+
+    {% for item in data.schedule %}
+        {% set row = [
+            { text: item.line },
+            { text: item.feeEarnerInitials },
+            { text: item.date },
+            { text: item.costType },
+            { text: item.time },
+            { text: item.hearingTypeCode },
+            { text: item.personAttendedCode },
+            { text: item.hourlyRate | formatCurrency },
+            { text: item.basicClaim | formatCurrency },
+            { text: item.uplift | formatPercentage },
+            { text: item.claim | formatCurrency }
+        ] %}
+        {% set _ = scheduleData.rows.push(row) %}
+    {% endfor %}
+
+    {{ formSubsection('Schedule Of Time Spent', scheduleData, true) }}
+
+     Render "Time Totals" subsection
+    {% set timeTotalsData = {
+        head: [
+            { text: "Travel" },
+            { text: "Waiting" },
+            { text: "Attendance" },
+            { text: "Preparation" },
+            { text: "Advocacy" }
+        ],
+        rows: [
+            [
+                { text: data.timeTotals.travel },
+                { text: data.timeTotals.waiting },
+                { text: data.timeTotals.attendance },
+                { text: data.timeTotals.preparation },
+                { text: data.timeTotals.advocacy }
+            ]
+        ]
+    } %}
+
+    {{ formSubsection('Time Totals', timeTotalsData, true) }}
+
+     Render "Cost Totals" subsection
+    {% set costTotalsData = {
+        head: [
+            { text: "Travel" },
+            { text: "Waiting" },
+            { text: "Attendance" },
+            { text: "Preparation" },
+            { text: "Advocacy" }
+        ],
+        rows: [
+            [
+                { text: data.costTotals.travel },
+                { text: data.costTotals.waiting },
+                { text: data.costTotals.attendance },
+                { text: data.costTotals.preparation },
+                { text: data.costTotals.advocacy }
+            ],
+            [
+                { text: "Total Basic Claim:", isHeader: true, colspan: "4", class: "govuk-brand-colour" },
+                { text: data.totals.basic | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold" }
+            ],
+            [
+                { text: "Total Claim:", isHeader: true, colspan: "4", class: "govuk-brand-colour" },
+                { text: data.totals.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold" }
+            ]
+        ]
+    } %}
+
+    {{ formSubsection('Cost Totals', costTotalsData, true) }}
+
+{% endmacro %}
+

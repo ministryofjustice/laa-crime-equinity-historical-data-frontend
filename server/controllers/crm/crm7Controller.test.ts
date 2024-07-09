@@ -38,11 +38,206 @@ describe('CRM7 Controller', () => {
           solicitorReference: '123456789',
         },
         decisionOfficeUseOnly: 'No',
+        scheduleOfTimeSpent: {
+          schedule: [
+            {
+              line: 1,
+              feeEarnerInitials: 'FEI',
+              date: '2023-01-01',
+              costType: 'Type1',
+              time: '10:00',
+              hearingTypeCode: 'HTC1',
+              personAttendedCode: 'PAC1',
+              hourlyRate: 100,
+              basicClaim: 50,
+              uplift: 10,
+              claim: 60,
+            },
+          ],
+          laaAdjustments: [
+            {
+              line: 1,
+              time: '10:00',
+              hourlyRate: 100,
+              basicClaim: 50,
+              uplift: 10,
+              claim: 60,
+              comments: 'Adjustment Comment',
+            },
+          ],
+          timeTotals: {
+            travel: '10:00',
+            waiting: '11:00',
+            attendance: '12:00',
+            preparation: '13:00',
+            advocacy: '14:00',
+          },
+          costTotals: {
+            travel: '110',
+            waiting: '120',
+            attendance: '130',
+            preparation: '140',
+            advocacy: '150',
+          },
+          totals: {
+            basic: 753.1,
+            total: 753.2,
+          },
+          officeUse: {
+            basic: 0,
+            total: 0,
+          },
+        },
+        claimOfCosts: {
+          timeTotals: {
+            travel: '10:00',
+            waiting: '11:00',
+            attendance: '12:00',
+            preparation: '13:00',
+            advocacy: '14:00',
+          },
+          costTotals: {
+            travel: '110',
+            waiting: '120',
+            attendance: '130',
+            preparation: '140',
+            advocacy: '150',
+          },
+          totals: {
+            basic: 753.1,
+            total: 753.2,
+          },
+          officeUse: {
+            basic: 0,
+            total: 0,
+          },
+          lettersAndPhoneCalls: {
+            totals: {
+              letters: {
+                number: 99,
+                rate: 3.9,
+                uplift: 0.0,
+                cost: 386.1,
+              },
+              telephoneCalls: {
+                number: 99,
+                rate: 3.9,
+                uplift: 0.0,
+                cost: 386.1,
+              },
+              total: 772.2,
+              solicitorCost: 1231.3,
+            },
+            officeOnly: {
+              letters: {
+                number: 99,
+                rate: 3.9,
+                uplift: 0.0,
+                cost: 386.1,
+              },
+              telephoneCalls: {
+                number: 99,
+                rate: 3.9,
+                uplift: 0.0,
+                cost: 386.1,
+              },
+              total: 772.2,
+              solicitorCost: 1231.3,
+            },
+            assessmentReasons: '',
+          },
+        },
       },
       evidenceFiles: {
         files: [],
       },
+      mergedScheduleCostsData: {
+        schedule: [
+          {
+            line: 1,
+            feeEarnerInitials: 'FEI',
+            date: '2023-01-01',
+            costType: 'Type1',
+            time: '10:00',
+            hearingTypeCode: 'HTC1',
+            personAttendedCode: 'PAC1',
+            hourlyRate: 100,
+            basicClaim: 50,
+            uplift: 10,
+            claim: 60,
+          },
+        ],
+        officeUse: {
+          basic: 0,
+          total: 0,
+        },
+        costTotals: {
+          travel: '110',
+          waiting: '120',
+          attendance: '130',
+          preparation: '140',
+          advocacy: '150',
+        },
+        timeTotals: {
+          travel: '10:00',
+          waiting: '11:00',
+          attendance: '12:00',
+          preparation: '13:00',
+          advocacy: '14:00',
+        },
+        totals: {
+          basic: 753.1,
+          total: 753.2,
+        },
+        lettersAndPhoneCalls: {
+          totals: {
+            letters: {
+              number: 99,
+              rate: 3.9,
+              uplift: 0.0,
+              cost: 386.1,
+            },
+            telephoneCalls: {
+              number: 99,
+              rate: 3.9,
+              uplift: 0.0,
+              cost: 386.1,
+            },
+            total: 772.2,
+            solicitorCost: 1231.3,
+          },
+          officeOnly: {
+            letters: {
+              number: 99,
+              rate: 3.9,
+              uplift: 0.0,
+              cost: 386.1,
+            },
+            telephoneCalls: {
+              number: 99,
+              rate: 3.9,
+              uplift: 0.0,
+              cost: 386.1,
+            },
+            total: 772.2,
+            solicitorCost: 1231.3,
+          },
+          assessmentReasons: '',
+        },
+        laaAdjustments: [
+          {
+            line: 1,
+            time: '10:00',
+            hourlyRate: 100,
+            basicClaim: 50,
+            uplift: 10,
+            claim: 60,
+            comments: 'Adjustment Comment',
+          },
+        ],
+      },
     }
+
     mockCrmApiService.getCrm.mockResolvedValue(crm7Response)
 
     const crmNavigation: Navigation = {
@@ -95,6 +290,7 @@ describe('CRM7 Controller', () => {
       navigationItems: crmNavigation,
       section: crmSection,
       backUrl: '/search-eform',
+      mergedScheduleCostsData: crm7Response.mergedScheduleCostsData, // Ensure this is included in the expected data
     })
   })
 })
