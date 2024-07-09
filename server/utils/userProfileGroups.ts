@@ -1,22 +1,16 @@
 import type { Response } from 'express'
 
 import config from '../config'
-import logger from '../../logger'
 
 function getProfileAcceptedTypes(res: Response): string {
-  let allowedUserProfileGroups
-  try {
-    allowedUserProfileGroups = JSON.parse(config.sso.allowedUserProfileGroups)
-  } catch (error) {
-    logger.error('Unable to parse "config.sso.allowedUserProfileGroups" as JSON', error)
-    return ''
-  }
+  const allowedUserProfileGroups = config.sso.allowedUserProfileGroups.split(',')
 
   const ssoUserGroups = res.locals.ssoUserGroups || []
-  return Object.keys(allowedUserProfileGroups)
-    .map(groupId => {
-      if (ssoUserGroups.includes(groupId)) {
-        return allowedUserProfileGroups[groupId]
+  return allowedUserProfileGroups
+    .map(group => {
+      const parts = group.split(':')
+      if (ssoUserGroups.includes(parts[0])) {
+        return parts[1]
       }
       return null
     })
