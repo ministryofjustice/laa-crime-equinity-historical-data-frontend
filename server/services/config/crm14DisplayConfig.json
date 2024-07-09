@@ -304,11 +304,11 @@
             },
             {
               "label": "Is your partner a victim, prosecution witness or a co-defendant in the case for which you require legal aid?",
-              "apiField": "aboutYouPartner.coDefendant"
+              "apiField": "aboutYouPartner.???"
             },
             {
               "label": "Please specify",
-              "apiField": "aboutYouPart1.hasHomeAddress"
+              "apiField": "aboutYouPartner.coDefendant"
             },
             {
               "label": "Does your partner have a conflict of interest?",
@@ -320,19 +320,19 @@
             },
             {
               "label": "Address line 1",
-              "apiField": "aboutYouPart1.homeAddress.addressLine1"
+              "apiField": "aboutYouPartner.homeAddress.addressLine1"
             },
             {
               "label": "Address line 2",
-              "apiField": "aboutYouPart1.homeAddress.addressLine2"
+              "apiField": "aboutYouPartner.homeAddress.addressLine2"
             },
             {
               "label": "Address line 3",
-              "apiField": "aboutYouPart1.homeAddress.addressLine3"
+              "apiField": "aboutYouPartner.homeAddress.addressLine3"
             },
             {
               "label": "Postcode",
-              "apiField": "aboutYouPart1.homeAddress.postCode"
+              "apiField": "aboutYouPartner.homeAddress.postCode"
             }
           ]
         }
