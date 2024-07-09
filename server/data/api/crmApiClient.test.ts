@@ -55,7 +55,7 @@ describe('CRM Api Client', () => {
       .matchHeader('authorization', 'Bearer no_auth')
       .reply(200, crm5Response)
 
-    const result = await crm5ApiClient.getCrm(1234567)
+    const result = await crm5ApiClient.getCrm(1234567, '1,4,5,6')
 
     expect(result).toEqual(crm5Response)
   })

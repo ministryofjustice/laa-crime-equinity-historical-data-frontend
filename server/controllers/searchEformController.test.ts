@@ -6,6 +6,9 @@ import SearchEformController from './searchEformController'
 import SearchEformService from '../services/searchEformService'
 
 jest.mock('../services/searchEformService')
+jest.mock('../utils/userProfileGroups', () => {
+  return jest.fn().mockReturnValue('1,4,5,6')
+})
 
 describe('Search Eform Controller', () => {
   let mockSearchEformService: jest.Mocked<SearchEformService>
@@ -106,6 +109,7 @@ describe('Search Eform Controller', () => {
       usn: '123456789',
       page: 0,
       pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
     })
   })
 
@@ -237,6 +241,7 @@ describe('Search Eform Controller', () => {
       usn: '8888888',
       page: 0,
       pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
     })
   })
 
