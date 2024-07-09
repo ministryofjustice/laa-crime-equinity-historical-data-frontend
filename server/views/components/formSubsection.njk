@@ -1,5 +1,5 @@
 {%- from "govuk/components/table/macro.njk" import govukTable -%}
-{% from "./formField.njk" import formField %}
+{% from "./formFieldList.njk" import formFieldList %}
 {% from "./formTable.njk" import formTable %}
 
 
@@ -13,11 +13,7 @@
             {% if isTableData %}
                 {{ formTable(data) }}
             {% else %}
-                <dl class="govuk-summary-list">
-                    {% for field in data %}
-                        {{ formField(field) }}
-                    {% endfor %}
-                </dl>
+                {{ formFieldList(data) }}
             {% endif %}
         </div>
     </div>
