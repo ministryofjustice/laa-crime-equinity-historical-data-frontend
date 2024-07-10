@@ -178,7 +178,7 @@
             },
             {
               "label": "Postcode",
-              "apiField": "aboutYouPart1.contactDetails.homeAddress.postcode"
+              "apiField": "aboutYouPart1.contactDetails.homeAddress.postCode"
             },
             {
               "label": "To what address should we write to you?",
@@ -198,7 +198,7 @@
             },
             {
               "label": "Postcode",
-              "apiField": "aboutYouPart1.contactDetails.homeAddress.postcode"
+              "apiField": "aboutYouPart1.contactDetails.homeAddress.postCode"
             },
             {
               "label": "Your email address",
@@ -292,7 +292,8 @@
             },
             {
               "label": "Date of birth",
-              "apiField": "aboutYouPartner.partnerDetails.clientDateOfBirth"
+              "apiField": "aboutYouPartner.partnerDetails.clientDateOfBirth",
+              "type": "date"
             },
             {
               "label": "National Insurance Number",
@@ -304,11 +305,11 @@
             },
             {
               "label": "Is your partner a victim, prosecution witness or a co-defendant in the case for which you require legal aid?",
-              "apiField": "aboutYouPartner.???"
+              "apiField": "aboutYouPartner.coDefendant"
             },
             {
               "label": "Please specify",
-              "apiField": "aboutYouPartner.coDefendant"
+              "apiField": "aboutYouPartner.???"
             },
             {
               "label": "Does your partner have a conflict of interest?",
@@ -445,6 +446,160 @@
             {
               "label": "Is your partner employed (excluding being self employed)?",
               "apiField": "evidencePart1.partnerEmployed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "income",
+      "title": "Income",
+      "subsections": [
+        {
+          "title": "Your Income and Your Partner's Income",
+          "fields": [
+            {
+              "subHeading": "???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "evidence-2",
+      "title": "Evidence: 2",
+      "subsections": [
+        {
+          "title": "Your Evidence",
+          "fields": [
+            {
+              "subHeading": "???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "legal-representation",
+      "title": "Legal Representation",
+      "subsections": [
+        {
+          "title": "Legal Representation",
+          "fields": [
+            {
+              "label": "Office from which solicitor is applying",
+              "apiField": "legalRepresentationDetails.solicitorApplyOffice"
+            },
+            {
+              "label": "The solicitor who you want to act for you (LAA Account Number)",
+              "apiField": "legalRepresentationDetails.solicitorAccountNum"
+            },
+            {
+              "label": "Title",
+              "apiField": "legalRepresentationDetails.title"
+            },
+            {
+              "label": "Full name",
+              "apiField": "legalRepresentationDetails.solicitorFullName"
+            },
+            {
+              "label": "Name of the solicitor's firm",
+              "apiField": "legalRepresentationDetails.firmName"
+            },
+            {
+              "label": "Address line 1",
+              "apiField": "legalRepresentationDetails.homeAddress.addressLine1"
+            },
+            {
+              "label": "Address line 2",
+              "apiField": "legalRepresentationDetails.homeAddress.addressLine2"
+            },
+            {
+              "label": "Address line 3",
+              "apiField": "legalRepresentationDetails.homeAddress.addressLine3"
+            },
+            {
+              "label": "Postcode",
+              "apiField": "legalRepresentationDetails.homeAddress.postCode"
+            },
+            {
+              "label": "Telephone (land line)",
+              "apiField": "legalRepresentationDetails.landLineNumber"
+            },
+            {
+              "label": "Mobile phone",
+              "apiField": "legalRepresentationDetails.mobileNumber"
+            },
+            {
+              "label": "Document Exchange (DX)",
+              "apiField": "legalRepresentationDetails.documentExchange"
+            },
+            {
+              "label": "Fax",
+              "apiField": "legalRepresentationDetails.fax"
+            },
+            {
+              "label": "Email address",
+              "apiField": "legalRepresentationDetails.emailId"
+            },
+            {
+              "label": "Firm Administrator's email address",
+              "apiField": "legalRepresentationDetails.adminEmailId"
+            },
+            {
+              "label": "Declaration by the Legal Representative",
+              "apiField": "legalRepresentationDetails.declarationStatement"
+            },
+            {
+              "label": "I understand that, as Legal Representative, I must obtain, and retain on file, a Declaration from the Applicant (and partner if applicable). I understand that this means completing a hardcopy mandate form.",
+              "apiField": "legalRepresentationDetails.declarationConfirm"
+            },
+            {
+              "label": "Date",
+              "apiField": "legalRepresentationDetails.signDate",
+              "type": "date"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "about-the-information",
+      "title": "About The Information",
+      "subsections": [
+        {
+          "title": "About the information which you have provided and its protection",
+          "fields": [
+            {
+              "subHeading": "???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "declarations",
+      "title": "Declarations",
+      "subsections": [
+        {
+          "title": "Fraud Notice",
+          "fields": [
+            {
+              "subHeading": "???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "privacy-notice",
+      "title": "Privacy Notice",
+      "subsections": [
+        {
+          "title": "Privacy Notice",
+          "fields": [
+            {
+              "subHeading": "???"
             }
           ]
         }
