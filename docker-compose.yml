@@ -38,18 +38,7 @@ services:
       - "--uno-listener-restart-threshold=0" #disables uno listener
     restart: always
     healthcheck:
-      test: [ 'CMD', 'curl', '-f', 'http://localhost:3100/health' ]
+      test: [ 'CMD', 'curl', '-f', '/health' ]
 
-  redis:
-    container_name: redis
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-    image: redis:7.0
-    networks:
-      - laa
-    ports:
-      - '6379:6379'
-
-networks:
-  laa:
+ 
     
