@@ -339,15 +339,114 @@
       ]
     },
     {
-      "sectionId": "interests-of-justice",
-      "title": "Interests of Justice",
+      "sectionId": "interests-of-justice-1",
+      "title": "Interests of Justice: 1",
       "subsections": [
         {
-          "title": "Interests of Justice",
+          "title": "Interests of Justice: 1",
           "customDisplay": {
             "name": "crm14InterestsOfJustice",
             "apiField": "interestOfJusticePart1"
           }
+        }
+      ]
+    },
+    {
+      "sectionId": "interests-of-justice-2",
+      "title": "Interests of Justice: 2",
+      "subsections": [
+        {
+          "title": "Why do you want legal aid?",
+          "fields": [
+            {
+              "subHeading": "Complete one or more reasons. For each reason you choose, say why you have chosen it. Mention any evidence that supports your choice of a reason."
+            },
+            {
+              "label": "It is likely that I will lose my liberty if any matter in the proceedings is decided against me.",
+              "apiField": "interestOfJusticePart2.loseLibertyDetails"
+            },
+            {
+              "label": "I have been given a sentence that is suspended or non-custodial. If I break this, the court may be able to deal with me for the original offence.",
+              "apiField": "interestOfJusticePart2.suspendedSentenceDetails"
+            },
+            {
+              "label": "It is likely that I will lose my livelihood.",
+              "apiField": "interestOfJusticePart2.loseLivelihoodDetails"
+            },
+            {
+              "label": "It is likely that I will suffer serious damage to my reputation.",
+              "apiField": "interestOfJusticePart2.damageReputationDetails"
+            },
+            {
+              "label": "A substantial question of law may be involved (whether arising from legislation, judicial authority or other source of law).",
+              "apiField": "interestOfJusticePart2.questionLawDetails"
+            },
+            {
+              "label": "I may not be able to understand the court proceedings or present my own case.",
+              "apiField": "interestOfJusticePart2.ownCaseDetails"
+            },
+            {
+              "label": "Witnesses may need to be traced or interviewed on my behalf.",
+              "apiField": "interestOfJusticePart2.witnessTraceDetails"
+            },
+            {
+              "label": "The proceedings may involve expert cross-examination of a prosecution witness (whether an expert or not).",
+              "apiField": "interestOfJusticePart2.expertExamDetails"
+            },
+            {
+              "label": " It is in the interests of another person (such as the person making a complaint or other witness) that I am represented.",
+              "apiField": "interestOfJusticePart2.interestsAnotherDetails"
+            },
+            {
+              "label": "Any other reason",
+              "apiField": "interestOfJusticePart2.otherReasonRepresentedDetails"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "evidence-1",
+      "title": "Evidence: 1",
+      "subsections": [
+        {
+          "title": "Questions to inform evidential requirements",
+          "fields": [
+            {
+              "label": "Has a court remanded you in custody?",
+              "apiField": "evidencePart1.remandedInCustody"
+            },
+            {
+              "label": "What date were you remanded?",
+              "apiField": "evidencePart1.remandedDate",
+              "type": "date"
+            },
+            {
+              "label": "Will your case be heard in a magistrates' court?",
+              "apiField": "evidencePart1.heardInMagistrateCourt"
+            },
+            {
+              "label": "Are you employed (excluding being self employed)?",
+              "apiField": "evidencePart1.employed"
+            },
+            {
+              "label": "Have you ceased employment within the last 3 months?",
+              "apiField": "evidencePart1.employmentCeased"
+            },
+            {
+              "label": "Have you lost your job as a result of being in custody?",
+              "apiField": "evidencePart1.lostJobDuetoCustody"
+            },
+            {
+              "label": "When did this occur?",
+              "apiField": "evidencePart1.lostJobDuetoCustodyDate",
+              "type": "date"
+            },
+            {
+              "label": "Is your partner employed (excluding being self employed)?",
+              "apiField": "evidencePart1.partnerEmployed"
+            }
+          ]
         }
       ]
     }
