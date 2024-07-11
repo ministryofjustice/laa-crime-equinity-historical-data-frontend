@@ -263,49 +263,6 @@ describe('routes', () => {
         evidenceFiles: {
           files: [],
         },
-        mergedScheduleCostsData: {
-          schedule: [],
-          officeUse: undefined,
-          costTotals: undefined,
-          timeTotals: undefined,
-          totals: undefined,
-          lettersAndPhoneCalls: {
-            totals: {
-              letters: {
-                number: 0,
-                rate: 0,
-                uplift: 0,
-                cost: 0,
-              },
-              telephoneCalls: {
-                number: 0,
-                rate: 0,
-                uplift: 0,
-                cost: 0,
-              },
-              total: 0,
-              solicitorCost: 0,
-            },
-            officeOnly: {
-              letters: {
-                number: 0,
-                rate: 0,
-                uplift: 0,
-                cost: 0,
-              },
-              telephoneCalls: {
-                number: 0,
-                rate: 0,
-                uplift: 0,
-                cost: 0,
-              },
-              total: 0,
-              solicitorCost: 0,
-            },
-            assessmentReasons: '',
-          },
-          laaAdjustments: [],
-        },
       }
       mockCrm7Service.getCrm.mockResolvedValue(crm7Response)
 

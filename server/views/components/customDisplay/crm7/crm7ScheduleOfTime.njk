@@ -2,7 +2,7 @@
 {% from "../../formSubsection.njk" import formSubsection %}
 
 {% macro crm7ScheduleOfTime(data) %}
-     Render "Schedule Of Time Spent" subsection
+    {# Render "Schedule Of Time Spent" subsection #}
     {% set scheduleData = {
         head: [
             { text: "Line" },
@@ -39,7 +39,7 @@
 
     {{ formSubsection('Schedule Of Time Spent', scheduleData, true) }}
 
-     Render "Time Totals" subsection
+    {# Render "Time Totals" subsection #}
     {% set timeTotalsData = {
         head: [
             { text: "Travel" },
@@ -61,7 +61,7 @@
 
     {{ formSubsection('Time Totals', timeTotalsData, true) }}
 
-     Render "Cost Totals" subsection
+    {# Render "Cost Totals" subsection #}
     {% set costTotalsData = {
         head: [
             { text: "Travel" },
@@ -72,11 +72,11 @@
         ],
         rows: [
             [
-                { text: data.costTotals.travel },
-                { text: data.costTotals.waiting },
-                { text: data.costTotals.attendance },
-                { text: data.costTotals.preparation },
-                { text: data.costTotals.advocacy }
+                { text: data.costTotals.travel | formatCurrency },
+                { text: data.costTotals.waiting | formatCurrency },
+                { text: data.costTotals.attendance | formatCurrency },
+                { text: data.costTotals.preparation | formatCurrency },
+                { text: data.costTotals.advocacy | formatCurrency }
             ],
             [
                 { text: "Total Basic Claim:", isHeader: true, colspan: "4", class: "govuk-brand-colour" },
@@ -92,4 +92,3 @@
     {{ formSubsection('Cost Totals', costTotalsData, true) }}
 
 {% endmacro %}
-

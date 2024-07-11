@@ -386,7 +386,7 @@
           "title": "Schedule Of Time Spent",
           "customDisplay": {
             "name": "crm7ScheduleOfTime",
-            "apiField": "mergedScheduleCostsData"
+            "apiField": "scheduleOfTimeSpent"
           }
         }
       ]
