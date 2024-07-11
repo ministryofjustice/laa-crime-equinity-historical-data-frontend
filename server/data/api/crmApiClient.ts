@@ -14,10 +14,13 @@ export default class CrmApiClient<T extends CrmResponse> {
     return new RestClient(name, config.apis.eqApi, token)
   }
 
-  async getCrm(usn: number): Promise<T> {
+  async getCrm(usn: number, profileAcceptedTypes: string): Promise<T> {
     return CrmApiClient.restClient('CRM API client', 'no_auth').get<T>({
       path: `/api/internal/v1/equinity/${this.crmApiPath}/${usn}`,
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        profileAcceptedTypes,
+      },
     })
   }
 }

@@ -40,7 +40,12 @@ describe('Search Eform Service', () => {
 
     const searchEformService = new SearchEformService(mockSearchApiClient)
 
-    const result = await searchEformService.search({ usn: '1234567', page: 0, pageSize: 10 })
+    const result = await searchEformService.search({
+      usn: '1234567',
+      page: 0,
+      pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
+    })
 
     expect(result).toEqual({
       results: [
@@ -70,6 +75,7 @@ describe('Search Eform Service', () => {
       usn: '1234567',
       page: 0,
       pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
     })
   })
 
@@ -86,7 +92,12 @@ describe('Search Eform Service', () => {
 
     const searchEformService = new SearchEformService(mockSearchApiClient)
 
-    const result = await searchEformService.search({ usn: '1234567', page: 0, pageSize: 10 })
+    const result = await searchEformService.search({
+      usn: '1234567',
+      page: 0,
+      pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
+    })
 
     expect(result).toEqual({
       error: {
@@ -99,6 +110,7 @@ describe('Search Eform Service', () => {
       usn: '1234567',
       page: 0,
       pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
     })
   })
 
@@ -118,7 +130,12 @@ describe('Search Eform Service', () => {
 
     const searchEformService = new SearchEformService(mockSearchApiClient)
 
-    const result = await searchEformService.search({ usn: '1234567', page: 100, pageSize: 10 })
+    const result = await searchEformService.search({
+      usn: '1234567',
+      page: 100,
+      pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
+    })
     expect(result).toEqual({
       error: {
         message: 'No search results found',
@@ -130,6 +147,7 @@ describe('Search Eform Service', () => {
       usn: '1234567',
       page: 100,
       pageSize: 10,
+      profileAcceptedTypes: '1,4,5,6',
     })
   })
 })

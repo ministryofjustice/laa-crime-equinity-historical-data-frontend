@@ -24,6 +24,7 @@ type SearchRequest = {
   supplierAccountNumber?: string
   pageSize: number
   page: number
+  profileAcceptedTypes: string
 }
 
 type SearchPaging = {
