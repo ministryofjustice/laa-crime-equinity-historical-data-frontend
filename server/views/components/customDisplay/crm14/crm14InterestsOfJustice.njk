@@ -45,14 +45,23 @@
             {{ formFieldList(fields) }}
 
             {% if data.otherCases == 'Yes' %}
-                <p class="govuk-summary-list__key">You</p>
-                {% set fields = [
-                    { label: "The charges", value: data.otherCaseCharges.you.charges },
-                    { label: "The Court hearing the case", value: data.otherCaseCharges.you.court },
-                    { label: "Date of the next hearing", value: data.otherCaseCharges.you.nextHearing, type: "date" }
-                ] %}
-                {{ formFieldList(fields) }}
+                <div class="govuk-!-padding-bottom-4">
+                    <p class="govuk-brand-colour govuk-heading-s govuk-!-margin-top-4">You</p>
+                    {% set fields = [
+                        { label: "The charges", value: data.otherCaseCharges.you.charges },
+                        { label: "The Court hearing the case", value: data.otherCaseCharges.you.court },
+                        { label: "Date of the next hearing", value: data.otherCaseCharges.you.nextHearing, type: "date" }
+                    ] %}
+                    {{ formFieldList(fields) }}
 
+                    <p class="govuk-brand-colour govuk-heading-s govuk-!-margin-top-4">Your Partner</p>
+                    {% set fields = [
+                        { label: "The charges", value: data.otherCaseCharges.partner.charges },
+                        { label: "The Court hearing the case", value: data.otherCaseCharges.partner.court },
+                        { label: "Date of the next hearing", value: data.otherCaseCharges.partner.nextHearing, type: "date" }
+                    ] %}
+                    {{ formFieldList(fields) }}
+                </div>
             {% endif %}
 
             {% set fields = [
