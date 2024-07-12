@@ -4,4 +4,3 @@ EXPOSE 3100
 
 ENV TZ=Europe/London
 
-HEALTHCHECK CMD curl -f http://localhost:3100/health
