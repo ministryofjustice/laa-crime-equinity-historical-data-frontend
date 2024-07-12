@@ -61,8 +61,8 @@ jobs:
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ github.sha }}gotenberg # Tags ECR image with commit sha
         with:
-          context: ./gotengerg
-          file: ./Dockerfile
+          context: ./gotenberg
+          file: ./gotenberg/Dockerfile
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
 
