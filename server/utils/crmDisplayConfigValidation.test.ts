@@ -1,29 +1,19 @@
-import { CrmDisplayConfig } from '@crmDisplay'
+import { CrmDisplayConfig, CrmType } from '@crmDisplay'
 import validateConfig from './crmDisplayConfigValidation'
 import crm4DisplayConfig from '../services/config/crm4DisplayConfig.json'
 import crm5DisplayConfig from '../services/config/crm5DisplayConfig.json'
 import crm7DisplayConfig from '../services/config/crm7DisplayConfig.json'
+import crm14DisplayConfig from '../services/config/crm14DisplayConfig.json'
 
 describe('CRM Display Config Validation', () => {
-  it('should validate CRM4 config', () => {
-    const config = crm4DisplayConfig as CrmDisplayConfig
-    const result = validateConfig(config, 'crm5')
-
-    expect(result).toEqual(config)
-  })
-
-  it('should validate CRM5 config', () => {
-    const config = crm5DisplayConfig as CrmDisplayConfig
-    const result = validateConfig(config, 'crm5')
-
-    expect(result).toEqual(config)
-  })
-
-  it('should validate CRM7 config', () => {
-    const config = crm7DisplayConfig as CrmDisplayConfig
-    const result = validateConfig(config, 'crm7')
-
-    expect(result).toEqual(config)
+  it.each([
+    ['crm4', crm4DisplayConfig],
+    ['crm5', crm5DisplayConfig],
+    ['crm7', crm7DisplayConfig],
+    ['crm14', crm14DisplayConfig],
+  ])('should validate %s config', (crmType, displayConfig) => {
+    const result = validateConfig(displayConfig as CrmDisplayConfig, crmType as CrmType)
+    expect(result).toEqual(displayConfig)
   })
 
   it('should return error for empty sections', () => {
