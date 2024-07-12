@@ -1,4 +1,5 @@
 import { Configuration } from '@azure/msal-node/src/config/Configuration'
+import msal from '@azure/msal-node'
 import config from '../config'
 import logger from '../../logger'
 
@@ -19,12 +20,12 @@ const msalConfig: Configuration = {
         logger.info(message)
       },
       piiLoggingEnabled: false,
-      logLevel: 3,
+      logLevel: msal.LogLevel.Info,
     },
   },
 }
 
-const { REDIRECT_URI } = process.env
-const { POST_LOGOUT_REDIRECT_URI } = process.env
+const REDIRECT_URI = config.sso.redirectUri
+const POST_LOGOUT_REDIRECT_URI = config.sso.redirectUri
 
 export { msalConfig, REDIRECT_URI, POST_LOGOUT_REDIRECT_URI }
