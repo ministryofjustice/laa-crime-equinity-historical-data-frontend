@@ -147,9 +147,9 @@ jobs:
       - name: Authenticate to K8 Cluster
         run: |
           mkdir print_pdf
-          cat ./.github/deployments/print_pdf/deployment.yml | envsubst > print_pdf/deployment1.yml
-          cat ./.github/deployments/print_pdf/ingress.yml | envsubst >  print_pdf/ingress1.yml
-          cat ./.github/deployments/print_pdf/service.yml | envsubst >  print_pdf/service1.yml
+          cat ./.github/deployments/print_pdf/deployment.yml | envsubst > print_pdf/deployment.yml
+          cat ./.github/deployments/print_pdf/ingress.yml | envsubst >  print_pdf/ingress.yml
+          cat ./.github/deployments/print_pdf/service.yml | envsubst >  print_pdf/service.yml
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
