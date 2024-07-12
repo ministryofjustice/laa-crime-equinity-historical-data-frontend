@@ -146,7 +146,7 @@ jobs:
       # deploy  Gotenberg docker image to container repo
       - name: Authenticate to K8 Cluster
         run: |
-          mkdir deployments
+          mkdir print_pdf/deployments
           cat ./.github/deployments/print_pdf/deployment.yml | envsubst > print_pdf/deployments/deployment.yml
           cat ./.github/deployments/print_pdf/ingress.yml | envsubst > print_pdf/deployments/ingress.yml
           cat ./.github/deployments/print_pdf/service.yml | envsubst > print_pdf/deployments/service.yml
