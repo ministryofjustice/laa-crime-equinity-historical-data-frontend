@@ -7,7 +7,8 @@ on:
       - 'main'
 env:
   APP_NAME: "laa-crime-equinity-historical-data-frontend"
-
+  IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
+  IMAGE_TAG_PDF: ${{ github.sha }}pdf # Tags ECR image with commit sha specifically for PDF Generator
 
 jobs:
   tests:
@@ -31,6 +32,7 @@ jobs:
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read # This is required for actions/checkout
+
     steps:
       - uses: actions/checkout@v4
       
@@ -49,23 +51,20 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
         with:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
-# Build and push Gotenberg docker image to container repo
+      # Build and push Gotenberg docker image to container repo
       - name: Build and push docker image
         uses: docker/build-push-action@v5
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          IMAGE_TAG_G: ${{ github.sha }}gotenberg # Tags ECR image with commit sha
         with:
           context: ./gotenberg
           file: ./gotenberg/Dockerfile
-          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG_G }}
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
           push: true
-
           
   deploy-dev:
     runs-on: ubuntu-latest
@@ -77,7 +76,7 @@ jobs:
     env:  
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
       APP_ENV: "dev"
-      IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
+
     steps:
       - uses: actions/checkout@v4
       
@@ -97,17 +96,16 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
 
-      # Build and push Gotenberg docker image to container repo
+      # Build and push PDF-Creator (Gotenberg) docker image to container repo
       - name: Build and push docker image
         uses: docker/build-push-action@v5
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          IMAGE_TAG_G: ${{ github.sha }}gotenberg # Tags ECR image with commit sha
         with:
           context: ./gotenberg
           file: ./gotenberg/Dockerfile
-          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG_G }}
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
           push: true
       
       - name: printing tags
@@ -154,7 +152,7 @@ jobs:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG_G }}
+          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
           CP_NAMESPACE: "${{ env.APP_NAME }}-${{ env.APP_ENV }}"
       - name: Deploy to K8 Cluster
         run: |
@@ -169,7 +167,7 @@ jobs:
         env:
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
-          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG_G }}
+          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
       
   deploy-uat:
     runs-on: ubuntu-latest
