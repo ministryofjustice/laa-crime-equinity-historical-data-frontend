@@ -125,6 +125,8 @@ jobs:
           NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           CP_NAMESPACE: "${{ env.APP_NAME }}-${{ env.APP_ENV }}"
+
+          
       - name: Deploy to K8 Cluster
         run: |
           echo "${{ secrets.KUBE_CERT }}" > ca.crt
@@ -139,13 +141,15 @@ jobs:
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
           IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+
+          
       # deploy  Gotenberg docker image to container repo
       - name: Authenticate to K8 Cluster
         run: |
           mkdir deployments
-          cat ./.github/deployments/print_pdf/deployment.yml | envsubst > deployments/deployment.yml
-          cat ./.github/deployments/print_pdf/ingress.yml | envsubst > deployments/ingress.yml
-          cat ./.github/deployments/print_pdf/service.yml | envsubst > deployments/service.yml
+          cat ./.github/deployments/print_pdf/deployment.yml | envsubst > print_pdf/deployments/deployment.yml
+          cat ./.github/deployments/print_pdf/ingress.yml | envsubst > print_pdf/deployments/ingress.yml
+          cat ./.github/deployments/print_pdf/service.yml | envsubst > print_pdf/deployments/service.yml
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
@@ -161,7 +165,7 @@ jobs:
           kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
           kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
           kubectl config use-context ${KUBE_CLUSTER}
-          kubectl -n ${KUBE_NAMESPACE} apply -f deployments/
+          kubectl -n ${KUBE_NAMESPACE} apply -f print_pdf/deployments/
         env:
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
