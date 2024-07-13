@@ -42,53 +42,66 @@
     {# Render "Time Totals" subsection #}
     {% set timeTotalsData = {
         head: [
-            { text: "Travel" },
-            { text: "Waiting" },
-            { text: "Attendance" },
+            { text: "Attendance Counsel" },
+            { text: "Attendance no Counsel" },
             { text: "Preparation" },
             { text: "Advocacy" }
         ],
         rows: [
             [
-                { text: data.timeTotals.travel },
-                { text: data.timeTotals.waiting },
-                { text: data.timeTotals.attendance },
+                { text: data.timeTotals.attendanceCounsel },
+                { text: data.timeTotals.attendanceNoCounsel },
                 { text: data.timeTotals.preparation },
                 { text: data.timeTotals.advocacy }
             ]
         ]
     } %}
 
-    {{ formSubsection('Time Totals', timeTotalsData, true) }}
+    {{ formSubsection('Time Totals', timeTotalsData, true, 'equal-width-table') }}
 
     {# Render "Cost Totals" subsection #}
     {% set costTotalsData = {
         head: [
-            { text: "Travel" },
-            { text: "Waiting" },
-            { text: "Attendance" },
+            { text: "Attendance Counsel" },
+            { text: "Attendance no Counsel" },
             { text: "Preparation" },
             { text: "Advocacy" }
         ],
         rows: [
             [
-                { text: data.costTotals.travel | formatCurrency },
-                { text: data.costTotals.waiting | formatCurrency },
-                { text: data.costTotals.attendance | formatCurrency },
+                { text: data.costTotals.attendanceCounsel | formatCurrency },
+                { text: data.costTotals.attendanceNoCounsel | formatCurrency },
                 { text: data.costTotals.preparation | formatCurrency },
                 { text: data.costTotals.advocacy | formatCurrency }
             ],
             [
-                { text: "Total Basic Claim:", isHeader: true, colspan: "4", class: "govuk-brand-colour" },
-                { text: data.totals.basic | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold" }
+                { text: "Total Basic Claim:", isHeader: true, colspan: "3", class: "govuk-brand-colour", noDataHeader: true },
+                { text: data.totals.basic | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
             ],
             [
-                { text: "Total Claim:", isHeader: true, colspan: "4", class: "govuk-brand-colour" },
-                { text: data.totals.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold" }
+                { text: "Total Claim:", isHeader: true, colspan: "3", class: "govuk-brand-colour", noDataHeader: true },
+                { text: data.totals.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
             ]
         ]
     } %}
 
-    {{ formSubsection('Cost Totals', costTotalsData, true) }}
+    {{ formSubsection('Cost Totals', costTotalsData, true, 'equal-width-table') }}
+
+    {# Render "Office Use Only" subsection #}
+    {% set officeUseData = {
+        head: [],
+        rows: [
+            [
+                { text: "Total Basic Claim:", isHeader: true, colspan: "3", class: "govuk-brand-colour", noDataHeader: true },
+                { text: data.officeUse.basic | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
+            ],
+            [
+                { text: "Total Claim:", isHeader: true, colspan: "3", class: "govuk-brand-colour", noDataHeader: true },
+                { text: data.officeUse.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
+            ]
+        ]
+    } %}
+
+    {{ formSubsection('Office Use Only', officeUseData, true, 'equal-width-table') }}
 
 {% endmacro %}
