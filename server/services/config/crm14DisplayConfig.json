@@ -1,0 +1,622 @@
+{
+  "sections": [
+    {
+      "sectionId": "legal-rep-use",
+      "title": "Legal Rep Use",
+      "subsections": [
+        {
+          "title": "Date Stamp",
+          "fields": [
+            {
+              "label": "USN",
+              "apiField": "legalRepresentativeUse.dateStamp.usn"
+            },
+            {
+              "label": "Date",
+              "apiField": "legalRepresentativeUse.dateStamp.date",
+              "type": "date"
+            },
+            {
+              "label": "Time",
+              "apiField": "legalRepresentativeUse.dateStamp.time",
+              "type": "time"
+            },
+            {
+              "label": "Client name",
+              "apiField": "legalRepresentativeUse.dateStamp.clientName"
+            },
+            {
+              "label": "Client date of birth",
+              "apiField": "legalRepresentativeUse.dateStamp.clientDateOfBirth",
+              "type": "date"
+            }
+          ]
+        },
+        {
+          "title": "For the Legal Representative's use",
+          "fields": [
+            {
+              "label": "USN",
+              "apiField": "legalRepresentativeUse.legalRepUse.usn"
+            },
+            {
+              "label": "URN",
+              "apiField": "legalRepresentativeUse.legalRepUse.urn"
+            },
+            {
+              "label": "Please select",
+              "apiField": "legalRepresentativeUse.legalRepUse.applicationType"
+            },
+            {
+              "subHeading": "Previous application details"
+            },
+            {
+              "label": "USN",
+              "apiField": "legalRepresentativeUse.legalRepUse.???"
+            },
+            {
+              "label": "MAAT ID",
+              "apiField": "legalRepresentativeUse.legalRepUse.???"
+            },
+            {
+              "label": "Is this application subject to the usual means / passported test?",
+              "apiField": "legalRepresentativeUse.legalRepUse.meansTested"
+            },
+            {
+              "label": "Case Type",
+              "apiField": "legalRepresentativeUse.legalRepUse.caseType"
+            },
+            {
+              "label": "The court where the case commenced",
+              "apiField": "legalRepresentativeUse.legalRepUse.originatingCourt"
+            },
+            {
+              "label": "The court hearing the case",
+              "apiField": "legalRepresentativeUse.legalRepUse.courtName"
+            },
+            {
+              "label": "Is this a Priority Case?",
+              "apiField": "legalRepresentativeUse.legalRepUse.isPriorityCase"
+            },
+            {
+              "subHeading": "Please select at least ONE type of Priority Case:"
+            },
+            {
+              "label": "Custody",
+              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.custody"
+            },
+            {
+              "label": "Vulnerable",
+              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.vulnerable"
+            },
+            {
+              "label": "Youth",
+              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.youth"
+            },
+            {
+              "label": "Late application in the Crown Court for trial",
+              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.lateApplication"
+            },
+            {
+              "label": "Hearing date imminent",
+              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.imminentHearing"
+            },
+            {
+              "label": "Date of trial",
+              "apiField": "legalRepresentativeUse.legalRepUse.dateOfTrial",
+              "type": "date"
+            },
+            {
+              "label": "Appeal Lodged Date",
+              "apiField": "legalRepresentativeUse.legalRepUse.???",
+              "type": "date"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "about-you-1",
+      "title": "About You: 1",
+      "subsections": [
+        {
+          "title": "About You: 1",
+          "fields": [
+            {
+              "label": "Title",
+              "apiField": "aboutYouPart1.aboutYou.title"
+            },
+            {
+              "label": "Forename",
+              "apiField": "aboutYouPart1.aboutYou.clientForeName"
+            },
+            {
+              "label": "Other names",
+              "apiField": "aboutYouPart1.aboutYou.clientOtherNames"
+            },
+            {
+              "label": "Surname or family name",
+              "apiField": "aboutYouPart1.aboutYou.clientSurname"
+            },
+            {
+              "label": "Date of birth",
+              "apiField": "aboutYouPart1.aboutYou.clientDateOfBirth",
+              "type": "date"
+            },
+            {
+              "label": "National Insurance Number",
+              "apiField": "aboutYouPart1.aboutYou.nationalInsurance"
+            },
+            {
+              "label": "Application Registration Card (ARC) Number",
+              "apiField": "aboutYouPart1.aboutYou.applicationRegistrationCard"
+            },
+            {
+              "label": "Do you require all correspondence concerning your Application to be in Welsh?",
+              "apiField": "aboutYouPart1.aboutYou.welshCorrespondence"
+            }
+          ]
+        },
+        {
+          "title": "Contacting You",
+          "fields": [
+            {
+              "label": "Do you have a usual home address?",
+              "apiField": "aboutYouPart1.hasHomeAddress"
+            },
+            {
+              "label": "Address line 1",
+              "apiField": "aboutYouPart1.contactDetails.homeAddress.addressLine1"
+            },
+            {
+              "label": "Address line 2",
+              "apiField": "aboutYouPart1.contactDetails.homeAddress.addressLine2"
+            },
+            {
+              "label": "Address line 3",
+              "apiField": "aboutYouPart1.contactDetails.homeAddress.addressLine3"
+            },
+            {
+              "label": "Postcode",
+              "apiField": "aboutYouPart1.contactDetails.homeAddress.postCode"
+            },
+            {
+              "label": "To what address should we write to you?",
+              "apiField": "aboutYouPart1.contactDetails.correspondenceType"
+            },
+            {
+              "label": "Address line 1",
+              "apiField": "aboutYouPart1.contactDetails.correspondenceAddress.addressLine1"
+            },
+            {
+              "label": "Address line 2",
+              "apiField": "aboutYouPart1.contactDetails.correspondenceAddress.addressLine2"
+            },
+            {
+              "label": "Address line 3",
+              "apiField": "aboutYouPart1.contactDetails.correspondenceAddress.addressLine3"
+            },
+            {
+              "label": "Postcode",
+              "apiField": "aboutYouPart1.contactDetails.homeAddress.postCode"
+            },
+            {
+              "label": "Your email address",
+              "apiField": "aboutYouPart1.contactDetails.emailId"
+            },
+            {
+              "label": "Your telephone number (landline)",
+              "apiField": "aboutYouPart1.contactDetails.phoneNumber"
+            },
+            {
+              "label": "Mobile phone number",
+              "apiField": "aboutYouPart1.contactDetails.mobileNumber"
+            },
+            {
+              "label": "Work phone number",
+              "apiField": "aboutYouPart1.contactDetails.workPhoneNumber"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "about-you-2",
+      "title": "About You: 2",
+      "subsections": [
+        {
+          "title": "About You: 2",
+          "fields": [
+            {
+              "label": "Your usual home address is",
+              "apiField": "aboutYouPart2.homeAddressType"
+            },
+            {
+              "label": "Your relationship to the homeowner",
+              "apiField": "aboutYouPart2.relationshipToHomeOwner"
+            },
+            {
+              "label": "Are you under 18 years old?",
+              "apiField": "aboutYouPart2.under18"
+            },
+            {
+              "label": "Are you charged with an adult?",
+              "apiField": "aboutYouPart2.???"
+            },
+            {
+              "label": "Do you have a partner?",
+              "apiField": "aboutYouPart2.havePartner"
+            },
+            {
+              "label": "You are",
+              "apiField": "aboutYouPart2.maritalStatus"
+            },
+            {
+              "label": "Date of separation",
+              "apiField": "aboutYouPart2.???"
+            },
+            {
+              "label": "You are and your partner are",
+              "apiField": "aboutYouPart2.???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "about-your-partner",
+      "title": "About Your Partner",
+      "subsections": [
+        {
+          "title": "Your Partner's Details",
+          "fields": [
+            {
+              "label": "Title",
+              "apiField": "aboutYouPartner.partnerDetails.title"
+            },
+            {
+              "label": "Other Title",
+              "apiField": "aboutYouPartner.partnerDetails.otherTitle"
+            },
+            {
+              "label": "Forename",
+              "apiField": "aboutYouPartner.partnerDetails.clientForeName"
+            },
+            {
+              "label": "Other names",
+              "apiField": "aboutYouPartner.partnerDetails.clientOtherNames"
+            },
+            {
+              "label": "Surname or family name",
+              "apiField": "aboutYouPartner.partnerDetails.clientSurname"
+            },
+            {
+              "label": "Date of birth",
+              "apiField": "aboutYouPartner.partnerDetails.clientDateOfBirth",
+              "type": "date"
+            },
+            {
+              "label": "National Insurance Number",
+              "apiField": "aboutYouPartner.partnerDetails.nationalInsurance"
+            },
+            {
+              "label": "Application Registration Card (ARC) Number",
+              "apiField": "aboutYouPartner.partnerDetails.applicationRegistrationCard"
+            },
+            {
+              "label": "Is your partner a victim, prosecution witness or a co-defendant in the case for which you require legal aid?",
+              "apiField": "aboutYouPartner.coDefendant"
+            },
+            {
+              "label": "Please specify",
+              "apiField": "aboutYouPartner.???"
+            },
+            {
+              "label": "Does your partner have a conflict of interest?",
+              "apiField": "aboutYouPart1.conflictOfInterest"
+            },
+            {
+              "label": "Is your partner's usual home address different from yours?",
+              "apiField": "aboutYouPart1.partnerDifferentHome"
+            },
+            {
+              "label": "Address line 1",
+              "apiField": "aboutYouPartner.homeAddress.addressLine1"
+            },
+            {
+              "label": "Address line 2",
+              "apiField": "aboutYouPartner.homeAddress.addressLine2"
+            },
+            {
+              "label": "Address line 3",
+              "apiField": "aboutYouPartner.homeAddress.addressLine3"
+            },
+            {
+              "label": "Postcode",
+              "apiField": "aboutYouPartner.homeAddress.postCode"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "interests-of-justice-1",
+      "title": "Interests of Justice: 1",
+      "subsections": [
+        {
+          "title": "Interests of Justice: 1",
+          "customDisplay": {
+            "name": "crm14InterestsOfJustice",
+            "apiField": "interestOfJusticePart1"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "interests-of-justice-2",
+      "title": "Interests of Justice: 2",
+      "subsections": [
+        {
+          "title": "Why do you want legal aid?",
+          "fields": [
+            {
+              "subHeading": "Complete one or more reasons. For each reason you choose, say why you have chosen it. Mention any evidence that supports your choice of a reason."
+            },
+            {
+              "label": "It is likely that I will lose my liberty if any matter in the proceedings is decided against me.",
+              "apiField": "interestOfJusticePart2.loseLibertyDetails"
+            },
+            {
+              "label": "I have been given a sentence that is suspended or non-custodial. If I break this, the court may be able to deal with me for the original offence.",
+              "apiField": "interestOfJusticePart2.suspendedSentenceDetails"
+            },
+            {
+              "label": "It is likely that I will lose my livelihood.",
+              "apiField": "interestOfJusticePart2.loseLivelihoodDetails"
+            },
+            {
+              "label": "It is likely that I will suffer serious damage to my reputation.",
+              "apiField": "interestOfJusticePart2.damageReputationDetails"
+            },
+            {
+              "label": "A substantial question of law may be involved (whether arising from legislation, judicial authority or other source of law).",
+              "apiField": "interestOfJusticePart2.questionLawDetails"
+            },
+            {
+              "label": "I may not be able to understand the court proceedings or present my own case.",
+              "apiField": "interestOfJusticePart2.ownCaseDetails"
+            },
+            {
+              "label": "Witnesses may need to be traced or interviewed on my behalf.",
+              "apiField": "interestOfJusticePart2.witnessTraceDetails"
+            },
+            {
+              "label": "The proceedings may involve expert cross-examination of a prosecution witness (whether an expert or not).",
+              "apiField": "interestOfJusticePart2.expertExamDetails"
+            },
+            {
+              "label": " It is in the interests of another person (such as the person making a complaint or other witness) that I am represented.",
+              "apiField": "interestOfJusticePart2.interestsAnotherDetails"
+            },
+            {
+              "label": "Any other reason",
+              "apiField": "interestOfJusticePart2.otherReasonRepresentedDetails"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "evidence-1",
+      "title": "Evidence: 1",
+      "subsections": [
+        {
+          "title": "Questions to inform evidential requirements",
+          "fields": [
+            {
+              "label": "Has a court remanded you in custody?",
+              "apiField": "evidencePart1.remandedInCustody"
+            },
+            {
+              "label": "What date were you remanded?",
+              "apiField": "evidencePart1.remandedDate",
+              "type": "date"
+            },
+            {
+              "label": "Will your case be heard in a magistrates' court?",
+              "apiField": "evidencePart1.heardInMagistrateCourt"
+            },
+            {
+              "label": "Are you employed (excluding being self employed)?",
+              "apiField": "evidencePart1.employed"
+            },
+            {
+              "label": "Have you ceased employment within the last 3 months?",
+              "apiField": "evidencePart1.employmentCeased"
+            },
+            {
+              "label": "Have you lost your job as a result of being in custody?",
+              "apiField": "evidencePart1.lostJobDuetoCustody"
+            },
+            {
+              "label": "When did this occur?",
+              "apiField": "evidencePart1.lostJobDuetoCustodyDate",
+              "type": "date"
+            },
+            {
+              "label": "Is your partner employed (excluding being self employed)?",
+              "apiField": "evidencePart1.partnerEmployed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "income",
+      "title": "Income",
+      "subsections": [
+        {
+          "title": "Your Income and Your Partner's Income",
+          "fields": [
+            {
+              "subHeading": "???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "evidence-2",
+      "title": "Evidence: 2",
+      "subsections": [
+        {
+          "title": "Your Evidence",
+          "fields": [
+            {
+              "subHeading": "???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "legal-representation",
+      "title": "Legal Representation",
+      "subsections": [
+        {
+          "title": "Legal Representation",
+          "fields": [
+            {
+              "label": "Office from which solicitor is applying",
+              "apiField": "legalRepresentationDetails.solicitorApplyOffice"
+            },
+            {
+              "label": "The solicitor who you want to act for you (LAA Account Number)",
+              "apiField": "legalRepresentationDetails.solicitorAccountNum"
+            },
+            {
+              "label": "Title",
+              "apiField": "legalRepresentationDetails.title"
+            },
+            {
+              "label": "Full name",
+              "apiField": "legalRepresentationDetails.solicitorFullName"
+            },
+            {
+              "label": "Name of the solicitor's firm",
+              "apiField": "legalRepresentationDetails.firmName"
+            },
+            {
+              "label": "Address line 1",
+              "apiField": "legalRepresentationDetails.homeAddress.addressLine1"
+            },
+            {
+              "label": "Address line 2",
+              "apiField": "legalRepresentationDetails.homeAddress.addressLine2"
+            },
+            {
+              "label": "Address line 3",
+              "apiField": "legalRepresentationDetails.homeAddress.addressLine3"
+            },
+            {
+              "label": "Postcode",
+              "apiField": "legalRepresentationDetails.homeAddress.postCode"
+            },
+            {
+              "label": "Telephone (land line)",
+              "apiField": "legalRepresentationDetails.landLineNumber"
+            },
+            {
+              "label": "Mobile phone",
+              "apiField": "legalRepresentationDetails.mobileNumber"
+            },
+            {
+              "label": "Document Exchange (DX)",
+              "apiField": "legalRepresentationDetails.documentExchange"
+            },
+            {
+              "label": "Fax",
+              "apiField": "legalRepresentationDetails.fax"
+            },
+            {
+              "label": "Email address",
+              "apiField": "legalRepresentationDetails.emailId"
+            },
+            {
+              "label": "Firm Administrator's email address",
+              "apiField": "legalRepresentationDetails.adminEmailId"
+            },
+            {
+              "label": "Declaration by the Legal Representative",
+              "apiField": "legalRepresentationDetails.declarationStatement"
+            },
+            {
+              "label": "I understand that, as Legal Representative, I must obtain, and retain on file, a Declaration from the Applicant (and partner if applicable). I understand that this means completing a hardcopy mandate form.",
+              "apiField": "legalRepresentationDetails.declarationConfirm"
+            },
+            {
+              "label": "Date",
+              "apiField": "legalRepresentationDetails.signDate",
+              "type": "date"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "about-the-information",
+      "title": "About The Information",
+      "subsections": [
+        {
+          "title": "About the information which you have provided and its protection",
+          "fields": [
+            {
+              "subHeading": "???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "declarations",
+      "title": "Declarations",
+      "subsections": [
+        {
+          "title": "Fraud Notice",
+          "fields": [
+            {
+              "subHeading": "???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "privacy-notice",
+      "title": "Privacy Notice",
+      "subsections": [
+        {
+          "title": "Privacy Notice",
+          "fields": [
+            {
+              "subHeading": "???"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "evidence",
+      "title": "Evidence",
+      "subsections": [
+        {
+          "title": "Evidence",
+          "customDisplay": {
+            "name": "crmEvidence",
+            "apiField": "evidenceFiles.files"
+          }
+        }
+      ]
+    }
+  ]
+}

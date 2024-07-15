@@ -18,12 +18,14 @@ import { CrmResponse } from '@eqApi'
 import crm4DisplayConfig from './config/crm4DisplayConfig.json'
 import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 import crm7DisplayConfig from './config/crm7DisplayConfig.json'
+import crm14DisplayConfig from './config/crm14DisplayConfig.json'
 import validateConfig from '../utils/crmDisplayConfigValidation'
 
 const configMap: Record<CrmType, CrmDisplayConfig> = {
   crm4: validateConfig(crm4DisplayConfig as CrmDisplayConfig, 'crm4'),
   crm5: validateConfig(crm5DisplayConfig as CrmDisplayConfig, 'crm5'),
   crm7: validateConfig(crm7DisplayConfig as CrmDisplayConfig, 'crm7'),
+  crm14: validateConfig(crm14DisplayConfig as CrmDisplayConfig, 'crm14'),
 }
 
 export default class CrmDisplayService {

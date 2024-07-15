@@ -16,7 +16,7 @@ spec:
         app: laa-crime-equinity-historical-data-frontend-print-pdf # this should match the selector in service.yml
     spec:
       containers:
-        - name: print-pdf-frontend
+        - name: printpdffrontend
           image: ${IMAGE_NAME}
           ports:
             - containerPort: 3100

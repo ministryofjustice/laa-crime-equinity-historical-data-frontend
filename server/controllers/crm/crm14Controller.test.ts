@@ -1,8 +1,10 @@
 import { Crm14Response } from '@crm14'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import type { NextFunction, Request, Response } from 'express'
+import { Navigation, Section } from '@crmDisplay'
 import CrmApiService from '../../services/crmApiService'
 import Crm14Controller from './crm14Controller'
+import CrmDisplayService from '../../services/crmDisplayService'
 
 jest.mock('../../services/crmApiService')
 jest.mock('../../services/crmDisplayService')
@@ -12,6 +14,7 @@ jest.mock('../../utils/userProfileGroups', () => {
 
 describe('CRM14 Controller', () => {
   let mockCrmApiService: jest.Mocked<CrmApiService<Crm14Response>>
+  let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
 
   let request: DeepMocked<Request>
   let response: DeepMocked<Response>
@@ -21,6 +24,7 @@ describe('CRM14 Controller', () => {
     request = createMock<Request>({})
     response = createMock<Response>({})
     mockCrmApiService = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm14Response>>
+    mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
   })
 
   it('should render CRM14 page', async () => {
@@ -64,7 +68,41 @@ describe('CRM14 Controller', () => {
     }
     mockCrmApiService.getCrm.mockResolvedValue(crm14Response)
 
-    const crm14Controller = new Crm14Controller(mockCrmApiService)
+    const crmNavigation: Navigation = {
+      label: 'Legal Rep Use',
+      items: [
+        {
+          text: 'Legal Rep Use',
+          href: 'legal-rep-use',
+          active: true,
+        },
+      ],
+    }
+    mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
+
+    const crmSection: Section = {
+      sectionId: 'legal-rep-use',
+      title: 'Legal Rep Use',
+      subsections: [
+        {
+          title: 'Date Stamp',
+          fields: [
+            {
+              label: 'USN',
+              apiField: 'legalRepresentativeUse.dateStamp.usn',
+            },
+            {
+              label: 'Date',
+              apiField: 'legalRepresentativeUse.dateStamp.date',
+              type: 'date',
+            },
+          ],
+        },
+      ],
+    }
+    mockCrmDisplayService.getCrmSection.mockReturnValue(crmSection)
+
+    const crm14Controller = new Crm14Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm14Controller.show()
     request.params = {
       usn: '123456789',
@@ -76,8 +114,8 @@ describe('CRM14 Controller', () => {
       title: 'Application for Legal Aid in Criminal Proceedings',
       usn: 123456789,
       crmType: 'CRM 14',
-      navigationItems: [],
-      section: {},
+      navigationItems: crmNavigation,
+      section: crmSection,
       backUrl: '/search-eform',
     })
   })

@@ -1,4 +1,3 @@
-version: '3.1'
 services:
 # @TODO: EMP-271
 #  app:
@@ -23,7 +22,7 @@ services:
 #      - INGRESS_URL=http://localhost:3000
 
   gotenberg:
-    image: gotenberg/gotenberg:7.7.0
+    image: gotenberg/gotenberg:8
     networks:
       - laa
     container_name: gotenberg
@@ -38,18 +37,7 @@ services:
       - "--uno-listener-restart-threshold=0" #disables uno listener
     restart: always
     healthcheck:
-      test: [ 'CMD', 'curl', '-f', 'http://localhost:3100/health' ]
+      test: [ 'CMD', 'curl', '-f', '/health' ]
 
-  redis:
-    container_name: redis
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-    image: redis:7.0
-    networks:
-      - laa
-    ports:
-      - '6379:6379'
-
-networks:
-  laa:
+ 
     

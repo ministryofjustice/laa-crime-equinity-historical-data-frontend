@@ -47,7 +47,7 @@ type Section = {
   subsections: Array<Subsection>
 }
 
-type CrmType = 'crm4' | 'crm5' | 'crm7'
+type CrmType = 'crm4' | 'crm5' | 'crm7' | 'crm14'
 
 type CrmDisplayConfig = {
   sections: Array<Section>
