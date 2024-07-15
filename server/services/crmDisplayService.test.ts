@@ -1,5 +1,5 @@
 import { Crm5Response } from '@crm5'
-import { Section } from '@crmDisplay'
+import { CrmDetails } from '@crmDisplay'
 import CrmDisplayService from './crmDisplayService'
 
 describe('CRM Display Service', () => {
@@ -55,6 +55,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
       })
@@ -74,6 +75,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
       })
@@ -93,6 +95,7 @@ describe('CRM Display Service', () => {
           { text: 'Case History', href: '/crm5/1234567/case-history', active: false },
           { text: "Solicitor's Certification", href: '/crm5/1234567/solicitors-certification', active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
       })
@@ -125,6 +128,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
       })
@@ -165,6 +169,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
       })
@@ -202,6 +207,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
       })
@@ -240,41 +246,48 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
       })
     })
   })
 
-  describe('getCrmSection()', () => {
-    const generalInformationSection: Section = {
-      sectionId: 'general-information',
-      subsections: [
+  describe('getCrmDetails()', () => {
+    const generalInformation: CrmDetails = {
+      title: 'General Information',
+      sections: [
         {
-          fields: [
+          sectionId: 'general-information',
+          subsections: [
             {
-              label: 'Has a previous application for an extension been made?',
-              value: 'Yes',
-              apiField: 'hasPreviousApplication',
+              fields: [
+                {
+                  label: 'Has a previous application for an extension been made?',
+                  value: 'Yes',
+                  apiField: 'hasPreviousApplication',
+                },
+                {
+                  label:
+                    'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
+                  value: 'No',
+                  apiField: 'appealedPrevDecision',
+                },
+                { label: 'Urgent?', value: 'Yes', apiField: 'urgent' },
+                { label: 'Reason for urgency', value: 'Urgent', apiField: 'urgencyReason' },
+              ],
+              title: 'General Information',
             },
-            {
-              label: 'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
-              value: 'No',
-              apiField: 'appealedPrevDecision',
-            },
-            { label: 'Urgent?', value: 'Yes', apiField: 'urgent' },
-            { label: 'Reason for urgency', value: 'Urgent', apiField: 'urgencyReason' },
           ],
           title: 'General Information',
         },
       ],
-      title: 'General Information',
     }
 
-    it('should return crm section for given CRM type, sectionId, usn', () => {
-      const result = crmDisplayService.getCrmSection('crm5', 'general-information', crm5Response)
+    it('should return crm details for given CRM type, sectionId, usn', () => {
+      const result = crmDisplayService.getCrmDetails('crm5', 'general-information', crm5Response)
 
-      expect(result).toEqual(generalInformationSection)
+      expect(result).toEqual(generalInformation)
     })
 
     it('should handle empty fields', () => {
@@ -303,29 +316,39 @@ describe('CRM Display Service', () => {
         },
       }
 
-      const result = crmDisplayService.getCrmSection('crm5', 'advice-and-assistance', customResponse)
+      const result = crmDisplayService.getCrmDetails('crm5', 'advice-and-assistance', customResponse)
 
       expect(result).toEqual({
-        sectionId: 'advice-and-assistance',
-        showWhen: {
-          apiField: 'CaseDetails.levelOfWork',
-          equals: 'Advice',
-        },
-        subsections: [
-          { fields: [], title: 'Advice and Assistance' },
-          { fields: [], title: 'LAA Advice and Assistance' },
-        ],
         title: 'Advice and Assistance',
+        sections: [
+          {
+            sectionId: 'advice-and-assistance',
+            showWhen: {
+              apiField: 'CaseDetails.levelOfWork',
+              equals: 'Advice',
+            },
+            subsections: [
+              { fields: [], title: 'Advice and Assistance' },
+              { fields: [], title: 'LAA Advice and Assistance' },
+            ],
+            title: 'Advice and Assistance',
+          },
+        ],
       })
     })
 
     it('should handle crm section with no data in crm response', () => {
-      const result = crmDisplayService.getCrmSection('crm5', 'clients-details', crm5Response)
+      const result = crmDisplayService.getCrmDetails('crm5', 'clients-details', crm5Response)
 
       expect(result).toEqual({
-        sectionId: 'clients-details',
-        subsections: [{ fields: [{ subHeading: 'Address' }], title: "Client's Details" }],
         title: "Client's Details",
+        sections: [
+          {
+            sectionId: 'clients-details',
+            subsections: [{ fields: [{ subHeading: 'Address' }], title: "Client's Details" }],
+            title: "Client's Details",
+          },
+        ],
       })
     })
 
@@ -340,60 +363,65 @@ describe('CRM Display Service', () => {
         },
       }
 
-      const result = crmDisplayService.getCrmSection('crm5', 'capital-details', customResponse)
+      const result = crmDisplayService.getCrmDetails('crm5', 'capital-details', customResponse)
 
       expect(result).toEqual({
-        hideWhen: {
-          apiField: 'CaseDetails.cwCriminalProceeding',
-          equals: 'true',
-        },
-        sectionId: 'capital-details',
-        showWhen: {
-          apiField: 'hasPreviousApplication',
-          equals: 'No',
-        },
-        subsections: [
+        title: 'Capital Details',
+        sections: [
           {
-            fields: [
+            hideWhen: {
+              apiField: 'CaseDetails.cwCriminalProceeding',
+              equals: 'true',
+            },
+            sectionId: 'capital-details',
+            showWhen: {
+              apiField: 'hasPreviousApplication',
+              equals: 'No',
+            },
+            subsections: [
               {
-                label: 'Is your client under 18 years old?',
-                value: 'No',
-                apiField: 'CapitalDetails.isUnder18',
-              },
-              {
-                label:
-                  "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance or Guarantee State Pension Credit?",
-                value: 'Yes',
-                apiField: 'CapitalDetails.hasIncomeSupport',
-              },
-              {
-                label: 'How many dependants does your client have?',
-                value: 2,
-                apiField: 'CapitalDetails.numOfDependants',
-              },
-              {
-                label: 'Client',
-                type: 'currency',
-                value: 60000,
-                apiField: 'CapitalDetails.clientSavings',
-              },
-              {
-                label: 'Partner',
-                type: 'currency',
-                value: 40000,
-                apiField: 'CapitalDetails.partnerSavings',
-              },
-              {
-                label: 'Total',
-                type: 'currency',
-                value: 100000,
-                apiField: 'CapitalDetails.totalSavings',
+                fields: [
+                  {
+                    label: 'Is your client under 18 years old?',
+                    value: 'No',
+                    apiField: 'CapitalDetails.isUnder18',
+                  },
+                  {
+                    label:
+                      "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance or Guarantee State Pension Credit?",
+                    value: 'Yes',
+                    apiField: 'CapitalDetails.hasIncomeSupport',
+                  },
+                  {
+                    label: 'How many dependants does your client have?',
+                    value: 2,
+                    apiField: 'CapitalDetails.numOfDependants',
+                  },
+                  {
+                    label: 'Client',
+                    type: 'currency',
+                    value: 60000,
+                    apiField: 'CapitalDetails.clientSavings',
+                  },
+                  {
+                    label: 'Partner',
+                    type: 'currency',
+                    value: 40000,
+                    apiField: 'CapitalDetails.partnerSavings',
+                  },
+                  {
+                    label: 'Total',
+                    type: 'currency',
+                    value: 100000,
+                    apiField: 'CapitalDetails.totalSavings',
+                  },
+                ],
+                title: 'Capital Details',
               },
             ],
             title: 'Capital Details',
           },
         ],
-        title: 'Capital Details',
       })
     })
 
@@ -415,15 +443,15 @@ describe('CRM Display Service', () => {
         },
       }
 
-      const result = crmDisplayService.getCrmSection('crm5', 'capital-details', customResponse)
+      const result = crmDisplayService.getCrmDetails('crm5', 'capital-details', customResponse)
 
-      expect(result).toEqual(generalInformationSection)
+      expect(result).toEqual(generalInformation)
     })
 
     it('should return first section if condition not met for given section', () => {
-      const result = crmDisplayService.getCrmSection('crm5', 'capital-details', crm5Response)
+      const result = crmDisplayService.getCrmDetails('crm5', 'capital-details', crm5Response)
 
-      expect(result).toEqual(generalInformationSection)
+      expect(result).toEqual(generalInformation)
     })
   })
 })

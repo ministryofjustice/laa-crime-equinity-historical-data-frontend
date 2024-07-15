@@ -17,17 +17,17 @@ export default class Crm5Controller {
       const { sectionId } = req.params
       const crm5Response = await this.crm5Service.getCrm(usn, getProfileAcceptedTypes(res))
       const navigation = this.crmDisplayService.getCrmNavigation('crm5', usn, sectionId, crm5Response)
-      const section = this.crmDisplayService.getCrmSection('crm5', sectionId, crm5Response)
+      const crmDetails = this.crmDisplayService.getCrmDetails('crm5', sectionId, crm5Response)
 
       const currentUrl = `/crm5/${usn}/${sectionId || 'general-information'}`
       const backUrl = manageBackLink(req, currentUrl)
 
       res.render('pages/crmDetails', {
         title: 'Application For Extension Of Upper Limit',
-        navigationItems: navigation,
-        usn,
         crmType: 'CRM 5',
-        section,
+        usn,
+        navigationItems: navigation,
+        crmDetails,
         backUrl,
       })
     }

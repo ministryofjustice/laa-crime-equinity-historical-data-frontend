@@ -1,7 +1,7 @@
 import { Crm7Response } from '@crm7'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import type { NextFunction, Request, Response } from 'express'
-import { Navigation, Section } from '@crmDisplay'
+import { CrmDetails, Navigation } from '@crmDisplay'
 import CrmApiService from '../../services/crmApiService'
 import CrmDisplayService from '../../services/crmDisplayService'
 import Crm7Controller from './crm7Controller'
@@ -60,28 +60,33 @@ describe('CRM7 Controller', () => {
     }
     mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
 
-    const crmSection: Section = {
-      sectionId: 'summary-of-claim',
+    const crmDetails: CrmDetails = {
       title: 'Summary of Claim',
-      subsections: [
+      sections: [
         {
+          sectionId: 'summary-of-claim',
           title: 'Summary of Claim',
-          fields: [
+          subsections: [
             {
-              label: 'Client Surname',
-              apiField: 'summary.clientSurname',
-              value: 'Doe',
-            },
-            {
-              label: 'Client First Name',
-              apiField: 'summary.clientFirstName',
-              value: 'John',
+              title: 'Summary of Claim',
+              fields: [
+                {
+                  label: 'Client Surname',
+                  apiField: 'summary.clientSurname',
+                  value: 'Doe',
+                },
+                {
+                  label: 'Client First Name',
+                  apiField: 'summary.clientFirstName',
+                  value: 'John',
+                },
+              ],
             },
           ],
         },
       ],
     }
-    mockCrmDisplayService.getCrmSection.mockReturnValue(crmSection)
+    mockCrmDisplayService.getCrmDetails.mockReturnValue(crmDetails)
 
     const crm7Controller = new Crm7Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm7Controller.show()
@@ -96,7 +101,7 @@ describe('CRM7 Controller', () => {
       usn: 123456789,
       crmType: 'CRM 7',
       navigationItems: crmNavigation,
-      section: crmSection,
+      crmDetails,
       backUrl: '/search-eform',
     })
   })

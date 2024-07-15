@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import {
   ConfigField,
+  CrmDetails,
   CrmDisplayConfig,
   CrmType,
   CustomDisplay,
@@ -62,10 +63,33 @@ export default class CrmDisplayService {
     }
   }
 
-  getCrmSection<T extends CrmResponse>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
+  getCrmDetails<T extends CrmResponse>(crmType: CrmType, sectionId: string, crmResponse: T): CrmDetails {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
-    const section = this.getSection(sectionId, crmDisplayConfig.sections, crmResponse)
+    const availableSections = crmDisplayConfig.sections.filter(section => this.showOrHideSection(section, crmResponse))
 
+    const crmSection =
+      availableSections.find(section => section.sectionId === sectionId) || crmDisplayConfig.sections[0]
+
+    if (sectionId === 'summary') {
+      return {
+        title: crmSection.title,
+        sections: this.getCrmSummary(availableSections, crmResponse),
+      }
+    }
+
+    return {
+      title: crmSection.title,
+      sections: [this.getCrmSectionWithData(crmSection, crmResponse)],
+    }
+  }
+
+  private getCrmSummary<T extends CrmResponse>(sections: Array<Section>, crmResponse: T): Array<Section> {
+    return sections.map(section => {
+      return this.getCrmSectionWithData(section, crmResponse)
+    })
+  }
+
+  private getCrmSectionWithData<T extends CrmResponse>(section: Section, crmResponse: T): Section {
     const subsections: Array<Subsection> = section.subsections.map(subsection => {
       return {
         ...subsection,
@@ -84,14 +108,6 @@ export default class CrmDisplayService {
     const crmDisplayConfig = configMap[crmType]
     if (!crmDisplayConfig) throw new Error(`Display config not found for CRM type = ${crmType}`)
     return crmDisplayConfig
-  }
-
-  private getSection<T extends CrmResponse>(sectionId: string, sections: Array<Section>, crmResponse: T): Section {
-    const sectionFound = sections.find(section => section.sectionId === sectionId)
-    if (!sectionFound || !this.showOrHideSection(sectionFound, crmResponse)) {
-      return sections[0]
-    }
-    return sectionFound
   }
 
   private getFields<T extends CrmResponse>(fields: Array<FieldOrSubHeading>, crmResponse: T): Array<FieldOrSubHeading> {

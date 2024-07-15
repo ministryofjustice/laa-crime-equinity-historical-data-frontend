@@ -166,6 +166,16 @@ describe('routes', () => {
         },
       }
       mockCrm4Service.getCrm.mockResolvedValue(crm4Response)
+      mockCrmDisplayService.getCrmNavigation.mockReturnValue({
+        label: 'Side navigation',
+        items: [
+          {
+            text: 'General Information',
+            href: '1',
+            active: true,
+          },
+        ],
+      })
 
       return request(app)
         .get('/crm4/1234567')
@@ -215,25 +225,6 @@ describe('routes', () => {
           },
         ],
       })
-      mockCrmDisplayService.getCrmSection.mockReturnValue({
-        sectionId: 'general-information',
-        title: 'General Information',
-        subsections: [
-          {
-            title: 'General Information',
-            fields: [
-              {
-                label: 'Has a previous application for an extension been made?',
-                apiField: 'No',
-              },
-              {
-                label: 'Most recent application reference',
-                apiField: '',
-              },
-            ],
-          },
-        ],
-      })
 
       return request(app)
         .get('/crm5/2345678')
@@ -265,6 +256,16 @@ describe('routes', () => {
         },
       }
       mockCrm7Service.getCrm.mockResolvedValue(crm7Response)
+      mockCrmDisplayService.getCrmNavigation.mockReturnValue({
+        label: 'Side navigation',
+        items: [
+          {
+            text: 'General Information',
+            href: '1',
+            active: true,
+          },
+        ],
+      })
 
       return request(app)
         .get('/crm7/3456789')
@@ -316,6 +317,16 @@ describe('routes', () => {
         },
       }
       mockCrm14Service.getCrm.mockResolvedValue(crm14Response)
+      mockCrmDisplayService.getCrmNavigation.mockReturnValue({
+        label: 'Side navigation',
+        items: [
+          {
+            text: 'General Information',
+            href: '1',
+            active: true,
+          },
+        ],
+      })
 
       return request(app)
         .get('/crm14/4567890')

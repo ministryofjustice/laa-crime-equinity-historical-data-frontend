@@ -1,7 +1,7 @@
 import { Crm14Response } from '@crm14'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import type { NextFunction, Request, Response } from 'express'
-import { Navigation, Section } from '@crmDisplay'
+import { CrmDetails, Navigation } from '@crmDisplay'
 import CrmApiService from '../../services/crmApiService'
 import Crm14Controller from './crm14Controller'
 import CrmDisplayService from '../../services/crmDisplayService'
@@ -80,27 +80,32 @@ describe('CRM14 Controller', () => {
     }
     mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
 
-    const crmSection: Section = {
-      sectionId: 'legal-rep-use',
+    const crmDetails: CrmDetails = {
       title: 'Legal Rep Use',
-      subsections: [
+      sections: [
         {
-          title: 'Date Stamp',
-          fields: [
+          sectionId: 'legal-rep-use',
+          title: 'Legal Rep Use',
+          subsections: [
             {
-              label: 'USN',
-              apiField: 'legalRepresentativeUse.dateStamp.usn',
-            },
-            {
-              label: 'Date',
-              apiField: 'legalRepresentativeUse.dateStamp.date',
-              type: 'date',
+              title: 'Date Stamp',
+              fields: [
+                {
+                  label: 'USN',
+                  apiField: 'legalRepresentativeUse.dateStamp.usn',
+                },
+                {
+                  label: 'Date',
+                  apiField: 'legalRepresentativeUse.dateStamp.date',
+                  type: 'date',
+                },
+              ],
             },
           ],
         },
       ],
     }
-    mockCrmDisplayService.getCrmSection.mockReturnValue(crmSection)
+    mockCrmDisplayService.getCrmDetails.mockReturnValue(crmDetails)
 
     const crm14Controller = new Crm14Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm14Controller.show()
@@ -115,7 +120,7 @@ describe('CRM14 Controller', () => {
       usn: 123456789,
       crmType: 'CRM 14',
       navigationItems: crmNavigation,
-      section: crmSection,
+      crmDetails,
       backUrl: '/search-eform',
     })
   })

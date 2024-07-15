@@ -64,8 +64,14 @@ type Navigation = {
   items: Array<NavigationItem>
 }
 
+type CrmDetails = {
+  title: string
+  sections: Array<Section>
+}
+
 export type {
   ConfigField,
+  CrmDetails,
   CrmDisplayConfig,
   CrmType,
   CustomDisplay,

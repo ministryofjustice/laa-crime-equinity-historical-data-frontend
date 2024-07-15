@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import { Crm4Response } from '@crm4'
-import { Navigation, Section } from '@crmDisplay'
+import { CrmDetails, Navigation } from '@crmDisplay'
 import Crm4Controller from './crm4Controller'
 import CrmApiService from '../../services/crmApiService'
 import CrmDisplayService from '../../services/crmDisplayService'
@@ -81,28 +81,33 @@ describe('CRM4 Controller', () => {
     }
     mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
 
-    const crmSection: Section = {
-      sectionId: 'general-information',
+    const crmDetails: CrmDetails = {
       title: 'General Information',
-      subsections: [
+      sections: [
         {
+          sectionId: 'general-information',
           title: 'General Information',
-          fields: [
+          subsections: [
             {
-              label: 'Has a previous application for an extension been made?',
-              apiField: 'hasPreviousApplication',
-              value: 'No',
-            },
-            {
-              label: 'Most recent application reference',
-              apiField: 'previousApplicationRef',
-              value: '',
+              title: 'General Information',
+              fields: [
+                {
+                  label: 'Is the total authority for which you are applying more than or equal to £100?',
+                  apiField: 'hasPreviousApplication',
+                  value: 'No',
+                },
+                {
+                  label: 'Is your application in relation to a Post Mortem examination?',
+                  apiField: 'previousApplicationRef',
+                  value: 'Yes',
+                },
+              ],
             },
           ],
         },
       ],
     }
-    mockCrmDisplayService.getCrmSection.mockReturnValue(crmSection)
+    mockCrmDisplayService.getCrmDetails.mockReturnValue(crmDetails)
 
     const crm4Controller = new Crm4Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm4Controller.show()
@@ -118,7 +123,7 @@ describe('CRM4 Controller', () => {
       usn: 123456789,
       crmType: 'CRM 4',
       navigationItems: crmNavigation,
-      section: crmSection,
+      crmDetails,
       backUrl: '/search-eform',
     })
   })

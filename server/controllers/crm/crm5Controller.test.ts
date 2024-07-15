@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import { Crm5Response } from '@crm5'
-import { Navigation, Section } from '@crmDisplay'
+import { CrmDetails, Navigation } from '@crmDisplay'
 import Crm5Controller from './crm5Controller'
 import CrmApiService from '../../services/crmApiService'
 import CrmDisplayService from '../../services/crmDisplayService'
@@ -69,28 +69,33 @@ describe('CRM5 Controller', () => {
     }
     mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
 
-    const crmSection: Section = {
-      sectionId: 'general-information',
+    const crmDetails: CrmDetails = {
       title: 'General Information',
-      subsections: [
+      sections: [
         {
+          sectionId: 'general-information',
           title: 'General Information',
-          fields: [
+          subsections: [
             {
-              label: 'Has a previous application for an extension been made?',
-              apiField: 'hasPreviousApplication',
-              value: 'No',
-            },
-            {
-              label: 'Most recent application reference',
-              apiField: 'previousApplicationRef',
-              value: '',
+              title: 'General Information',
+              fields: [
+                {
+                  label: 'Has a previous application for an extension been made?',
+                  apiField: 'hasPreviousApplication',
+                  value: 'No',
+                },
+                {
+                  label: 'Most recent application reference',
+                  apiField: 'previousApplicationRef',
+                  value: '123ABC',
+                },
+              ],
             },
           ],
         },
       ],
     }
-    mockCrmDisplayService.getCrmSection.mockReturnValue(crmSection)
+    mockCrmDisplayService.getCrmDetails.mockReturnValue(crmDetails)
 
     const crm5Controller = new Crm5Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm5Controller.show()
@@ -106,7 +111,7 @@ describe('CRM5 Controller', () => {
       usn: 1234567,
       crmType: 'CRM 5',
       navigationItems: crmNavigation,
-      section: crmSection,
+      crmDetails,
       backUrl: '/search-eform',
     })
   })

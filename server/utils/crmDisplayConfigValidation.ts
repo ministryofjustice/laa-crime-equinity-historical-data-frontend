@@ -15,25 +15,23 @@ const schema = Joi.object({
         apiField: Joi.string().required(),
         equals: Joi.string().required(),
       }).optional(),
-      subsections: Joi.array()
-        .min(1)
-        .items({
-          title: Joi.string().required(),
-          fields: Joi.array().items(
-            {
-              label: Joi.string().optional().allow(''),
-              apiField: Joi.string().required(),
-              type: Joi.string().valid('currency', 'date', 'time', 'percent', 'timeAndCost', 'totalAndCost').optional(),
-            },
-            {
-              subHeading: Joi.string().required(),
-            },
-          ),
-          customDisplay: {
-            name: Joi.string().required(),
+      subsections: Joi.array().items({
+        title: Joi.string().required(),
+        fields: Joi.array().items(
+          {
+            label: Joi.string().optional().allow(''),
             apiField: Joi.string().required(),
+            type: Joi.string().valid('currency', 'date', 'time', 'percent', 'timeAndCost', 'totalAndCost').optional(),
           },
-        }),
+          {
+            subHeading: Joi.string().required(),
+          },
+        ),
+        customDisplay: {
+          name: Joi.string().required(),
+          apiField: Joi.string().required(),
+        },
+      }),
     }),
 })
 
