@@ -140,6 +140,28 @@ export interface Crm7Response extends CrmResponse {
           comments: string
         },
       ]
+      costTotals: {
+        waiting: string
+        advocacy: string
+        travel: string
+        attendance: string
+        preparation: string
+      }
+      timeTotals: {
+        waiting: string
+        advocacy: string
+        travel: string
+        attendance: string
+        preparation: string
+      }
+      totals: {
+        total: number
+        basic: number
+      }
+      officeUse: {
+        total: number
+        basic: number
+      }
     }
     claimOfCosts?: {
       timeTotals: {

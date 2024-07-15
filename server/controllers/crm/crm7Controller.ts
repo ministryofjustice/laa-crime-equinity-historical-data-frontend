@@ -16,6 +16,7 @@ export default class Crm7Controller {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm7Response = await this.crm7Service.getCrm(usn, getProfileAcceptedTypes(res))
+
       const navigation = this.crmDisplayService.getCrmNavigation('crm7', usn, sectionId, crm7Response)
       const section = this.crmDisplayService.getCrmSection('crm7', sectionId, crm7Response)
 
