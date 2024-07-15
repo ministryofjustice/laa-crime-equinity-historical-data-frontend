@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import {
   ConfigField,
-  CrmDetails,
   CrmDisplayConfig,
   CrmType,
   CustomDisplay,
@@ -29,13 +28,10 @@ const configMap: Record<CrmType, CrmDisplayConfig> = {
   crm14: validateConfig(crm14DisplayConfig as CrmDisplayConfig, 'crm14'),
 }
 
+const SUMMARY_SECTION_ID = 'summary'
+
 export default class CrmDisplayService {
-  getCrmNavigation<T extends CrmResponse>(
-    crmType: CrmType,
-    usn: number,
-    sectionId: string,
-    crmResponse: T,
-  ): Navigation {
+  getNavigation<T extends CrmResponse>(crmType: CrmType, usn: number, sectionId: string, crmResponse: T): Navigation {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
 
     let isAnySectionActive = false
@@ -63,33 +59,26 @@ export default class CrmDisplayService {
     }
   }
 
-  getCrmDetails<T extends CrmResponse>(crmType: CrmType, sectionId: string, crmResponse: T): CrmDetails {
+  getSections<T extends CrmResponse>(crmType: CrmType, sectionId: string, crmResponse: T): Array<Section> {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
     const availableSections = crmDisplayConfig.sections.filter(section => this.showOrHideSection(section, crmResponse))
 
-    const crmSection =
+    if (sectionId === SUMMARY_SECTION_ID) {
+      // return all sections for summary
+      return availableSections
+        .filter(section => section.sectionId !== SUMMARY_SECTION_ID) // exclude summary section
+        .map(section => {
+          return this.getSectionWithData(section, crmResponse)
+        })
+    }
+
+    // otherwise return only the required section
+    const requiredSection =
       availableSections.find(section => section.sectionId === sectionId) || crmDisplayConfig.sections[0]
-
-    if (sectionId === 'summary') {
-      return {
-        title: crmSection.title,
-        sections: this.getCrmSummary(availableSections, crmResponse),
-      }
-    }
-
-    return {
-      title: crmSection.title,
-      sections: [this.getCrmSectionWithData(crmSection, crmResponse)],
-    }
+    return [this.getSectionWithData(requiredSection, crmResponse)]
   }
 
-  private getCrmSummary<T extends CrmResponse>(sections: Array<Section>, crmResponse: T): Array<Section> {
-    return sections.map(section => {
-      return this.getCrmSectionWithData(section, crmResponse)
-    })
-  }
-
-  private getCrmSectionWithData<T extends CrmResponse>(section: Section, crmResponse: T): Section {
+  private getSectionWithData<T extends CrmResponse>(section: Section, crmResponse: T): Section {
     const subsections: Array<Subsection> = section.subsections.map(subsection => {
       return {
         ...subsection,

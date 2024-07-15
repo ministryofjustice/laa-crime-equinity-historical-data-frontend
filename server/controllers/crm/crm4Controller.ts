@@ -16,8 +16,8 @@ export default class Crm4Controller {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm4Response = await this.crm4Service.getCrm(usn, getProfileAcceptedTypes(res))
-      const navigation = this.crmDisplayService.getCrmNavigation('crm4', usn, sectionId, crm4Response)
-      const crmDetails = this.crmDisplayService.getCrmDetails('crm4', sectionId, crm4Response)
+      const navigation = this.crmDisplayService.getNavigation('crm4', usn, sectionId, crm4Response)
+      const sections = this.crmDisplayService.getSections('crm4', sectionId, crm4Response)
 
       const currentUrl = sectionId ? `/crm4/${usn}/${sectionId}` : navigation.items[0].href
       const backUrl = manageBackLink(req, currentUrl)
@@ -27,7 +27,7 @@ export default class Crm4Controller {
         crmType: 'CRM 4',
         usn,
         navigationItems: navigation,
-        crmDetails,
+        sections,
         backUrl,
       })
     }

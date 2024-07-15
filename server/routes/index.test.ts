@@ -166,7 +166,7 @@ describe('routes', () => {
         },
       }
       mockCrm4Service.getCrm.mockResolvedValue(crm4Response)
-      mockCrmDisplayService.getCrmNavigation.mockReturnValue({
+      mockCrmDisplayService.getNavigation.mockReturnValue({
         label: 'Side navigation',
         items: [
           {
@@ -215,7 +215,7 @@ describe('routes', () => {
         },
       }
       mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
-      mockCrmDisplayService.getCrmNavigation.mockReturnValue({
+      mockCrmDisplayService.getNavigation.mockReturnValue({
         label: 'Side navigation',
         items: [
           {
@@ -256,7 +256,7 @@ describe('routes', () => {
         },
       }
       mockCrm7Service.getCrm.mockResolvedValue(crm7Response)
-      mockCrmDisplayService.getCrmNavigation.mockReturnValue({
+      mockCrmDisplayService.getNavigation.mockReturnValue({
         label: 'Side navigation',
         items: [
           {
@@ -317,7 +317,7 @@ describe('routes', () => {
         },
       }
       mockCrm14Service.getCrm.mockResolvedValue(crm14Response)
-      mockCrmDisplayService.getCrmNavigation.mockReturnValue({
+      mockCrmDisplayService.getNavigation.mockReturnValue({
         label: 'Side navigation',
         items: [
           {

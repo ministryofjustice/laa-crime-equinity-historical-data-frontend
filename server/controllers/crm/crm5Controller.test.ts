@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import { Crm5Response } from '@crm5'
-import { CrmDetails, Navigation } from '@crmDisplay'
+import { Navigation, Section } from '@crmDisplay'
 import Crm5Controller from './crm5Controller'
 import CrmApiService from '../../services/crmApiService'
 import CrmDisplayService from '../../services/crmDisplayService'
@@ -67,35 +67,32 @@ describe('CRM5 Controller', () => {
         },
       ],
     }
-    mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
+    mockCrmDisplayService.getNavigation.mockReturnValue(crmNavigation)
 
-    const crmDetails: CrmDetails = {
-      title: 'General Information',
-      sections: [
-        {
-          sectionId: 'general-information',
-          title: 'General Information',
-          subsections: [
-            {
-              title: 'General Information',
-              fields: [
-                {
-                  label: 'Has a previous application for an extension been made?',
-                  apiField: 'hasPreviousApplication',
-                  value: 'No',
-                },
-                {
-                  label: 'Most recent application reference',
-                  apiField: 'previousApplicationRef',
-                  value: '123ABC',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    }
-    mockCrmDisplayService.getCrmDetails.mockReturnValue(crmDetails)
+    const sections: Array<Section> = [
+      {
+        sectionId: 'general-information',
+        title: 'General Information',
+        subsections: [
+          {
+            title: 'General Information',
+            fields: [
+              {
+                label: 'Has a previous application for an extension been made?',
+                apiField: 'hasPreviousApplication',
+                value: 'No',
+              },
+              {
+                label: 'Most recent application reference',
+                apiField: 'previousApplicationRef',
+                value: '123ABC',
+              },
+            ],
+          },
+        ],
+      },
+    ]
+    mockCrmDisplayService.getSections.mockReturnValue(sections)
 
     const crm5Controller = new Crm5Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm5Controller.show()
@@ -111,7 +108,7 @@ describe('CRM5 Controller', () => {
       usn: 1234567,
       crmType: 'CRM 5',
       navigationItems: crmNavigation,
-      crmDetails,
+      sections,
       backUrl: '/search-eform',
     })
   })

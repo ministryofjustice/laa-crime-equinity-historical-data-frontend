@@ -16,8 +16,8 @@ export default class Crm5Controller {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm5Response = await this.crm5Service.getCrm(usn, getProfileAcceptedTypes(res))
-      const navigation = this.crmDisplayService.getCrmNavigation('crm5', usn, sectionId, crm5Response)
-      const crmDetails = this.crmDisplayService.getCrmDetails('crm5', sectionId, crm5Response)
+      const navigation = this.crmDisplayService.getNavigation('crm5', usn, sectionId, crm5Response)
+      const sections = this.crmDisplayService.getSections('crm5', sectionId, crm5Response)
 
       const currentUrl = `/crm5/${usn}/${sectionId || 'general-information'}`
       const backUrl = manageBackLink(req, currentUrl)
@@ -27,7 +27,7 @@ export default class Crm5Controller {
         crmType: 'CRM 5',
         usn,
         navigationItems: navigation,
-        crmDetails,
+        sections,
         backUrl,
       })
     }

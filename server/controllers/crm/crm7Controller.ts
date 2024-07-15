@@ -16,8 +16,8 @@ export default class Crm7Controller {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm7Response = await this.crm7Service.getCrm(usn, getProfileAcceptedTypes(res))
-      const navigation = this.crmDisplayService.getCrmNavigation('crm7', usn, sectionId, crm7Response)
-      const crmDetails = this.crmDisplayService.getCrmDetails('crm7', sectionId, crm7Response)
+      const navigation = this.crmDisplayService.getNavigation('crm7', usn, sectionId, crm7Response)
+      const sections = this.crmDisplayService.getSections('crm7', sectionId, crm7Response)
 
       const currentUrl = `/crm7/${usn}/${sectionId || 'summary-of-claim'}`
       const backUrl = manageBackLink(req, currentUrl)
@@ -27,7 +27,7 @@ export default class Crm7Controller {
         crmType: 'CRM 7',
         usn,
         navigationItems: navigation,
-        crmDetails,
+        sections,
         backUrl,
       })
     }

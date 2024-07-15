@@ -1,7 +1,7 @@
 import { Crm14Response } from '@crm14'
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import type { NextFunction, Request, Response } from 'express'
-import { CrmDetails, Navigation } from '@crmDisplay'
+import { Navigation, Section } from '@crmDisplay'
 import CrmApiService from '../../services/crmApiService'
 import Crm14Controller from './crm14Controller'
 import CrmDisplayService from '../../services/crmDisplayService'
@@ -78,34 +78,31 @@ describe('CRM14 Controller', () => {
         },
       ],
     }
-    mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
+    mockCrmDisplayService.getNavigation.mockReturnValue(crmNavigation)
 
-    const crmDetails: CrmDetails = {
-      title: 'Legal Rep Use',
-      sections: [
-        {
-          sectionId: 'legal-rep-use',
-          title: 'Legal Rep Use',
-          subsections: [
-            {
-              title: 'Date Stamp',
-              fields: [
-                {
-                  label: 'USN',
-                  apiField: 'legalRepresentativeUse.dateStamp.usn',
-                },
-                {
-                  label: 'Date',
-                  apiField: 'legalRepresentativeUse.dateStamp.date',
-                  type: 'date',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    }
-    mockCrmDisplayService.getCrmDetails.mockReturnValue(crmDetails)
+    const sections: Array<Section> = [
+      {
+        sectionId: 'legal-rep-use',
+        title: 'Legal Rep Use',
+        subsections: [
+          {
+            title: 'Date Stamp',
+            fields: [
+              {
+                label: 'USN',
+                apiField: 'legalRepresentativeUse.dateStamp.usn',
+              },
+              {
+                label: 'Date',
+                apiField: 'legalRepresentativeUse.dateStamp.date',
+                type: 'date',
+              },
+            ],
+          },
+        ],
+      },
+    ]
+    mockCrmDisplayService.getSections.mockReturnValue(sections)
 
     const crm14Controller = new Crm14Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm14Controller.show()
@@ -120,7 +117,7 @@ describe('CRM14 Controller', () => {
       usn: 123456789,
       crmType: 'CRM 14',
       navigationItems: crmNavigation,
-      crmDetails,
+      sections,
       backUrl: '/search-eform',
     })
   })
