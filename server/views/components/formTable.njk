@@ -1,31 +1,36 @@
 {%- from "govuk/components/table/macro.njk" import govukTable -%}
 {% from "./formField.njk" import formField %}
 
-{% macro formTable(data) %}
+{% macro formTable(data, tableClass = "") %}
 
-<div class="govuk-table-responsive">
-    <table class="govuk-table">
-        <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-            {% for head in data.head %}
-                <th class="govuk-table__header" scope="col">{{ head.text }}</th>
+    <div class="govuk-table-responsive">
+        <table class="govuk-table {{ tableClass }}">
+            {% if data.head.length > 0 %}
+                <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    {% for head in data.head %}
+                        <th class="govuk-table__header" scope="col">{{ head.text }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+            {% endif %}
+            <tbody class="govuk-table__body">
+            {% for row in data.rows %}
+                <tr class="govuk-table__row">
+                    {% for cell in row %}
+                        {% if cell.isHeader %}
+                            <th class="govuk-table__header {{ cell.class }}" scope="row" {% if cell.colspan %}colspan="{{ cell.colspan }}"{% endif %}>{{ cell.text }}</th>
+                        {% else %}
+                            <td class="govuk-table__cell {{ cell.class }}"
+                                {% if cell.colspan %}colspan="{{ cell.colspan }}"{% endif %}
+                                    {% if not cell.noDataHeader %}data-header="{{ data.head[loop.index0].text }}"{% endif %}
+                            >{{ cell.text }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
             {% endfor %}
-        </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-        {% for row in data.rows %}
-            <tr class="govuk-table__row">
-                {% for cell in row %}
-                    {% if cell.isHeader %}
-                        <th class="govuk-table__header {{ cell.class }}" scope="row" {% if cell.colspan %}colspan="{{ cell.colspan }}"{% endif %}>{{ cell.text }}</th>
-                    {% else %}
-                        <td class="govuk-table__cell {{ cell.class }}" {% if cell.colspan %}colspan="{{ cell.colspan }}"{% endif %}>{{ cell.text }}</td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
 
 {% endmacro %}
