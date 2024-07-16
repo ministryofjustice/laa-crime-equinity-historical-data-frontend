@@ -25,4 +25,4 @@ spec:
               service:
                 name: laa-crime-equinity-historical-data-frontend-print-pdf-service # this should match the metadata.name in service.yml
                 port:
-                  number: 3000
+                  number: 3100
