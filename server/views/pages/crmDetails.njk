@@ -22,7 +22,7 @@
                     {{ navigationBar(navigationItems) }}
                 </div>
                 <div class="govuk-grid-column-two-thirds govuk-!-padding-top-4">
-                    {% for section in crmDetails.sections %}
+                    {% for section in sections %}
                         <h2 class="govuk-heading-m">{{ section.title }}</h2>
                         {% for subsection in section.subsections %}
                             {% if subsection.customDisplay %}
