@@ -87,14 +87,7 @@ jobs:
       - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
       
-      - name: Build and push docker image
-        uses: docker/build-push-action@v5
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-        with:
-          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
-          push: true
+    
 
       # Build and push PDF-Creator (Gotenberg) docker image to container repo
       - name: Build and push docker image
@@ -108,37 +101,9 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
           push: true
       
-      - name: printing tags
-        run: echo ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
-
-      - name: Authenticate to K8 Cluster
-        run: |
-          mkdir deployments
-          cat ./.github/deployments/deployment.yml | envsubst > deployments/deployment.yml
-          cat ./.github/deployments/ingress.yml | envsubst > deployments/ingress.yml
-          cat ./.github/deployments/service.yml | envsubst > deployments/service.yml
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
-          CP_NAMESPACE: "${{ env.APP_NAME }}-${{ env.APP_ENV }}"
-
+     
           
-      - name: Deploy to K8 Cluster
-        run: |
-          echo "${{ secrets.KUBE_CERT }}" > ca.crt
-          echo ${KUBE_NAMESPACE}
-          echo ${{ env.IMAGE_NAME }}
-          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
-          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
-          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
-          kubectl config use-context ${KUBE_CLUSTER}
-          kubectl -n ${KUBE_NAMESPACE} apply -f deployments/
-        env:
-          KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
-          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+    
 
           
       # deploy  Gotenberg docker image to container repo
