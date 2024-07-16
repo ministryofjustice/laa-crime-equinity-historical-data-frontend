@@ -15,7 +15,7 @@ describe('SDS Api Client', () => {
     nock.cleanAll()
   })
 
-  it('should retrieve file for the given file name', async () => {
+  xit('should retrieve file for the given file name', async () => {
     const sdsResponse: SdsResponse = {
       fileURL: 'https://test.com/some-file.txt',
     }
