@@ -69,7 +69,7 @@ describe('CRM4 Controller', () => {
     }
     mockCrmApiService.getCrm.mockResolvedValue(crm4Response)
 
-    const crmNavigation: Navigation = {
+    const navigation: Navigation = {
       label: 'Side navigation',
       items: [
         {
@@ -79,30 +79,32 @@ describe('CRM4 Controller', () => {
         },
       ],
     }
-    mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
+    mockCrmDisplayService.getNavigation.mockReturnValue(navigation)
 
-    const crmSection: Section = {
-      sectionId: 'general-information',
-      title: 'General Information',
-      subsections: [
-        {
-          title: 'General Information',
-          fields: [
-            {
-              label: 'Has a previous application for an extension been made?',
-              apiField: 'hasPreviousApplication',
-              value: 'No',
-            },
-            {
-              label: 'Most recent application reference',
-              apiField: 'previousApplicationRef',
-              value: '',
-            },
-          ],
-        },
-      ],
-    }
-    mockCrmDisplayService.getCrmSection.mockReturnValue(crmSection)
+    const sections: Array<Section> = [
+      {
+        sectionId: 'general-information',
+        title: 'General Information',
+        subsections: [
+          {
+            title: 'General Information',
+            fields: [
+              {
+                label: 'Is the total authority for which you are applying more than or equal to £100?',
+                apiField: 'hasPreviousApplication',
+                value: 'No',
+              },
+              {
+                label: 'Is your application in relation to a Post Mortem examination?',
+                apiField: 'previousApplicationRef',
+                value: 'Yes',
+              },
+            ],
+          },
+        ],
+      },
+    ]
+    mockCrmDisplayService.getSections.mockReturnValue(sections)
 
     const crm4Controller = new Crm4Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm4Controller.show()
@@ -117,8 +119,8 @@ describe('CRM4 Controller', () => {
       title: 'Application for Prior Authority to Incur Disbursements in Criminal Cases',
       usn: 123456789,
       crmType: 'CRM 4',
-      navigationItems: crmNavigation,
-      section: crmSection,
+      navigationItems: navigation,
+      sections,
       backUrl: '/search-eform',
     })
   })

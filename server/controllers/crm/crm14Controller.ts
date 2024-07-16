@@ -16,18 +16,18 @@ export default class Crm14Controller {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm14Response = await this.crm14Service.getCrm(usn, getProfileAcceptedTypes(res))
-      const navigation = this.crmDisplayService.getCrmNavigation('crm14', usn, sectionId, crm14Response)
-      const section = this.crmDisplayService.getCrmSection('crm14', sectionId, crm14Response)
+      const navigation = this.crmDisplayService.getNavigation('crm14', usn, sectionId, crm14Response)
+      const sections = this.crmDisplayService.getSections('crm14', sectionId, crm14Response)
 
-      const currentUrl = `/crm14/${usn}/${sectionId || 'legal-rep-use'}`
+      const currentUrl = sectionId ? `/crm14/${usn}/${sectionId}` : navigation.items[0].href
       const backUrl = manageBackLink(req, currentUrl)
 
       res.render('pages/crmDetails', {
         title: 'Application for Legal Aid in Criminal Proceedings',
-        navigationItems: navigation,
-        usn,
         crmType: 'CRM 14',
-        section,
+        usn,
+        navigationItems: navigation,
+        sections,
         backUrl,
       })
     }

@@ -57,7 +57,7 @@ describe('CRM5 Controller', () => {
 
     mockCrmApiService.getCrm.mockResolvedValue(crm5Response)
 
-    const crmNavigation: Navigation = {
+    const navigation: Navigation = {
       label: 'Side navigation',
       items: [
         {
@@ -67,30 +67,32 @@ describe('CRM5 Controller', () => {
         },
       ],
     }
-    mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
+    mockCrmDisplayService.getNavigation.mockReturnValue(navigation)
 
-    const crmSection: Section = {
-      sectionId: 'general-information',
-      title: 'General Information',
-      subsections: [
-        {
-          title: 'General Information',
-          fields: [
-            {
-              label: 'Has a previous application for an extension been made?',
-              apiField: 'hasPreviousApplication',
-              value: 'No',
-            },
-            {
-              label: 'Most recent application reference',
-              apiField: 'previousApplicationRef',
-              value: '',
-            },
-          ],
-        },
-      ],
-    }
-    mockCrmDisplayService.getCrmSection.mockReturnValue(crmSection)
+    const sections: Array<Section> = [
+      {
+        sectionId: 'general-information',
+        title: 'General Information',
+        subsections: [
+          {
+            title: 'General Information',
+            fields: [
+              {
+                label: 'Has a previous application for an extension been made?',
+                apiField: 'hasPreviousApplication',
+                value: 'No',
+              },
+              {
+                label: 'Most recent application reference',
+                apiField: 'previousApplicationRef',
+                value: '123ABC',
+              },
+            ],
+          },
+        ],
+      },
+    ]
+    mockCrmDisplayService.getSections.mockReturnValue(sections)
 
     const crm5Controller = new Crm5Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm5Controller.show()
@@ -105,8 +107,8 @@ describe('CRM5 Controller', () => {
       title: 'Application For Extension Of Upper Limit',
       usn: 1234567,
       crmType: 'CRM 5',
-      navigationItems: crmNavigation,
-      section: crmSection,
+      navigationItems: navigation,
+      sections,
       backUrl: '/search-eform',
     })
   })

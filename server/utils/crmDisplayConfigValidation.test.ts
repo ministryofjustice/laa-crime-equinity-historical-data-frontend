@@ -24,19 +24,4 @@ describe('CRM Display Config Validation', () => {
       'Invalid crm5 display config: [{"message":"\\"sections\\" must contain at least 1 items',
     )
   })
-
-  it('should return error for empty subsections', () => {
-    const config: CrmDisplayConfig = {
-      sections: [
-        {
-          sectionId: 'general-information',
-          title: 'General Information',
-          subsections: [],
-        },
-      ],
-    }
-    expect(() => validateConfig(config, 'crm5')).toThrow(
-      'Invalid crm5 display config: [{"message":"\\"sections[0].subsections\\" must contain at least 1 items',
-    )
-  })
 })

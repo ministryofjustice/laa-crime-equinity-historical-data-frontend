@@ -166,6 +166,16 @@ describe('routes', () => {
         },
       }
       mockCrm4Service.getCrm.mockResolvedValue(crm4Response)
+      mockCrmDisplayService.getNavigation.mockReturnValue({
+        label: 'Side navigation',
+        items: [
+          {
+            text: 'General Information',
+            href: '1',
+            active: true,
+          },
+        ],
+      })
 
       return request(app)
         .get('/crm4/1234567')
@@ -205,32 +215,13 @@ describe('routes', () => {
         },
       }
       mockCrm5Service.getCrm.mockResolvedValue(crm5Response)
-      mockCrmDisplayService.getCrmNavigation.mockReturnValue({
+      mockCrmDisplayService.getNavigation.mockReturnValue({
         label: 'Side navigation',
         items: [
           {
             text: 'General Information',
             href: '1',
             active: true,
-          },
-        ],
-      })
-      mockCrmDisplayService.getCrmSection.mockReturnValue({
-        sectionId: 'general-information',
-        title: 'General Information',
-        subsections: [
-          {
-            title: 'General Information',
-            fields: [
-              {
-                label: 'Has a previous application for an extension been made?',
-                apiField: 'No',
-              },
-              {
-                label: 'Most recent application reference',
-                apiField: '',
-              },
-            ],
           },
         ],
       })
@@ -265,6 +256,16 @@ describe('routes', () => {
         },
       }
       mockCrm7Service.getCrm.mockResolvedValue(crm7Response)
+      mockCrmDisplayService.getNavigation.mockReturnValue({
+        label: 'Side navigation',
+        items: [
+          {
+            text: 'General Information',
+            href: '1',
+            active: true,
+          },
+        ],
+      })
 
       return request(app)
         .get('/crm7/3456789')
@@ -316,6 +317,16 @@ describe('routes', () => {
         },
       }
       mockCrm14Service.getCrm.mockResolvedValue(crm14Response)
+      mockCrmDisplayService.getNavigation.mockReturnValue({
+        label: 'Side navigation',
+        items: [
+          {
+            text: 'General Information',
+            href: '1',
+            active: true,
+          },
+        ],
+      })
 
       return request(app)
         .get('/crm14/4567890')
