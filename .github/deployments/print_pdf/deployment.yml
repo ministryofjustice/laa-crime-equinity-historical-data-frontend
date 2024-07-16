@@ -19,7 +19,7 @@ spec:
         - name: printpdffrontend
           image: ${IMAGE_NAME}
           ports:
-            - containerPort: 3100
+            - containerPort: 3000
           securityContext:
             runAsNonRoot: true
             allowPrivilegeEscalation: false
