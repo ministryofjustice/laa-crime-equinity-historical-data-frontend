@@ -28,13 +28,10 @@ const configMap: Record<CrmType, CrmDisplayConfig> = {
   crm14: validateConfig(crm14DisplayConfig as CrmDisplayConfig, 'crm14'),
 }
 
+const SUMMARY_SECTION_ID = 'summary'
+
 export default class CrmDisplayService {
-  getCrmNavigation<T extends CrmResponse>(
-    crmType: CrmType,
-    usn: number,
-    sectionId: string,
-    crmResponse: T,
-  ): Navigation {
+  getNavigation<T extends CrmResponse>(crmType: CrmType, usn: number, sectionId: string, crmResponse: T): Navigation {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
 
     let isAnySectionActive = false
@@ -62,10 +59,26 @@ export default class CrmDisplayService {
     }
   }
 
-  getCrmSection<T extends CrmResponse>(crmType: CrmType, sectionId: string, crmResponse: T): Section {
+  getSections<T extends CrmResponse>(crmType: CrmType, sectionId: string, crmResponse: T): Array<Section> {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
-    const section = this.getSection(sectionId, crmDisplayConfig.sections, crmResponse)
+    const availableSections = crmDisplayConfig.sections.filter(section => this.showOrHideSection(section, crmResponse))
 
+    if (sectionId === SUMMARY_SECTION_ID) {
+      // return all sections for summary
+      return availableSections
+        .filter(section => section.sectionId !== SUMMARY_SECTION_ID) // exclude summary section
+        .map(section => {
+          return this.getSectionWithData(section, crmResponse)
+        })
+    }
+
+    // otherwise return only the required section
+    const requiredSection =
+      availableSections.find(section => section.sectionId === sectionId) || crmDisplayConfig.sections[0]
+    return [this.getSectionWithData(requiredSection, crmResponse)]
+  }
+
+  private getSectionWithData<T extends CrmResponse>(section: Section, crmResponse: T): Section {
     const subsections: Array<Subsection> = section.subsections.map(subsection => {
       return {
         ...subsection,
@@ -84,14 +97,6 @@ export default class CrmDisplayService {
     const crmDisplayConfig = configMap[crmType]
     if (!crmDisplayConfig) throw new Error(`Display config not found for CRM type = ${crmType}`)
     return crmDisplayConfig
-  }
-
-  private getSection<T extends CrmResponse>(sectionId: string, sections: Array<Section>, crmResponse: T): Section {
-    const sectionFound = sections.find(section => section.sectionId === sectionId)
-    if (!sectionFound || !this.showOrHideSection(sectionFound, crmResponse)) {
-      return sections[0]
-    }
-    return sectionFound
   }
 
   private getFields<T extends CrmResponse>(fields: Array<FieldOrSubHeading>, crmResponse: T): Array<FieldOrSubHeading> {

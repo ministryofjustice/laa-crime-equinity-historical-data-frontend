@@ -68,7 +68,7 @@ describe('CRM14 Controller', () => {
     }
     mockCrmApiService.getCrm.mockResolvedValue(crm14Response)
 
-    const crmNavigation: Navigation = {
+    const navigation: Navigation = {
       label: 'Legal Rep Use',
       items: [
         {
@@ -78,29 +78,31 @@ describe('CRM14 Controller', () => {
         },
       ],
     }
-    mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
+    mockCrmDisplayService.getNavigation.mockReturnValue(navigation)
 
-    const crmSection: Section = {
-      sectionId: 'legal-rep-use',
-      title: 'Legal Rep Use',
-      subsections: [
-        {
-          title: 'Date Stamp',
-          fields: [
-            {
-              label: 'USN',
-              apiField: 'legalRepresentativeUse.dateStamp.usn',
-            },
-            {
-              label: 'Date',
-              apiField: 'legalRepresentativeUse.dateStamp.date',
-              type: 'date',
-            },
-          ],
-        },
-      ],
-    }
-    mockCrmDisplayService.getCrmSection.mockReturnValue(crmSection)
+    const sections: Array<Section> = [
+      {
+        sectionId: 'legal-rep-use',
+        title: 'Legal Rep Use',
+        subsections: [
+          {
+            title: 'Date Stamp',
+            fields: [
+              {
+                label: 'USN',
+                apiField: 'legalRepresentativeUse.dateStamp.usn',
+              },
+              {
+                label: 'Date',
+                apiField: 'legalRepresentativeUse.dateStamp.date',
+                type: 'date',
+              },
+            ],
+          },
+        ],
+      },
+    ]
+    mockCrmDisplayService.getSections.mockReturnValue(sections)
 
     const crm14Controller = new Crm14Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm14Controller.show()
@@ -114,8 +116,8 @@ describe('CRM14 Controller', () => {
       title: 'Application for Legal Aid in Criminal Proceedings',
       usn: 123456789,
       crmType: 'CRM 14',
-      navigationItems: crmNavigation,
-      section: crmSection,
+      navigationItems: navigation,
+      sections,
       backUrl: '/search-eform',
     })
   })
