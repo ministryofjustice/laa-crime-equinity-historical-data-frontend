@@ -253,7 +253,7 @@ describe('CRM Display Service', () => {
     })
   })
 
-  describe('getCrmDetails()', () => {
+  describe('getSections()', () => {
     const generalInformation: Array<Section> = [
       {
         sectionId: 'general-information',
@@ -281,7 +281,7 @@ describe('CRM Display Service', () => {
       },
     ]
 
-    it('should return crm details for given CRM type, sectionId, usn', () => {
+    it('should return sections for given CRM type, sectionId, usn', () => {
       const result = crmDisplayService.getSections('crm5', 'general-information', crm5Response)
 
       expect(result).toEqual(generalInformation)
@@ -343,7 +343,7 @@ describe('CRM Display Service', () => {
       ])
     })
 
-    it('should return crm section if showWhen condition met', () => {
+    it('should return section if showWhen condition met', () => {
       const customResponse: Crm5Response = {
         formDetails: {
           ...crm5Response.formDetails,
