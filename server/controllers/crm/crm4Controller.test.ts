@@ -69,7 +69,7 @@ describe('CRM4 Controller', () => {
     }
     mockCrmApiService.getCrm.mockResolvedValue(crm4Response)
 
-    const crmNavigation: Navigation = {
+    const navigation: Navigation = {
       label: 'Side navigation',
       items: [
         {
@@ -79,7 +79,7 @@ describe('CRM4 Controller', () => {
         },
       ],
     }
-    mockCrmDisplayService.getNavigation.mockReturnValue(crmNavigation)
+    mockCrmDisplayService.getNavigation.mockReturnValue(navigation)
 
     const sections: Array<Section> = [
       {
@@ -119,7 +119,7 @@ describe('CRM4 Controller', () => {
       title: 'Application for Prior Authority to Incur Disbursements in Criminal Cases',
       usn: 123456789,
       crmType: 'CRM 4',
-      navigationItems: crmNavigation,
+      navigationItems: navigation,
       sections,
       backUrl: '/search-eform',
     })

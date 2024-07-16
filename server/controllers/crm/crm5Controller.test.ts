@@ -57,7 +57,7 @@ describe('CRM5 Controller', () => {
 
     mockCrmApiService.getCrm.mockResolvedValue(crm5Response)
 
-    const crmNavigation: Navigation = {
+    const navigation: Navigation = {
       label: 'Side navigation',
       items: [
         {
@@ -67,7 +67,7 @@ describe('CRM5 Controller', () => {
         },
       ],
     }
-    mockCrmDisplayService.getNavigation.mockReturnValue(crmNavigation)
+    mockCrmDisplayService.getNavigation.mockReturnValue(navigation)
 
     const sections: Array<Section> = [
       {
@@ -107,7 +107,7 @@ describe('CRM5 Controller', () => {
       title: 'Application For Extension Of Upper Limit',
       usn: 1234567,
       crmType: 'CRM 5',
-      navigationItems: crmNavigation,
+      navigationItems: navigation,
       sections,
       backUrl: '/search-eform',
     })

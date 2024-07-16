@@ -68,7 +68,7 @@ describe('CRM14 Controller', () => {
     }
     mockCrmApiService.getCrm.mockResolvedValue(crm14Response)
 
-    const crmNavigation: Navigation = {
+    const navigation: Navigation = {
       label: 'Legal Rep Use',
       items: [
         {
@@ -78,7 +78,7 @@ describe('CRM14 Controller', () => {
         },
       ],
     }
-    mockCrmDisplayService.getNavigation.mockReturnValue(crmNavigation)
+    mockCrmDisplayService.getNavigation.mockReturnValue(navigation)
 
     const sections: Array<Section> = [
       {
@@ -116,7 +116,7 @@ describe('CRM14 Controller', () => {
       title: 'Application for Legal Aid in Criminal Proceedings',
       usn: 123456789,
       crmType: 'CRM 14',
-      navigationItems: crmNavigation,
+      navigationItems: navigation,
       sections,
       backUrl: '/search-eform',
     })
