@@ -43,7 +43,7 @@ export default {
   production,
   https: production,
   staticResourceCacheDuration: '1h',
-  sso: {
+  auth: {
     cloudInstance: get('CLOUD_INSTANCE', 'https://login.microsoftonline.com/', requiredInProduction),
     clientId: get('CLIENT_ID', 'xxx', requiredInProduction),
     clientSecret: get('CLIENT_SECRET', 'xxx', requiredInProduction),
@@ -79,6 +79,7 @@ export default {
         deadline: Number(get('SDS_API_TIMEOUT_DEADLINE', 10000)),
       },
       agent: new AgentConfig(Number(get('SDS_API_TIMEOUT_RESPONSE', 10000))),
+      authScope: get('SDS_AUTH_SCOPE', 'xxx', requiredInProduction),
     },
   },
   session: {
@@ -88,4 +89,9 @@ export default {
   domain: get('INGRESS_URL', 'http://localhost:3000'),
   // The fallback should be empty. It will become when all environments will be setup.
   environmentName: get('ENVIRONMENT_NAME', 'Local'),
+  cache: {
+    sdsAuthCache: {
+      ttlMinutes: Number(get('SDS_AUTH_CACHE_TTL', 50)),
+    },
+  },
 }

@@ -5,6 +5,7 @@ import type { Request, Response, NextFunction } from 'express'
 import { AuthorizationCodeRequest } from '@azure/msal-node/src/request/AuthorizationCodeRequest'
 import { AuthorizationUrlRequest } from '@azure/msal-node/src/request/AuthorizationUrlRequest'
 import { CloudDiscoveryMetadata } from '@azure/msal-common/src/authority/CloudDiscoveryMetadata'
+import { ClientCredentialRequest } from '@azure/msal-node/src/request/ClientCredentialRequest'
 import { msalConfig } from './authConfig'
 
 type Options = {
@@ -82,50 +83,6 @@ class AuthProvider {
     }
   }
 
-  acquireToken(options: Options = {}) {
-    return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-      try {
-        const msalInstance = this.getMsalInstance(this.authConfig)
-
-        /**
-         * If a token cache exists in the session, deserialize it and set it as the
-         * cache for the new MSAL CCA instance. For more, see:
-         * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-node/docs/caching.md
-         */
-        if (req.session.tokenCache) {
-          msalInstance.getTokenCache().deserialize(req.session.tokenCache)
-        }
-
-        const tokenResponse = await msalInstance.acquireTokenSilent({
-          account: req.session.account,
-          scopes: options.scopes || [],
-        })
-
-        /**
-         * On successful token acquisition, write the updated token
-         * cache back to the session. For more, see:
-         * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-node/docs/caching.md
-         */
-        req.session.tokenCache = msalInstance.getTokenCache().serialize()
-        req.session.accessToken = tokenResponse.accessToken
-        req.session.idToken = tokenResponse.idToken
-        req.session.account = tokenResponse.account
-
-        return res.redirect(options.successRedirect)
-      } catch (error) {
-        if (error instanceof msal.InteractionRequiredAuthError) {
-          return this.login({
-            scopes: options.scopes || [],
-            redirectUri: options.redirectUri,
-            successRedirect: options.successRedirect || '/',
-          })(req, res, next)
-        }
-
-        return next(error)
-      }
-    }
-  }
-
   handleRedirect() {
     return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
       if (!req.body || !req.body.state) {
@@ -179,12 +136,23 @@ class AuthProvider {
     }
   }
 
+  async getAccessToken(scopes: Array<string>): Promise<string> {
+    const msalInstance = this.getMsalInstance(this.authConfig)
+    const clientCredentialRequest: ClientCredentialRequest = {
+      scopes,
+      skipCache: true,
+    }
+
+    const response = await msalInstance.acquireTokenByClientCredential(clientCredentialRequest)
+    return response.accessToken
+  }
+
   /**
    * Instantiates a new MSAL ConfidentialClientApplication object
    * @returns
    * @param authConfig
    */
-  getMsalInstance(authConfig: Configuration) {
+  private getMsalInstance(authConfig: Configuration) {
     return new msal.ConfidentialClientApplication(authConfig)
   }
 
@@ -194,7 +162,7 @@ class AuthProvider {
    * @param authCodeRequestParams
    * @param msalInstance
    */
-  redirectToAuthCodeUrl(
+  private redirectToAuthCodeUrl(
     authCodeUrlRequestParams: AuthorizationUrlRequest,
     authCodeRequestParams: AuthorizationCodeRequest,
     msalInstance: msal.ConfidentialClientApplication,
@@ -241,7 +209,7 @@ class AuthProvider {
    * Retrieves cloud discovery metadata from the /discovery/instance endpoint
    * @returns
    */
-  async getCloudDiscoveryMetadata(authority: string): Promise<CloudDiscoveryMetadata> {
+  private async getCloudDiscoveryMetadata(authority: string): Promise<CloudDiscoveryMetadata> {
     const endpoint = 'https://login.microsoftonline.com/common/discovery/instance'
 
     const response = await axios.get(endpoint, {
@@ -258,7 +226,7 @@ class AuthProvider {
    * Retrieves oidc metadata from the openid endpoint
    * @returns
    */
-  async getAuthorityMetadata(authority: string): Promise<CloudDiscoveryMetadata> {
+  private async getAuthorityMetadata(authority: string): Promise<CloudDiscoveryMetadata> {
     const endpoint = `${authority}/v2.0/.well-known/openid-configuration`
 
     const response = await axios.get(endpoint)

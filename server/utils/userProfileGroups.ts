@@ -4,7 +4,7 @@ import config from '../config'
 
 function getProfileAcceptedTypes(res: Response): string {
   const ssoUserGroups = res.locals.ssoUserGroups || []
-  const allowedUserProfileGroups = config.sso.allowedUserProfileGroups.split(',')
+  const allowedUserProfileGroups = config.auth.allowedUserProfileGroups.split(',')
 
   return allowedUserProfileGroups
     .map(group => {
