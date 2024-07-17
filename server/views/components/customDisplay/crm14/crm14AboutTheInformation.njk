@@ -20,7 +20,7 @@
         {% endfor %}
     {% endfor %}
 
-    {# Add the ethnicity field if there are any ethnicity values #}
+    {# Add the ethnicity field #}
     {% if ethnicityValues.length > 0 %}
         {% set ethnicityField = { label: "Which of the options in the table best describes you?", value: ethnicityValues | join('<br>') | safe } %}
         {% set _ = fields.push(ethnicityField) %}
