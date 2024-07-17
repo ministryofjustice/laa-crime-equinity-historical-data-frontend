@@ -5,6 +5,7 @@ import type { Request, Response, NextFunction } from 'express'
 import { AuthorizationCodeRequest } from '@azure/msal-node/src/request/AuthorizationCodeRequest'
 import { AuthorizationUrlRequest } from '@azure/msal-node/src/request/AuthorizationUrlRequest'
 import { CloudDiscoveryMetadata } from '@azure/msal-common/src/authority/CloudDiscoveryMetadata'
+import { ClientCredentialRequest } from '@azure/msal-node/src/request/ClientCredentialRequest'
 import { msalConfig } from './authConfig'
 
 type Options = {
@@ -263,6 +264,17 @@ class AuthProvider {
 
     const response = await axios.get(endpoint)
     return response.data
+  }
+
+  async getSDSAccessToken(): Promise<string> {
+    const confidentialClientApplication = new msal.ConfidentialClientApplication(this.authConfig)
+    const clientCredentialRequest: ClientCredentialRequest = {
+      scopes: [process.env.SDS_AUTH_SCOPE],
+      skipCache: true,
+    }
+
+    const response = await confidentialClientApplication.acquireTokenByClientCredential(clientCredentialRequest)
+    return response.accessToken
   }
 }
 

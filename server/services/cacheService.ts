@@ -28,8 +28,7 @@ class CacheService {
   }
 }
 
-export const SDS_ACCESS_TOKEN = 'sds-access-token'
+const SDS_ACCESS_TOKEN = 'sds-access-token'
+const sdsCacheService = new CacheService({})
 
-const cacheService = new CacheService()
-
-export default cacheService
+export { sdsCacheService, SDS_ACCESS_TOKEN }
