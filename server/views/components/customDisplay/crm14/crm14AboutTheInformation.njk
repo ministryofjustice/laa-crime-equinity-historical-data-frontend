@@ -1,0 +1,40 @@
+{% from "../../formFieldList.njk" import formFieldList %}
+{% from "../../formSubsection.njk" import formSubsection %}
+{% from "../../formTable.njk" import formTable %}
+
+{% macro crm14AboutTheInformation(data) %}
+    {# Initialize fields for the formFieldList #}
+    {% set fields = [
+        { label: "Gender", value: data.gender },
+        { label: "Do you consider that you have a disability?", value: data.disabled }
+    ] %}
+
+    {# Determine the ethnicity #}
+    {% set ethnicityValues = [] %}
+    {% for category, options in data.ethnicity %}
+        {% for option, value in options %}
+            {% if value %}
+                {% set ethnicityValue = ('<strong>' + (category|capitalize) + '</strong> - ' + (option|splitCamelCase|capitalize)) | safe %}
+                {% set _ = ethnicityValues.push(ethnicityValue) %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+    {# Add the ethnicity field #}
+    {% if ethnicityValues.length > 0 %}
+        {% set ethnicityField = { label: "Which of the options in the table best describes you?", value: ethnicityValues | join('<br>') | safe } %}
+        {% set _ = fields.push(ethnicityField) %}
+    {% endif %}
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">About The Information</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <p class="govuk-body">The information which you have given when you answer this question will be treated in the strictest confidence and will not affect our decision on this application.</p>
+            <p class="govuk-body govuk-!-margin-bottom-4">We, or HM Courts and Tribunal Service, may use the information on this form and on form CRM15, for statistical monitoring or research. The information we publish will not identify you or anyone else. We will process the information according to the Data Protection Act 1998 and other legal requirements.</p>
+
+            {{ formFieldList(fields) }}
+        </div>
+    </div>
+{% endmacro %}

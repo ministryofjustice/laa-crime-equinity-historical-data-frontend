@@ -48,7 +48,7 @@ describe('CRM7 Controller', () => {
     }
     mockCrmApiService.getCrm.mockResolvedValue(crm7Response)
 
-    const crmNavigation: Navigation = {
+    const navigation: Navigation = {
       label: 'Side navigation',
       items: [
         {
@@ -58,30 +58,32 @@ describe('CRM7 Controller', () => {
         },
       ],
     }
-    mockCrmDisplayService.getCrmNavigation.mockReturnValue(crmNavigation)
+    mockCrmDisplayService.getNavigation.mockReturnValue(navigation)
 
-    const crmSection: Section = {
-      sectionId: 'summary-of-claim',
-      title: 'Summary of Claim',
-      subsections: [
-        {
-          title: 'Summary of Claim',
-          fields: [
-            {
-              label: 'Client Surname',
-              apiField: 'summary.clientSurname',
-              value: 'Doe',
-            },
-            {
-              label: 'Client First Name',
-              apiField: 'summary.clientFirstName',
-              value: 'John',
-            },
-          ],
-        },
-      ],
-    }
-    mockCrmDisplayService.getCrmSection.mockReturnValue(crmSection)
+    const sections: Array<Section> = [
+      {
+        sectionId: 'summary-of-claim',
+        title: 'Summary of Claim',
+        subsections: [
+          {
+            title: 'Summary of Claim',
+            fields: [
+              {
+                label: 'Client Surname',
+                apiField: 'summary.clientSurname',
+                value: 'Doe',
+              },
+              {
+                label: 'Client First Name',
+                apiField: 'summary.clientFirstName',
+                value: 'John',
+              },
+            ],
+          },
+        ],
+      },
+    ]
+    mockCrmDisplayService.getSections.mockReturnValue(sections)
 
     const crm7Controller = new Crm7Controller(mockCrmApiService, mockCrmDisplayService)
     const requestHandler = crm7Controller.show()
@@ -95,8 +97,8 @@ describe('CRM7 Controller', () => {
       title: 'Non-Standard Fee Contract Work Assessment Form',
       usn: 123456789,
       crmType: 'CRM 7',
-      navigationItems: crmNavigation,
-      section: crmSection,
+      navigationItems: navigation,
+      sections,
       backUrl: '/search-eform',
     })
   })

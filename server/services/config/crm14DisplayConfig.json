@@ -569,11 +569,10 @@
       "subsections": [
         {
           "title": "About the information which you have provided and its protection",
-          "fields": [
-            {
-              "subHeading": "???"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm14AboutTheInformation",
+            "apiField": "aboutInformation"
+          }
         }
       ]
     },
@@ -617,6 +616,11 @@
           }
         }
       ]
+    },
+    {
+      "sectionId": "summary",
+      "title": "Summary",
+      "subsections": []
     }
   ]
 }

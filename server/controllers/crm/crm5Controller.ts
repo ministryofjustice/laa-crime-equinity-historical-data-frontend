@@ -16,18 +16,18 @@ export default class Crm5Controller {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm5Response = await this.crm5Service.getCrm(usn, getProfileAcceptedTypes(res))
-      const navigation = this.crmDisplayService.getCrmNavigation('crm5', usn, sectionId, crm5Response)
-      const section = this.crmDisplayService.getCrmSection('crm5', sectionId, crm5Response)
+      const navigation = this.crmDisplayService.getNavigation('crm5', usn, sectionId, crm5Response)
+      const sections = this.crmDisplayService.getSections('crm5', sectionId, crm5Response)
 
-      const currentUrl = `/crm5/${usn}/${sectionId || 'general-information'}`
+      const currentUrl = sectionId ? `/crm4/${usn}/${sectionId}` : navigation.items[0].href
       const backUrl = manageBackLink(req, currentUrl)
 
       res.render('pages/crmDetails', {
         title: 'Application For Extension Of Upper Limit',
-        navigationItems: navigation,
-        usn,
         crmType: 'CRM 5',
-        section,
+        usn,
+        navigationItems: navigation,
+        sections,
         backUrl,
       })
     }
