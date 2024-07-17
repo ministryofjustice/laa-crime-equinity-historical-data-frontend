@@ -137,13 +137,13 @@ class AuthProvider {
   }
 
   async getAccessToken(scopes: Array<string>): Promise<string> {
-    const confidentialClientApplication = new msal.ConfidentialClientApplication(this.authConfig)
+    const msalInstance = this.getMsalInstance(this.authConfig)
     const clientCredentialRequest: ClientCredentialRequest = {
       scopes,
       skipCache: true,
     }
 
-    const response = await confidentialClientApplication.acquireTokenByClientCredential(clientCredentialRequest)
+    const response = await msalInstance.acquireTokenByClientCredential(clientCredentialRequest)
     return response.accessToken
   }
 
