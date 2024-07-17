@@ -43,7 +43,7 @@ export default {
   production,
   https: production,
   staticResourceCacheDuration: '1h',
-  sso: {
+  auth: {
     cloudInstance: get('CLOUD_INSTANCE', 'https://login.microsoftonline.com/', requiredInProduction),
     clientId: get('CLIENT_ID', 'xxx', requiredInProduction),
     clientSecret: get('CLIENT_SECRET', 'xxx', requiredInProduction),

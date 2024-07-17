@@ -7,7 +7,7 @@ describe('authProvider', () => {
   let fakeAuthClient: nock.Scope
 
   beforeEach(() => {
-    fakeAuthClient = nock(`${config.sso.cloudInstance}${config.sso.tenantId}`)
+    fakeAuthClient = nock(`${config.auth.cloudInstance}${config.auth.tenantId}`)
   })
 
   afterEach(() => {

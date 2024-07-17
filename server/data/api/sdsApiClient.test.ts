@@ -8,7 +8,7 @@ describe('SDS Api Client', () => {
   let sdsApiClient: SdsApiClient
 
   beforeEach(() => {
-    fakeAuthClient = nock(`${config.sso.cloudInstance}${config.sso.tenantId}`)
+    fakeAuthClient = nock(`${config.auth.cloudInstance}${config.auth.tenantId}`)
     fakeRestClient = nock(config.apis.sdsApi.url)
     sdsApiClient = new SdsApiClient()
   })
