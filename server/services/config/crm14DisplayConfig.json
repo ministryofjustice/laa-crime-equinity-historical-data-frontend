@@ -582,11 +582,10 @@
       "subsections": [
         {
           "title": "Fraud Notice",
-          "fields": [
-            {
-              "subHeading": "???"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm14Declarations",
+            "apiField": "declarations"
+          }
         }
       ]
     },
