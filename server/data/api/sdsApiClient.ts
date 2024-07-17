@@ -1,7 +1,9 @@
 import RestClient from '../restClient'
 import config from '../../config'
 import authProvider from '../../auth/authProvider'
-import { sdsCacheService, SDS_ACCESS_TOKEN } from '../../services/cacheService'
+import sdsAuthCache from '../../utils/cacheProvider'
+
+const SDS_ACCESS_TOKEN = 'sds-access-token'
 
 export type SdsResponse = {
   fileURL: string
@@ -24,12 +26,12 @@ export default class SdsApiClient {
   }
 
   private getAccessToken = async (): Promise<string> => {
-    if (sdsCacheService.has(SDS_ACCESS_TOKEN)) {
-      return sdsCacheService.get(SDS_ACCESS_TOKEN)
+    if (sdsAuthCache.has(SDS_ACCESS_TOKEN)) {
+      return sdsAuthCache.get(SDS_ACCESS_TOKEN)
     }
 
-    const accessToken = await authProvider.getSDSAccessToken()
-    sdsCacheService.set(SDS_ACCESS_TOKEN, accessToken)
+    const accessToken = await authProvider.getAccessToken([config.apis.sdsApi.authScope])
+    sdsAuthCache.set(SDS_ACCESS_TOKEN, accessToken)
     return accessToken
   }
 }

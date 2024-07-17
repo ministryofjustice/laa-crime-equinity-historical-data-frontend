@@ -5,13 +5,13 @@ type CacheOptions = {
   maxAge?: number
 }
 
-class CacheService {
+class CacheProvider {
   cache: LRUCache<string, string>
 
   constructor(private readonly options: CacheOptions = {}) {
     this.cache = new LRUCache<string, string>({
-      max: options.max || 100,
-      ttl: options.maxAge || 1000 * 60 * 60, // 1 hr
+      max: this.options.max || 100,
+      ttl: this.options.maxAge || 1000 * 60 * 60, // 1 hr
     })
   }
 
@@ -28,7 +28,6 @@ class CacheService {
   }
 }
 
-const SDS_ACCESS_TOKEN = 'sds-access-token'
-const sdsCacheService = new CacheService({})
+const sdsAuthCache = new CacheProvider({ maxAge: 1000 * 60 * 50 }) // 50 minutes
 
-export { sdsCacheService, SDS_ACCESS_TOKEN }
+export default sdsAuthCache

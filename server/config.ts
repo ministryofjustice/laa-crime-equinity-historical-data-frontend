@@ -79,6 +79,7 @@ export default {
         deadline: Number(get('SDS_API_TIMEOUT_DEADLINE', 10000)),
       },
       agent: new AgentConfig(Number(get('SDS_API_TIMEOUT_RESPONSE', 10000))),
+      authScope: get('SDS_AUTH_SCOPE', 'xxx', requiredInProduction),
     },
   },
   session: {

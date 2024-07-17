@@ -266,10 +266,10 @@ class AuthProvider {
     return response.data
   }
 
-  async getSDSAccessToken(): Promise<string> {
+  async getAccessToken(scopes: Array<string>): Promise<string> {
     const confidentialClientApplication = new msal.ConfidentialClientApplication(this.authConfig)
     const clientCredentialRequest: ClientCredentialRequest = {
-      scopes: [process.env.SDS_AUTH_SCOPE],
+      scopes,
       skipCache: true,
     }
 
