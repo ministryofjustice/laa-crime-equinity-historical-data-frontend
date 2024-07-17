@@ -28,3 +28,7 @@ export const formatPercentage = (value: string): string => {
   if (Number.isNaN(number)) return value
   return `${number}%`
 }
+
+export const splitCamelCase = (value: string): string => {
+  return value.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
+}
