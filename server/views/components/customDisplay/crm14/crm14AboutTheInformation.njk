@@ -5,23 +5,30 @@
 {% macro crm14AboutTheInformation(data) %}
     {# Initialize fields for the formFieldList #}
     {% set fields = [
-        { label: "Are you male or female?", value: data.gender },
+        { label: "Gender", value: data.gender },
         { label: "Do you consider that you have a disability?", value: data.disabled }
     ] %}
 
     {# Determine the ethnicity #}
+    {% set ethnicityValues = [] %}
     {% for category, options in data.ethnicity %}
         {% for option, value in options %}
             {% if value %}
                 {% set ethnicityValue = ('<strong>' + (category|capitalize) + '</strong> - ' + (option|splitCamelCase|capitalize)) | safe %}
-                {% set _ = fields.push({ label: "Which of the options in the table best describes you?", value: ethnicityValue }) %}
+                {% set _ = ethnicityValues.push(ethnicityValue) %}
             {% endif %}
         {% endfor %}
     {% endfor %}
 
+    {# Add the ethnicity field if there are any ethnicity values #}
+    {% if ethnicityValues.length > 0 %}
+        {% set ethnicityField = { label: "Which of the options in the table best describes you?", value: ethnicityValues | join('<br>') | safe } %}
+        {% set _ = fields.push(ethnicityField) %}
+    {% endif %}
+
     <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
         <div class="govuk-summary-card__title-wrapper">
-            <h3 class="govuk-summary-card__title">About The Information which you have provided and its protection</h3>
+            <h3 class="govuk-summary-card__title">About The Information</h3>
         </div>
         <div class="govuk-summary-card__content">
             <p class="govuk-body">The information which you have given when you answer this question will be treated in the strictest confidence and will not affect our decision on this application.</p>
