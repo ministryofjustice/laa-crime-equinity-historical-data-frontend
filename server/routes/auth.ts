@@ -1,5 +1,4 @@
 import { type NextFunction, type Request, type RequestHandler, type Response, Router } from 'express'
-import createError from 'http-errors'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import authProvider from '../auth/authProvider'
 import { REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } from '../auth/authConfig'
@@ -20,15 +19,6 @@ export default function routes(): Router {
       scopes: [],
       redirectUri: REDIRECT_URI,
       successRedirect: '/',
-    }),
-  )
-
-  get(
-    '/acquireToken',
-    authProvider.acquireToken({
-      scopes: ['User.Read'],
-      redirectUri: REDIRECT_URI,
-      successRedirect: '/users/profile',
     }),
   )
 
