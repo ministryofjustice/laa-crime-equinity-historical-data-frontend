@@ -89,4 +89,9 @@ export default {
   domain: get('INGRESS_URL', 'http://localhost:3000'),
   // The fallback should be empty. It will become when all environments will be setup.
   environmentName: get('ENVIRONMENT_NAME', 'Local'),
+  cache: {
+    sdsAuthCache: {
+      ttlMinutes: Number(get('SDS_AUTH_CACHE_TTL', 50)),
+    },
+  },
 }

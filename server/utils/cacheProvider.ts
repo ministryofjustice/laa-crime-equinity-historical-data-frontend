@@ -1,8 +1,9 @@
 import { LRUCache } from 'lru-cache'
+import config from '../config'
 
 type CacheOptions = {
   max?: number
-  maxAge?: number
+  ttlMinutes?: number
 }
 
 class CacheProvider {
@@ -11,7 +12,7 @@ class CacheProvider {
   constructor(private readonly options: CacheOptions = {}) {
     this.cache = new LRUCache<string, string>({
       max: this.options.max || 100,
-      ttl: this.options.maxAge || 1000 * 60 * 60, // 1 hr
+      ttl: 1000 * 60 * (options.ttlMinutes || 60),
     })
   }
 
@@ -28,6 +29,6 @@ class CacheProvider {
   }
 }
 
-const sdsAuthCache = new CacheProvider({ maxAge: 1000 * 60 * 50 }) // 50 minutes
+const sdsAuthCache = new CacheProvider({ ttlMinutes: config.cache.sdsAuthCache.ttlMinutes }) // 50 minutes
 
 export default sdsAuthCache
