@@ -6,7 +6,7 @@
 {% from "./crm7/crm7ClaimForCosts.njk" import crm7ClaimForCosts %}
 {% from "./crm7/crm7ScheduleOfTime.njk" import crm7ScheduleOfTime %}
 {% from "./crm14/crm14InterestsOfJustice.njk" import crm14InterestsOfJustice %}
-{% from "./crm14/crm14AboutTheInformation.njk" import crm14AboutTheInformation %}
+{% from "./crm14/crm14Declarations.njk" import crm14Declarations %}
 
 {% macro customDisplay(params) %}
     {% if params.name == 'crmEvidence' %}
@@ -27,6 +27,10 @@
         {{ crm14InterestsOfJustice(params.value) }}
         {% elif params.name == 'crm14AboutTheInformation' %}
     {{ crm14AboutTheInformation(params.value) }}
+        {% elif params.name == 'crm14InterestsOfJustice' %}
+    {{ crm14InterestsOfJustice(params.value) }}
+        {% elif params.name == 'crm14Declarations' %}
+    {{ crm14Declarations(params.value) }}
     {% endif %}
 
 {% endmacro %}
