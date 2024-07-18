@@ -62,7 +62,6 @@ jobs:
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
         with:
           context: ./gotenberg
-          file: ./gotenberg/Dockerfile
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
           push: true
           
