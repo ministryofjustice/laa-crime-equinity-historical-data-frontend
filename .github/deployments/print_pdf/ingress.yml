@@ -23,6 +23,6 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: laa-crime-equinity-historical-data-frontend-print-pdf-service # this should match the metadata.name in service.yml
+                name: print-pdf-service # this should match the metadata.name in service.yml
                 port:
                   number: 3100
