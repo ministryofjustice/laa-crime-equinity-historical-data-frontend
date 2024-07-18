@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ${APP_NAME}-print-pdf-service
+  name: print-pdf-service  
   namespace: ${CP_NAMESPACE}
 spec:
   selector:
