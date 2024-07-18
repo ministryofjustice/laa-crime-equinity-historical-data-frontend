@@ -4,7 +4,7 @@ USER root
 
 RUN usermod -u 1001 -g 1001 gotenberg
 
-USER gotenberg
+USER 1001
 EXPOSE 3100
 CMD gotenberg --api-port=3100 --chromium-ignore-certificate-errors --api-timeout=30s --pdfengines-engines=pdftk 
 
