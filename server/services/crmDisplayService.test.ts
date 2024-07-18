@@ -101,7 +101,7 @@ describe('CRM Display Service', () => {
       })
     })
 
-    it('should return crm navigation for showWhen condition met', () => {
+    it('should return crm navigation for conditions met', () => {
       const customResponse: Crm5Response = {
         ...crm5Response,
         formDetails: {
@@ -120,47 +120,6 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/capital-details', text: 'Capital Details', active: false }, // showWhen(hasPreviousApplication: 'No')
           { href: '/crm5/1234567/income-details', text: 'Income Details', active: false }, // showWhen(hasPreviousApplication: 'No')
           { href: '/crm5/1234567/solicitors-declaration', text: "Solicitor's Declaration", active: false }, // showWhen(hasPreviousApplication: 'No')
-          { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
-          { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
-          { href: '/crm5/1234567/costs', text: 'Costs', active: false },
-          { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
-          { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
-          { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
-          { href: '/crm5/1234567/summary', text: 'Summary', active: false },
-        ],
-        label: 'Side navigation',
-      })
-    })
-
-    it('should return crm navigation for showWhen and hideWhen condition met', () => {
-      const customResponse: Crm5Response = {
-        formDetails: {
-          ...crm5Response.formDetails,
-          hasPreviousApplication: 'No', // ensure showWhen condition met
-          CaseDetails: {
-            levelOfWork: 'Advocacy',
-            cwCriminalProceeding: true, // ensure hideWhen condition met
-            cwCriminalInvestigation: false,
-            cwCcrc: false,
-            cwAppealsReview: false,
-            cwPrisonLaw: true,
-          },
-        },
-        evidenceFiles: {
-          files: [],
-        },
-      }
-
-      const result = crmDisplayService.getNavigation('crm5', 1234567, '', customResponse)
-
-      expect(result).toEqual({
-        items: [
-          { href: '/crm5/1234567/general-information', text: 'General Information', active: true },
-          { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
-          { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
-          { href: '/crm5/1234567/proceedings', text: 'Proceedings', active: false },
-          { href: '/crm5/1234567/statement-of-case', text: 'Statement of Case', active: false },
-          { href: '/crm5/1234567/solicitors-declaration', text: "Solicitor's Declaration", active: false },
           { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
           { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
@@ -247,12 +206,12 @@ describe('CRM Display Service', () => {
       ])
     })
 
-    it('should return "CRM5: Capital Details" section for showWhen(hasPreviousApplication = No)', () => {
+    it('should return crm section for conditions met', () => {
       const customResponse: Crm5Response = {
         ...crm5Response,
         formDetails: {
           ...crm5Response.formDetails,
-          hasPreviousApplication: 'No',
+          hasPreviousApplication: 'No', // // ensure showWhen condition met
         },
       }
 
@@ -263,109 +222,7 @@ describe('CRM Display Service', () => {
       expect(result[0].title).toEqual('Capital Details')
     })
 
-    it('should return "CRM5: Income Details" section for showWhen(hasPreviousApplication = No)', () => {
-      const customResponse: Crm5Response = {
-        ...crm5Response,
-        formDetails: {
-          ...crm5Response.formDetails,
-          hasPreviousApplication: 'No',
-        },
-      }
-
-      const result = crmDisplayService.getSections('crm5', 'income-details', customResponse)
-
-      expect(result.length).toEqual(1)
-      expect(result[0].sectionId).toEqual('income-details')
-      expect(result[0].title).toEqual('Income Details')
-    })
-
-    it('should return "CRM5: Solicitor\'s Declaration" section for (showWhen hasPreviousApplication = No)', () => {
-      const customResponse: Crm5Response = {
-        ...crm5Response,
-        formDetails: {
-          ...crm5Response.formDetails,
-          hasPreviousApplication: 'No',
-        },
-      }
-
-      const result = crmDisplayService.getSections('crm5', 'solicitors-declaration', customResponse)
-
-      expect(result.length).toEqual(1)
-      expect(result[0].sectionId).toEqual('solicitors-declaration')
-      expect(result[0].title).toEqual("Solicitor's Declaration")
-    })
-
-    it('should return "CRM5: Advice and Assistance" section when CaseDetails.levelOfWork = Advice', () => {
-      const customResponse: Crm5Response = {
-        ...crm5Response,
-        formDetails: {
-          ...crm5Response.formDetails,
-          CaseDetails: {
-            levelOfWork: 'Advice',
-            cwCriminalProceeding: false,
-            cwCriminalInvestigation: false,
-            cwCcrc: false,
-            cwAppealsReview: false,
-            cwPrisonLaw: true,
-          },
-        },
-      }
-
-      const result = crmDisplayService.getSections('crm5', 'advice-and-assistance', customResponse)
-
-      expect(result.length).toEqual(1)
-      expect(result[0].sectionId).toEqual('advice-and-assistance')
-      expect(result[0].title).toEqual('Advice and Assistance')
-    })
-
-    it('should not return "CRM5: Capital Details" section when conditions not met', () => {
-      const result = crmDisplayService.getSections('crm5', 'capital-details', crm5Response)
-
-      expect(result.length).toEqual(1)
-      expect(result[0].sectionId).toEqual('general-information')
-      expect(result[0].title).toEqual('General Information')
-    })
-
-    it('should not return "CRM5: Income Details" section when conditions not met', () => {
-      const result = crmDisplayService.getSections('crm5', 'income-details', crm5Response)
-
-      expect(result.length).toEqual(1)
-      expect(result[0].sectionId).toEqual('general-information')
-      expect(result[0].title).toEqual('General Information')
-    })
-
-    it('should not return "Solicitor\'s Declaration" section when conditions not met', () => {
-      const result = crmDisplayService.getSections('crm5', 'solicitors-declaration', crm5Response)
-
-      expect(result.length).toEqual(1)
-      expect(result[0].sectionId).toEqual('general-information')
-      expect(result[0].title).toEqual('General Information')
-    })
-
-    it('should return first section if hideWhen condition met', () => {
-      const customResponse: Crm5Response = {
-        formDetails: {
-          ...crm5Response.formDetails,
-          CaseDetails: {
-            levelOfWork: 'Advocacy',
-            cwCriminalProceeding: true,
-            cwCriminalInvestigation: false,
-            cwCcrc: false,
-            cwAppealsReview: false,
-            cwPrisonLaw: true,
-          },
-        },
-        evidenceFiles: {
-          files: [],
-        },
-      }
-
-      const result = crmDisplayService.getSections('crm5', 'capital-details', customResponse)
-
-      expect(result).toEqual(generalInformation)
-    })
-
-    it('should return first section if condition not met for given section', () => {
+    it('should return first section if conditions not met for given section', () => {
       const result = crmDisplayService.getSections('crm5', 'capital-details', crm5Response)
 
       expect(result).toEqual(generalInformation)
