@@ -14,12 +14,12 @@ spec:
   ingressClassName: nginx    
   tls:
     - hosts:
-        - ${CP_NAMESPACE}.apps.live.cloud-platform.service.justice.gov.uk
+        - ${CP_NAMESPACE}-print-pdf.apps.live.cloud-platform.service.justice.gov.uk
   rules:
-    - host: ${CP_NAMESPACE}.apps.live.cloud-platform.service.justice.gov.uk
+    - host: ${CP_NAMESPACE}-print-pdf.apps.live.cloud-platform.service.justice.gov.uk
       http:
         paths:
-          - path: /print-pdf
+          - path: /
             pathType: ImplementationSpecific
             backend:
               service:
