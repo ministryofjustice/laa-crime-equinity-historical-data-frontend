@@ -1,5 +1,4 @@
 {% extends "../partials/layout.njk" %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "../components/navigationBar.njk" import navigationBar %}
 {% from "../components/formField.njk" import formField %}
 {% from "../components/timeAndCost.njk" import timeAndCost %}
@@ -23,12 +22,6 @@
                     {{ navigationBar(navigationItems) }}
                 </div>
                 <div class="govuk-grid-column-two-thirds govuk-!-padding-top-4">
-                    <form action="/print-eform" method="POST" target="_blank">
-                        <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-                        {{ govukButton({
-                            text: 'Print'
-                        }) }}
-                    </form>
                     {% for section in sections %}
                         <h2 class="govuk-heading-m">{{ section.title }}</h2>
                         {% for subsection in section.subsections %}
