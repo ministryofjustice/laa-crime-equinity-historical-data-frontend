@@ -1,0 +1,45 @@
+{% from "../../formFieldList.njk" import formFieldList %}
+{% from "../../formTable.njk" import formTable %}
+{% macro crm15Income1(data) %}
+
+    <p class="govuk-summary-list__key">How many employers do you and your partner have?</p>
+    {% set fields = [
+        { label: "You", value: data.employersCrm15 },
+        { label: "Your partner", value: data.employersCrm15}
+    ] %}
+    {{ formFieldList(fields) }}
+
+
+
+    {% if (data.allEmployers.you | length) > 0 %}
+        {{ employersTable('Your Employer(s)', data.allEmployers.you ) }}
+    {% else %}
+        {{ employersTable('Your Partner\'s Employer(s)', data.allEmployers.you ) }}
+    {% endif %}
+
+{% endmacro %}
+
+
+{% macro employersTable(title, data) %}
+    <p class="govuk-summary-list__key">Your Partner's Employer(s)</p>
+    {% set tableData = {
+        head: [
+            { text: "Employers Name / Job Title"},
+            { text: "Address" },
+            { text: "Salary" },
+            { text: "Deductions" }
+        ],
+        rows: []
+    } %}
+
+    {% for item in data %}
+        {%- set tableRow = [
+            { text: item.employersName | safe, attributes: { 'data-header': 'Employer\'s Name Job Title' } },
+            { text: item.addressDisplay | safe, attributes: { 'data-header': 'Address' } },
+            { text: item.salary | safe | formatDate, attributes: { 'data-header': 'Salary' } },
+            { text: item.otherDeduction | safe | formatDate, attributes: { 'data-header': 'Deductions' } }
+        ] -%}
+        {% set list = tableData.rows.push(tableRow) %}
+    {% endfor %}
+    {{ formTable(tableData) }}
+{% endmacro %}

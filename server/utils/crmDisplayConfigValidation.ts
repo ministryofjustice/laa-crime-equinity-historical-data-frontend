@@ -8,14 +8,14 @@ const schema = Joi.object({
       sectionId: Joi.string().required(),
       title: Joi.string().required(),
       showWhen: Joi.object({
-        conditionsMet: Joi.string().optional(),
+        conditionsMet: Joi.string().optional().allow('any', 'all'),
         conditions: Joi.array().items({
           apiField: Joi.string().required(),
           equals: Joi.string().required(),
         }),
       }).optional(),
       hideWhen: Joi.object({
-        conditionsMet: Joi.string().optional(),
+        conditionsMet: Joi.string().optional().allow('any', 'all'),
         conditions: Joi.array().items({
           apiField: Joi.string().required(),
           equals: Joi.string().required(),
