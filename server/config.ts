@@ -81,6 +81,14 @@ export default {
       agent: new AgentConfig(Number(get('SDS_API_TIMEOUT_RESPONSE', 10000))),
       authScope: get('SDS_AUTH_SCOPE', 'xxx', requiredInProduction),
     },
+    printApi: {
+      url: get('PRINT_API_URL', 'http://localhost:3100', requiredInProduction),
+      timeout: {
+        response: Number(get('SDS_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('SDS_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('SDS_API_TIMEOUT_RESPONSE', 10000))),
+    },
   },
   session: {
     secret: get('SESSION_SECRET', 'app-insecure-default-session'),
