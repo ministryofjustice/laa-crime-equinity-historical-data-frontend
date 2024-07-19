@@ -2,6 +2,9 @@ import { Readable } from 'stream'
 import superagent from 'superagent'
 import Agent, { HttpsAgent } from 'agentkeepalive'
 
+import { Blob } from 'buffer'
+import { ReadStream } from 'fs'
+import { ConfigField, FieldOrSubHeading } from '@crmDisplay'
 import logger from '../../logger'
 import sanitiseError from '../sanitisedError'
 import type { UnsanitisedError } from '../sanitisedError'
@@ -19,6 +22,15 @@ interface Request {
 
 interface RequestWithBody extends Request {
   data?: Record<string, unknown>
+  retry?: boolean
+}
+
+interface MultiPartRequest extends Request {
+  field: {
+    [fieldName: string]:
+      | (string | number | boolean | Blob | Buffer | ReadStream)
+      | Array<string | number | boolean | Blob | Buffer | ReadStream>
+  }
   retry?: boolean
 }
 
@@ -109,11 +121,45 @@ export default class RestClient {
     }
   }
 
+  private async multipartRequest<Response = unknown>(
+    method: 'patch' | 'post' | 'put',
+    { path, query = {}, headers = {}, responseType = '', field = {}, raw = false, retry = false }: MultiPartRequest,
+  ): Promise<Response> {
+    logger.info(`${this.name} ${method.toUpperCase()}: ${path}`)
+    try {
+      const result = await superagent[method](`${this.apiUrl()}${path}`)
+        .query(query)
+        .field(field)
+        .agent(this.agent)
+        .use(restClientMetricsMiddleware)
+        .retry(2, (err, res) => {
+          if (retry === false) {
+            return false
+          }
+          if (err) logger.info(`Retry handler found API error with ${err.code} ${err.message}`)
+          return undefined // retry handler only for logging retries, not to influence retry logic
+        })
+        .auth(this.token, { type: 'bearer' })
+        .set(headers)
+        .responseType(responseType)
+        .timeout(this.timeoutConfig())
+
+      return raw ? result : result.body
+    } catch (error) {
+      const sanitisedError = sanitiseError(error)
+      logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: '${method.toUpperCase()}'`)
+      throw sanitisedError
+    }
+  }
+
   async patch<Response = unknown>(request: RequestWithBody): Promise<Response> {
     return this.requestWithBody('patch', request)
   }
 
-  async post<Response = unknown>(request: RequestWithBody): Promise<Response> {
+  async post<Response = unknown>(request: RequestWithBody | MultiPartRequest): Promise<Response> {
+    if (isMultiPartRequest(request)) {
+      return this.multipartRequest('post', request)
+    }
     return this.requestWithBody('post', request)
   }
 
@@ -182,3 +228,6 @@ export default class RestClient {
     })
   }
 }
+
+const isMultiPartRequest = (field: RequestWithBody | MultiPartRequest): field is MultiPartRequest =>
+  (field as MultiPartRequest).field !== undefined
