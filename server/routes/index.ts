@@ -5,13 +5,12 @@ import { Controllers } from '../controllers'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function routes({
+  searchEformController,
   crm4Controller,
   crm5Controller,
   crm7Controller,
   crm14Controller,
   downloadEvidenceController,
-  printEformController,
-  searchEformController,
 }: Controllers): Router {
   const router = Router()
 
@@ -54,6 +53,5 @@ export default function routes({
 
   get('/download-evidence', downloadEvidenceController.download())
 
-  post('/print-eform', printEformController.submit())
   return router
 }

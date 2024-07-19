@@ -11,7 +11,6 @@ import { EqApiHeader } from '@eqApi'
 import { initialiseAppInsights, buildAppInsightsClient } from '../utils/azureAppInsights'
 import applicationInfoSupplier from '../applicationInfo'
 import CrmApiClient from './api/crmApiClient'
-import PrintApiClient from './api/printApiClient'
 import SdsApiClient from './api/sdsApiClient'
 import SearchApiClient from './api/searchApiClient'
 
@@ -34,7 +33,6 @@ export const dataAccess = () => ({
   crm5ApiClient: new CrmApiClient<Crm5Response>(eqiApiHeaders, 'crm5'),
   crm7ApiClient: new CrmApiClient<Crm7Response>(eqiApiHeaders, 'crm7'),
   crm14ApiClient: new CrmApiClient<Crm14Response>(eqiApiHeaders, 'crm14'),
-  printApiClient: new PrintApiClient(),
   sdsApiClient: new SdsApiClient(),
   searchApiClient: new SearchApiClient(eqiApiHeaders),
 })
