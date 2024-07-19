@@ -41,10 +41,10 @@ jobs:
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
           aws-region: ${{ vars.ECR_REGION }}
-      - name: Login to AWS SCR
-        uses: aws-actions/amazon-ecr-login@v2
+          
+      - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
-        
+          
       # Build and push docker image to container repo
       - name: Build and push docker image
         uses: docker/build-push-action@v5
@@ -54,6 +54,13 @@ jobs:
         with:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
+          
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          context: ./gotenberg
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
+    
       # Build and push Gotenberg docker image to container repo
       - name: Build and push docker image
         uses: docker/build-push-action@v5
@@ -62,7 +69,6 @@ jobs:
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
         with:
           context: ./gotenberg
-          file: ./gotenberg/Dockerfile
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
           push: true
           
@@ -83,7 +89,8 @@ jobs:
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-          aws-region: ${{ vars.ECR_REGION }}
+          aws-region: ${{ vars.ECR_REGION }}    
+        
       - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
       
@@ -95,6 +102,12 @@ jobs:
         with:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          context: ./gotenberg
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
 
       # Build and push PDF-Creator (Gotenberg) docker image to container repo
       - name: Build and push docker image

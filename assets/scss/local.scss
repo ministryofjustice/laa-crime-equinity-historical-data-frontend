@@ -21,3 +21,13 @@
     @include govuk-responsive-padding(0, "left");
   }
 }
+
+@media print {
+  a[href]::after {
+    content: none !important;
+  }
+
+  @page {
+    margin: 0;
+  }
+}

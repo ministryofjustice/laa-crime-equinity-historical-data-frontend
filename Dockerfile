@@ -1,4 +1,3 @@
-# Stage: base image
 FROM node:21-slim AS base
 
 # ARG BUILD_NUMBER
