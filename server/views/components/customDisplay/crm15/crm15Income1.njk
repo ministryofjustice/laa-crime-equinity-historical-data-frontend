@@ -2,26 +2,94 @@
 {% from "../../formTable.njk" import formTable %}
 {% macro crm15Income1(data) %}
 
-    <p class="govuk-summary-list__key">How many employers do you and your partner have?</p>
-    {% set fields = [
-        { label: "You", value: data.employersCrm15 },
-        { label: "Your partner", value: data.employersCrm15}
-    ] %}
-    {{ formFieldList(fields) }}
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Your Income and Your Partner's Income</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            {% set yourEmployersCount = data.allEmployers.you | length %}
+            {% set partnerEmployersCount = data.allEmployers.partner | length %}
+
+            <p class="govuk-body govuk-!-font-weight-bold">How many employers do you and your partner have?</p>
+            {% if yourEmployersCount > 0 %}
+                {{ formFieldList([{ label: 'You', value: yourEmployersCount}]) }}
+            {% endif %}
+
+            {% if partnerEmployersCount > 0 %}
+                {{ formFieldList([{ label: 'Your Partner', value: partnerEmployersCount}]) }}
+            {% endif %}
 
 
+            {% if yourEmployersCount > 0 %}
+                {{ employersTable('Your Employer(s)', data.allEmployers.you ) }}
+            {% endif %}
 
-    {% if (data.allEmployers.you | length) > 0 %}
-        {{ employersTable('Your Employer(s)', data.allEmployers.you ) }}
-    {% else %}
-        {{ employersTable('Your Partner\'s Employer(s)', data.allEmployers.you ) }}
-    {% endif %}
+            {% if partnerEmployersCount > 0 %}
+                {{ employersTable('Your Partner\'s Employer(s)', data.allEmployers.partner ) }}
+            {% endif %}
+
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Self-employment, partnerships and private businesses</p>
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
+            {% set fields = [
+                { label: 'Self-employed: the number of businesses', value: data.selfEmployedNoOfBusinesses },
+                { label: 'Business partnership: the number of partnerships', value: data.businessPartnerships },
+                { label: 'Director or Shareholder: the number of private companies', value: data.privateCompanies }
+            ] %}
+            {{ formFieldList(fields) }}
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
+            {% set fields = [
+                { label: 'Self-employed: the number of businesses', value: data.partnerSelfEmployedNoOfBusinesses },
+                { label: 'Business partnership: the number of partnerships', value: data.partnerBusinessPartnershipsNoOf },
+                { label: 'Director or Shareholder: the number of private companies', value: data.partnerPrivateCompaniesNoOf }
+            ] %}
+            {{ formFieldList(fields) }}
+
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Have you or your partner received a self
+                assessment tax calculation sheet from HM Revenue and Customs telling you about your tax liability,
+                within the last 2 years?</p>
+            {{ formFieldList([{ label: 'You', value: data.selfAssessmentTaxReceived }]) }}
+
+            {% if data.partnerSelfAssessmentTaxReceived %}
+                {{ formFieldList([{ label: 'Your Partner', value: data.partnerSelfAssessmentTaxReceived }]) }}
+            {% endif %}
+
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
+            {% set fields = [
+                { label: 'amount', value: data.taxLiability },
+                { label: 'every', value: data.taxLiabilityPaidEvery }
+            ] %}
+            {{ formFieldList(fields) }}
+
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
+            {% set fields = [
+                { label: 'amount', value: data.partnerTaxLiability },
+                { label: 'every', value: data.partnerTaxLiabilityPaidEvery }
+            ] %}
+            {{ formFieldList(fields) }}
+
+
+            {{ businessTable('Your Businesses', data.allBusinesses.you ) }}
+            {{ businessTable("Your Partner's Businesses", data.allBusinesses.partner ) }}
+
+            <p class="govuk-body govuk-!-font-weight-bold">Do you or your partner receive from work
+                any benefit that is not money - such as a company vehicle, relocation payments, vouchers for childcare,
+                or private health insurance?</p>
+            {{ formFieldList([{ label: 'You', value: data.??? }]) }}
+            {{ formFieldList([{ label: 'Your Partner', value: data.??? }]) }}
+
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
+            {{ formFieldList([ { label: 'The total value every year', value: data.??? }]) }}
+
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
+            {{ formFieldList([{ label: 'The total value every year', value: data.??? }]) }}
+        </div>
+    </div>
 
 {% endmacro %}
 
 
 {% macro employersTable(title, data) %}
-    <p class="govuk-summary-list__key">Your Partner's Employer(s)</p>
+    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">{{ title }}</p>
     {% set tableData = {
         head: [
             { text: "Employers Name / Job Title"},
@@ -38,6 +106,35 @@
             { text: item.addressDisplay | safe, attributes: { 'data-header': 'Address' } },
             { text: item.salary | safe | formatDate, attributes: { 'data-header': 'Salary' } },
             { text: item.otherDeduction | safe | formatDate, attributes: { 'data-header': 'Deductions' } }
+        ] -%}
+        {% set list = tableData.rows.push(tableRow) %}
+    {% endfor %}
+    {{ formTable(tableData) }}
+{% endmacro %}
+
+
+{% macro businessTable(title, data) %}
+    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">{{ title }}</p>
+    {% set tableData = {
+        head: [
+            { text: "Business Type"},
+            { text: "Previous 12 Months' Financials" },
+            { text: "Director's Salary Total Income from Share Sales" },
+            { text: "Trading Name & Address" },
+            { text: "Business Details" },
+            { text: "In business with anyone else" }
+        ],
+        rows: []
+    } %}
+
+    {% for item in data %}
+        {%- set tableRow = [
+            { text: item.businessType | safe, attributes: { 'data-header': 'Business Type' } },
+            { text: item.previousFinancialsDisplay | safe, attributes: { 'data-header': "Previous 12 Months' Financials" } },
+            { text: item.directorShareIncomeDisplay | safe | formatDate, attributes: { 'data-header': "Director's Salary Total Income from Share Sales" } },
+            { text: item.tradingDetailsDisplay | safe | formatDate, attributes: { 'data-header': 'Trading Name & Address' } },
+            { text: item.businessDetailsDisplay | safe | formatDate, attributes: { 'data-header': 'Business Details' } },
+            { text: item.businessWithName | safe | formatDate, attributes: { 'data-header': 'In business with anyone else' } }
         ] -%}
         {% set list = tableData.rows.push(tableRow) %}
     {% endfor %}

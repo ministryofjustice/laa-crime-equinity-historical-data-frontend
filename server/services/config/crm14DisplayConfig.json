@@ -466,8 +466,8 @@
       ]
     },
     {
-      "sectionId": "crm15-details",
-      "title": "CRM 15 Details",
+      "sectionId": "crm15-income-1",
+      "title": "CRM 15 - Income: 1",
       "showWhen": {
         "conditionsMet": "any",
         "conditions": [
@@ -487,6 +487,32 @@
           "customDisplay": {
             "name": "crm15Income1",
             "apiField": "crm15Details.income1"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "crm15-income-2",
+      "title": "CRM 15 - Income: 2",
+      "showWhen": {
+        "conditionsMet": "any",
+        "conditions": [
+          {
+            "apiField": "privateCompany",
+            "equals": "Yes"
+          },
+          {
+            "apiField": "partnerPrivateCompany",
+            "equals": "Yes"
+          }
+        ]
+      },
+      "subsections": [
+        {
+          "title": "Your Income and Your Partner's Income",
+          "customDisplay": {
+            "name": "crm15Income2",
+            "apiField": "crm15Details.income2"
           }
         }
       ]

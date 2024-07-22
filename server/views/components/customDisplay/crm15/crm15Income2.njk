@@ -1,0 +1,85 @@
+{% from "../../formFieldList.njk" import formFieldList %}
+{% from "../../formTable.njk" import formTable %}
+
+{% macro crm15Income2(data) %}
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Your Income and Your Partner's Income</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <p class="govuk-body govuk-!-font-weight-bold">Do you or your partner receive the State Pension or any of
+                the Benefits listed here?</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>State Pension</li>
+                <li>Child Benefit</li>
+                <li>Working Tax Credit or Child Tax Credit</li>
+                <li>Universal Credit</li>
+                <li>Incapacity Benefit</li>
+                <li>Industrial Injuries Disablement Benefit</li>
+                <li>Contribution-based Job Seekers Allowance</li>
+                <li>Other Benefits (except Housing Benefit)</li>
+            </ul>
+
+            {{ formFieldList([{ label: 'You', value: data.receivingBenefits2 }]) }}
+            {{ formFieldList([{ label: 'Your Partner', value: data.partnerReceivingBenefits2 }]) }}
+
+            {% set benefitsData = [
+                {label: 'State Pension', amount: data.statePensionCrm15, every: data.statePensionCrm15PaidEvery },
+                {label: 'Child Benefit', amount: data.childBenefitCrm15, every: data.childBenefitCrm15PaidEvery },
+                {label: 'Working Tax Credit or Child Tax Credit', amount: data.taxCreditCrm15, every: data.taxCreditCrm15PaidEvery },
+                {label: 'Universal Credit', amount: data.universalCreditCrm15, every: data.universalCreditCrm15PaidEvery },
+                {label: 'Incapacity Benefit', amount: data.incapacityBenefitCrm15, every: data.incapacityBenefitCrm15PaidEvery },
+                {label: 'Industrial Injuries Disablement Benefit', amount: data.disablementBenefitCrm15, every: data.disablementBenefitCrm15PaidEvery },
+                {label: 'Contribution-based Job Seekers Allowance', amount: data.jsaCrm15, every: data.jsaCrm15PaidEvery },
+                {label: 'Other Benefits (except Housing Benefit)', amount: data.otherBenefitsCrm15, every: data.otherBenefitsCrm15PaidEvery }
+            ] %}
+            {{ benefitsTable('You:', benefitsData) }}
+
+            {% set benefitsData = [
+                {label: 'State Pension', amount: data.partnerStatePensionCrm15, every: data.partnerStatePensionCrm15PaidEvery },
+                {label: 'Child Benefit', amount: data.partnerChildBenefitCrm15, every: data.partnerChildBenefitCrm15PaidEvery },
+                {label: 'Working Tax Credit or Child Tax Credit', amount: data.partnerTaxCreditCrm15, every: data.partnerTaxCreditCrm15PaidEvery },
+                {label: 'Universal Credit', amount: data.partnerUniversalCreditCrm15, every: data.partnerUniversalCreditCrm15PaidEvery },
+                {label: 'Incapacity Benefit', amount: data.partnerIncapacityBenefitCrm15, every: data.partnerIncapacityBenefitCrm15PaidEvery },
+                {label: 'Industrial Injuries Disablement Benefit', amount: data.partnerDisablementBenefitCrm15, every: data.partnerDisablementBenefitCrm15PaidEvery },
+                {label: 'Contribution-based Job Seekers Allowance', amount: data.partnerJsaCrm15, every: data.partnerJsaCrm15PaidEvery },
+                {label: 'Other Benefits (except Housing Benefit)', amount: data.partnerOtherBenefitsCrm15, every: data.partnerOtherBenefitsCrm15PaidEvery }
+            ] %}
+            {{ benefitsTable('Your Partner:', benefitsData) }}
+
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">At their next birthday, how many
+                children living with you will be aged</p>
+            {% set fields = [
+                { label: '1 year', value: data.partnerSelfEmployedNoOfBusinesses },
+                { label: '2 to 4', value: data.partnerBusinessPartnershipsNoOf },
+                { label: '5 to 7', value: data.partnerPrivateCompaniesNoOf },
+                { label: '8 to 10', value: data.partnerPrivateCompaniesNoOf },
+                { label: '11 to 12', value: data.partnerPrivateCompaniesNoOf },
+                { label: '13 to 15', value: data.partnerPrivateCompaniesNoOf },
+                { label: '16 to 18', value: data.partnerPrivateCompaniesNoOf }
+            ] %}
+            {{ formFieldList(fields) }}
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro benefitsTable(title, data) %}
+    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">{{ title }}</p>
+    {% set tableData = {
+        head: [],
+        rows: []
+    } %}
+
+    {% for item in data %}
+        {%- set tableRow = [
+            { text: item.label },
+            { text: 'amount ' + (item.amount | safe | formatCurrency) },
+            { text: 'every ' + (item.every | default('1 week', true) | safe) }
+        ] -%}
+        {% set list = tableData.rows.push(tableRow) %}
+    {% endfor %}
+
+    {{ formTable(tableData) }}
+{% endmacro %}
