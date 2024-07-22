@@ -74,8 +74,11 @@
             <p class="govuk-body govuk-!-font-weight-bold">Do you or your partner receive from work
                 any benefit that is not money - such as a company vehicle, relocation payments, vouchers for childcare,
                 or private health insurance?</p>
-            {{ formFieldList([{ label: 'You', value: data.??? }]) }}
-            {{ formFieldList([{ label: 'Your Partner', value: data.??? }]) }}
+            {% set fields = [
+                { label: 'You', value: data.??? },
+                { label: 'every', value: data.??? }
+            ] %}
+            {{ formFieldList(fields) }}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
             {{ formFieldList([ { label: 'The total value every year', value: data.??? }]) }}
