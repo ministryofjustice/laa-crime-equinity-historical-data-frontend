@@ -1,0 +1,10 @@
+{% from "./formFieldList.njk" import formFieldList %}
+
+{% macro amountAndEvery(label, amount, every) %}
+    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">{{ label }}</p>
+    {% set fields = [
+        { label: 'amount', value: amount, type: 'currency' },
+        { label: 'every', value: every }
+    ] %}
+    {{ formFieldList(fields) }}
+{% endmacro %}

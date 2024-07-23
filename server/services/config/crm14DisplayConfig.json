@@ -518,6 +518,32 @@
       ]
     },
     {
+      "sectionId": "crm15-outgoings",
+      "title": "CRM 15 - Outgoings",
+      "showWhen": {
+        "conditionsMet": "any",
+        "conditions": [
+          {
+            "apiField": "privateCompany",
+            "equals": "Yes"
+          },
+          {
+            "apiField": "partnerPrivateCompany",
+            "equals": "Yes"
+          }
+        ]
+      },
+      "subsections": [
+        {
+          "title": "Your outgoings and your partner's outgoings",
+          "customDisplay": {
+            "name": "crm15Outgoings",
+            "apiField": "crm15Details.outgoings"
+          }
+        }
+      ]
+    },
+    {
       "sectionId": "evidence-2",
       "title": "Evidence: 2",
       "subsections": [
