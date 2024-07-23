@@ -11,6 +11,7 @@
 {% from "./crm15/crm15Income1.njk" import crm15Income1 %}
 {% from "./crm15/crm15Income2.njk" import crm15Income2 %}
 {% from "./crm15/crm15Outgoings.njk" import crm15Outgoings %}
+{% from "./crm15/crm15LandProperty.njk" import crm15LandProperty %}
 
 {% macro customDisplay(params) %}
     {% if params.name == 'crmEvidence' %}
@@ -41,6 +42,8 @@
     {{ crm15Income2(params.value) }}
         {% elif params.name == 'crm15Outgoings' %}
     {{ crm15Outgoings(params.value) }}
+        {% elif params.name == 'crm15LandProperty' %}
+    {{ crm15LandProperty(params.value) }}
     {% endif %}
 
 {% endmacro %}
