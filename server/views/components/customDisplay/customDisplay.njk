@@ -8,6 +8,7 @@
 {% from "./crm14/crm14AboutTheInformation.njk" import crm14AboutTheInformation %}
 {% from "./crm14/crm14InterestsOfJustice.njk" import crm14InterestsOfJustice %}
 {% from "./crm14/crm14Declarations.njk" import crm14Declarations %}
+{% from "./crm14/crm14PrivacyNotice.njk" import crm14PrivacyNotice %}
 
 {% macro customDisplay(params) %}
     {% if params.name == 'crmEvidence' %}
@@ -32,6 +33,8 @@
     {{ crm14InterestsOfJustice(params.value) }}
         {% elif params.name == 'crm14Declarations' %}
     {{ crm14Declarations(params.value) }}
+        {% elif params.name == 'crm14PrivacyNotice' %}
+    {{ crm14PrivacyNotice(params.value) }}
     {% endif %}
 
 {% endmacro %}
