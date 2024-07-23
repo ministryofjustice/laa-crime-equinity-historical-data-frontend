@@ -76,7 +76,7 @@
                 or private health insurance?</p>
             {% set fields = [
                 { label: 'You', value: data.??? },
-                { label: 'every', value: data.??? }
+                { label: 'Your Partner', value: data.??? }
             ] %}
             {{ formFieldList(fields) }}
 
@@ -105,9 +105,9 @@
 
     {% for item in data %}
         {%- set tableRow = [
-            { text: item.employersName | safe, attributes: { 'data-header': 'Employer\'s Name Job Title' } },
+            { text: item.nameAndJobTitleDisplay | safe, attributes: { 'data-header': 'Employer\'s Name Job Title' } },
             { text: item.addressDisplay | safe, attributes: { 'data-header': 'Address' } },
-            { text: item.salary | safe | formatDate, attributes: { 'data-header': 'Salary' } },
+            { text: item.salaryDisplay | safe | formatDate, attributes: { 'data-header': 'Salary' } },
             { text: item.otherDeduction | safe | formatDate, attributes: { 'data-header': 'Deductions' } }
         ] -%}
         {% set list = tableData.rows.push(tableRow) %}

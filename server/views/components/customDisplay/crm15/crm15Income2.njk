@@ -63,44 +63,58 @@
             ] %}
             {{ formFieldList(fields) }}
 
-            <p class="govuk-body govuk-!-font-weight-bold">Do you or your partner receive a private pension, or a pension from an employer?</p>
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner receive a private pension, or a pension from an employer?</p>
             {% set fields = [
                 { label: 'You', value: data.receivePension  },
                 { label: 'Your Partner', value: data.partnerReceivePension}
             ] %}
             {{ formFieldList(fields) }}
 
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
-            {{ formFieldList([ { label: 'amount', value: data.totalPension }]) }}
-            {{ formFieldList([ { label: 'every', value: data.totalPensionPaidEvery }]) }}
+            {{ amountEvery('You:', data.totalPension, data.totalPensionPaidEvery) }}
 
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
-            {{ formFieldList([ { label: 'amount', value: data.partnerTotalPension }]) }}
-            {{ formFieldList([ { label: 'every', value: data.partnerTotalPensionPaidEvery }]) }}
+            {{ amountEvery('Your Partner:', data.partnerTotalPension, data.partnerTotalPensionPaidEvery) }}
 
-            <p class="govuk-body govuk-!-font-weight-bold">Do you or your partner receive maintenance payments for anyone in your household?</p>
-            {{ formFieldList([{ label: 'You', value: data.receiveMaintenancePayments }]) }}
-            {{ formFieldList([{ label: 'Your Partner', value: data.partnerReceiveMaintenancePayments }]) }}
-
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
-            {{ formFieldList([ { label: 'amount', value: data.maintenancePayment }]) }}
-            {{ formFieldList([ { label: 'every', value: data.maintenancePaymentPaidEvery }]) }}
-
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
-            {{ formFieldList([ { label: 'amount', value: data.partnerMaintenance }]) }}
-            {{ formFieldList([ { label: 'every', value: data.partnerMaintenancePaymentPaidEvery }]) }}
-
-            <p class="govuk-body govuk-!-font-weight-bold">Do you or your partner receive interest or income from any savings or other investment?</p>
-            {{ formFieldList([{ label: 'You', value: data.receiveInterest }]) }}
-            {{ formFieldList([{ label: 'Your Partner', value: data.partnerReceiveInterest }]) }}
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner receive maintenance payments for anyone in your household?</p>
+            {% set fields = [
+                { label: 'You', value: data.receiveMaintenancePayments },
+                { label: 'Your Partner', value: data.partnerReceiveMaintenancePayments }
+            ] %}
+            {{ formFieldList(fields) }}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
-            {{ formFieldList([ { label: 'amount', value: data.interest }]) }}
-            {{ formFieldList([ { label: 'every', value: data.partnerInterestPaidEvery }]) }}
+            {% set fields = [
+                { label: 'amount', value: data.maintenancePayment },
+                { label: 'every', value: data.maintenancePaymentPaidEvery }
+            ] %}
+            {{ formFieldList(fields) }}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
-            {{ formFieldList([ { label: 'amount', value: data.partnerInterest }]) }}
-            {{ formFieldList([ { label: 'every', value: data.partnerInterestPaidEvery }]) }}
+            {% set fields = [
+                { label: 'amount', value: data.partnerMaintenance },
+                { label: 'every', value: data.partnerMaintenancePaymentPaidEvery }
+            ] %}
+            {{ formFieldList(fields) }}
+
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner receive interest or income from any savings or other investment?</p>
+            {% set fields = [
+                { label: 'You', value: data.receiveInterest },
+                { label: 'Your Partner', value: data.partnerReceiveInterest }
+            ] %}
+            {{ formFieldList(fields) }}
+
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
+            {% set fields = [
+                { label: 'amount', value: data.interest },
+                { label: 'every', value: data.partnerInterestPaidEvery }
+            ] %}
+            {{ formFieldList(fields) }}
+
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
+            {% set fields = [
+                { label: 'amount', value: data.partnerInterest },
+                { label: 'every', value: data.partnerInterestPaidEvery }
+            ] %}
+            {{ formFieldList(fields) }}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner receive any income from the sources listed here?</p>
             <ul class="govuk-list govuk-list--bullet">
@@ -110,30 +124,51 @@
                 <li>Financial support from anyone else or from someone who allows you to use assets or money</li>
                 <li>Income from any other source which you have not stated in any of the previous questions</li>
             </ul>
-            {{ formFieldList([{ label: 'You', value: data.incomeFromOtherSources }]) }}
-            {{ formFieldList([{ label: 'Your Partner', value: data.partnerIncomeFromOtherSources }]) }}
+            {% set fields = [
+                { label: 'You', value: data.incomeFromOtherSources },
+                { label: 'Your Partner', value: data.partnerIncomeFromOtherSources }
+            ] %}
+            {{ formFieldList(fields) }}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
-            {{ formFieldList([ { label: 'Student grant or loan', value: data.studentLoan }]) }}
-            {{ formFieldList([ { label: 'Board or rent from a family lodger or tenant', value: data.familyRent }]) }}
-            {{ formFieldList([ { label: 'Rent from another property', value: data.otherRent }]) }}
-            {{ formFieldList([ { label: 'Financial support from anyone else or from someone who allows you to use assets or money', value: data.otherFinancialSupport }]) }}
-            {{ formFieldList([ { label: 'Income from any other source which you have not stated in any of the previous questions. Please explain', value: data.otherIncomeSourceFreetext }]) }}
-            <p class="govuk-body"The total amount received from all sources in this question</p>
-            {{ formFieldList([ { label: 'amount', value: data.totalAmountReceived }]) }}
-            {{ formFieldList([ { label: 'every', value: data.totalAmountReceivedEvery }]) }}
+            {% set fields = [
+                { label: 'Student grant or loan', value: data.studentLoan },
+                { label: 'Board or rent from a family lodger or tenant', value: otherRent.familyRent },
+                { label: 'Rent from another property', value: data.partnerOtherRent },
+                { label: 'Financial support from anyone else or from someone who allows you to use assets or money', value: data.otherFinancialSupport },
+                { label: 'Income from any other source which you have not stated in any of the previous questions. Please explain', value: data.otherIncomeSourceFreetext }
+            ] %}
+            {{ formFieldList(fields) }}
+
+            <p class="govuk-body govuk-!-font-weight-bold">The total amount received from all sources in this question</p>
+            {% set fields = [
+                { label: 'amount', value: data.totalAmountReceived },
+                { label: 'every', value: data.totalAmountReceivedEvery }
+            ] %}
+            {{ formFieldList(fields) }}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
-            {{ formFieldList([ { label: 'Student grant or loan', value: data.partnerStudentLoan }]) }}
-            {{ formFieldList([ { label: 'Board or rent from a family lodger or tenant', value: data.partnerFamilyRent }]) }}
-            {{ formFieldList([ { label: 'Rent from another property', value: data.partnerOtherRent }]) }}
-            {{ formFieldList([ { label: 'Financial support from anyone else or from someone who allows you to use assets or money', value: data.partnerOtherFinancialSupport }]) }}
-            {{ formFieldList([ { label: 'Income from any other source which you have not stated in any of the previous questions. Please explain', value: data.partnerOtherIncomeSourceFreetext }]) }}
-            <p class="govuk-body">The total amount received from all sources in this question</p>
-            {{ formFieldList([ { label: 'amount', value: data.partnerTotalAmountReceived }]) }}
-            {{ formFieldList([ { label: 'every', value: data.partnerTotalAmountReceivedEvery }]) }}
-            {{ formFieldList([ { label: 'Do your answers to the previous questions tell us that you have no income from any of the sources which we have asked about?', value: data.prevAnswersNoOtherIncome }]) }}
-            {{ formFieldList([ { label: 'How do you and your partner pay your bills and daily expenses?', value: data.howPayBillsCrm15 }]) }}
+            {% set fields = [
+                { label: 'Student grant or loan', value: data.partnerStudentLoan },
+                { label: 'Board or rent from a family lodger or tenant', value: data.partnerFamilyRent },
+                { label: 'Rent from another property', value: data.partnerOtherRent },
+                { label: 'Financial support from anyone else or from someone who allows you to use assets or money', value: data.partnerOtherFinancialSupport },
+                { label: 'Income from any other source which you have not stated in any of the previous questions. Please explain', value: data.partnerOtherIncomeSourceFreetext }
+            ] %}
+            {{ formFieldList(fields) }}
+
+            <p class="govuk-body govuk-!-font-weight-bold">The total amount received from all sources in this question</p>
+            {% set fields = [
+                { label: 'amount', value: data.partnerTotalAmountReceived },
+                { label: 'every', value: data.partnerTotalAmountReceivedEvery }
+            ] %}
+            {{ formFieldList(fields) }}
+
+            {% set fields = [
+                { label: 'Do your answers to the previous questions tell us that you have no income from any of the sources which we have asked about?', value: data.prevAnswersNoOtherIncome },
+                { label: 'How do you and your partner pay your bills and daily expenses?', value: data.howPayBillsCrm15 }
+            ] %}
+            {{ formFieldList(fields) }}
         </div>
     </div>
 {% endmacro %}
@@ -149,7 +184,7 @@
     {% for item in data %}
 
         {% if item.details %}
-            {% set details = 'amount ' + (item.amount | formatCurrency) + '<p>The benefit: ' + item.details + '</p>' %}
+            {% set details = 'amount ' + (item.amount | formatCurrency) + '<p>The benefit: </p><p>' + item.details + '</p>' %}
         {% else %}
             {% set details = 'amount ' + (item.amount | formatCurrency) %}
         {% endif %}
@@ -163,4 +198,14 @@
     {% endfor %}
 
     {{ formTable(tableData) }}
+{% endmacro %}
+
+
+{% macro amountEvery(label, amount, every) %}
+    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">{{ label }}</p>
+    {% set fields = [
+        { label: 'amount', value: amount },
+        { label: 'every', value: every }
+    ] %}
+    {{ formFieldList(fields) }}
 {% endmacro %}
