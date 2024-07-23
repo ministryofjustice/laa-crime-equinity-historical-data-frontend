@@ -55,9 +55,9 @@
             {%- set tableRow = [
                 { text: item.type | safe, attributes: { 'data-header': 'Type' } },
                 { text: item.lAndpAddressDisplay | safe, attributes: { 'data-header': 'Address' } },
-                { text: item.ownershipDetailsDisplay | safe | formatDate, attributes: { 'data-header': 'Ownership' } },
-                { text: item.mortgageDisplay | safe | formatDate, attributes: { 'data-header': 'Values' } },
-                { text: item.residentialCommercialLandDetailsDisplay | safe | formatDate, attributes: { 'data-header': 'Details' } }
+                { text: item.ownershipDetailsDisplay | safe, attributes: { 'data-header': 'Ownership' } },
+                { text: item.mortgageDisplay | safe, attributes: { 'data-header': 'Values' } },
+                { text: item.residentialCommercialLandDetailsDisplay | safe, attributes: { 'data-header': 'Details' } }
             ] -%}
             {% set list = tableData.rows.push(tableRow) %}
         {% endfor %}

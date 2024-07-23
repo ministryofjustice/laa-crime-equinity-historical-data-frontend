@@ -19,7 +19,6 @@
                 {{ formFieldList([{ label: 'Your Partner', value: partnerEmployersCount}]) }}
             {% endif %}
 
-
             {% if yourEmployersCount > 0 %}
                 {{ employersTable('Your Employer(s)', data.allEmployers.you ) }}
             {% endif %}
@@ -107,8 +106,8 @@
         {%- set tableRow = [
             { text: item.nameAndJobTitleDisplay | safe, attributes: { 'data-header': 'Employer\'s Name Job Title' } },
             { text: item.addressDisplay | safe, attributes: { 'data-header': 'Address' } },
-            { text: item.salaryDisplay | safe | formatDate, attributes: { 'data-header': 'Salary' } },
-            { text: item.otherDeduction | safe | formatDate, attributes: { 'data-header': 'Deductions' } }
+            { text: item.salaryDisplay | safe, attributes: { 'data-header': 'Salary' } },
+            { text: item.otherDeduction | safe, attributes: { 'data-header': 'Deductions' } }
         ] -%}
         {% set list = tableData.rows.push(tableRow) %}
     {% endfor %}
@@ -134,10 +133,10 @@
         {%- set tableRow = [
             { text: item.businessType | safe, attributes: { 'data-header': 'Business Type' } },
             { text: item.previousFinancialsDisplay | safe, attributes: { 'data-header': "Previous 12 Months' Financials" } },
-            { text: item.directorShareIncomeDisplay | safe | formatDate, attributes: { 'data-header': "Director's Salary Total Income from Share Sales" } },
-            { text: item.tradingDetailsDisplay | safe | formatDate, attributes: { 'data-header': 'Trading Name & Address' } },
-            { text: item.businessDetailsDisplay | safe | formatDate, attributes: { 'data-header': 'Business Details' } },
-            { text: item.businessWithName | safe | formatDate, attributes: { 'data-header': 'In business with anyone else' } }
+            { text: item.directorShareIncomeDisplay | safe, attributes: { 'data-header': "Director's Salary Total Income from Share Sales" } },
+            { text: item.tradingDetailsDisplay | safe, attributes: { 'data-header': 'Trading Name & Address' } },
+            { text: item.businessDetailsDisplay | safe, attributes: { 'data-header': 'Business Details' } },
+            { text: item.businessWithName | safe, attributes: { 'data-header': 'In business with anyone else' } }
         ] -%}
         {% set list = tableData.rows.push(tableRow) %}
     {% endfor %}

@@ -1,0 +1,84 @@
+{% from "../../formFieldList.njk" import formFieldList %}
+{% from "../../formTable.njk" import formTable %}
+{% from "../../amountAndEvery.njk" import amountAndEvery %}
+
+{% macro crm15Savings(data) %}
+
+<div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+    <div class="govuk-summary-card__title-wrapper">
+        <h3 class="govuk-summary-card__title">Your Savings and Investments and those of Your Partner</h3>
+    </div>
+    <div class="govuk-summary-card__content">
+        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner have any of these types of saving, in the United Kingdom or overseas?</p>
+        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Please enter the number of accounts you, your partner or any held jointly of the following types. Enter '0' if you have none of a particular type. Include empty or overdrawn accounts:</p>
+
+        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Bank accounts?</p>
+        {% set fields = [
+            { label: 'You', value: data.receivePension  },
+            { label: 'Your Partner', value: data.partnerReceivePension },
+            { label: 'Joint', value: data.partnerReceivePension }
+        ] %}
+        {{ formFieldList(fields) }}
+
+        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Building society accounts?</p>
+        {% set fields = [
+            { label: 'You', value: data.receivePension },
+            { label: 'Your Partner', value: data.partnerReceivePension },
+            { label: 'Joint', value: data.partnerReceivePension }
+        ] %}
+        {{ formFieldList(fields) }}
+
+        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Cash ISAs?</p>
+        {% set fields = [
+            { label: 'You', value: data.receivePension },
+            { label: 'Your Partner', value: data.partnerReceivePension },
+            { label: 'Joint', value: data.partnerReceivePension }
+        ] %}
+        {{ formFieldList(fields) }}
+
+        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">National Savings or Post Office Accounts?</p>
+        {% set fields = [
+            { label: 'You', value: data.receivePension },
+            { label: 'Your Partner', value: data.partnerReceivePension },
+            { label: 'Joint', value: data.partnerReceivePension }
+        ] %}
+        {{ formFieldList(fields) }}
+
+        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Any other cash investments?</p>
+        {% set fields = [
+            { label: 'You', value: data.receivePension },
+            { label: 'Your Partner', value: data.partnerReceivePension },
+            { label: 'Joint', value: data.partnerReceivePension }
+        ] %}
+        {{ formFieldList(fields) }}
+
+        {% set tableData = {
+            head: [
+                { text: "Bank, building society or other"},
+                { text: "Sort code / Branch" },
+                { text: "Account Number" },
+                { text: "Account Type" },
+                { text: "Balance" },
+                { text: "Overdrawn" },
+                { text: "Account Holder" }
+            ],
+            rows: []
+        } %}
+
+        {% for item in data.bankAccounts %}
+            {%- set tableRow = [
+                { text: item.bank | safe, attributes: { 'data-header': 'Bank, building society or other' } },
+                { text: item.sortCode | safe, attributes: { 'data-header': 'Sort code / Branch' } },
+                { text: item.accountNumber | safe, attributes: { 'data-header': 'Account Number' } },
+                { text: item.accountType | safe, attributes: { 'data-header': 'Account Type' } },
+                { text: item.balance | safe, attributes: { 'data-header': 'Balance' } },
+                { text: item.overdrawn | safe, attributes: { 'data-header': 'Overdrawn' } },
+                { text: item.accountHolder | safe, attributes: { 'data-header': 'Account Holder' } }
+            ] -%}
+            {% set list = tableData.rows.push(tableRow) %}
+        {% endfor %}
+        {{ formTable(tableData) }}
+    </div>
+</div>
+
+{% endmacro %}

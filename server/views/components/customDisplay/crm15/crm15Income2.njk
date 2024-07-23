@@ -154,10 +154,9 @@
 
     {% for item in data %}
 
+        {% set details = 'amount ' + (item.amount | formatCurrency) %}
         {% if item.details %}
-            {% set details = 'amount ' + (item.amount | formatCurrency) + '<p>The benefit: </p><p>' + item.details + '</p>' %}
-        {% else %}
-            {% set details = 'amount ' + (item.amount | formatCurrency) %}
+            {% set details = details + '<p>The benefit: ' + item.details + '</p>' %}
         {% endif %}
 
         {%- set tableRow = [
