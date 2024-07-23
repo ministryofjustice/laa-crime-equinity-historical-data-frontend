@@ -699,11 +699,10 @@
       "subsections": [
         {
           "title": "Privacy Notice",
-          "fields": [
-            {
-              "subHeading": "???"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm14PrivacyNotice",
+            "apiField": "privacyAgree"
+          }
         }
       ]
     },
