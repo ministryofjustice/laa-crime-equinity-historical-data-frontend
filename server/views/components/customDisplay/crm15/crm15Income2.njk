@@ -1,6 +1,7 @@
 {% from "../../formFieldList.njk" import formFieldList %}
 {% from "../../formTable.njk" import formTable %}
 {% from "../../amountAndEvery.njk" import amountAndEvery %}
+{% from "../../youAndYourPartner.njk" import youAndYourPartner %}
 
 {% macro crm15Income2(data) %}
 
@@ -21,81 +22,81 @@
                 <li>Contribution-based Job Seekers Allowance</li>
                 <li>Other Benefits (except Housing Benefit)</li>
             </ul>
-            {% set fields = [
-                { label: 'You', value: data.receivingBenefits2 },
-                { label: 'Your Partner', value: data.partnerReceivingBenefits2 }
-            ] %}
-            {{ formFieldList(fields) }}
+            {{ youAndYourPartner(you=data.receivingBenefits2, yourPartner=data.partnerReceivingBenefits2) }}
 
-            {% set benefitsData = [
-                {label: 'State Pension', amount: data.statePensionCrm15, every: data.statePensionCrm15PaidEvery },
-                {label: 'Child Benefit', amount: data.childBenefitCrm15, every: data.childBenefitCrm15PaidEvery },
-                {label: 'Working Tax Credit or Child Tax Credit', amount: data.taxCreditCrm15, every: data.taxCreditCrm15PaidEvery },
-                {label: 'Universal Credit', amount: data.universalCreditCrm15, every: data.universalCreditCrm15PaidEvery },
-                {label: 'Incapacity Benefit', amount: data.incapacityBenefitCrm15, every: data.incapacityBenefitCrm15PaidEvery },
-                {label: 'Industrial Injuries Disablement Benefit', amount: data.disablementBenefitCrm15, every: data.disablementBenefitCrm15PaidEvery },
-                {label: 'Contribution-based Job Seekers Allowance', amount: data.jsaCrm15, every: data.jsaCrm15PaidEvery },
-                {label: 'Other Benefits (except Housing Benefit)', amount: data.otherBenefitsCrm15, every: data.otherBenefitsCrm15PaidEvery, details: data.otherBenefitsCrm15Details }
-            ] %}
-            {{ benefitsTable('You:', benefitsData) }}
+            {% if data.receivingBenefits2 === 'Yes' %}
+                {% set benefitsData = [
+                    {label: "State Pension", amount: data.statePensionCrm15, every: data.statePensionCrm15PaidEvery },
+                    {label: "Child Benefit", amount: data.childBenefitCrm15, every: data.childBenefitCrm15PaidEvery },
+                    {label: "Working Tax Credit or Child Tax Credit", amount: data.taxCreditCrm15, every: data.taxCreditCrm15PaidEvery },
+                    {label: "Universal Credit", amount: data.universalCreditCrm15, every: data.universalCreditCrm15PaidEvery },
+                    {label: "Incapacity Benefit", amount: data.incapacityBenefitCrm15, every: data.incapacityBenefitCrm15PaidEvery },
+                    {label: "Industrial Injuries Disablement Benefit", amount: data.disablementBenefitCrm15, every: data.disablementBenefitCrm15PaidEvery },
+                    {label: "Contribution-based Job Seekers Allowance", amount: data.jsaCrm15, every: data.jsaCrm15PaidEvery },
+                    {label: "Other Benefits (except Housing Benefit)", amount: data.otherBenefitsCrm15, every: data.otherBenefitsCrm15PaidEvery, details: data.otherBenefitsCrm15Details }
+                ] %}
+                {{ benefitsTable("You:", benefitsData) }}
+            {% endif %}
 
-            {% set benefitsData = [
-                {label: 'State Pension', amount: data.partnerStatePensionCrm15, every: data.partnerStatePensionCrm15PaidEvery },
-                {label: 'Child Benefit', amount: data.partnerChildBenefitCrm15, every: data.partnerChildBenefitCrm15PaidEvery },
-                {label: 'Working Tax Credit or Child Tax Credit', amount: data.partnerTaxCreditCrm15, every: data.partnerTaxCreditCrm15PaidEvery },
-                {label: 'Universal Credit', amount: data.partnerUniversalCreditCrm15, every: data.partnerUniversalCreditCrm15PaidEvery },
-                {label: 'Incapacity Benefit', amount: data.partnerIncapacityBenefitCrm15, every: data.partnerIncapacityBenefitCrm15PaidEvery },
-                {label: 'Industrial Injuries Disablement Benefit', amount: data.partnerDisablementBenefitCrm15, every: data.partnerDisablementBenefitCrm15PaidEvery },
-                {label: 'Contribution-based Job Seekers Allowance', amount: data.partnerJsaCrm15, every: data.partnerJsaCrm15PaidEvery },
-                {label: 'Other Benefits (except Housing Benefit)', amount: data.partnerOtherBenefitsCrm15, every: data.partnerOtherBenefitsCrm15PaidEvery , details: data.partnerOtherBenefitsCrm15Details }
-            ] %}
-            {{ benefitsTable('Your Partner:', benefitsData) }}
+            {% if data.partnerReceivingBenefits2 === 'Yes' %}
+                {% set benefitsData = [
+                    {label: "State Pension", amount: data.partnerStatePensionCrm15, every: data.partnerStatePensionCrm15PaidEvery },
+                    {label: "Child Benefit", amount: data.partnerChildBenefitCrm15, every: data.partnerChildBenefitCrm15PaidEvery },
+                    {label: "Working Tax Credit or Child Tax Credit", amount: data.partnerTaxCreditCrm15, every: data.partnerTaxCreditCrm15PaidEvery },
+                    {label: "Universal Credit", amount: data.partnerUniversalCreditCrm15, every: data.partnerUniversalCreditCrm15PaidEvery },
+                    {label: "Incapacity Benefit", amount: data.partnerIncapacityBenefitCrm15, every: data.partnerIncapacityBenefitCrm15PaidEvery },
+                    {label: "Industrial Injuries Disablement Benefit", amount: data.partnerDisablementBenefitCrm15, every: data.partnerDisablementBenefitCrm15PaidEvery },
+                    {label: "Contribution-based Job Seekers Allowance", amount: data.partnerJsaCrm15, every: data.partnerJsaCrm15PaidEvery },
+                    {label: "Other Benefits (except Housing Benefit)", amount: data.partnerOtherBenefitsCrm15, every: data.partnerOtherBenefitsCrm15PaidEvery , details: data.partnerOtherBenefitsCrm15Details }
+                ] %}
+                {{ benefitsTable("Your Partner:", benefitsData) }}
+            {% endif %}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">At their next birthday, how many
                 children living with you will be aged</p>
             {% set fields = [
-                { label: '1 year', value: data.year1 },
-                { label: '2 to 4', value: data.year2to4 },
-                { label: '5 to 7', value: data.year5to7 },
-                { label: '8 to 10', value: data.year8to10 },
-                { label: '11 to 12', value: data.year11to12 },
-                { label: '13 to 15', value: data.year13to15 },
-                { label: '16 to 18', value: data.year16to18 }
+                { label: "1 year", value: data.year1 },
+                { label: "2 to 4", value: data.year2to4 },
+                { label: "5 to 7", value: data.year5to7 },
+                { label: "8 to 10", value: data.year8to10 },
+                { label: "11 to 12", value: data.year11to12 },
+                { label: "13 to 15", value: data.year13to15 },
+                { label: "16 to 18", value: data.year16to18 }
             ] %}
             {{ formFieldList(fields) }}
 
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner receive a private pension, or a pension from an employer?</p>
-            {% set fields = [
-                { label: 'You', value: data.receivePension  },
-                { label: 'Your Partner', value: data.partnerReceivePension}
-            ] %}
-            {{ formFieldList(fields) }}
+            {{ youAndYourPartner("Do you or your partner receive a private pension, or a pension from an employer?",
+                data.receivePension , data.partnerReceivePension) }}
 
-            {{ amountAndEvery('You:', data.totalPension, data.totalPensionPaidEvery) }}
+            {% if data.receivePension === 'Yes' %}
+                {{ amountAndEvery("You:", data.totalPension, data.totalPensionPaidEvery) }}
+            {% endif %}
 
-            {{ amountAndEvery('Your Partner:', data.partnerTotalPension, data.partnerTotalPensionPaidEvery) }}
+            {% if data.partnerReceivePension === 'Yes' %}
+                {{ amountAndEvery("Your Partner:", data.partnerTotalPension, data.partnerTotalPensionPaidEvery) }}
+            {% endif %}
 
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner receive maintenance payments for anyone in your household?</p>
-            {% set fields = [
-                { label: 'You', value: data.receiveMaintenancePayments },
-                { label: 'Your Partner', value: data.partnerReceiveMaintenancePayments }
-            ] %}
-            {{ formFieldList(fields) }}
+            {{ youAndYourPartner("Do you or your partner receive maintenance payments for anyone in your household?",
+                data.receiveMaintenancePayments , data.partnerReceiveMaintenancePayments) }}
 
-            {{ amountAndEvery('You:', data.maintenancePayment, data.maintenancePaymentPaidEvery) }}
+            {% if data.receiveMaintenancePayments === 'Yes' %}
+                {{ amountAndEvery("You:", data.maintenancePayment, data.maintenancePaymentPaidEvery) }}
+            {% endif %}
 
-            {{ amountAndEvery('Your Partner:', data.partnerMaintenance, data.partnerMaintenancePaymentPaidEvery) }}
+            {% if data.partnerReceiveMaintenancePayments === 'Yes' %}
+                {{ amountAndEvery("Your Partner:", data.partnerMaintenance, data.partnerMaintenancePaymentPaidEvery) }}
+            {% endif %}
 
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner receive interest or income from any savings or other investment?</p>
-            {% set fields = [
-                { label: 'You', value: data.receiveInterest },
-                { label: 'Your Partner', value: data.partnerReceiveInterest }
-            ] %}
-            {{ formFieldList(fields) }}
+            {{ youAndYourPartner("Do you or your partner receive interest or income from any savings or other investment?",
+                data.receiveInterest , data.partnerReceiveInterest) }}
 
-            {{ amountAndEvery('You:', data.interest, data.interestPaidEvery) }}
+            {% if data.receiveInterest === 'Yes' %}
+                {{ amountAndEvery("You:", data.interest, data.interestPaidEvery) }}
+            {% endif %}
 
-            {{ amountAndEvery('Your Partner:', data.partnerInterest, data.partnerInterestPaidEvery) }}
+            {% if data.partnerReceiveInterest === 'Yes' %}
+                {{ amountAndEvery("Your Partner:", data.partnerInterest, data.partnerInterestPaidEvery) }}
+            {% endif %}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner receive any income from the sources listed here?</p>
             <ul class="govuk-list govuk-list--bullet">
@@ -105,39 +106,39 @@
                 <li>Financial support from anyone else or from someone who allows you to use assets or money</li>
                 <li>Income from any other source which you have not stated in any of the previous questions</li>
             </ul>
+            {{ youAndYourPartner(you=data.incomeFromOtherSources, yourPartner=data.partnerIncomeFromOtherSources) }}
+
+            {% if data.incomeFromOtherSources === 'Yes' %}
+                <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
+                {% set fields = [
+                    { label: "Student grant or loan", value: data.studentLoan },
+                    { label: "Board or rent from a family lodger or tenant", value: data.familyRent },
+                    { label: "Rent from another property", value: data.otherRent },
+                    { label: "Financial support from anyone else or from someone who allows you to use assets or money", value: data.otherFinancialSupport },
+                    { label: "Income from any other source which you have not stated in any of the previous questions. Please explain", value: data.otherIncomeSourceFreetext }
+                ] %}
+                {{ formFieldList(fields) }}
+
+                {{ amountAndEvery("The total amount received from all sources in this question", data.totalAmountReceived, data.totalAmountReceivedEvery) }}
+            {% endif %}
+
+            {% if data.partnerIncomeFromOtherSources === 'Yes' %}
+                <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
+                {% set fields = [
+                    { label: "Student grant or loan", value: data.partnerStudentLoan },
+                    { label: "Board or rent from a family lodger or tenant", value: data.partnerFamilyRent },
+                    { label: "Rent from another property", value: data.partnerOtherRent },
+                    { label: "Financial support from anyone else or from someone who allows you to use assets or money", value: data.partnerOtherFinancialSupport },
+                    { label: "Income from any other source which you have not stated in any of the previous questions. Please explain", value: data.partnerOtherIncomeSourceFreetext }
+                ] %}
+                {{ formFieldList(fields) }}
+
+                {{ amountAndEvery("The total amount received from all sources in this question", data.partnerTotalAmountReceived, data.partnerTotalAmountReceivedEvery) }}
+            {% endif %}
+
             {% set fields = [
-                { label: 'You', value: data.incomeFromOtherSources },
-                { label: 'Your Partner', value: data.partnerIncomeFromOtherSources }
-            ] %}
-            {{ formFieldList(fields) }}
-
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
-            {% set fields = [
-                { label: 'Student grant or loan', value: data.studentLoan },
-                { label: 'Board or rent from a family lodger or tenant', value: otherRent.familyRent },
-                { label: 'Rent from another property', value: data.partnerOtherRent },
-                { label: 'Financial support from anyone else or from someone who allows you to use assets or money', value: data.otherFinancialSupport },
-                { label: 'Income from any other source which you have not stated in any of the previous questions. Please explain', value: data.otherIncomeSourceFreetext }
-            ] %}
-            {{ formFieldList(fields) }}
-
-            {{ amountAndEvery('The total amount received from all sources in this question', data.totalAmountReceived, data.totalAmountReceivedEvery) }}
-
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
-            {% set fields = [
-                { label: 'Student grant or loan', value: data.partnerStudentLoan },
-                { label: 'Board or rent from a family lodger or tenant', value: data.partnerFamilyRent },
-                { label: 'Rent from another property', value: data.partnerOtherRent },
-                { label: 'Financial support from anyone else or from someone who allows you to use assets or money', value: data.partnerOtherFinancialSupport },
-                { label: 'Income from any other source which you have not stated in any of the previous questions. Please explain', value: data.partnerOtherIncomeSourceFreetext }
-            ] %}
-            {{ formFieldList(fields) }}
-
-            {{ amountAndEvery('The total amount received from all sources in this question<', data.partnerTotalAmountReceived, data.partnerTotalAmountReceivedEvery) }}
-
-            {% set fields = [
-                { label: 'Do your answers to the previous questions tell us that you have no income from any of the sources which we have asked about?', value: data.prevAnswersNoOtherIncome },
-                { label: 'How do you and your partner pay your bills and daily expenses?', value: data.howPayBillsCrm15 }
+                { label: "Do your answers to the previous questions tell us that you have no income from any of the sources which we have asked about?", value: data.prevAnswersNoOtherIncome },
+                { label: "How do you and your partner pay your bills and daily expenses?", value: data.howPayBillsCrm15 }
             ] %}
             {{ formFieldList(fields) }}
         </div>
@@ -154,15 +155,15 @@
 
     {% for item in data %}
 
-        {% set details = 'amount ' + (item.amount | formatCurrency) %}
+        {% set details = "amount " + (item.amount | formatCurrency) %}
         {% if item.details %}
-            {% set details = details + '<p>The benefit: ' + item.details + '</p>' %}
+            {% set details = details + "<p>The benefit: " + item.details + "</p>" %}
         {% endif %}
 
         {%- set tableRow = [
             { text: item.label },
             { text: details | safe },
-            { text: 'every ' + (item.every | default('1 week', true) | safe) }
+            { text: "every " + (item.every | default("1 week", true) | safe) }
         ] -%}
         {% set list = tableData.rows.push(tableRow) %}
     {% endfor %}

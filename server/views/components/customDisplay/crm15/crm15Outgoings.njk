@@ -5,53 +5,53 @@
 
     <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
         <div class="govuk-summary-card__title-wrapper">
-            <h3 class="govuk-summary-card__title">Your outgoings and your partner's outgoings</h3>
+            <h3 class="govuk-summary-card__title">Your outgoings and your partner"s outgoings</h3>
         </div>
         <div class="govuk-summary-card__content">
-            {{ formFieldList([{ label: 'For the place where you usually live, do you or your partner pay:', value: data.usuallyLive }]) }}
+            {{ formFieldList([{ label: "For the place where you usually live, do you or your partner pay:", value: data.usuallyLive }]) }}
 
-            {{ amountAndEvery('What is the total amount that you and your partner, together, pay for the rent or mortgage, after taking away housing benefit?', data.mortgageRentAmount, data.mortgageRentEvery) }}
+            {{ amountAndEvery("What is the total amount that you and your partner, together, pay for the rent or mortgage, after taking away housing benefit?", data.mortgageRentAmount, data.mortgageRentEvery) }}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">For your usual home address, what is the
                 total annual amount that you and your partner, together, pay for Council Tax?</p>
             {% set fields = [
-                { label: 'amount', value: data.annualCouncilTax, type: 'currency' }
+                { label: "amount", value: data.annualCouncilTax, type: "currency" }
             ] %}
             {{ formFieldList(fields) }}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">If you usually pay for Board and
                 Lodgings:</p>
-            {{ amountAndEvery('How much do you and your partner, together, pay for the board and lodgings?', data.boardAndLodgings, data.boardAndLodgingsEvery) }}
-            {{ amountAndEvery('How much of the amount you pay for board and lodging is for food?', data.foodBill, data.foodBillEvery) }}
+            {{ amountAndEvery("How much do you and your partner, together, pay for the board and lodgings?", data.boardAndLodgings, data.boardAndLodgingsEvery) }}
+            {{ amountAndEvery("How much of the amount you pay for board and lodging is for food?", data.foodBill, data.foodBillEvery) }}
 
             {% set fields = [
-                { label: 'The name of the person who you pay for your board and lodgings', value: data.boardAndLodgingsLandlord },
-                { label: 'Your relationship to the person who you pay', value: data.boardAndLodgingsLandlordRelationship }
+                { label: "The name of the person who you pay for your board and lodgings", value: data.boardAndLodgingsLandlord },
+                { label: "Your relationship to the person who you pay", value: data.boardAndLodgingsLandlordRelationship }
             ] %}
             {{ formFieldList(fields) }}
 
-            {{ formFieldList([{ label: 'Do you or your partner pay childcare costs to a registered care provider for any children who live with you?', value: data.childCareCosts }]) }}
+            {{ formFieldList([{ label: "Do you or your partner pay childcare costs to a registered care provider for any children who live with you?", value: data.childCareCosts }]) }}
 
-            {{ amountAndEvery('The total amount which you and your partner, together, pay for child care.', data.childCareCostsAmount, data.childCareCostsEvery) }}
+            {{ amountAndEvery("The total amount which you and your partner, together, pay for child care.", data.childCareCostsAmount, data.childCareCostsEvery) }}
 
-            {{ formFieldList([{ label: 'Do you or your partner pay maintenance to any ex-partners, or for any children who do not live with you or your partner?', value: data.payMaintenance }]) }}
+            {{ formFieldList([{ label: "Do you or your partner pay maintenance to any ex-partners, or for any children who do not live with you or your partner?", value: data.payMaintenance }]) }}
 
-            {{ amountAndEvery('The total amount which you and your partner, together, pay for maintenance.', data.maintenanceAmount, data.maintenanceAmountEvery) }}
+            {{ amountAndEvery("The total amount which you and your partner, together, pay for maintenance.", data.maintenanceAmount, data.maintenanceAmountEvery) }}
 
-            {{ formFieldList([{ label: 'Do you or your partner already pay any contributions towards civil or criminal legal aid?', value: data.contributeLegalAid }]) }}
+            {{ formFieldList([{ label: "Do you or your partner already pay any contributions towards civil or criminal legal aid?", value: data.contributeLegalAid }]) }}
 
-            {{ amountAndEvery('The total amount which you and your partner, together, pay towards legal aid.', data.legalAidContribution, data.legalAidContributionPaidEvery) }}
+            {{ amountAndEvery("The total amount which you and your partner, together, pay towards legal aid.", data.legalAidContribution, data.legalAidContributionPaidEvery) }}
 
-            {{ formFieldList([{ label: 'Criminal case reference or Civil certificate number (or both)', value: data.legalAidContributionRef }]) }}
+            {{ formFieldList([{ label: "Criminal case reference or Civil certificate number (or both)", value: data.legalAidContributionRef }]) }}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">In the last 2 years, have you or your
                 partner paid income tax at the 40% rate?</p>
             {% set fields = [
-                { label: 'You', value: data.paid40PercentTax  },
-                { label: 'Your Partner', value: data.partnerPaid40PercentTax },
-                { label: 'Are you charged with an indictable offence or an either way offence?', value: data.indictable },
+                { label: "You", value: data.paid40PercentTax  },
+                { label: "Your Partner", value: data.partnerPaid40PercentTax },
+                { label: "Are you charged with an indictable offence or an either way offence?", value: data.indictable },
                 { label: "Does your client's household outgoings exceed their income?", value: data.householdOutgoingsExceedIncome },
-                { label: 'Please provide details below of how your client is managing this.', value: data.householdOutgoingsExceedIncomeHow }
+                { label: "Please provide details below of how your client is managing this.", value: data.householdOutgoingsExceedIncomeHow }
             ] %}
             {{ formFieldList(fields) }}
         </div>

@@ -11,32 +11,32 @@
     <div class="govuk-summary-card__content">
         <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner own or part-own land or property of any kind including your own home, in the United Kingdom or overseas?</p>
         {% set fields = [
-            { label: 'You', value: data.ownProperty },
-            { label: 'Your Partner', value: data.partnerOwnProperty }
+            { label: "You", value: data.ownProperty },
+            { label: "Your Partner", value: data.partnerOwnProperty }
         ] %}
         {{ formFieldList(fields) }}
 
         <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
         {% set fields = [
-            { label: 'How many residential properties?', value: data.residentialProperties },
-            { label: 'Your How many commercial properties?', value: data.commercialProperties },
-            { label: 'How many pieces of land?', value: data.piecesOfLand }
+            { label: "How many residential properties?", value: data.residentialProperties },
+            { label: "Your How many commercial properties?", value: data.commercialProperties },
+            { label: "How many pieces of land?", value: data.piecesOfLand }
         ] %}
         {{ formFieldList(fields) }}
 
         <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
         {% set fields = [
-            { label: 'How many residential properties?', value: data.partnerResidentialProperties },
-            { label: 'Your How many commercial properties?', value: data.partnerCommercialProperties },
-            { label: 'How many pieces of land?', value: data.partnerPiecesOfLand }
+            { label: "How many residential properties?", value: data.partnerResidentialProperties },
+            { label: "Your How many commercial properties?", value: data.partnerCommercialProperties },
+            { label: "How many pieces of land?", value: data.partnerPiecesOfLand }
         ] %}
         {{ formFieldList(fields) }}
 
         <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You and Your Partner jointly:</p>
         {% set fields = [
-            { label: 'How many residential properties?', value: data.jointResidentialProperties },
-            { label: 'Your How many commercial properties?', value: data.jointCommercialProperties },
-            { label: 'How many pieces of land?', value: data.jointPiecesOfLand }
+            { label: "How many residential properties?", value: data.jointResidentialProperties },
+            { label: "Your How many commercial properties?", value: data.jointCommercialProperties },
+            { label: "How many pieces of land?", value: data.jointPiecesOfLand }
         ] %}
         {{ formFieldList(fields) }}
 
@@ -53,11 +53,11 @@
 
         {% for item in data.propertyList %}
             {%- set tableRow = [
-                { text: item.type | safe, attributes: { 'data-header': 'Type' } },
-                { text: item.lAndpAddressDisplay | safe, attributes: { 'data-header': 'Address' } },
-                { text: item.ownershipDetailsDisplay | safe, attributes: { 'data-header': 'Ownership' } },
-                { text: item.mortgageDisplay | safe, attributes: { 'data-header': 'Values' } },
-                { text: item.residentialCommercialLandDetailsDisplay | safe, attributes: { 'data-header': 'Details' } }
+                { text: item.type | safe, attributes: { "data-header": "Type" } },
+                { text: item.lAndpAddressDisplay | safe, attributes: { "data-header": "Address" } },
+                { text: item.ownershipDetailsDisplay | safe, attributes: { "data-header": "Ownership" } },
+                { text: item.mortgageDisplay | safe, attributes: { "data-header": "Values" } },
+                { text: item.residentialCommercialLandDetailsDisplay | safe, attributes: { "data-header": "Details" } }
             ] -%}
             {% set list = tableData.rows.push(tableRow) %}
         {% endfor %}
