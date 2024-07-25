@@ -16,6 +16,39 @@ export default class Crm14Controller {
       const usn = Number(req.params.usn)
       const { sectionId } = req.params
       const crm14Response = await this.crm14Service.getCrm(usn, getProfileAcceptedTypes(res))
+      crm14Response.formDetails.evidencePart2 = {
+        processedAttachments: [
+          {
+            evidenceType: 'Proof of Address',
+            key: 'https://example.com/Document1.pdf',
+            fileName: 'Document1.pdf',
+            fileSizeBytes: 20,
+            status: 'Processed',
+            dtSubmitted: '2022-08-18T00:00:00.000+00:00',
+            fileSizeMb: 1.5,
+            caseworkerNotes: 'Notes from caseworker',
+            providerNotes: 'Notes from provider',
+            attachmentStoreId: 'string',
+            providerFirmId: 72,
+            dtProcessed: '2022-08-19T00:00:00.000+00:00',
+          },
+        ],
+        newAttachments: [
+          {
+            evidenceType: 'Proof of Identity',
+            key: 'https://example.com/Document1.pdf',
+            fileName: 'Document2.pdf',
+            fileSizeBytes: 20,
+            status: 'string',
+            dtSubmitted: 'string',
+            fileSizeMb: 2.0,
+            caseworkerNotes: 'string',
+            providerNotes: 'Notes from provider',
+            attachmentStoreId: 'string',
+            providerFirmId: 72,
+          },
+        ],
+      }
       const navigation = this.crmDisplayService.getNavigation('crm14', usn, sectionId, crm14Response)
       const sections = this.crmDisplayService.getSections('crm14', sectionId, crm14Response)
 

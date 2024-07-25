@@ -1,0 +1,72 @@
+{% from "../../formTable.njk" import formTable %}
+{% from "../../formField.njk" import formField %}
+{% from "../../formSubsection.njk" import formSubsection %}
+
+{% macro crm14EvidencePart2(data) %}
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Evidence to support the information you have given</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <p class="govuk-body">Your answers indicate that no evidence is required to support your application, but if you wish to attach any files please do so below.</p>
+            <p class="govuk-body">Where further evidence is required you will receive a separate notification detailing what this is and when it should be provided.</p>
+        </div>
+    </div>
+
+    {# Render "Processed Attachments" subsection #}
+
+    {% set processedAttachmentsData = {
+        head: [
+            { text: "Date Submitted" },
+            { text: "File Name" },
+            { text: "Size (MB)" },
+            { text: "Evidence Type" },
+            { text: "Provider Notes" },
+            { text: "Status" },
+            { text: "Caseworker Notes" },
+            { text: "Date Processed" }
+        ],
+        rows: []
+    } %}
+
+    {% for item in data.processedAttachments %}
+        {% set row = [
+            { text: item.dtSubmitted | formatDate },
+            { text: '<a href="' ~ item.key ~ '" class="govuk-link" download>' ~ item.fileName ~ '</a>' | safe },
+            { text: item.fileSizeMb },
+            { text: item.evidenceType },
+            { text: item.providerNotes },
+            { text: item.status },
+            { text: item.caseworkerNotes },
+            { text: item.dtProcessed | formatDate }
+        ] %}
+        {% set _ = processedAttachmentsData.rows.push(row) %}
+    {% endfor %}
+
+    {{ formSubsection('Previously Submitted and Processed Evidence Files', processedAttachmentsData, true) }}
+
+    {# Render "New Attachments" subsection #}
+
+    {% set newAttachmentsData = {
+        head: [
+            { text: "File Name" },
+            { text: "Size (MB)" },
+            { text: "Evidence Type" },
+            { text: "Provider Notes" }
+        ],
+        rows: []
+    } %}
+
+    {% for item in data.newAttachments %}
+        {% set row = [
+            { text: '<a href="' ~ item.key ~ '" class="govuk-link" download>' ~ item.fileName ~ '</a>' | safe },
+            { text: item.fileSizeMb },
+            { text: item.evidenceType },
+            { text: item.providerNotes }
+        ] %}
+        {% set _ = newAttachmentsData.rows.push(row) %}
+    {% endfor %}
+
+    {{ formSubsection('Newly Submitted Evidence Files - Require Processing', newAttachmentsData, true) }}
+
+{% endmacro %}
