@@ -1,6 +1,7 @@
 {% from "../../formFieldList.njk" import formFieldList %}
 {% from "../../formTable.njk" import formTable %}
 {% from "../../amountAndEvery.njk" import amountAndEvery %}
+{% from "../../youAndYourPartner.njk" import youAndYourPartner %}
 
 {% macro crm15Savings(data) %}
 
@@ -11,14 +12,15 @@
         <div class="govuk-summary-card__content">
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner have any of these
                 types of saving, in the United Kingdom or overseas?</p>
+
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Please enter the number of accounts you,
                 your partner or any held jointly of the following types. Enter "0" if you have none of a particular
                 type. Include empty or overdrawn accounts:</p>
-            {{ youAndYourPartner("Bank accounts?", data.receivePension, data.partnerReceivePension, data.jointReceivePension) }}
-            {{ youAndYourPartner("Building society accounts?", data.receivePension, data.partnerReceivePension, data.jointReceivePension) }}
-            {{ youAndYourPartner("Cash ISAs?",  data.receivePension, ata.partnerReceivePension, data.jointReceivePension) }}
-            {{ youAndYourPartner("National Savings or Post OfficeAccounts?", data.receivePension, data.partnerReceivePension, data.jointReceivePension) }}
-            {{ youAndYourPartner("Any other cash investments?", data.receivePension, data.partnerReceivePension, data.jointReceivePension) }}
+            {{ youAndYourPartner("Bank accounts?", data.numBankAccounts, data.numPartnerBankAccounts, data.numJointBankAccounts) }}
+            {{ youAndYourPartner("Building society accounts?", data.numBuildingSocietyAccount, data.numPartnerBuildingSocietyAccount, data.numJointBuildingSocietyAccount) }}
+            {{ youAndYourPartner("Cash ISAs?",  data.numCashIsa, ata.numPartnerCashIsa, data.numJointCashIsa) }}
+            {{ youAndYourPartner("National Savings or Post Office Accounts?", data.numNationalSavings, data.numPartnerNationalSavings, data.numJointNationalSavings) }}
+            {{ youAndYourPartner("Any other cash investments?", data.numOtherCashInvestments, data.numPartnerOtherCashInvestments, data.numJointOtherCashInvestments) }}
 
             {% set tableData = {
                 head: [
@@ -48,19 +50,25 @@
             {{ formTable(tableData) }}
 
             {{ youAndYourPartner("Is the salary, wages or benefits of you or your partner paid to one of the accounts?",
-                data.receivePension, data.partnerReceivePension) }}
+                data.salaryPaidIntoAccount, data.partnerSalaryPaidIntoAccount) }}
+
+            {{ formFieldList([{ label: "Name of bank, building society or other holder of the savings (You)", value: data.salaryAccount }]) }}
+
+            {{ formFieldList([{ label: "Name of bank, building society or other holder of the savings (Partner)", value: data.partnerSalaryAccount }]) }}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner have any Premium
                 Savings Bonds?</p>
             {% set fields = [
-                { label: "You", value: data.receivePension },
-                { label: "Your Partner", value: data.partnerReceivePension },
+                { label: "You", value: data.premiumBonds },
+                { label: "Your Partner", value: data.partnerPremiumBonds },
                 { label: "Holder Number (You)", value: data.partnerReceivePension },
                 { label: "Holder Number (Your Partner)", value: data.partnerReceivePension },
                 { label: "Total value of the Premium Savings Bonds", value: data.partnerReceivePension }
             ] %}
             {{ formFieldList(fields) }}
 
+            {{ youAndYourPartner("Do you or your partner have any National Savings Certificates?",
+                data.receivingBenefits2, data.partnerReceivingBenefits2) }}
             {{ youAndYourPartner("Do you or your partner have any National Savings Certificates?",
                 data.receivePension, data.partnerReceivePension, data.jointReceivePension) }}
 
@@ -101,7 +109,7 @@
 
             {{ youAndYourPartner("Other lump sum investments?", data.otherLumpSum, data.partnerOtherLumpSum, data.jointOtherLumpSum) }}
 
-            {{ youYourPartner("Do you or your partner stand to benefit from a trust fund in the United Kingdom or overseas?",
+            {{ youAndYourPartner("Do you or your partner stand to benefit from a trust fund in the United Kingdom or overseas?",
                 data.trustFund, data.partnerTrustFund) }}
 
             {% set tableData = {
@@ -127,18 +135,4 @@
         </div>
     </div>
 
-{% endmacro %}
-
-{% macro youAndYourPartner(title, you, yourPartner, joint) %}
-{#    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Personal Equity Plans (PEPs)?</p>#}
-{#    {% set fields = [#}
-{#        { label: "You", value: data.you },#}
-{#        { label: "Your Partner", value: data.yourPartner }#}
-{#    ] %}#}
-
-{#    {% if joint %}#}
-{#        {% fields.push({ label: "Joint", value: joint }) %}#}
-{#    {% endif %}#}
-
-{#    {{ formFieldList(fields) }}#}
 {% endmacro %}

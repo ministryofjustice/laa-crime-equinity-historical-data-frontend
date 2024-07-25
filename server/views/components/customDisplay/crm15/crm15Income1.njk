@@ -1,8 +1,6 @@
-{% from "../../formFieldList.njk" import formFieldList %}
+{% from "../../formField.njk" import formField %}
+{% from "../../formSubHeading.njk" import formSubHeading %}
 {% from "../../formTable.njk" import formTable %}
-{% from "../../youAndYourPartner.njk" import youAndYourPartner %}
-{% from "../../amountAndEvery.njk" import amountAndEvery %}
-
 {% macro crm15Income1(data) %}
 
     <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
@@ -13,54 +11,62 @@
             {% set yourEmployersCount = data.allEmployers.you | length %}
             {% set partnerEmployersCount = data.allEmployers.partner | length %}
 
-            {{ youAndYourPartner("How many employers do you and your partner have?",
-                yourEmployersCount, partnerEmployersCount) }}
+            <dl class="govuk-summary-list">
+                {{ formSubHeading("How many employers do you and your partner have?", hasPreviousContent=false) }}
+                {{ formField({ label: "You", value: yourEmployersCount}) }}
+                {{ formField({ label: "Your Partner", value: partnerEmployersCount}) }}
+            </dl>
 
             {{ employersTable("Your Employer(s)", data.allEmployers.you ) }}
 
             {{ employersTable("Your Partner's Employer(s)", data.allEmployers.partner ) }}
 
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Self-employment, partnerships and private businesses</p>
+            <dl class="govuk-summary-list">
+                {{ formSubHeading("Self-employment, partnerships and private businesses") }}
+                {{ formSubHeading("You:", hasPreviousContent=false) }}
+                {{ formField({ label: "Self-employed: the number of businesses", value: data.selfEmployedNoOfBusinesses }) }}
+                {{ formField({ label: "Business partnership: the number of partnerships", value: data.businessPartnerships }) }}
+                {{ formField({ label: "Director or Shareholder: the number of private companies", value: data.privateCompanies }) }}
 
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
-            {% set fields = [
-                { label: "Self-employed: the number of businesses", value: data.selfEmployedNoOfBusinesses },
-                { label: "Business partnership: the number of partnerships", value: data.businessPartnerships },
-                { label: "Director or Shareholder: the number of private companies", value: data.privateCompanies }
-            ] %}
-            {{ formFieldList(fields) }}
+                {{ formSubHeading("Your Partner:") }}
+                {{ formField({ label: "Self-employed: the number of businesses", value: data.selfEmployedNoOfBusinesses }) }}
+                {{ formField({ label: "Business partnership: the number of partnerships", value: data.businessPartnerships }) }}
+                {{ formField({ label: "Director or Shareholder: the number of private companies", value: data.privateCompanies }) }}
 
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
-            {% set fields = [
-                { label: "Self-employed: the number of businesses", value: data.partnerSelfEmployedNoOfBusinesses },
-                { label: "Business partnership: the number of partnerships", value: data.partnerBusinessPartnershipsNoOf },
-                { label: "Director or Shareholder: the number of private companies", value: data.partnerPrivateCompaniesNoOf }
-            ] %}
-            {{ formFieldList(fields) }}
+            </dl>
 
-            {{ youAndYourPartner("Have you or your partner received a self
-                assessment tax calculation sheet from HM Revenue and Customs telling you about your tax liability,
-                within the last 2 years?",
-                data.selfAssessmentTaxReceived, data.partnerSelfAssessmentTaxReceived) }}
+            <dl class="govuk-summary-list">
+                {{ formSubHeading("Have you or your partner received a self assessment tax calculation sheet from HM Revenue and Customs
+                telling you about your tax liability, within the last 2 years?") }}
+                {{ formField({ label: "You", value: data.selfAssessmentTaxReceived }) }}
+                {{ formField({ label: "Your Partner", value: data.partnerSelfAssessmentTaxReceived }) }}
 
-            {{ amountAndEvery("You:", data.taxLiability, data.taxLiabilityPaidEvery) }}
+                {{ formSubHeading("You:") }}
+                {{ formField({ label: 'amount', value: data.taxLiability, type: 'currency' }) }}
+                {{ formField({ label: 'every', value: data.taxLiabilityPaidEvery }) }}
 
-            {{ amountAndEvery("Your Partner:", data.partnerTaxLiability, data.partnerTaxLiabilityPaidEvery) }}
+                {{ formSubHeading("Your Partner:") }}
+                {{ formField({ label: 'amount', value: data.partnerTaxLiability, type: 'currency' }) }}
+                {{ formField({ label: 'every', value: data.partnerTaxLiabilityPaidEvery }) }}
+            </dl>
 
             {{ businessTable("Your Businesses", data.allBusinesses.you ) }}
 
             {{ businessTable("Your Partner's Businesses", data.allBusinesses.partner ) }}
 
-            {{ youAndYourPartner("Do you or your partner receive from work
+            <dl class="govuk-summary-list">
+                {{ formSubHeading("Do you or your partner receive from work
                 any benefit that is not money - such as a company vehicle, relocation payments, vouchers for childcare,
-                or private health insurance?",
-                data.???, data.???) }}
+                or private health insurance?") }}
+                {{ formField({ label: "You", value: data.??? }) }}
+                {{ formField({ label: "Your Partner", value: data.??? }) }}
 
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">You:</p>
-            {{ formFieldList([{ label: 'The total value every year', value: data.??? }]) }}
+                {{ formSubHeading("You:") }}
+                {{ formField({ label: "The total value every year", value: data.??? }) }}
 
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Your Partner:</p>
-            {{ formFieldList([{ label: 'The total value every year', value: data.??? }]) }}
+                {{ formSubHeading("Your Partner:") }}
+                {{ formField({ label: "The total value every year", value: data.??? }) }}
+            </dl>
         </div>
     </div>
 
@@ -68,7 +74,7 @@
 
 
 {% macro employersTable(title, data) %}
-    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">{{ title }}</p>
+    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4 govuk-!-margin-bottom-1">{{ title }}</p>
     {% set tableData = {
         head: [
             { text: "Employer's Name / Job Title"},
@@ -93,7 +99,7 @@
 
 
 {% macro businessTable(title, data) %}
-    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">{{ title }}</p>
+    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4 govuk-!-margin-bottom-1">{{ title }}</p>
     {% set tableData = {
         head: [
             { text: "Business Type"},

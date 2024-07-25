@@ -1,3 +1,4 @@
+{% from "../../formField.njk" import formField %}
 {% from "../../formFieldList.njk" import formFieldList %}
 {% from "../../formTable.njk" import formTable %}
 {% from "../../amountAndEvery.njk" import amountAndEvery %}
@@ -10,19 +11,24 @@
             <h3 class="govuk-summary-card__title">Your Income and Your Partner's Income</h3>
         </div>
         <div class="govuk-summary-card__content">
-            <p class="govuk-body govuk-!-font-weight-bold">Do you or your partner receive the State Pension or any of
-                the Benefits listed here?</p>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>State Pension</li>
-                <li>Child Benefit</li>
-                <li>Working Tax Credit or Child Tax Credit</li>
-                <li>Universal Credit</li>
-                <li>Incapacity Benefit</li>
-                <li>Industrial Injuries Disablement Benefit</li>
-                <li>Contribution-based Job Seekers Allowance</li>
-                <li>Other Benefits (except Housing Benefit)</li>
-            </ul>
-            {{ youAndYourPartner(you=data.receivingBenefits2, yourPartner=data.partnerReceivingBenefits2) }}
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
+                    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4 govuk-!-margin-bottom-1">Do you or your partner receive the State Pension or any of
+                        the Benefits listed here?</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>State Pension</li>
+                        <li>Child Benefit</li>
+                        <li>Working Tax Credit or Child Tax Credit</li>
+                        <li>Universal Credit</li>
+                        <li>Incapacity Benefit</li>
+                        <li>Industrial Injuries Disablement Benefit</li>
+                        <li>Contribution-based Job Seekers Allowance</li>
+                        <li>Other Benefits (except Housing Benefit)</li>
+                    </ul>
+                </div>
+                {{ formField({ label: "You", value: data.receivingBenefits2}) }}
+                {{ formField({ label: "Your Partner", value: data.partnerReceivingBenefits2}) }}
+            </dl>
 
             {% if data.receivingBenefits2 === 'Yes' %}
                 {% set benefitsData = [
@@ -147,7 +153,7 @@
 
 
 {% macro benefitsTable(title, data) %}
-    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">{{ title }}</p>
+    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4 govuk-!-margin-bottom-1">{{ title }}</p>
     {% set tableData = {
         head: [],
         rows: []

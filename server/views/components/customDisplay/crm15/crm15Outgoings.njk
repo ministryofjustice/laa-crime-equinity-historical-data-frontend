@@ -14,10 +14,7 @@
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">For your usual home address, what is the
                 total annual amount that you and your partner, together, pay for Council Tax?</p>
-            {% set fields = [
-                { label: "amount", value: data.annualCouncilTax, type: "currency" }
-            ] %}
-            {{ formFieldList(fields) }}
+            {{ formFieldList([{ label: "amount", value: data.annualCouncilTax, type: "currency" }]) }}
 
             <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">If you usually pay for Board and
                 Lodgings:</p>
@@ -44,7 +41,7 @@
 
             {{ formFieldList([{ label: "Criminal case reference or Civil certificate number (or both)", value: data.legalAidContributionRef }]) }}
 
-            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">In the last 2 years, have you or your
+            <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4 govuk-!-margin-bottom-0">In the last 2 years, have you or your
                 partner paid income tax at the 40% rate?</p>
             {% set fields = [
                 { label: "You", value: data.paid40PercentTax  },
