@@ -1,6 +1,7 @@
 {% from "../../formField.njk" import formField %}
-{% from "../../formSubHeading.njk" import formSubHeading %}
+{% from "../../formFieldHeading.njk" import formFieldHeading %}
 {% from "../../formTable.njk" import formTable %}
+
 {% macro crm15Income1(data) %}
 
     <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
@@ -8,63 +9,54 @@
             <h3 class="govuk-summary-card__title">Your Income and Your Partner's Income</h3>
         </div>
         <div class="govuk-summary-card__content">
-            {% set yourEmployersCount = data.allEmployers.you | length %}
-            {% set partnerEmployersCount = data.allEmployers.partner | length %}
-
             <dl class="govuk-summary-list">
-                {{ formSubHeading("How many employers do you and your partner have?", hasPreviousContent=false) }}
+                {% set yourEmployersCount = data.allEmployers.you | length %}
+                {% set partnerEmployersCount = data.allEmployers.partner | length %}
+
+                {{ formFieldHeading("How many employers do you and your partner have?", hasPreviousContent=false) }}
                 {{ formField({ label: "You", value: yourEmployersCount}) }}
                 {{ formField({ label: "Your Partner", value: partnerEmployersCount}) }}
-            </dl>
 
-            {{ employersTable("Your Employer(s)", data.allEmployers.you ) }}
+                {{ employersTable("Your Employer(s)", data.allEmployers.you ) }}
+                {{ employersTable("Your Partner's Employer(s)", data.allEmployers.partner ) }}
 
-            {{ employersTable("Your Partner's Employer(s)", data.allEmployers.partner ) }}
-
-            <dl class="govuk-summary-list">
-                {{ formSubHeading("Self-employment, partnerships and private businesses") }}
-                {{ formSubHeading("You:", hasPreviousContent=false) }}
+                {{ formFieldHeading("Self-employment, partnerships and private businesses") }}
+                {{ formFieldHeading("You:", hasPreviousContent=false) }}
                 {{ formField({ label: "Self-employed: the number of businesses", value: data.selfEmployedNoOfBusinesses }) }}
                 {{ formField({ label: "Business partnership: the number of partnerships", value: data.businessPartnerships }) }}
                 {{ formField({ label: "Director or Shareholder: the number of private companies", value: data.privateCompanies }) }}
 
-                {{ formSubHeading("Your Partner:") }}
+                {{ formFieldHeading("Your Partner:") }}
                 {{ formField({ label: "Self-employed: the number of businesses", value: data.selfEmployedNoOfBusinesses }) }}
                 {{ formField({ label: "Business partnership: the number of partnerships", value: data.businessPartnerships }) }}
                 {{ formField({ label: "Director or Shareholder: the number of private companies", value: data.privateCompanies }) }}
 
-            </dl>
-
-            <dl class="govuk-summary-list">
-                {{ formSubHeading("Have you or your partner received a self assessment tax calculation sheet from HM Revenue and Customs
+                {{ formFieldHeading("Have you or your partner received a self assessment tax calculation sheet from HM Revenue and Customs
                 telling you about your tax liability, within the last 2 years?") }}
                 {{ formField({ label: "You", value: data.selfAssessmentTaxReceived }) }}
                 {{ formField({ label: "Your Partner", value: data.partnerSelfAssessmentTaxReceived }) }}
 
-                {{ formSubHeading("You:") }}
+                {{ formFieldHeading("You:") }}
                 {{ formField({ label: 'amount', value: data.taxLiability, type: 'currency' }) }}
                 {{ formField({ label: 'every', value: data.taxLiabilityPaidEvery }) }}
 
-                {{ formSubHeading("Your Partner:") }}
+                {{ formFieldHeading("Your Partner:") }}
                 {{ formField({ label: 'amount', value: data.partnerTaxLiability, type: 'currency' }) }}
                 {{ formField({ label: 'every', value: data.partnerTaxLiabilityPaidEvery }) }}
-            </dl>
 
-            {{ businessTable("Your Businesses", data.allBusinesses.you ) }}
+                {{ businessTable("Your Businesses", data.allBusinesses.you ) }}
+                {{ businessTable("Your Partner's Businesses", data.allBusinesses.partner ) }}
 
-            {{ businessTable("Your Partner's Businesses", data.allBusinesses.partner ) }}
-
-            <dl class="govuk-summary-list">
-                {{ formSubHeading("Do you or your partner receive from work
+                {{ formFieldHeading("Do you or your partner receive from work
                 any benefit that is not money - such as a company vehicle, relocation payments, vouchers for childcare,
                 or private health insurance?") }}
                 {{ formField({ label: "You", value: data.??? }) }}
                 {{ formField({ label: "Your Partner", value: data.??? }) }}
 
-                {{ formSubHeading("You:") }}
+                {{ formFieldHeading("You:") }}
                 {{ formField({ label: "The total value every year", value: data.??? }) }}
 
-                {{ formSubHeading("Your Partner:") }}
+                {{ formFieldHeading("Your Partner:") }}
                 {{ formField({ label: "The total value every year", value: data.??? }) }}
             </dl>
         </div>
@@ -74,54 +66,58 @@
 
 
 {% macro employersTable(title, data) %}
-    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4 govuk-!-margin-bottom-1">{{ title }}</p>
-    {% set tableData = {
-        head: [
-            { text: "Employer's Name / Job Title"},
-            { text: "Address" },
-            { text: "Salary" },
-            { text: "Deductions" }
-        ],
-        rows: []
-    } %}
+    <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
+        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-6 govuk-!-margin-bottom-1">{{ title }}</p>
+        {% set tableData = {
+            head: [
+                { text: "Employer's Name / Job Title"},
+                { text: "Address" },
+                { text: "Salary" },
+                { text: "Deductions" }
+            ],
+            rows: []
+        } %}
 
-    {% for item in data %}
-        {%- set tableRow = [
-            { text: item.nameAndJobTitleDisplay | safe, attributes: { "data-header": "Employer's Name Job Title" } },
-            { text: item.addressDisplay | safe, attributes: { "data-header": "Address" } },
-            { text: item.salaryDisplay | safe, attributes: { "data-header": "Salary" } },
-            { text: item.otherDeduction | safe, attributes: { "data-header": "Deductions" } }
-        ] -%}
-        {% set list = tableData.rows.push(tableRow) %}
-    {% endfor %}
-    {{ formTable(tableData) }}
+        {% for item in data %}
+            {%- set tableRow = [
+                { text: item.nameAndJobTitleDisplay | safe, attributes: { "data-header": "Employer's Name Job Title" } },
+                { text: item.addressDisplay | safe, attributes: { "data-header": "Address" } },
+                { text: item.salaryDisplay | safe, attributes: { "data-header": "Salary" } },
+                { text: item.otherDeduction | safe, attributes: { "data-header": "Deductions" } }
+            ] -%}
+            {% set list = tableData.rows.push(tableRow) %}
+        {% endfor %}
+        {{ formTable(tableData) }}
+    </div>
 {% endmacro %}
 
 
 {% macro businessTable(title, data) %}
-    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4 govuk-!-margin-bottom-1">{{ title }}</p>
-    {% set tableData = {
-        head: [
-            { text: "Business Type"},
-            { text: "Previous 12 Months' Financials" },
-            { text: "Director's Salary Total Income from Share Sales" },
-            { text: "Trading Name & Address" },
-            { text: "Business Details" },
-            { text: "In business with anyone else" }
-        ],
-        rows: []
-    } %}
+    <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
+        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-6 govuk-!-margin-bottom-1">{{ title }}</p>
+        {% set tableData = {
+            head: [
+                { text: "Business Type"},
+                { text: "Previous 12 Months' Financials" },
+                { text: "Director's Salary Total Income from Share Sales" },
+                { text: "Trading Name & Address" },
+                { text: "Business Details" },
+                { text: "In business with anyone else" }
+            ],
+            rows: []
+        } %}
 
-    {% for item in data %}
-        {%- set tableRow = [
-            { text: item.businessType | safe, attributes: { "data-header": "Business Type" } },
-            { text: item.previousFinancialsDisplay | safe, attributes: { "data-header": "Previous 12 Months' Financials" } },
-            { text: item.directorShareIncomeDisplay | safe, attributes: { "data-header": "Director's Salary Total Income from Share Sales" } },
-            { text: item.tradingDetailsDisplay | safe, attributes: { "data-header": "Trading Name & Address" } },
-            { text: item.businessDetailsDisplay | safe, attributes: { "data-header": "Business Details" } },
-            { text: item.businessWithName | safe, attributes: { "data-header": "In business with anyone else" } }
-        ] -%}
-        {% set list = tableData.rows.push(tableRow) %}
-    {% endfor %}
-    {{ formTable(tableData) }}
+        {% for item in data %}
+            {%- set tableRow = [
+                { text: item.businessType | safe, attributes: { "data-header": "Business Type" } },
+                { text: item.previousFinancialsDisplay | safe, attributes: { "data-header": "Previous 12 Months' Financials" } },
+                { text: item.directorShareIncomeDisplay | safe, attributes: { "data-header": "Director's Salary Total Income from Share Sales" } },
+                { text: item.tradingDetailsDisplay | safe, attributes: { "data-header": "Trading Name & Address" } },
+                { text: item.businessDetailsDisplay | safe, attributes: { "data-header": "Business Details" } },
+                { text: item.businessWithName | safe, attributes: { "data-header": "In business with anyone else" } }
+            ] -%}
+            {% set list = tableData.rows.push(tableRow) %}
+        {% endfor %}
+        {{ formTable(tableData) }}
+    </div>
 {% endmacro %}
