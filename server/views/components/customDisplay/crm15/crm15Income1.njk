@@ -13,51 +13,83 @@
                 {% set yourEmployersCount = data.allEmployers.you | length %}
                 {% set partnerEmployersCount = data.allEmployers.partner | length %}
 
-                {{ formFieldHeading("How many employers do you and your partner have?", hasPreviousContent=false) }}
-                {{ formField({ label: "You", value: yourEmployersCount}) }}
-                {{ formField({ label: "Your Partner", value: partnerEmployersCount}) }}
+                {% set hasEmployers = yourEmployersCount > 0 %}
+                {% set hasPartnerEmployers = partnerEmployersCount > 0 %}
 
-                {{ employersTable("Your Employer(s)", data.allEmployers.you ) }}
-                {{ employersTable("Your Partner's Employer(s)", data.allEmployers.partner ) }}
+                {% if hasEmployers or hasPartnerEmployers %}
+                    {{ formFieldHeading("How many employers do you and your partner have?", hasPreviousContent=false) }}
+                {% endif %}
 
-                {{ formFieldHeading("Self-employment, partnerships and private businesses") }}
+                {% if hasEmployers %}
+                    {{ formField({ label: "You", value: yourEmployersCount}) }}
+                {% endif %}
+
+                {% if hasPartnerEmployers %}
+                    {{ formField({ label: "Your Partner", value: partnerEmployersCount}) }}
+                {% endif %}
+
+                {% if hasEmployers %}
+                    {{ formFieldHeading("Your Employer(s)") }}
+                    {{ employersTable(data.allEmployers.you ) }}
+                {% endif %}
+
+                {% if hasPartnerEmployers %}
+                    {{ formFieldHeading("Your Partner's Employer(s)") }}
+                    {{ employersTable(data.allEmployers.partner) }}
+                {% endif %}
+
+                {{ formFieldHeading("Self-employment, partnerships and private businesses", hasPreviousContent=(hasEmployers or hasPartnerEmployers)) }}
                 {{ formFieldHeading("You:", hasPreviousContent=false) }}
                 {{ formField({ label: "Self-employed: the number of businesses", value: data.selfEmployedNoOfBusinesses }) }}
                 {{ formField({ label: "Business partnership: the number of partnerships", value: data.businessPartnerships }) }}
                 {{ formField({ label: "Director or Shareholder: the number of private companies", value: data.privateCompanies }) }}
 
                 {{ formFieldHeading("Your Partner:") }}
-                {{ formField({ label: "Self-employed: the number of businesses", value: data.selfEmployedNoOfBusinesses }) }}
-                {{ formField({ label: "Business partnership: the number of partnerships", value: data.businessPartnerships }) }}
-                {{ formField({ label: "Director or Shareholder: the number of private companies", value: data.privateCompanies }) }}
+                {{ formField({ label: "Self-employed: the number of businesses", value: data.partnerSelfEmployedNoOfBusinesses }) }}
+                {{ formField({ label: "Business partnership: the number of partnerships", value: data.partnerBusinessPartnershipsNoOf }) }}
+                {{ formField({ label: "Director or Shareholder: the number of private companies", value: data.partnerPrivateCompaniesNoOf }) }}
 
                 {{ formFieldHeading("Have you or your partner received a self assessment tax calculation sheet from HM Revenue and Customs
                 telling you about your tax liability, within the last 2 years?") }}
                 {{ formField({ label: "You", value: data.selfAssessmentTaxReceived }) }}
                 {{ formField({ label: "Your Partner", value: data.partnerSelfAssessmentTaxReceived }) }}
 
-                {{ formFieldHeading("You:") }}
-                {{ formField({ label: 'amount', value: data.taxLiability, type: 'currency' }) }}
-                {{ formField({ label: 'every', value: data.taxLiabilityPaidEvery }) }}
+                {% if data.selfAssessmentTaxReceived === "Yes" %}
+                    {{ formFieldHeading("You:") }}
+                    {{ formField({ label: "amount", value: data.taxLiability, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.taxLiabilityPaidEvery }) }}
+                {% endif %}
 
-                {{ formFieldHeading("Your Partner:") }}
-                {{ formField({ label: 'amount', value: data.partnerTaxLiability, type: 'currency' }) }}
-                {{ formField({ label: 'every', value: data.partnerTaxLiabilityPaidEvery }) }}
+                {% if data.partnerSelfAssessmentTaxReceived === "Yes" %}
+                    {{ formFieldHeading("Your Partner:") }}
+                    {{ formField({ label: "amount", value: data.partnerTaxLiability, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.partnerTaxLiabilityPaidEvery }) }}
+                {% endif %}
 
-                {{ businessTable("Your Businesses", data.allBusinesses.you ) }}
-                {{ businessTable("Your Partner's Businesses", data.allBusinesses.partner ) }}
+                {% if (data.allBusinesses.you | length) > 0 %}
+                    {{ formFieldHeading("Your Businesses") }}
+                    {{ businessTable(data.allBusinesses.you ) }}
+                {% endif %}
 
-                {{ formFieldHeading("Do you or your partner receive from work
-                any benefit that is not money - such as a company vehicle, relocation payments, vouchers for childcare,
-                or private health insurance?") }}
-                {{ formField({ label: "You", value: data.??? }) }}
-                {{ formField({ label: "Your Partner", value: data.??? }) }}
+                {% if (data.allBusinesses.partner | length) > 0 %}
+                    {{ formFieldHeading("Your Partner's Businesses") }}
+                    {{ businessTable(data.allBusinesses.partner ) }}
+                {% endif %}
 
-                {{ formFieldHeading("You:") }}
-                {{ formField({ label: "The total value every year", value: data.??? }) }}
+                {{ formFieldHeading("Do you or your partner receive from work any benefit that is not money - such as a company vehicle,
+                relocation payments, vouchers for childcare, or private health insurance?") }}
+                {{ formField({ label: "You", value: data.nonCashBenefit }) }}
+                {{ formField({ label: "Your Partner", value: data.partnerNonCashBenefit }) }}
 
-                {{ formFieldHeading("Your Partner:") }}
-                {{ formField({ label: "The total value every year", value: data.??? }) }}
+                {% if data.nonCashBenefit === "Yes" %}
+                    {{ formFieldHeading("You:") }}
+                    {{ formField({ label: "The total value every year", value: data.nonCashBenefitValue }) }}
+                {% endif %}
+
+                {% if data.partnerNonCashBenefit === "Yes" %}
+                    {{ formFieldHeading("Your Partner:") }}
+                    {{ formField({ label: "The total value every year", value: data.partnerNonCashBenefitValue }) }}
+                {% endif %}
             </dl>
         </div>
     </div>
@@ -65,9 +97,8 @@
 {% endmacro %}
 
 
-{% macro employersTable(title, data) %}
-    <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
-        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-6 govuk-!-margin-bottom-1">{{ title }}</p>
+{% macro employersTable(data) %}
+    <div class="govuk-summary-list__row govuk-grid-row">
         {% set tableData = {
             head: [
                 { text: "Employer's Name / Job Title"},
@@ -92,9 +123,8 @@
 {% endmacro %}
 
 
-{% macro businessTable(title, data) %}
-    <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
-        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-6 govuk-!-margin-bottom-1">{{ title }}</p>
+{% macro businessTable(data) %}
+    <div class="govuk-summary-list__row govuk-grid-row">
         {% set tableData = {
             head: [
                 { text: "Business Type"},
