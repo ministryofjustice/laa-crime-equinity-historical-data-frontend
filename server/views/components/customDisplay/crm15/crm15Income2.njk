@@ -10,9 +10,9 @@
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
-                    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-2 govuk-!-margin-bottom-1">Do you
-                        or your partner receive the State Pension or any of
-                        the Benefits listed here?</p>
+                    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-2 govuk-!-margin-bottom-1">
+                        Do you or your partner receive the State Pension or any of the Benefits listed here?
+                    </p>
                     <ul class="govuk-list govuk-list--bullet">
                         <li>State Pension</li>
                         <li>Child Benefit</li>
@@ -39,7 +39,8 @@
                         {label: "Other Benefits (except Housing Benefit)",
                             amount: data.otherBenefitsCrm15, every: data.otherBenefitsCrm15PaidEvery, details: data.otherBenefitsCrm15Details }
                     ] %}
-                    {{ benefitsTable("You:", benefitsData) }}
+                    {{ formFieldHeading("You:") }}
+                    {{ benefitsTable(benefitsData) }}
                 {% endif %}
 
                 {% if data.partnerReceivingBenefits2 === "Yes" %}
@@ -55,7 +56,8 @@
                         {label: "Other Benefits (except Housing Benefit)",
                             amount: data.partnerOtherBenefitsCrm15, every: data.partnerOtherBenefitsCrm15PaidEvery , details: data.partnerOtherBenefitsCrm15Details }
                     ] %}
-                    {{ benefitsTable("Your Partner:", benefitsData) }}
+                    {{ formFieldHeading("Your Partner:") }}
+                    {{ benefitsTable(benefitsData) }}
                 {% endif %}
 
                 {{ formFieldHeading("At their next birthday, how many children living with you will be aged") }}
@@ -114,10 +116,11 @@
                     {{ formField({ label: "amount", value: data.partnerInterest, type: "currency" }) }}
                     {{ formField({ label: "every", value: data.partnerInterestPaidEvery }) }}
                 {% endif %}
+
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
-                    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-4">Do you or your partner receive
-                        any
-                        income from the sources listed here?</p>
+                    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-8 govuk-!-margin-bottom-1">
+                        Do you or your partner receive any income from the sources listed here?
+                    </p>
                     <ul class="govuk-list govuk-list--bullet">
                         <li>Student grant or loan</li>
                         <li>Board or rent from a family lodger or tenant</li>
@@ -159,20 +162,22 @@
                     {{ formFieldHeading("The total amount received from all sources in this question") }}
                     {{ formField({ label: "amount", value: data.partnerTotalAmountReceived, type: "currency" }) }}
                     {{ formField({ label: "every", value: data.partnerTotalAmountReceivedEvery }) }}
+                {% endif %}
 
-                    {{ formField({ label: "Do your answers to the previous questions tell us that you have no income
+                {{ formField({ label: "Do your answers to the previous questions tell us that you have no income
                     from any of the sources which we have asked about?", value: data.prevAnswersNoOtherIncome }) }}
+
+                {% if data.prevAnswersNoOtherIncome === "Yes" %}
                     {{ formField({ label: "How do you and your partner pay your bills and daily expenses?", value: data.howPayBillsCrm15 }) }}
                 {% endif %}
+
             </dl>
         </div>
     </div>
 {% endmacro %}
 
-
-{% macro benefitsTable(title, data) %}
-    <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
-        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-6 govuk-!-margin-bottom-1">{{ title }}</p>
+{% macro benefitsTable(data) %}
+    <div class="govuk-summary-list__row govuk-grid-row">
         {% set tableData = {
             head: [],
             rows: []
