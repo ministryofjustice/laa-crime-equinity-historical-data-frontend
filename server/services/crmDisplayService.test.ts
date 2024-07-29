@@ -211,7 +211,7 @@ describe('CRM Display Service', () => {
         ...crm5Response,
         formDetails: {
           ...crm5Response.formDetails,
-          hasPreviousApplication: 'No', // // ensure showWhen condition met
+          hasPreviousApplication: 'No', // ensure showWhen condition met
         },
       }
 
