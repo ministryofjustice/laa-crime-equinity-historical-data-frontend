@@ -32,7 +32,7 @@
     {% for item in data.processedAttachments %}
         {% set row = [
             { text: item.dtSubmitted | formatDate },
-            { text: '<a href="' ~ item.key ~ '" class="govuk-link" download>' ~ item.fileName ~ '</a>' | safe },
+            { text:  item.fileName },
             { text: item.fileSizeMb },
             { text: item.evidenceType },
             { text: item.providerNotes },
@@ -59,7 +59,7 @@
 
     {% for item in data.newAttachments %}
         {% set row = [
-            { text: '<a href="' ~ item.key ~ '" class="govuk-link" download>' ~ item.fileName ~ '</a>' | safe },
+            { text: item.fileName },
             { text: item.fileSizeMb },
             { text: item.evidenceType },
             { text: item.providerNotes }
