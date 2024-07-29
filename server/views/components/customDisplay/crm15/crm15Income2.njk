@@ -1,0 +1,203 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formFieldHeading.njk" import formFieldHeading %}
+{% from "../../formTable.njk" import formTable %}
+
+{% macro crm15Income2(data) %}
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Your Income and Your Partner"s Income</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
+                    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-2 govuk-!-margin-bottom-1">
+                        Do you or your partner receive the State Pension or any of the Benefits listed here?
+                    </p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>State Pension</li>
+                        <li>Child Benefit</li>
+                        <li>Working Tax Credit or Child Tax Credit</li>
+                        <li>Universal Credit</li>
+                        <li>Incapacity Benefit</li>
+                        <li>Industrial Injuries Disablement Benefit</li>
+                        <li>Contribution-based Job Seekers Allowance</li>
+                        <li>Other Benefits (except Housing Benefit)</li>
+                    </ul>
+                </div>
+                {{ formField({ label: "You", value: data.receivingBenefits2}) }}
+                {{ formField({ label: "Your Partner", value: data.partnerReceivingBenefits2}) }}
+
+                {% if data.receivingBenefits2 === "Yes" %}
+                    {% set benefitsData = [
+                        {label: "State Pension", amount: data.statePensionCrm15, every: data.statePensionCrm15PaidEvery },
+                        {label: "Child Benefit", amount: data.childBenefitCrm15, every: data.childBenefitCrm15PaidEvery },
+                        {label: "Working Tax Credit or Child Tax Credit", amount: data.taxCreditCrm15, every: data.taxCreditCrm15PaidEvery },
+                        {label: "Universal Credit", amount: data.universalCreditCrm15, every: data.universalCreditCrm15PaidEvery },
+                        {label: "Incapacity Benefit", amount: data.incapacityBenefitCrm15, every: data.incapacityBenefitCrm15PaidEvery },
+                        {label: "Industrial Injuries Disablement Benefit", amount: data.disablementBenefitCrm15, every: data.disablementBenefitCrm15PaidEvery },
+                        {label: "Contribution-based Job Seekers Allowance", amount: data.jsaCrm15, every: data.jsaCrm15PaidEvery },
+                        {label: "Other Benefits (except Housing Benefit)",
+                            amount: data.otherBenefitsCrm15, every: data.otherBenefitsCrm15PaidEvery, details: data.otherBenefitsCrm15Details }
+                    ] %}
+                    {{ formFieldHeading("You:") }}
+                    {{ benefitsTable(benefitsData) }}
+                {% endif %}
+
+                {% if data.partnerReceivingBenefits2 === "Yes" %}
+                    {% set benefitsData = [
+                        {label: "State Pension", amount: data.partnerStatePensionCrm15, every: data.partnerStatePensionCrm15PaidEvery },
+                        {label: "Child Benefit", amount: data.partnerChildBenefitCrm15, every: data.partnerChildBenefitCrm15PaidEvery },
+                        {label: "Working Tax Credit or Child Tax Credit", amount: data.partnerTaxCreditCrm15, every: data.partnerTaxCreditCrm15PaidEvery },
+                        {label: "Universal Credit", amount: data.partnerUniversalCreditCrm15, every: data.partnerUniversalCreditCrm15PaidEvery },
+                        {label: "Incapacity Benefit", amount: data.partnerIncapacityBenefitCrm15, every: data.partnerIncapacityBenefitCrm15PaidEvery },
+                        {label: "Industrial Injuries Disablement Benefit",
+                            amount: data.partnerDisablementBenefitCrm15, every: data.partnerDisablementBenefitCrm15PaidEvery },
+                        {label: "Contribution-based Job Seekers Allowance", amount: data.partnerJsaCrm15, every: data.partnerJsaCrm15PaidEvery },
+                        {label: "Other Benefits (except Housing Benefit)",
+                            amount: data.partnerOtherBenefitsCrm15, every: data.partnerOtherBenefitsCrm15PaidEvery , details: data.partnerOtherBenefitsCrm15Details }
+                    ] %}
+                    {{ formFieldHeading("Your Partner:") }}
+                    {{ benefitsTable(benefitsData) }}
+                {% endif %}
+
+                {{ formFieldHeading("At their next birthday, how many children living with you will be aged") }}
+                {{ formField({ label: "1 year", value: data.year1 }) }}
+                {{ formField({ label: "2 to 4", value: data.year2to4 }) }}
+                {{ formField({ label: "5 to 7", value: data.year5to7 }) }}
+                {{ formField({ label: "8 to 10", value: data.year8to10 }) }}
+                {{ formField({ label: "11 to 12", value: data.year11to12 }) }}
+                {{ formField({ label: "13 to 15", value: data.year13to15 }) }}
+                {{ formField({ label: "16 to 18", value: data.year16to18 }) }}
+
+                {{ formFieldHeading("Do you or your partner receive a private pension, or a pension from an employer?") }}
+                {{ formField({ label: "You", value: data.receivePension }) }}
+                {{ formField({ label: "Your Partner", value: data.partnerReceivePension }) }}
+
+                {% if data.receivePension === "Yes" %}
+                    {{ formFieldHeading("You:") }}
+                    {{ formField({ label: "amount", value: data.totalPension, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.totalPensionPaidEvery }) }}
+                {% endif %}
+
+                {% if data.partnerReceivePension === "Yes" %}
+                    {{ formFieldHeading("Your Partner:") }}
+                    {{ formField({ label: "amount", value: data.partnerTotalPension, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.partnerTotalPensionPaidEvery }) }}
+                {% endif %}
+
+                {{ formFieldHeading("Do you or your partner receive maintenance payments for anyone in your household?") }}
+                {{ formField({ label: "You", value: data.receiveMaintenancePayments }) }}
+                {{ formField({ label: "Your Partner", value: data.partnerReceiveMaintenancePayments }) }}
+
+                {% if data.receiveMaintenancePayments === "Yes" %}
+                    {{ formFieldHeading("You:") }}
+                    {{ formField({ label: "amount", value: data.maintenancePayment, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.maintenancePaymentPaidEvery }) }}
+                {% endif %}
+
+                {% if data.partnerReceiveMaintenancePayments === "Yes" %}
+                    {{ formFieldHeading("Your Partner:") }}
+                    {{ formField({ label: "amount", value: data.partnerMaintenance, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.partnerMaintenancePaymentPaidEvery }) }}
+                {% endif %}
+
+                {{ formFieldHeading("Do you or your partner receive interest or income from any savings or other investment?") }}
+                {{ formField({ label: "You", value: data.receiveInterest }) }}
+                {{ formField({ label: "Your Partner", value: data.partnerReceiveInterest }) }}
+
+                {% if data.receiveInterest === "Yes" %}
+                    {{ formFieldHeading("You:") }}
+                    {{ formField({ label: "amount", value: data.interest, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.interestPaidEvery }) }}
+                {% endif %}
+
+                {% if data.partnerReceiveInterest === "Yes" %}
+                    {{ formFieldHeading("Your Partner:") }}
+                    {{ formField({ label: "amount", value: data.partnerInterest, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.partnerInterestPaidEvery }) }}
+                {% endif %}
+
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
+                    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-8 govuk-!-margin-bottom-1">
+                        Do you or your partner receive any income from the sources listed here?
+                    </p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>Student grant or loan</li>
+                        <li>Board or rent from a family lodger or tenant</li>
+                        <li>Rent from another property</li>
+                        <li>Financial support from anyone else or from someone who allows you to use assets or money
+                        </li>
+                        <li>Income from any other source which you have not stated in any of the previous questions</li>
+                    </ul>
+                </div>
+                {{ formField({ label: "You", value: data.incomeFromOtherSources}) }}
+                {{ formField({ label: "Your Partner", value: data.partnerIncomeFromOtherSources}) }}
+
+                {% if data.incomeFromOtherSources === "Yes" %}
+                    {{ formFieldHeading("You:") }}
+                    {{ formField({ label: "Student grant or loan", value: data.studentLoan }) }}
+                    {{ formField({ label: "Board or rent from a family lodger or tenant", value: data.familyRent }) }}
+                    {{ formField({ label: "Rent from another property", value: data.otherRent }) }}
+                    {{ formField({ label: "Financial support from anyone else or from someone who allows you to use assets or money",
+                        value: data.otherFinancialSupport }) }}
+                    {{ formField({ label: "Income from any other source which you have not stated in any of the previous questions. Please explain",
+                        value: data.otherIncomeSourceFreetext }) }}
+
+                    {{ formFieldHeading("The total amount received from all sources in this question") }}
+                    {{ formField({ label: "amount", value: data.totalAmountReceived, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.totalAmountReceivedEvery }) }}
+                {% endif %}
+
+                {% if data.partnerIncomeFromOtherSources === "Yes" %}
+                    {{ formFieldHeading("Your Partner:") }}
+                    {{ formField({ label: "Student grant or loan", value: data.partnerStudentLoan }) }}
+                    {{ formField({ label: "Board or rent from a family lodger or tenant", value: data.partnerFamilyRent }) }}
+                    {{ formField({ label: "Rent from another property", value: data.partnerOtherRent }) }}
+                    {{ formField({ label: "Financial support from anyone else or from someone who allows you to use assets or money",
+                        value: data.partnerOtherFinancialSupport }) }}
+                    {{ formField({ label: "Income from any other source which you have not stated in any of the previous questions. Please explain",
+                        value: data.partnerOtherIncomeSourceFreetext }) }}
+                    }) }}
+
+                    {{ formFieldHeading("The total amount received from all sources in this question") }}
+                    {{ formField({ label: "amount", value: data.partnerTotalAmountReceived, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.partnerTotalAmountReceivedEvery }) }}
+                {% endif %}
+
+                {{ formField({ label: "Do your answers to the previous questions tell us that you have no income
+                    from any of the sources which we have asked about?", value: data.prevAnswersNoOtherIncome }) }}
+
+                {% if data.prevAnswersNoOtherIncome === "Yes" %}
+                    {{ formField({ label: "How do you and your partner pay your bills and daily expenses?", value: data.howPayBillsCrm15 }) }}
+                {% endif %}
+
+            </dl>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro benefitsTable(data) %}
+    <div class="govuk-summary-list__row govuk-grid-row">
+        {% set tableData = {
+            head: [],
+            rows: []
+        } %}
+
+        {% for item in data %}
+
+            {% set details = "amount " + (item.amount | formatCurrency) %}
+            {% if item.details %}
+                {% set details = details + "<p>The benefit: " + item.details + "</p>" %}
+            {% endif %}
+
+            {%- set tableRow = [
+                { text: item.label },
+                { text: details | safe },
+                { text: "every " + (item.every | default("1 week", true) | safe) }
+            ] -%}
+            {% set list = tableData.rows.push(tableRow) %}
+        {% endfor %}
+
+        {{ formTable(tableData) }}
+    </div>
+{% endmacro %}

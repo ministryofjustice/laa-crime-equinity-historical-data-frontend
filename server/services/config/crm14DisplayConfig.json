@@ -466,6 +466,136 @@
       ]
     },
     {
+      "sectionId": "crm15-income-1",
+      "title": "CRM 15 - Income: 1",
+      "showWhen": {
+        "conditionsMet": "any",
+        "conditions": [
+          {
+            "apiField": "privateCompany",
+            "equals": "Yes"
+          },
+          {
+            "apiField": "partnerPrivateCompany",
+            "equals": "Yes"
+          }
+        ]
+      },
+      "subsections": [
+        {
+          "title": "Your Income and Your Partner's Income",
+          "customDisplay": {
+            "name": "crm15Income1",
+            "apiField": "crm15Details.income1"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "crm15-income-2",
+      "title": "CRM 15 - Income: 2",
+      "showWhen": {
+        "conditionsMet": "any",
+        "conditions": [
+          {
+            "apiField": "privateCompany",
+            "equals": "Yes"
+          },
+          {
+            "apiField": "partnerPrivateCompany",
+            "equals": "Yes"
+          }
+        ]
+      },
+      "subsections": [
+        {
+          "title": "Your Income and Your Partner's Income",
+          "customDisplay": {
+            "name": "crm15Income2",
+            "apiField": "crm15Details.income2"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "crm15-outgoings",
+      "title": "CRM 15 - Outgoings",
+      "showWhen": {
+        "conditionsMet": "any",
+        "conditions": [
+          {
+            "apiField": "privateCompany",
+            "equals": "Yes"
+          },
+          {
+            "apiField": "partnerPrivateCompany",
+            "equals": "Yes"
+          }
+        ]
+      },
+      "subsections": [
+        {
+          "title": "Your outgoings and your partner's outgoings",
+          "customDisplay": {
+            "name": "crm15Outgoings",
+            "apiField": "crm15Details.outgoings"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "crm15-land-and-property",
+      "title": "CRM 15 - Land & Property",
+      "showWhen": {
+        "conditionsMet": "any",
+        "conditions": [
+          {
+            "apiField": "privateCompany",
+            "equals": "Yes"
+          },
+          {
+            "apiField": "partnerPrivateCompany",
+            "equals": "Yes"
+          }
+        ]
+      },
+      "subsections": [
+        {
+          "title": "Your outgoings and your partner's outgoings",
+          "customDisplay": {
+            "name": "crm15LandProperty",
+            "apiField": "crm15Details.landProperty"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "crm15-savings",
+      "title": "CRM 15 - Savings",
+      "showWhen": {
+        "conditionsMet": "any",
+        "conditions": [
+          {
+            "apiField": "privateCompany",
+            "equals": "Yes"
+          },
+          {
+            "apiField": "partnerPrivateCompany",
+            "equals": "Yes"
+          }
+        ]
+      },
+      "subsections": [
+        {
+          "title": "Your Savings and Investments and those of Your Partner",
+          "customDisplay": {
+            "name": "crm15Savings",
+            "apiField": "crm15Details.savings"
+          }
+        }
+      ]
+    },
+    {
       "sectionId": "evidence-2",
       "title": "Evidence: 2",
       "subsections": [

@@ -1,0 +1,81 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formFieldHeading.njk" import formFieldHeading %}
+{% from "../../formTable.njk" import formTable %}
+
+{% macro crm15Outgoings(data) %}
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Your outgoings and your partner"s outgoings</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                {{ formField({ label: "For the place where you usually live, do you or your partner pay:", value: data.usuallyLive }) }}
+
+                {% if data.usuallyLive === 'Rent' or data.usuallyLive === 'Mortgage' %}
+                    {{ formFieldHeading("What is the total amount that you and your partner, together, pay for the rent or mortgage, after taking away housing benefit?") }}
+                    {{ formField({ label: "amount", value: data.mortgageRentAmount, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.mortgageRentEvery }) }}
+                {%  endif %}
+
+                {% if data.usuallyLive === 'Rent' or data.usuallyLive === 'Mortgage' or data.usuallyLive === 'None of these'  %}
+                    {{ formFieldHeading("For your usual home address, what is the total annual amount that you and your partner, together, pay for Council Tax?") }}
+                    {{ formField({ label: "amount", value: data.annualCouncilTax, type: "currency" }) }}
+                {%  endif %}
+
+
+                {% if data.usuallyLive === 'Board and Lodgings' %}
+                    {{ formFieldHeading("If you usually pay for Board and Lodgings:") }}
+                    {{ formFieldHeading("How much do you and your partner, together, pay for the board and lodgings?", hasPreviousContent=false) }}
+                    {{ formField({ label: "amount", value: data.boardAndLodgings, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.boardAndLodgingsEvery }) }}
+
+                    {{ formFieldHeading("How much of the amount you pay for board and lodging is for food?") }}
+                    {{ formField({ label: "amount", value: data.foodBill, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.foodBillEvery }) }}
+
+                    {{ formField({ label: "The name of the person who you pay for your board and lodgings", value: data.boardAndLodgingsLandlord }) }}
+                    {{ formField({ label: "Your relationship to the person who you pay", value: data.boardAndLodgingsLandlordRelationship }) }}
+                {%  endif %}
+
+                {{ formField({ label: "Do you or your partner pay childcare costs to a registered care provider for any children who live with you?",
+                    value: data.childCareCosts }) }}
+
+
+                {% if data.childCareCosts === 'Yes' %}
+                    {{ formFieldHeading("The total amount which you and your partner, together, pay for child care.") }}
+                    {{ formField({ label: "amount", value: data.childCareCostsAmount, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.childCareCostsEvery }) }}
+                {% endif %}
+
+                {{ formField({ label: "Do you or your partner pay maintenance to any ex-partners, or for any children who do not live with you or your partner?",
+                    value: data.payMaintenance }) }}
+
+                {% if data.payMaintenance === 'Yes' %}
+                    {{ formFieldHeading("The total amount which you and your partner, together, pay for maintenance.") }}
+                    {{ formField({ label: "amount", value: data.maintenanceAmount, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.maintenanceAmountEvery }) }}
+                {% endif %}
+
+                {{ formField({ label: "Do you or your partner already pay any contributions towards civil or criminal legal aid?",
+                    value: data.contributeLegalAid }) }}
+
+                {% if data.contributeLegalAid === 'Yes' %}
+                    {{ formFieldHeading("The total amount which you and your partner, together, pay towards legal aid.") }}
+                    {{ formField({ label: "amount", value: data.legalAidContribution, type: "currency" }) }}
+                    {{ formField({ label: "every", value: data.legalAidContributionPaidEvery }) }}
+                    {{ formField({ label: "Criminal case reference or Civil certificate number (or both)", value: data.legalAidContributionRef }) }}
+                {% endif %}
+
+                {{ formFieldHeading("In the last 2 years, have you or your partner paid income tax at the 40% rate?") }}
+                {{ formField({ label: "You", value: data.paid40PercentTax }) }}
+                {{ formField({ label: "Your Partner", value: data.partnerPaid40PercentTax }) }}
+                {{ formField({ label: "Are you charged with an indictable offence or an either way offence?", value: data.indictable }) }}
+                {{ formField({ label: "Does your client's household outgoings exceed their income?", value: data.householdOutgoingsExceedIncome }) }}
+                {% if data.householdOutgoingsExceedIncome === 'Yes' %}
+                {{ formField({ label: "Please provide details below of how your client is managing this.", value: data.householdOutgoingsExceedIncomeHow }) }}
+                {% endif %}
+            </dl>
+        </div>
+    </div>
+
+{% endmacro %}
