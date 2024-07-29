@@ -30,7 +30,7 @@
                 {{ youYourPartnerJoint("Any other cash investments?",
                     data.numOtherCashInvestments, data.numPartnerOtherCashInvestments, data.numJointOtherCashInvestments) }}
 
-                <div class="govuk-!-margin-top-6">
+                <div class="govuk-summary-list__row govuk-grid-row">
                     {% set tableData = {
                         head: [
                             { text: "Bank, building society or other"},
@@ -58,10 +58,7 @@
                     {% endfor %}
                     {{ formTable(tableData) }}
                 </div>
-            </dl>
 
-
-            <dl class="govuk-summary-list">
                 {{ youYourPartnerJoint("Is the salary, wages or benefits of you or your partner paid to one of the accounts?",
                     data.salaryPaidIntoAccount, data.partnerSalaryPaidIntoAccount) }}
 
@@ -71,35 +68,47 @@
                 {{ formFieldHeading("Do you or your partner have any Premium Savings Bonds?") }}
                 {{ formField({ label: "You", value: data.premiumBonds }) }}
                 {{ formField({ label: "Your Partner", value: data.partnerPremiumBonds }) }}
-                {{ formField({ label: "Holder Number (You)", value: data.premiumBondsHolderNo }) }}
-                {{ formField({ label: "Holder Number (Your Partner)", value: data.partnerPremiumBondsHolderNo }) }}
-                {{ formField({ label: "Total value of the Premium Savings Bonds", value: data.premiumBondsTotal }) }}
+
+                {% if data.premiumBonds === 'Yes' %}
+                    {{ formField({ label: "Holder Number (You)", value: data.premiumBondsHolderNo }) }}
+                {% endif %}
+
+                {% if data.partnerPremiumBonds === 'Yes' %}
+                    {{ formField({ label: "Holder Number (Your Partner)", value: data.partnerPremiumBondsHolderNo }) }}
+                {% endif %}
+
+                {% if data.premiumBonds === 'Yes' or data.partnerPremiumBonds === 'Yes'  %}
+                    {{ formField({ label: "Total value of the Premium Savings Bonds", value: data.premiumBondsTotal }) }}
+                {% endif %}
 
                 {{ youYourPartnerJoint("Do you or your partner have any National Savings Certificates?",
                     data.nationalSavingsCert, data.partnerNationalSavingsCert) }}
 
-                <div>
-                    {% set tableData = {
-                        head: [
-                            { text: "Customer (or Holder's) Number"},
-                            { text: "Certificate Number"  },
-                            { text: "Owned by" }
-                        ],
-                        rows: []
-                    } %}
+                {% if data.nationalSavingsCert === 'Yes' or data.partnerNationalSavingsCert === 'Yes'  %}
+                    <div class="govuk-summary-list__row govuk-grid-row">
+                        {% set tableData = {
+                            head: [
+                                { text: "Customer (or Holder's) Number"},
+                                { text: "Certificate Number"  },
+                                { text: "Owned by" }
+                            ],
+                            rows: []
+                        } %}
 
-                    {% for item in data.savingCertificates %}
-                        {%- set tableRow = [
-                            { text: item.customerNumber | safe, attributes: { "data-header": "Customer (or Holder's) Number" } },
-                            { text: item.certNumber | safe, attributes: { "data-header": "Certificate Number" } },
-                            { text: item.youOrPartner | safe, attributes: { "data-header": "Owned by" } }
-                        ] -%}
-                        {% set list = tableData.rows.push(tableRow) %}
-                    {% endfor %}
-                    {{ formTable(tableData) }}
-                </div>
+                        {% for item in data.savingCertificates %}
+                            {%- set tableRow = [
+                                { text: item.customerNumber | safe, attributes: { "data-header": "Customer (or Holder's) Number" } },
+                                { text: item.certNumber | safe, attributes: { "data-header": "Certificate Number" } },
+                                { text: item.youOrPartner | safe, attributes: { "data-header": "Owned by" } }
+                            ] -%}
+                            {% set list = tableData.rows.push(tableRow) %}
+                        {% endfor %}
+                        {{ formTable(tableData) }}
+                    </div>
 
-                {{ formField({ label: "Total value of the National Savings Certificates", value: data.partnerSelfAssessmentTaxReceived }) }}
+                    {{ formField({ label: "Total value of the National Savings Certificates", value: data.partnerSelfAssessmentTaxReceived }) }}
+                {% endif %}
+
 
                 {{ formFieldHeading("Do you or your partner own or jointly own any of these investments, in the United Kingdom or overseas?") }}
 
@@ -117,7 +126,7 @@
 
                 {{ youYourPartnerJoint("Other lump sum investments?", data.otherLumpSum, data.partnerOtherLumpSum, data.jointOtherLumpSum) }}
 
-                <div>
+                <div class="govuk-summary-list__row govuk-grid-row">
                     {% set tableData = {
                         head: [
                             { text: "Investment type"},
@@ -128,12 +137,12 @@
                         rows: []
                     } %}
 
-                    {% for item in data.bankAccounts %}
+                    {% for item in data.investments %}
                         {%- set tableRow = [
-                            { text: item.bank | safe, attributes: { "data-header": "Investment type" } },
-                            { text: item.sortCode | safe, attributes: { "data-header": "Describe each investment" } },
-                            { text: item.accountNumber | safe, attributes: { "data-header": "Value" } },
-                            { text: item.accountNumber | safe, attributes: { "data-header": "Investment holder" } }
+                            { text: item.investmentType | safe, attributes: { "data-header": "Investment type" } },
+                            { text: item.investmentInfo | safe, attributes: { "data-header": "Describe each investment" } },
+                            { text: item.investmentValue | safe, attributes: { "data-header": "Value" } },
+                            { text: item.investmentHolder | safe, attributes: { "data-header": "Investment holder" } }
                         ] -%}
                         {% set list = tableData.rows.push(tableRow) %}
                     {% endfor %}
@@ -143,19 +152,42 @@
                 {{ youYourPartnerJoint("Do you or your partner stand to benefit from a trust fund in the United Kingdom or overseas?",
                     data.trustFund, data.partnerTrustFund) }}
 
-                {{ formFieldHeading("You:") }}
-                {{ formField({ label: "The amount held in the fund", value: data.trustFundAmount }) }}
-                {{ formField({ label: "The yearly dividend", value: data.trustFundDividend }) }}
+                {% if data.trustFund === 'Yes' %}
+                    {{ formFieldHeading("You:") }}
+                    {{ formField({ label: "The amount held in the fund", value: data.trustFundAmount }) }}
+                    {{ formField({ label: "The yearly dividend", value: data.trustFundDividend }) }}
+                {% endif %}
 
-                {{ formFieldHeading("Your Partner:") }}
-                {{ formField({ label: "The amount held in the fund", value: data.partnerTrustFundAmount }) }}
-                {{ formField({ label: "The yearly dividend", value: data.partnerTrustFundDividend }) }}
+                {% if data.partnerTrustFund === 'Yes' %}
+                    {{ formFieldHeading("Your Partner:") }}
+                    {{ formField({ label: "The amount held in the fund", value: data.partnerTrustFundAmount }) }}
+                    {{ formField({ label: "The yearly dividend", value: data.partnerTrustFundDividend }) }}
+                {% endif %}
 
                 {{ youYourPartnerJoint("Do you or your partner have any income, savings or assets which are under a restraint order or a freezing order?",
                     data.freezingOrderCrm15, data.partnerFreezingOrderCrm15) }}
+
+                {{ formField({ label: "Do you, by yourself or with anyone else, own a motor vehicle?", value: data.ownCar }) }}
+
+                {% if data.ownCar === 'Yes' %}
+                    <div class="govuk-summary-list__row govuk-grid-row">
+                        {% set tableData = {
+                            head: [
+                                { text: "Registration Number(s)"}
+                            ],
+                            rows: []
+                        } %}
+
+                        {% for item in data.carRegs %}
+                            {%- set tableRow = [
+                                { text: item.carRegNumber | safe, attributes: { "data-header": "Registration Number(s)" } }
+                            ] -%}
+                            {% set list = tableData.rows.push(tableRow) %}
+                        {% endfor %}
+                        {{ formTable(tableData) }}
+                    </div>
+                {% endif %}
             </dl>
-
-
         </div>
     </div>
 
