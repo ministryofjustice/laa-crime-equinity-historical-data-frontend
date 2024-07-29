@@ -457,11 +457,10 @@
       "subsections": [
         {
           "title": "Your Income and Your Partner's Income",
-          "fields": [
-            {
-              "subHeading": "???"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm14Income",
+            "apiField": "income"
+          }
         }
       ]
     },
