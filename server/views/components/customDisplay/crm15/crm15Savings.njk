@@ -59,7 +59,7 @@
                     {{ formTable(tableData) }}
                 </div>
 
-                {{ youYourPartnerJoint("Is the salary, wages or benefits of you or your partner paid to one of the accounts?",
+                {{ youYourPartner("Is the salary, wages or benefits of you or your partner paid to one of the accounts?",
                     data.salaryPaidIntoAccount, data.partnerSalaryPaidIntoAccount) }}
 
                 {{ formField({ label: "Name of bank, building society or other holder of the savings (You)", value: data.salaryAccount }) }}
@@ -81,7 +81,7 @@
                     {{ formField({ label: "Total value of the Premium Savings Bonds", value: data.premiumBondsTotal }) }}
                 {% endif %}
 
-                {{ youYourPartnerJoint("Do you or your partner have any National Savings Certificates?",
+                {{ youYourPartner("Do you or your partner have any National Savings Certificates?",
                     data.nationalSavingsCert, data.partnerNationalSavingsCert) }}
 
                 {% if data.nationalSavingsCert === 'Yes' or data.partnerNationalSavingsCert === 'Yes'  %}
@@ -106,7 +106,7 @@
                         {{ formTable(tableData) }}
                     </div>
 
-                    {{ formField({ label: "Total value of the National Savings Certificates", value: data.partnerSelfAssessmentTaxReceived }) }}
+                    {{ formField({ label: "Total value of the National Savings Certificates", value: data.nationalSavingsCertTotal }) }}
                 {% endif %}
 
 
@@ -149,7 +149,7 @@
                     {{ formTable(tableData) }}
                 </div>
 
-                {{ youYourPartnerJoint("Do you or your partner stand to benefit from a trust fund in the United Kingdom or overseas?",
+                {{ youYourPartner("Do you or your partner stand to benefit from a trust fund in the United Kingdom or overseas?",
                     data.trustFund, data.partnerTrustFund) }}
 
                 {% if data.trustFund === 'Yes' %}
@@ -164,7 +164,7 @@
                     {{ formField({ label: "The yearly dividend", value: data.partnerTrustFundDividend }) }}
                 {% endif %}
 
-                {{ youYourPartnerJoint("Do you or your partner have any income, savings or assets which are under a restraint order or a freezing order?",
+                {{ youYourPartner("Do you or your partner have any income, savings or assets which are under a restraint order or a freezing order?",
                     data.freezingOrderCrm15, data.partnerFreezingOrderCrm15) }}
 
                 {{ formField({ label: "Do you, by yourself or with anyone else, own a motor vehicle?", value: data.ownCar }) }}
@@ -193,13 +193,14 @@
 
 {% endmacro %}
 
-{% macro youYourPartnerJoint(title, you, yourPartner, joint) %}
+
+{% macro youYourPartner(title, you, yourPartner) %}
     {{ formFieldHeading(title) }}
     {{ formField({ label: "You", value: you }) }}
     {{ formField({ label: "Your Partner", value: yourPartner }) }}
+{% endmacro %}
 
-    {% if joint %}
-        {{ formField({ label: "Joint", value: joint }) }}
-    {% endif %}
-
+{% macro youYourPartnerJoint(title, you, yourPartner, joint) %}
+    {{ youYourPartner(title, you, yourPartner) }}
+    {{ formField({ label: "Joint", value: joint }) }}
 {% endmacro %}
