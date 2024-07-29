@@ -24,7 +24,7 @@
                             <td class="govuk-table__cell {{ cell.class }}"
                                 {% if cell.colspan %}colspan="{{ cell.colspan }}"{% endif %}
                                     {% if not cell.noDataHeader %}data-header="{{ data.head[loop.index0].text }}"{% endif %}
-                            >{{ cell.text }}</td>
+                            >{{ cell.text | safe }}</td>
                         {% endif %}
                     {% endfor %}
                 </tr>
