@@ -145,10 +145,33 @@ export interface Crm14Response extends CrmResponse {
       partnerEmployed: string
     }
     evidencePart2?: {
-      fileName: string
-      fileSize: number
-      evidenceType: string
-      providerNotes: string
+      processedAttachments: {
+        evidenceType: string
+        key: string
+        fileName: string
+        fileSizeBytes: number
+        status: string
+        dtSubmitted: string
+        fileSizeMb: number
+        caseworkerNotes: string
+        providerNotes: string
+        attachmentStoreId: string
+        providerFirmId: number
+        dtProcessed: string
+      }[]
+      newAttachments: {
+        evidenceType: string
+        key: string
+        fileName: string
+        fileSizeBytes: number
+        status: string
+        dtSubmitted: string
+        fileSizeMb: number
+        caseworkerNotes: string
+        providerNotes: string
+        attachmentStoreId: string
+        providerFirmId: number
+      }[]
     }
     income?: {
       receiveBenefits: string
