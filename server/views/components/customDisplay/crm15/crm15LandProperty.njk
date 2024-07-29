@@ -16,46 +16,53 @@
                 {{ formField({ label: "Your Partner", value: data.partnerOwnProperty }) }}
 
 
-                {{ formFieldHeading("You:") }}
-                {{ formField({ label: "How many residential properties?", value: data.residentialProperties }) }}
-                {{ formField({ label: "How many commercial properties?", value: data.commercialProperties }) }}
-                {{ formField({ label: "How many pieces of land?", value: data.piecesOfLand }) }}
+                {% if ownProperty === 'Yes' %}
+                    {{ formFieldHeading("You:") }}
+                    {{ formField({ label: "How many residential properties?", value: data.residentialProperties }) }}
+                    {{ formField({ label: "How many commercial properties?", value: data.commercialProperties }) }}
+                    {{ formField({ label: "How many pieces of land?", value: data.piecesOfLand }) }}
+                {% endif %}
 
-                {{ formFieldHeading("Your Partner:") }}
-                {{ formField({ label: "How many residential properties?", value: data.partnerResidentialProperties }) }}
-                {{ formField({ label: "How many commercial properties?", value: data.partnerCommercialProperties }) }}
-                {{ formField({ label: "How many pieces of land?", value: data.partnerPiecesOfLand }) }}
+                {% if partnerOwnProperty === 'Yes' %}
+                    {{ formFieldHeading("Your Partner:") }}
+                    {{ formField({ label: "How many residential properties?", value: data.partnerResidentialProperties }) }}
+                    {{ formField({ label: "How many commercial properties?", value: data.partnerCommercialProperties }) }}
+                    {{ formField({ label: "How many pieces of land?", value: data.partnerPiecesOfLand }) }}
+                {% endif %}
 
-                {{ formFieldHeading("You and Your Partner jointly:") }}
-                {{ formField({ label: "How many residential properties?", value: data.jointResidentialProperties }) }}
-                {{ formField({ label: "How many commercial properties?", value: data.jointCommercialProperties }) }}
-                {{ formField({ label: "How many pieces of land?", value: data.jointPiecesOfLand }) }}
+                {% if ownProperty === 'Yes' and partnerOwnProperty === 'Yes' %}
+                    {{ formFieldHeading("You and Your Partner jointly:") }}
+                    {{ formField({ label: "How many residential properties?", value: data.jointResidentialProperties }) }}
+                    {{ formField({ label: "How many commercial properties?", value: data.jointCommercialProperties }) }}
+                    {{ formField({ label: "How many pieces of land?", value: data.jointPiecesOfLand }) }}
+                {% endif %}
 
-                <div class="govuk-summary-list__row govuk-grid-row">
-                    {% set tableData = {
-                        head: [
-                            { text: "Type"},
-                            { text: "Address" },
-                            { text: "Ownership" },
-                            { text: "Values" },
-                            { text: "Details" }
-                        ],
-                        rows: []
-                    } %}
+                {% if (data.propertyList | length) > 0 %}
+                    <div class="govuk-summary-list__row govuk-grid-row">
+                        {% set tableData = {
+                            head: [
+                                { text: "Type"},
+                                { text: "Address" },
+                                { text: "Ownership" },
+                                { text: "Values" },
+                                { text: "Details" }
+                            ],
+                            rows: []
+                        } %}
 
-                    {% for item in data.propertyList %}
-                        {%- set tableRow = [
-                            { text: item.type | safe, attributes: { "data-header": "Type" } },
-                            { text: item.lAndpAddressDisplay | safe, attributes: { "data-header": "Address" } },
-                            { text: item.ownershipDetailsDisplay | safe, attributes: { "data-header": "Ownership" } },
-                            { text: item.mortgageDisplay | safe, attributes: { "data-header": "Values" } },
-                            { text: item.residentialCommercialLandDetailsDisplay | safe, attributes: { "data-header": "Details" } }
-                        ] -%}
-                        {% set list = tableData.rows.push(tableRow) %}
-                    {% endfor %}
-                    {{ formTable(tableData) }}
-                </div>
-
+                        {% for item in data.propertyList %}
+                            {%- set tableRow = [
+                                { text: item.type | safe, attributes: { "data-header": "Type" } },
+                                { text: item.lAndpAddressDisplay | safe, attributes: { "data-header": "Address" } },
+                                { text: item.ownershipDetailsDisplay | safe, attributes: { "data-header": "Ownership" } },
+                                { text: item.mortgageDisplay | safe, attributes: { "data-header": "Values" } },
+                                { text: item.residentialCommercialLandDetailsDisplay | safe, attributes: { "data-header": "Details" } }
+                            ] -%}
+                            {% set list = tableData.rows.push(tableRow) %}
+                        {% endfor %}
+                        {{ formTable(tableData) }}
+                    </div>
+                {% endif %}
             </dl>
         </div>
     </div>
