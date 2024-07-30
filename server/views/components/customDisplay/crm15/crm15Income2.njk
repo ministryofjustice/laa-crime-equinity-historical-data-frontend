@@ -76,13 +76,13 @@
                 {% if data.receivePension === "Yes" %}
                     {{ formFieldHeading("You:") }}
                     {{ formField({ label: "amount", value: data.totalPension, type: "currency" }) }}
-                    {{ formField({ label: "every", value: data.totalPensionPaidEvery }) }}
+                    {{ formField({ label: "every", value: data.totalPensionPaidEvery, type: "every" }) }}
                 {% endif %}
 
                 {% if data.partnerReceivePension === "Yes" %}
                     {{ formFieldHeading("Your Partner:") }}
                     {{ formField({ label: "amount", value: data.partnerTotalPension, type: "currency" }) }}
-                    {{ formField({ label: "every", value: data.partnerTotalPensionPaidEvery }) }}
+                    {{ formField({ label: "every", value: data.partnerTotalPensionPaidEvery, type: "every" }) }}
                 {% endif %}
 
                 {{ formFieldHeading("Do you or your partner receive maintenance payments for anyone in your household?") }}
@@ -92,13 +92,13 @@
                 {% if data.receiveMaintenancePayments === "Yes" %}
                     {{ formFieldHeading("You:") }}
                     {{ formField({ label: "amount", value: data.maintenancePayment, type: "currency" }) }}
-                    {{ formField({ label: "every", value: data.maintenancePaymentPaidEvery }) }}
+                    {{ formField({ label: "every", value: data.maintenancePaymentPaidEvery, type: "every" }) }}
                 {% endif %}
 
                 {% if data.partnerReceiveMaintenancePayments === "Yes" %}
                     {{ formFieldHeading("Your Partner:") }}
                     {{ formField({ label: "amount", value: data.partnerMaintenance, type: "currency" }) }}
-                    {{ formField({ label: "every", value: data.partnerMaintenancePaymentPaidEvery }) }}
+                    {{ formField({ label: "every", value: data.partnerMaintenancePaymentPaidEver, type: "every" }) }}
                 {% endif %}
 
                 {{ formFieldHeading("Do you or your partner receive interest or income from any savings or other investment?") }}
