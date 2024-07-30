@@ -85,7 +85,7 @@
                 {% endif %}
 
                 {% if data.premiumBonds === 'Yes' or data.partnerPremiumBonds === 'Yes'  %}
-                    {{ formField({ label: "Total value of the Premium Savings Bonds", value: data.premiumBondsTotal }) }}
+                    {{ formField({ label: "Total value of the Premium Savings Bonds", value: data.premiumBondsTotal, type: "currency" }) }}
                 {% endif %}
 
                 {{ youYourPartner("Do you or your partner have any National Savings Certificates?",
@@ -148,7 +148,7 @@
                         {%- set tableRow = [
                             { text: item.investmentType | safe, attributes: { "data-header": "Investment type" } },
                             { text: item.investmentInfo | safe, attributes: { "data-header": "Describe each investment" } },
-                            { text: item.investmentValue | safe, attributes: { "data-header": "Value" } },
+                            { text: item.investmentValue | safe | formatCurrency, attributes: { "data-header": "Value" } },
                             { text: item.investmentHolder | safe, attributes: { "data-header": "Investment holder" } }
                         ] -%}
                         {% set list = tableData.rows.push(tableRow) %}
@@ -161,14 +161,14 @@
 
                 {% if data.trustFund === 'Yes' %}
                     {{ formFieldHeading("You:") }}
-                    {{ formField({ label: "The amount held in the fund", value: data.trustFundAmount }) }}
-                    {{ formField({ label: "The yearly dividend", value: data.trustFundDividend }) }}
+                    {{ formField({ label: "The amount held in the fund", value: data.trustFundAmount, type: "currency" }) }}
+                    {{ formField({ label: "The yearly dividend", value: data.trustFundDividend, type: "currency" }) }}
                 {% endif %}
 
                 {% if data.partnerTrustFund === 'Yes' %}
                     {{ formFieldHeading("Your Partner:") }}
-                    {{ formField({ label: "The amount held in the fund", value: data.partnerTrustFundAmount }) }}
-                    {{ formField({ label: "The yearly dividend", value: data.partnerTrustFundDividend }) }}
+                    {{ formField({ label: "The amount held in the fund", value: data.partnerTrustFundAmount, type: "currency" }) }}
+                    {{ formField({ label: "The yearly dividend", value: data.partnerTrustFundDividend, type: "currency"  }) }}
                 {% endif %}
 
                 {{ youYourPartner("Do you or your partner have any income, savings or assets which are under a restraint order or a freezing order?",
