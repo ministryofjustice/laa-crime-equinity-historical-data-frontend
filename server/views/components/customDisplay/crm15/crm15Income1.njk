@@ -82,12 +82,12 @@
 
                 {% if data.nonCashBenefit === "Yes" %}
                     {{ formFieldHeading("You:") }}
-                    {{ formField({ label: "The total value every year", value: data.nonCashBenefitValue }) }}
+                    {{ formField({ label: "The total value every year", value: data.nonCashBenefitValue, type: "currency"  }) }}
                 {% endif %}
 
                 {% if data.partnerNonCashBenefit === "Yes" %}
                     {{ formFieldHeading("Your Partner:") }}
-                    {{ formField({ label: "The total value every year", value: data.partnerNonCashBenefitValue }) }}
+                    {{ formField({ label: "The total value every year", value: data.partnerNonCashBenefitValue, type: "currency"  }) }}
                 {% endif %}
             </dl>
         </div>
