@@ -1,6 +1,6 @@
 import { formatCurrency, formatDate, formatTime } from './crmFieldFormatter'
 
-describe('CRM Display Field Formatter', () => {
+describe('CRM Field Formatter', () => {
   describe('formatCurrency', () => {
     it('should format currency when given whole number', () => {
       const result = formatCurrency('10000')
