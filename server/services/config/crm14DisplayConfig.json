@@ -198,7 +198,7 @@
             },
             {
               "label": "Postcode",
-              "apiField": "aboutYouPart1.contactDetails.homeAddress.postCode"
+              "apiField": "aboutYouPart1.contactDetails.correspondenceAddress.postCode"
             },
             {
               "label": "Your email address",
@@ -313,11 +313,11 @@
             },
             {
               "label": "Does your partner have a conflict of interest?",
-              "apiField": "aboutYouPart1.conflictOfInterest"
+              "apiField": "aboutYouPartner.conflictOfInterest"
             },
             {
               "label": "Is your partner's usual home address different from yours?",
-              "apiField": "aboutYouPart1.partnerDifferentHome"
+              "apiField": "aboutYouPartner.partnerDifferentHome"
             },
             {
               "label": "Address line 1",

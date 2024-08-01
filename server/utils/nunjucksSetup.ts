@@ -7,6 +7,8 @@ import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
 import { formatCurrency, formatDate, formatPercentage, formatTime, splitCamelCase } from './crmFieldFormatter'
 
+import transformValue from './crmFieldTransformer'
+
 const production = process.env.NODE_ENV === 'production'
 
 export default function nunjucksSetup(app: express.Express, applicationInfo: ApplicationInfo): void {
@@ -47,4 +49,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('formatTime', formatTime)
   njkEnv.addFilter('formatPercentage', formatPercentage)
   njkEnv.addFilter('splitCamelCase', splitCamelCase)
+  njkEnv.addFilter('transformValue', transformValue)
 }

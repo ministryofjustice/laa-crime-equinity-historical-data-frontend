@@ -16,21 +16,21 @@
                 {{ formField({ label: "Your Partner", value: data.partnerOwnProperty }) }}
 
 
-                {% if ownProperty === 'Yes' %}
+                {% if data.ownProperty === 'Yes' %}
                     {{ formFieldHeading("You:") }}
                     {{ formField({ label: "How many residential properties?", value: data.residentialProperties }) }}
                     {{ formField({ label: "How many commercial properties?", value: data.commercialProperties }) }}
                     {{ formField({ label: "How many pieces of land?", value: data.piecesOfLand }) }}
                 {% endif %}
 
-                {% if partnerOwnProperty === 'Yes' %}
+                {% if data.partnerOwnProperty === 'Yes' %}
                     {{ formFieldHeading("Your Partner:") }}
                     {{ formField({ label: "How many residential properties?", value: data.partnerResidentialProperties }) }}
                     {{ formField({ label: "How many commercial properties?", value: data.partnerCommercialProperties }) }}
                     {{ formField({ label: "How many pieces of land?", value: data.partnerPiecesOfLand }) }}
                 {% endif %}
 
-                {% if ownProperty === 'Yes' and partnerOwnProperty === 'Yes' %}
+                {% if data.ownProperty === 'Yes' and data.partnerOwnProperty === 'Yes' %}
                     {{ formFieldHeading("You and Your Partner jointly:") }}
                     {{ formField({ label: "How many residential properties?", value: data.jointResidentialProperties }) }}
                     {{ formField({ label: "How many commercial properties?", value: data.jointCommercialProperties }) }}

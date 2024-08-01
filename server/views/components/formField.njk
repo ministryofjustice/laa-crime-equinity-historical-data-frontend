@@ -40,9 +40,11 @@
     {% elif field.type === 'time' %}
         {{ field.value | formatTime }}
     {% elif field.type === 'percent' %}
-        {{ field.value | formatPercentage}}%
+        {{ field.value | formatPercentage }}%
     {% elif field.type === 'link' %}
         <a href="{{ field.value.href }}" class="govuk-link govuk-link--no-visited-state">{{ field.value.text }}</a>
+    {% elif field.type === 'every' %}
+        {{ field.value | transformValue('every') }}
     {% else %}
         {{ field.value }}
     {% endif %}
