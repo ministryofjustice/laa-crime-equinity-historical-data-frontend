@@ -22,6 +22,7 @@ describe('CRM Api Client', () => {
   afterEach(() => {
     nock.cleanAll()
     jest.clearAllMocks()
+    crmApiCache.clear()
   })
 
   it('should cache and CRM5 response for given usn', async () => {
@@ -45,10 +46,13 @@ describe('CRM Api Client', () => {
   it('should retrieve CRM5 response from cache for given usn', async () => {
     const spyCacheGet = jest.spyOn(crmApiCache, 'get')
 
-    crmApiCache.set('crm5/2345678', buildCrmResponse(2345678))
+    const crm5Response = buildCrmResponse(1234567)
 
-    await crm5ApiClient.getCrm(2345678, '1,4,5,6')
+    crmApiCache.set('crm5/2345678', crm5Response)
 
+    const result = await crm5ApiClient.getCrm(2345678, '1,4,5,6')
+
+    expect(result).toEqual(crm5Response)
     expect(spyCacheGet).toHaveBeenCalledWith('crm5/2345678')
   })
 })

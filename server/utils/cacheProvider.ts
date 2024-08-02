@@ -28,6 +28,10 @@ class CacheProvider<T> {
   set(key: string, value: T): void {
     this.cache.set(key, value)
   }
+
+  clear() {
+    this.cache.clear()
+  }
 }
 
 const crmApiCache = new CacheProvider<CrmResponse>({
