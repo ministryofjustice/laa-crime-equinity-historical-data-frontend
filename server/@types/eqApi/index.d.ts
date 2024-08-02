@@ -11,3 +11,5 @@ export type EvidenceFiles = {
 }
 
 export interface CrmResponse {}
+
+export type CrmReportResponse = { text: string }

@@ -44,7 +44,7 @@
                           }) }}
                       </div>
                   </div>
-
+                  <form action="/generate-report" method="POST">
                   <div class="govuk-grid-row">
                       <div class="govuk-grid-column-one-quarter">
                           {{ govukInput({
@@ -68,15 +68,20 @@
                           }) }}
                       </div>
                   </div>
-
+                  <div class="govuk-grid-row">
+                     <div class="govuk-grid-column-full">
+                     <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
                   {{ govukButton({
                       action: '#',
                       method: 'post',
                       text: 'Download report'
                   }) }}
+                   </div>
+                    </div>
               </div>
           </main>
-
+       </form>
       </div>
+
 
   {% endblock %}

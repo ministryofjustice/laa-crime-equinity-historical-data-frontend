@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 /*
- * Do appinsights first as it does some magic instrumentation work, i.e. it affects other 'require's
- * In particular, applicationinsights automatically collects bunyan logs
+ * Do app insights first as it does some magic instrumentation work, i.e. it affects other 'require's
+ * In particular, application insights automatically collects bunyan logs
  */
 import { Crm4Response } from '@crm4'
 import { Crm5Response } from '@crm5'
@@ -13,6 +13,7 @@ import applicationInfoSupplier from '../applicationInfo'
 import CrmApiClient from './api/crmApiClient'
 import SdsApiClient from './api/sdsApiClient'
 import SearchApiClient from './api/searchApiClient'
+import CrmReportApiClient from './api/crmReportApiClient'
 
 import config from '../config'
 
@@ -35,6 +36,7 @@ export const dataAccess = () => ({
   crm14ApiClient: new CrmApiClient<Crm14Response>(eqiApiHeaders, 'crm14'),
   sdsApiClient: new SdsApiClient(),
   searchApiClient: new SearchApiClient(eqiApiHeaders),
+  crmReportApiClient: new CrmReportApiClient(eqiApiHeaders, 'crm4'),
 })
 
 export type DataAccess = ReturnType<typeof dataAccess>
