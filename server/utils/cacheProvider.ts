@@ -1,17 +1,18 @@
 import { LRUCache } from 'lru-cache'
+import { CrmResponse } from '@eqApi'
 import config from '../config'
 
 type CacheOptions = {
-  max?: number
-  ttlMinutes?: number
+  max: number
+  ttlMinutes: number
 }
 
-class CacheProvider {
-  cache: LRUCache<string, string>
+class CacheProvider<T> {
+  cache: LRUCache<string, T>
 
-  constructor(private readonly options: CacheOptions = {}) {
-    this.cache = new LRUCache<string, string>({
-      max: this.options.max || 100,
+  constructor(private readonly options: CacheOptions) {
+    this.cache = new LRUCache<string, T>({
+      max: this.options.max,
       ttl: 1000 * 60 * (options.ttlMinutes || 60),
     })
   }
@@ -20,15 +21,23 @@ class CacheProvider {
     return this.cache.has(key)
   }
 
-  get(key: string): string {
+  get(key: string): T {
     return this.cache.get(key)
   }
 
-  set(key: string, value: string): void {
+  set(key: string, value: T): void {
     this.cache.set(key, value)
   }
 }
 
-const sdsAuthCache = new CacheProvider({ ttlMinutes: config.cache.sdsAuthCache.ttlMinutes }) // 50 minutes
+const crmApiCache = new CacheProvider<CrmResponse>({
+  max: config.cache.crmApiCache.max,
+  ttlMinutes: config.cache.crmApiCache.ttlMinutes,
+})
 
-export default sdsAuthCache
+const sdsAuthCache = new CacheProvider<string>({
+  max: config.cache.sdsAuthCache.max,
+  ttlMinutes: config.cache.sdsAuthCache.ttlMinutes,
+})
+
+export { crmApiCache, sdsAuthCache }
