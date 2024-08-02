@@ -21,7 +21,7 @@ export default class CrmApiClient<T extends CrmResponse> {
       return crmApiCache.get(crmPath) as T
     }
 
-    const response = CrmApiClient.restClient('CRM API client', 'no_auth').get<T>({
+    const response = await CrmApiClient.restClient('CRM API client', 'no_auth').get<T>({
       path: `/api/internal/v1/equinity/${crmPath}`,
       headers: {
         ...this.headers,

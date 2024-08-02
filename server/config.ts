@@ -94,7 +94,7 @@ export default {
       ttlMinutes: Number(get('CRM_API_CACHE_TTL', 10)),
     },
     sdsAuthCache: {
-      max: Number(get('CRM_AUTH_CACHE_MAX', 100)),
+      max: Number(get('SDS_AUTH_CACHE_MAX', 100)),
       ttlMinutes: Number(get('SDS_AUTH_CACHE_TTL', 50)),
     },
   },
