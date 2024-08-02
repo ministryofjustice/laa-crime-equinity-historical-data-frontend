@@ -14,17 +14,19 @@
 
     <div class="govuk-width-container">
 
-        {{ backLink(backUrl) }}
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+                {{ backLink(backUrl) }}
+            </div>
+            <div class="govuk-grid-column-one-half govuk-!-text-align-right">
+                {% set isSummaryPage = (sections | length) > 1 %}
 
+                {% if isSummaryPage %}
+                    {{ printButton() }}
 
-        {% set isSummaryPage = (sections | length) > 1 %}
-
-        {% if isSummaryPage %}
-            {{ printButton() }}
-
-        {% endif %}
-
-
+                {% endif %}
+            </div>
+        </div>
 
         <main class="govuk-main-wrapper">
 

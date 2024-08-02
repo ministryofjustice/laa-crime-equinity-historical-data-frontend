@@ -26,7 +26,11 @@
   a[href]::after {
     content: none !important;
   }
-
+  .govuk-header,
+  .govuk-header,
+  .govuk-footer, .govuk-back-link {
+    display: none;
+  }
   @page {
     margin: 0;
   }
