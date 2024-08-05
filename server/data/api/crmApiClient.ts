@@ -1,6 +1,7 @@
 import type { CrmResponse, EqApiHeader } from '@eqApi'
 import RestClient from '../restClient'
 import config from '../../config'
+import { crmApiCache } from '../../utils/cacheProvider'
 
 type CrmApiPath = 'crm4' | 'crm5' | 'crm7' | 'crm14'
 
@@ -15,12 +16,19 @@ export default class CrmApiClient<T extends CrmResponse> {
   }
 
   async getCrm(usn: number, profileAcceptedTypes: string): Promise<T> {
-    return CrmApiClient.restClient('CRM API client', 'no_auth').get<T>({
-      path: `/api/internal/v1/equinity/${this.crmApiPath}/${usn}`,
+    const crmPath = `${this.crmApiPath}/${usn}`
+    if (crmApiCache.has(crmPath)) {
+      return crmApiCache.get(crmPath) as T
+    }
+
+    const response = await CrmApiClient.restClient('CRM API client', 'no_auth').get<T>({
+      path: `/api/internal/v1/equinity/${crmPath}`,
       headers: {
         ...this.headers,
         profileAcceptedTypes,
       },
     })
+    crmApiCache.set(crmPath, response)
+    return response
   }
 }
