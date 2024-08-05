@@ -25,7 +25,7 @@ describe('CRM Api Client', () => {
     crmApiCache.clear()
   })
 
-  it('should cache and CRM5 response for given usn', async () => {
+  it('should cache and return CRM response for given usn', async () => {
     const spyCacheSet = jest.spyOn(crmApiCache, 'set')
     const spyCacheGet = jest.spyOn(crmApiCache, 'get')
 
@@ -43,7 +43,7 @@ describe('CRM Api Client', () => {
     expect(spyCacheGet).not.toHaveBeenCalled()
   })
 
-  it('should retrieve CRM5 response from cache for given usn', async () => {
+  it('should retrieve CRM response from cache for given usn', async () => {
     const spyCacheGet = jest.spyOn(crmApiCache, 'get')
 
     const crm5Response = buildCrmResponse(1234567)
