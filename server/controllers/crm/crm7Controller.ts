@@ -19,7 +19,7 @@ export default class Crm7Controller {
       const navigation = this.crmDisplayService.getNavigation('crm7', usn, sectionId, crm7Response)
       const sections = this.crmDisplayService.getSections('crm7', sectionId, crm7Response)
 
-      const currentUrl = sectionId ? `/crm4/${usn}/${sectionId}` : navigation.items[0].href
+      const currentUrl = sectionId ? `/crm7/${usn}/${sectionId}` : navigation.items[0].href
       const backUrl = manageBackLink(req, currentUrl)
 
       res.render('pages/crmDetails', {
