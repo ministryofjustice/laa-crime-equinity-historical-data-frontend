@@ -51,6 +51,7 @@ export default {
     allowedUserProfileGroups: get('ALLOWED_USER_PROFILE_GROUPS', '', requiredInProduction),
     redirectUri: get('REDIRECT_URI', 'http://localhost:3000/auth/redirect'),
     postLogoutRedirectUri: get('POST_LOGOUT_REDIRECT_URI', 'http://localhost:3000/auth/redirect'),
+    disabled: get('AUTH_DISABLED', 'false') === 'true',
   },
   redis: {
     enabled: get('REDIS_ENABLED', 'false', requiredInProduction) === 'true',
