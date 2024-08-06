@@ -1,0 +1,11 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% macro printButton() %}
+    {{ govukButton({
+        "text": "Print this page",
+        "classes": "govuk-button govuk-button--secondary",
+        "attributes": {
+            "id": "print-button"
+        }
+    }) }}
+{% endmacro %}

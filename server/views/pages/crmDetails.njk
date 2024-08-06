@@ -5,6 +5,7 @@
 {% from "../components/totalAndCost.njk" import totalAndCost %}
 {% from "../components/customDisplay/customDisplay.njk" import customDisplay %}
 {% from "../components/backLink.njk" import backLink %}
+{% from "../components/printButton.njk" import printButton %}
 
 {% set pageTitle = applicationName + " - " + crmType + ": " + title %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -12,7 +13,21 @@
 {% block content %}
 
     <div class="govuk-width-container">
-        {{ backLink(backUrl) }}
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+                {{ backLink(backUrl) }}
+            </div>
+            <div class="govuk-grid-column-one-half govuk-!-text-align-right">
+                {% set isSummaryPage = (sections | length) > 1 %}
+
+                {% if isSummaryPage %}
+                    {{ printButton() }}
+
+                {% endif %}
+            </div>
+        </div>
+
         <main class="govuk-main-wrapper">
 
             <span class="govuk-caption-l">eForm: {{ crmType }} | Case number: {{ usn }}</span>
@@ -86,4 +101,8 @@
             </div>
         </main>
     </div>
+{% endblock %}
+
+{% block pageScripts %}
+    <script src="/assets/printButton.js"></script>
 {% endblock %}
