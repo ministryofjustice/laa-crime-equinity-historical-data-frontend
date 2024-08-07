@@ -61,16 +61,6 @@ jobs:
           context: ./gotenberg
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
     
-      # Build and push Gotenberg docker image to container repo
-      - name: Build and push docker image
-        uses: docker/build-push-action@v5
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-        with:
-          context: ./gotenberg
-          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
-          push: true
           
   deploy-dev:
     runs-on: ubuntu-latest
@@ -153,34 +143,7 @@ jobs:
           IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
 
           
-      # deploy  Gotenberg docker image to container repo
-      - name: Authenticate to K8 Cluster
-        run: |
-          mkdir print_pdf
-          cat ./.github/deployments/print_pdf/deployment.yml | envsubst > print_pdf/deployment.yml
-          cat ./.github/deployments/print_pdf/ingress.yml | envsubst >  print_pdf/ingress.yml
-          cat ./.github/deployments/print_pdf/service.yml | envsubst >  print_pdf/service.yml
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
-          CP_NAMESPACE: "${{ env.APP_NAME }}-${{ env.APP_ENV }}"
-      - name: Deploy to K8 Cluster
-        run: |
-          echo "${{ secrets.KUBE_CERT }}" > ca.crt
-          echo ${KUBE_NAMESPACE}
-          echo ${{ env.IMAGE_NAME }}
-          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
-          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
-          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
-          kubectl config use-context ${KUBE_CLUSTER}
-          kubectl -n ${KUBE_NAMESPACE} apply -f  print_pdf/
-        env:
-          KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
-          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG_PDF }}
-      
+    
   deploy-uat:
     runs-on: ubuntu-latest
     needs: ecr
@@ -255,10 +218,10 @@ jobs:
           cat ./.github/deployments/ingress.yml | envsubst > deployments/ingress.yml
           cat ./.github/deployments/service.yml | envsubst > deployments/service.yml
         env:
-          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           CP_NAMESPACE: "${{ env.APP_NAME }}-${{ env.APP_ENV }}"
 
       - name: Deploy to K8 Cluster
@@ -274,6 +237,7 @@ jobs:
         env:
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
 
   deploy-prod:
     runs-on: ubuntu-latest
