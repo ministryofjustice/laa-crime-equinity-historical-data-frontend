@@ -202,6 +202,7 @@ jobs:
     env:
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
       APP_ENV: "staging"
+      IMAGE_TAG: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
 
