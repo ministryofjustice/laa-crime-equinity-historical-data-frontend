@@ -4,6 +4,7 @@ context('Healthcheck', () => {
       cy.task('reset')
     })
 
+    // TODO: EMP-425 fix health endpoint
     it.skip('Health check page is visible and UP', () => {
       cy.request('/health').its('body.status').should('equal', 'UP')
     })
