@@ -5,6 +5,7 @@
 {%- from "govuk/components/table/macro.njk" import govukTable -%}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "../components/pagination.njk" import paginationBox %}
+{% from "../components/backLink.njk" import backLink %}
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -25,6 +26,7 @@
 {% block content %}
 
     <div class="govuk-width-container">
+        {{ backLink(backUrl) }}
         <main class="govuk-main-wrapper">
 
             {% if errors.list | length %}
