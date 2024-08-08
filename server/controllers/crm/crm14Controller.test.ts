@@ -118,7 +118,7 @@ describe('CRM14 Controller', () => {
       crmType: 'CRM 14',
       navigationItems: navigation,
       sections,
-      backUrl: '/search-eform',
+      backUrl: '/',
     })
   })
 })

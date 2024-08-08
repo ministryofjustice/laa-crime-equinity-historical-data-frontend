@@ -5,6 +5,7 @@ import validateSearchQuery, { SearchValidationErrors } from '../utils/searchEfor
 import getPagination from '../utils/pagination'
 import { buildQueryString } from '../utils/utils'
 import getProfileAcceptedTypes from '../utils/userProfileGroups'
+import manageBackLink from '../utils/crmBackLink'
 
 const SEARCH_PAGE_SIZE = 10
 
@@ -15,12 +16,16 @@ export default class SearchEformController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
+      const currentUrl = '/search-eform'
+      const backUrl = manageBackLink(req, currentUrl)
+
       if (!req.query.page) {
         const searchResults = req.session.searchResults || []
         const formValues = req.session.formValues || {}
         res.render(VIEW_PATH, {
           results: searchResults,
           formValues,
+          backUrl,
         })
       } else {
         // render page with search results
@@ -38,7 +43,7 @@ export default class SearchEformController {
         const validationErrors = validateSearchQuery(queryParams)
         if (validationErrors) {
           // render with search query validation errors
-          res.render(VIEW_PATH, { results: [], errors: validationErrors, formValues: queryParams })
+          res.render(VIEW_PATH, { results: [], errors: validationErrors, formValues: queryParams, backUrl })
         } else {
           // perform search
           const searchRequest = buildSearchRequest(queryParams, getProfileAcceptedTypes(res))
@@ -47,7 +52,7 @@ export default class SearchEformController {
           if (searchResponse.error) {
             // render with errors for search API error
             const searchErrors = getSearchErrors(searchResponse.error)
-            res.render(VIEW_PATH, { results: [], errors: searchErrors, formValues: queryParams })
+            res.render(VIEW_PATH, { results: [], errors: searchErrors, formValues: queryParams, backUrl })
           } else {
             // render with search results
             const { results, paging } = searchResponse
@@ -58,11 +63,15 @@ export default class SearchEformController {
             req.session.searchResults = results
             req.session.formValues = queryParams
 
+            // Record the search page in the history
+            manageBackLink(req, currentUrl)
+
             res.render(VIEW_PATH, {
               results,
               itemsTotal: paging.itemsTotal,
               pagination: getPagination(paging.number + 1, paging.total, baseUrl),
               formValues: queryParams,
+              backUrl,
             })
           }
         }

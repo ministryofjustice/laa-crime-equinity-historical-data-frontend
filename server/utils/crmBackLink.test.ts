@@ -17,7 +17,7 @@ describe('manageBackLink', () => {
     const backUrl = manageBackLink(request, currentUrl)
 
     expect(request.session.history).toEqual(['/crm5/1234567/general-information'])
-    expect(backUrl).toBe('/search-eform')
+    expect(backUrl).toBe('/')
   })
 
   it('should add the new URL to history when navigating to another page', () => {

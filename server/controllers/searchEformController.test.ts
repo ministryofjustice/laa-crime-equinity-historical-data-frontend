@@ -28,6 +28,7 @@ describe('Search Eform Controller', () => {
     await requestHandler(request, response, next)
 
     expect(response.render).toHaveBeenCalledWith('pages/searchEform', {
+      backUrl: '/',
       results: [],
       formValues: {},
     })
@@ -87,6 +88,7 @@ describe('Search Eform Controller', () => {
           },
         ],
       },
+      backUrl: '/',
       formValues: {
         clientDOB: undefined,
         clientName: undefined,
@@ -138,6 +140,7 @@ describe('Search Eform Controller', () => {
           },
         },
       },
+      backUrl: '/',
       formValues: {
         type: undefined,
         clientName: undefined,
@@ -171,6 +174,7 @@ describe('Search Eform Controller', () => {
           },
         ],
       },
+      backUrl: '/',
       formValues: {
         type: undefined,
         clientDOB: undefined,
@@ -220,6 +224,7 @@ describe('Search Eform Controller', () => {
           },
         ],
       },
+      backUrl: '/',
       formValues: {
         type: undefined,
         clientName: undefined,

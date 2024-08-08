@@ -109,7 +109,7 @@ describe('CRM5 Controller', () => {
       crmType: 'CRM 5',
       navigationItems: navigation,
       sections,
-      backUrl: '/search-eform',
+      backUrl: '/',
     })
   })
 })
