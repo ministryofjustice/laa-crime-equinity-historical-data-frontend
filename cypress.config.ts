@@ -6,6 +6,7 @@ import { resetStubs } from './integration_tests/mockApis/wiremock'
 
 import crmApi from './integration_tests/mockApis/crmApi'
 import searchApi from './integration_tests/mockApis/searchApi'
+import sdsApi from './integration_tests/mockApis/sdsApi'
 
 export default defineConfig({
   chromeWebSecurity: false,
@@ -35,6 +36,7 @@ export default defineConfig({
         reset: resetStubs,
         ...crmApi,
         ...searchApi,
+        ...sdsApi,
       })
       return config
     },

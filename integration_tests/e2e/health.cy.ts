@@ -2,10 +2,10 @@ context('Healthcheck', () => {
   context('All healthy', () => {
     beforeEach(() => {
       cy.task('reset')
+      cy.task('stubSdsHealth')
     })
 
-    // TODO: EMP-425 fix health endpoint
-    it.skip('Health check page is visible and UP', () => {
+    it('Health check page is visible and UP', () => {
       cy.request('/health').its('body.status').should('equal', 'UP')
     })
 
@@ -21,6 +21,7 @@ context('Healthcheck', () => {
   context('Some unhealthy', () => {
     beforeEach(() => {
       cy.task('reset')
+      cy.task('stubSdsHealth', 500)
     })
 
     it('Health check page is visible and DOWN', () => {
