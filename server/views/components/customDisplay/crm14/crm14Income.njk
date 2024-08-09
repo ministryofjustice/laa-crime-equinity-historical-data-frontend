@@ -1,0 +1,209 @@
+{% from "../../formFieldList.njk" import formFieldList %}
+{% from "../../formSubsection.njk" import formSubsection %}
+{% from "../../formTable.njk" import formTable %}
+
+{% macro crm14Income(data) %}
+<!-- Question 1 -->
+{% set fieldsQ1 = [
+    { label: "Do you or your partner receive any of the benefits listed here?", value: data.receiveBenefits }
+] %}
+    {{ formSubsection('Your Income and Your Partner\'s Income', fieldsQ1) }}
+
+    {% if data.receiveBenefits == 'Yes' %}
+        <!-- Benefits for You -->
+        {% set benefitsYou = [] %}
+        {% for benefit, value in data.benefits.you %}
+            {% if value %}
+                {% set benefitValue = (benefit | splitCamelCase | capitalize) | safe %}
+                {% set _ = benefitsYou.push(benefitValue) %}
+            {% endif %}
+        {% endfor %}
+
+        <!-- Benefits for Your Partner -->
+        {% set benefitsPartner = [] %}
+        {% for benefit, value in data.benefits.partner %}
+            {% if value %}
+                {% set benefitValue = (benefit | splitCamelCase | capitalize) | safe %}
+                {% set _ = benefitsPartner.push(benefitValue) %}
+            {% endif %}
+        {% endfor %}
+
+        <!-- Fields for You and Your Partner -->
+        {% set youFields = [
+            { label: "You", value: benefitsYou | join('<br>') | safe }
+        ] %}
+
+        {% set partnerFields = [
+            { label: "Your Partner", value: benefitsPartner | join('<br>') | safe }
+        ] %}
+
+        <!-- Render the subsections for benefits -->
+        {{ formSubsection('Benefits (You)', youFields) }}
+        {{ formSubsection('Benefits (Your Partner)', partnerFields) }}
+    {% endif %}
+
+<!-- Self-Employment or Business Partnership -->
+{% set fieldsSelfEmployment = [
+    { label: "Are you or your partner self-employed, employed in a business partnership, or employed as either a company director or a shareholder in a private company?", value: data.privateCompany }
+] %}
+    {{ formSubsection('Self-Employment or Business Partnership', fieldsSelfEmployment) }}
+
+<!-- Total Income -->
+{% set fieldsTotalIncome = [
+    { label: "Do you or your partner, together, in a year have a total income from all sources before tax or any other deduction, of more than £12,475 (£239.90 a week)?", value: data.totalIncome }
+] %}
+    {{ formSubsection('Total Income', fieldsTotalIncome) }}
+
+<!-- Sources of Income -->
+{% set sourcesOfIncomeTable = {
+    head: [
+        { text: "" },
+        { text: "You - Amount" },
+        { text: "You - Frequency" },
+        { text: "Your Partner - Amount" },
+        { text: "Your Partner - Frequency" }
+    ],
+    rows: [
+        [
+            { text: "Employment" },
+            { text: data.allIncomes.you.wageCalc | formatCurrency },
+            { text: data.allIncomes.you.wagePaidEvery },
+            { text: data.allIncomes.partner.wageCalc | formatCurrency },
+            { text: data.allIncomes.partner.wagePaidEvery }
+        ],
+        [
+            { text: "Child Benefit" },
+            { text: data.allIncomes.you.childBenefit | formatCurrency },
+            { text: data.allIncomes.you.childBenefitPaidEvery },
+            { text: data.allIncomes.partner.childBenefit | formatCurrency },
+            { text: data.allIncomes.partner.childBenefitPaidEvery }
+        ],
+        [
+            { text: "Working Tax Credits" },
+            { text: data.allIncomes.you.taxCreditsAmount | formatCurrency },
+            { text: data.allIncomes.you.taxCreditsPaidEvery },
+            { text: data.allIncomes.partner.taxCreditsAmount | formatCurrency },
+            { text: data.allIncomes.partner.taxCreditsPaidEvery }
+        ],
+        [
+            { text: "Universal Credit" },
+            { text: data.allIncomes.you.universalCredit | formatCurrency },
+            { text: data.allIncomes.you.universalCreditPaidEvery },
+            { text: data.allIncomes.partner.universalCredit | formatCurrency },
+            { text: data.allIncomes.partner.universalCreditPaidEvery }
+        ],
+        [
+            { text: "Other Benefits" },
+            { text: data.allIncomes.you.otherBenefitsCalc | formatCurrency },
+            { text: data.allIncomes.you.otherBenefitsPaidEvery },
+            { text: data.allIncomes.partner.otherBenefitsCalc | formatCurrency },
+            { text: data.allIncomes.partner.otherBenefitsPaidEvery }
+        ],
+        [
+            { text: "Maintenance Income" },
+            { text: data.allIncomes.you.maintenancePayment | formatCurrency },
+            { text: data.allIncomes.you.maintenancePaymentPaidEvery },
+            { text: data.allIncomes.partner.maintenancePayment | formatCurrency },
+            { text: data.allIncomes.partner.maintenancePaymentPaidEvery }
+        ],
+        [
+            { text: "Pensions" },
+            { text: data.allIncomes.you.pensionsCalc | formatCurrency },
+            { text: data.allIncomes.you.pensionsPaidEvery },
+            { text: data.allIncomes.partner.pensionsCalc | formatCurrency },
+            { text: data.allIncomes.partner.pensionsPaidEvery }
+        ],
+        [
+            { text: "Other Income" },
+            { text: data.allIncomes.you.otherIncomeCalc | formatCurrency },
+            { text: data.allIncomes.you.otherIncomePaidEvery },
+            { text: data.allIncomes.partner.otherIncomeCalc | formatCurrency },
+            { text: data.allIncomes.partner.otherIncomePaidEvery }
+        ]
+    ]
+} %}
+
+    {% set otherSourcesYou = "" %}
+    {% if data.allIncomes.you.studentLoan %}
+        {% set otherSourcesYou = otherSourcesYou + 'Student grant<br>' %}
+    {% endif %}
+    {% if data.allIncomes.you.otherIncomeFriendsFamily %}
+        {% set otherSourcesYou = otherSourcesYou + 'Money from friends and/or family<br>' %}
+    {% endif %}
+    {% if data.allIncomes.you.otherIncomeMaintenance %}
+        {% set otherSourcesYou = otherSourcesYou + 'Maintenance<br>' %}
+    {% endif %}
+    {% if data.allIncomes.you.otherIncomeRentFromFamily %}
+        {% set otherSourcesYou = otherSourcesYou + 'Board or rent from family lodger or tenant<br>' %}
+    {% endif %}
+    {% if data.allIncomes.you.otherIncomeRental %}
+        {% set otherSourcesYou = otherSourcesYou + 'Rental income<br>' %}
+    {% endif %}
+    {% if data.allIncomes.you.otherFinancialSupport %}
+        {% set otherSourcesYou = otherSourcesYou + 'Financial support from someone who allows you access to their assets or money<br>' %}
+    {% endif %}
+    {% if data.allIncomes.you.otherIncomeSourceFreetext %}
+        {% set otherSourcesYou = otherSourcesYou + data.allIncomes.you.otherIncomeSourceFreetext %}
+    {% endif %}
+
+    {% set otherSourcesPartner = "" %}
+    {% if data.allIncomes.partner.studentLoan %}
+        {% set otherSourcesPartner = otherSourcesPartner + 'Student grant<br>' %}
+    {% endif %}
+    {% if data.allIncomes.partner.otherIncomeFriendsFamily %}
+        {% set otherSourcesPartner = otherSourcesPartner + 'Money from friends and/or family<br>' %}
+    {% endif %}
+    {% if data.allIncomes.partner.otherIncomeMaintenance %}
+        {% set otherSourcesPartner = otherSourcesPartner + 'Maintenance<br>' %}
+    {% endif %}
+    {% if data.allIncomes.partner.otherIncomeRentFromFamily %}
+        {% set otherSourcesPartner = otherSourcesPartner + 'Board or rent from family lodger or tenant<br>' %}
+    {% endif %}
+    {% if data.allIncomes.partner.otherIncomeRental %}
+        {% set otherSourcesPartner = otherSourcesPartner + 'Rental income<br>' %}
+    {% endif %}
+    {% if data.allIncomes.partner.otherFinancialSupport %}
+        {% set otherSourcesPartner = otherSourcesPartner + 'Financial support from someone who allows you access to their assets or money<br>' %}
+    {% endif %}
+    {% if data.allIncomes.partner.otherIncomeSourceFreetext %}
+        {% set otherSourcesPartner = otherSourcesPartner + data.allIncomes.partner.otherIncomeSourceFreetext %}
+    {% endif %}
+
+    {% set _ = sourcesOfIncomeTable.rows.push([
+        { text: "Other Source" },
+        { text: (data.allIncomes.you.otherIncomeCalc | formatCurrency + '<br>' + otherSourcesYou) | safe },
+        { text: data.allIncomes.you.otherIncomePaidEvery },
+        { text: (data.allIncomes.partner.otherIncomeCalc | formatCurrency + '<br>' + otherSourcesPartner) | safe },
+        { text: data.allIncomes.partner.otherIncomePaidEvery }
+    ]) %}
+
+    {{ formSubsection('Sources of Income for you and your partner', sourcesOfIncomeTable, true) }}
+
+<!-- Restraint Order -->
+{% set fieldsRestraintOrder = [
+    { label: "Do you or your partner have any income, savings or assets which are under a restraint order or a freezing order?", value: data.freezingOrder }
+] %}
+    {{ formSubsection('Restraint Order', fieldsRestraintOrder) }}
+
+<!-- Ownership of Property -->
+{% set fieldsOwnershipProperty = [
+    { label: "Do you or your partner own or part-own any land or property of any kind, including your own home, in the United Kingdom or overseas?", value: data.ownLandOrProperty }
+] %}
+    {{ formSubsection('Ownership of Property', fieldsOwnershipProperty) }}
+
+    <!-- Savings or Investments -->
+    {% set fieldsSavingsInvestments = [
+        { label: "Do you or your partner have any savings or investments, in the United Kingdom or overseas?", value: data.savingsOrInvestments }
+    ] %}
+    {{ formSubsection('Savings or Investments', fieldsSavingsInvestments) }}
+
+    <!-- Other Financial Information -->
+    {% set fieldsOtherFinancialInfo = [
+        { label: "Sleeping at friend's sofa - no money received", value: data.noMoneySleepingAtFriend },
+        { label: "Staying with family - no money received", value: data.noMoneyStayingWithFamily },
+        { label: "Living on the streets/homeless", value: data.homeless },
+        { label: "Remanded in custody for more than 3 months", value: data.remandedInCustody },
+        { label: "How you pay bills", value: data.howPayBillsText }
+    ] %}
+    {{ formSubsection('Other Financial Information', fieldsOtherFinancialInfo) }}
+{% endmacro %}
