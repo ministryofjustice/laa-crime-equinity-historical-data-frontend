@@ -1,7 +1,7 @@
 import RestClient from '../restClient'
 import config from '../../config'
 import authProvider from '../../auth/authProvider'
-import sdsAuthCache from '../../utils/cacheProvider'
+import { sdsAuthCache } from '../../utils/cacheProvider'
 
 const SDS_ACCESS_TOKEN = 'sds-access-token'
 

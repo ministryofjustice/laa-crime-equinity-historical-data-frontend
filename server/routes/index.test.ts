@@ -64,7 +64,7 @@ describe('routes', () => {
         .get('/search-eform')
         .expect('Content-Type', /html/)
         .expect(res => {
-          expect(res.text).toContain('Search for a historical eForm')
+          expect(res.text).toContain('Search for eForm records')
         })
     })
   })
@@ -97,7 +97,7 @@ describe('routes', () => {
         .get('/search-eform?page=1&usn=1234567')
         .expect('Content-Type', /html/)
         .expect(res => {
-          expect(res.text).toContain('Search for a historical eForm')
+          expect(res.text).toContain('Search for eForm records')
           expect(res.text).toContain('1234567')
         })
     })

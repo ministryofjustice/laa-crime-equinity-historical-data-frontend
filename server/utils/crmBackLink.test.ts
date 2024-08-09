@@ -17,7 +17,7 @@ describe('manageBackLink', () => {
     const backUrl = manageBackLink(request, currentUrl)
 
     expect(request.session.history).toEqual(['/crm5/1234567/general-information'])
-    expect(backUrl).toBe('/search-eform')
+    expect(backUrl).toBe('/')
   })
 
   it('should add the new URL to history when navigating to another page', () => {
@@ -29,5 +29,15 @@ describe('manageBackLink', () => {
 
     expect(request.session.history).toEqual(['/crm5/1234567/general-information', '/crm5/1234567/firm-details'])
     expect(backUrl).toBe('/crm5/1234567/general-information?fromBack=true')
+  })
+
+  it('should generate correct back link for crm5 pages', () => {
+    let currentUrl = '/crm5/1234567/general-information'
+    manageBackLink(request, currentUrl)
+
+    currentUrl = '/crm5/1234567/firm-details'
+    const backUrl = manageBackLink(request, currentUrl)
+
+    expect(backUrl).toMatch(/^\/crm5\/1234567\/general-information\?fromBack=true$/)
   })
 })

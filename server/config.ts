@@ -51,6 +51,7 @@ export default {
     allowedUserProfileGroups: get('ALLOWED_USER_PROFILE_GROUPS', '', requiredInProduction),
     redirectUri: get('REDIRECT_URI', 'http://localhost:3000/auth/redirect'),
     postLogoutRedirectUri: get('POST_LOGOUT_REDIRECT_URI', 'http://localhost:3000/auth/redirect'),
+    disabled: get('AUTH_DISABLED', 'false') === 'true',
   },
   redis: {
     enabled: get('REDIS_ENABLED', 'false', requiredInProduction) === 'true',
@@ -87,10 +88,14 @@ export default {
     expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 60)),
   },
   domain: get('INGRESS_URL', 'http://localhost:3000'),
-  // The fallback should be empty. It will become when all environments will be setup.
-  environmentName: get('ENVIRONMENT_NAME', 'Local'),
+  environmentName: get('ENVIRONMENT_NAME', 'local'),
   cache: {
+    crmApiCache: {
+      max: Number(get('CRM_API_CACHE_MAX', 1000)),
+      ttlMinutes: Number(get('CRM_API_CACHE_TTL', 10)),
+    },
     sdsAuthCache: {
+      max: Number(get('SDS_AUTH_CACHE_MAX', 100)),
       ttlMinutes: Number(get('SDS_AUTH_CACHE_TTL', 50)),
     },
   },

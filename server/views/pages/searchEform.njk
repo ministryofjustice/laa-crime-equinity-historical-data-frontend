@@ -5,6 +5,7 @@
 {%- from "govuk/components/table/macro.njk" import govukTable -%}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "../components/pagination.njk" import paginationBox %}
+{% from "../components/backLink.njk" import backLink %}
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -25,6 +26,7 @@
 {% block content %}
 
     <div class="govuk-width-container">
+        {{ backLink(backUrl) }}
         <main class="govuk-main-wrapper">
 
             {% if errors.list | length %}
@@ -34,9 +36,9 @@
                 }) }}
             {% endif %}
 
-            <h1 class="govuk-heading-l">Search for a historical eForm</h1>
-            <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
-            <span class="govuk-caption-m govuk-!-margin-bottom-4">To find cases, search by USN only or combine filters as Client name, Start date and End date.</span>
+            <h1 class="govuk-heading-l">Search for eForm records</h1>
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search Criteria</h2>
+            <span class="govuk-caption-m govuk-!-margin-bottom-4">To find an eForm record, search by USN or search by the following; Client surname, Provider account number, CRM type and Submission dates.</span>
 
             {% include "components/searchEformBox.njk" %}
 

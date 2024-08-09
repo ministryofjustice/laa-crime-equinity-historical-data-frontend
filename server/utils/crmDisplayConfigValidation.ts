@@ -8,12 +8,18 @@ const schema = Joi.object({
       sectionId: Joi.string().required(),
       title: Joi.string().required(),
       showWhen: Joi.object({
-        apiField: Joi.string().required(),
-        equals: Joi.string().required(),
+        conditionsMet: Joi.string().optional().allow('any', 'all'),
+        conditions: Joi.array().items({
+          apiField: Joi.string().required(),
+          equals: Joi.string().required(),
+        }),
       }).optional(),
       hideWhen: Joi.object({
-        apiField: Joi.string().required(),
-        equals: Joi.string().required(),
+        conditionsMet: Joi.string().optional().allow('any', 'all'),
+        conditions: Joi.array().items({
+          apiField: Joi.string().required(),
+          equals: Joi.string().required(),
+        }),
       }).optional(),
       subsections: Joi.array().items({
         title: Joi.string().required(),

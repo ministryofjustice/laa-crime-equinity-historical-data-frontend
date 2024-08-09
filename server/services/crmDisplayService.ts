@@ -1,15 +1,12 @@
-import _ from 'lodash'
 import {
   ConfigField,
   CrmDisplayConfig,
   CrmType,
   CustomDisplay,
   FieldOrSubHeading,
-  HideWhen,
   Navigation,
   NavigationItem,
   Section,
-  ShowWhen,
   SubHeading,
   Subsection,
 } from '@crmDisplay'
@@ -20,6 +17,7 @@ import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 import crm7DisplayConfig from './config/crm7DisplayConfig.json'
 import crm14DisplayConfig from './config/crm14DisplayConfig.json'
 import validateConfig from '../utils/crmDisplayConfigValidation'
+import { getApiFieldValue, includeSection } from '../utils/crmDisplayHelper'
 
 const configMap: Record<CrmType, CrmDisplayConfig> = {
   crm4: validateConfig(crm4DisplayConfig as CrmDisplayConfig, 'crm4'),
@@ -36,7 +34,7 @@ export default class CrmDisplayService {
 
     let isAnySectionActive = false
     const items: Array<NavigationItem> = crmDisplayConfig.sections
-      .filter(section => this.showOrHideSection(section, crmResponse))
+      .filter(section => includeSection(section, crmResponse))
       .map(section => {
         const isActive = section.sectionId === sectionId
         if (isActive) {
@@ -61,7 +59,7 @@ export default class CrmDisplayService {
 
   getSections<T extends CrmResponse>(crmType: CrmType, sectionId: string, crmResponse: T): Array<Section> {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
-    const availableSections = crmDisplayConfig.sections.filter(section => this.showOrHideSection(section, crmResponse))
+    const availableSections = crmDisplayConfig.sections.filter(section => includeSection(section, crmResponse))
 
     if (sectionId === SUMMARY_SECTION_ID) {
       // return all sections for summary
@@ -107,7 +105,7 @@ export default class CrmDisplayService {
             // populate config file with api field value
             return {
               ...field,
-              value: this.getApiFieldValue(crmResponse, field.apiField),
+              value: getApiFieldValue(crmResponse, field.apiField),
             }
           }
 
@@ -123,26 +121,10 @@ export default class CrmDisplayService {
     if (customDisplay) {
       return {
         ...customDisplay,
-        value: this.getApiFieldValue(crmResponse, customDisplay.apiField),
+        value: getApiFieldValue(crmResponse, customDisplay.apiField),
       }
     }
     return undefined
-  }
-
-  private getApiFieldValue<T extends CrmResponse>(crmResponse: T, apiFieldName: string): string {
-    return _.get(crmResponse, `formDetails.${apiFieldName}`) || _.get(crmResponse, apiFieldName) || ''
-  }
-
-  private showOrHideSection<T extends CrmResponse>(section: Section, crmResponse: T): boolean {
-    if (section.hideWhen && this.conditionIsTrue(section.hideWhen, crmResponse)) {
-      return false
-    }
-    return !section.showWhen || this.conditionIsTrue(section.showWhen, crmResponse)
-  }
-
-  private conditionIsTrue<T extends CrmResponse>(condition: HideWhen | ShowWhen, crmResponse: T): boolean {
-    const apiFieldValue = this.getApiFieldValue(crmResponse, condition.apiField)
-    return condition.equals === String(apiFieldValue)
   }
 }
 
