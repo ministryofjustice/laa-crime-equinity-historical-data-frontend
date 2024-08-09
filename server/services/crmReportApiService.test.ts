@@ -4,7 +4,7 @@ import CrmReportApiService from './crmReportApiService'
 
 jest.mock('../data/api/crmReportApiClient')
 
-describe('CRM API Service', () => {
+describe('CRM Report API Service', () => {
   let mockCrmReportApiClient: jest.Mocked<CrmReportApiClient>
 
   beforeEach(() => {
