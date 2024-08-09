@@ -3,6 +3,7 @@ import SearchEformService from './searchEformService'
 import CrmApiService from './crmApiService'
 import CrmDisplayService from './crmDisplayService'
 import DownloadEvidenceService from './downloadEvidenceService'
+import CrmReportApiService from './crmReportApiService'
 
 export const services = () => {
   const {
@@ -13,6 +14,7 @@ export const services = () => {
     crm14ApiClient,
     sdsApiClient,
     searchApiClient,
+    crmReportApiClient,
   } = dataAccess()
 
   const crm4Service = new CrmApiService(crm4ApiClient)
@@ -21,6 +23,7 @@ export const services = () => {
   const crm14Service = new CrmApiService(crm14ApiClient)
   const crmDisplayService = new CrmDisplayService()
   const downloadEvidenceService = new DownloadEvidenceService(sdsApiClient)
+  const crmReportApiService = new CrmReportApiService(crmReportApiClient)
   const searchEformService = new SearchEformService(searchApiClient)
 
   return {
@@ -30,6 +33,7 @@ export const services = () => {
     crm7Service,
     crm14Service,
     crmDisplayService,
+    crmReportApiService,
     downloadEvidenceService,
     searchEformService,
   }
