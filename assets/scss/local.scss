@@ -16,6 +16,10 @@
   min-height: 1em;
 }
 
+.govuk-summary-list__key, .govuk-summary-list__value {
+  word-break: break-all;
+}
+
 @media (min-width: 48em) {
   .govuk-custom-no-padding-left-desktop {
     @include govuk-responsive-padding(0, "left");
