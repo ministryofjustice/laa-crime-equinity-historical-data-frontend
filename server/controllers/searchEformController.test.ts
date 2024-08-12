@@ -31,6 +31,8 @@ describe('Search Eform Controller', () => {
       backUrl: '/',
       results: [],
       formValues: {},
+      itemsTotal: 0,
+      pagination: undefined,
     })
   })
 
