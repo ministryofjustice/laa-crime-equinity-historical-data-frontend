@@ -25,6 +25,11 @@ declare module 'express-session' {
     accessToken: string
     idToken: string
     isAuthenticated: boolean
+    paging: {
+      itemsTotal: number
+      number: number
+      total: number
+    }
   }
 }
 

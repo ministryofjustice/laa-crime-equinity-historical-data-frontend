@@ -6,7 +6,7 @@ export type TimeAndCost = {
 }
 
 export type TotalAndCost = {
-  total: string
+  total: number
   cost: number
 }
 
@@ -132,6 +132,9 @@ export interface Crm5Response extends CrmResponse {
         Mileage: TimedAndCost
         OtherDisbursement: Cost
         TotalCost: Cost
+      }
+      NewLimitRequest: {
+        cost: number
       }
     }
     CaseHistory?: {
