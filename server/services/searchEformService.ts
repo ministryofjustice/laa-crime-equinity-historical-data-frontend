@@ -14,7 +14,7 @@ export default class SearchEformService {
       }
       return addCrmLinksToResponse(response)
     } catch (error) {
-      logger.error('Failed to call search API', error)
+      logger.error('Search API error', error)
       return addErrorsToResponse(error.status, error.message)
     }
   }

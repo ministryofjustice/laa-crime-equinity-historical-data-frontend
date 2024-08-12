@@ -50,12 +50,12 @@ const schema = Joi.object({
     .messages({ 'number.min': 'Invalid page specified', 'number.base': 'Invalid page specified' }),
 }).options({ allowUnknown: true, abortEarly: false })
 
-export default function validateSearchQuery(data: Record<string, string>): SearchValidationErrors | null {
-  if (isSearchQueryEmpty(data)) {
+export default function validateSearchParams(params: Record<string, string>): SearchValidationErrors | null {
+  if (isSearchQueryEmpty(params)) {
     return { list: [{ href: '#', text: 'Enter at least one search field' }] }
   }
 
-  const { error } = schema.validate(data)
+  const { error } = schema.validate(params)
   if (error?.details) {
     return buildErrors(error)
   }

@@ -10,6 +10,14 @@ export type EvidenceFiles = {
   files: Array<EvidenceFile>
 }
 
+export type ReportError = {
+  status: number
+  message: string
+}
+
 export interface CrmResponse {}
 
-export type CrmReportResponse = { text: string }
+export type CrmReportResponse = {
+  text: string
+  error?: ReportError
+}

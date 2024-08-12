@@ -1,14 +1,14 @@
 import type { Request, RequestHandler, Response } from 'express'
 import type { SearchRequest, SearchError } from '@searchEform'
 import SearchEformService from '../services/searchEformService'
-import validateSearchQuery, { SearchValidationErrors } from '../utils/searchEformValidation'
+import validateSearchParams, { SearchValidationErrors } from '../utils/searchEformValidation'
 import getPagination from '../utils/pagination'
 import { buildQueryString } from '../utils/utils'
 import getProfileAcceptedTypes from '../utils/userProfileGroups'
 import manageBackLink from '../utils/crmBackLink'
 
+const CURRENT_URL = '/search-eform'
 const SEARCH_PAGE_SIZE = 10
-
 const VIEW_PATH = 'pages/searchEform'
 
 export default class SearchEformController {
@@ -16,8 +16,7 @@ export default class SearchEformController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      const currentUrl = '/search-eform'
-      const backUrl = manageBackLink(req, currentUrl)
+      const backUrl = manageBackLink(req, CURRENT_URL)
 
       if (!req.query.page) {
         const searchResults = req.session.searchResults || []
@@ -29,7 +28,7 @@ export default class SearchEformController {
         })
       } else {
         // render page with search results
-        const queryParams: Record<string, string> = {
+        const searchParams: Record<string, string> = {
           usn: req.query.usn as string,
           type: req.query.type as string,
           supplierAccountNumber: req.query.supplierAccountNumber as string,
@@ -40,37 +39,37 @@ export default class SearchEformController {
           page: req.query.page as string,
         }
 
-        const validationErrors = validateSearchQuery(queryParams)
+        const validationErrors = validateSearchParams(searchParams)
         if (validationErrors) {
           // render with search query validation errors
-          res.render(VIEW_PATH, { results: [], errors: validationErrors, formValues: queryParams, backUrl })
+          res.render(VIEW_PATH, { results: [], errors: validationErrors, formValues: searchParams, backUrl })
         } else {
           // perform search
-          const searchRequest = buildSearchRequest(queryParams, getProfileAcceptedTypes(res))
+          const searchRequest = buildSearchRequest(searchParams, getProfileAcceptedTypes(res))
           const searchResponse = await this.searchEformService.search(searchRequest)
 
           if (searchResponse.error) {
             // render with errors for search API error
             const searchErrors = getSearchErrors(searchResponse.error)
-            res.render(VIEW_PATH, { results: [], errors: searchErrors, formValues: queryParams, backUrl })
+            res.render(VIEW_PATH, { results: [], errors: searchErrors, formValues: searchParams, backUrl })
           } else {
             // render with search results
             const { results, paging } = searchResponse
-            const baseUrl = `/search-eform?${buildQueryString(queryParams)}&`
+            const baseUrl = `/search-eform?${buildQueryString(searchParams)}&`
             // Reset session history when a new search is performed
             req.session.history = []
             // Store search results and form values in session
             req.session.searchResults = results
-            req.session.formValues = queryParams
+            req.session.formValues = searchParams
 
             // Record the search page in the history
-            manageBackLink(req, currentUrl)
+            manageBackLink(req, CURRENT_URL)
 
             res.render(VIEW_PATH, {
               results,
               itemsTotal: paging.itemsTotal,
               pagination: getPagination(paging.number + 1, paging.total, baseUrl),
-              formValues: queryParams,
+              formValues: searchParams,
               backUrl,
             })
           }

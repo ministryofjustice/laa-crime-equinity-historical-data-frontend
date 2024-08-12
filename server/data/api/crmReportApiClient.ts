@@ -1,6 +1,7 @@
 import { CrmReportResponse, EqApiHeader } from '@eqApi'
 import RestClient from '../restClient'
 import config from '../../config'
+import logger from '../../../logger'
 
 type CrmApiPath = 'crm4' | 'crm5' | 'crm7' | 'crm14'
 
