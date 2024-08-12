@@ -1,6 +1,6 @@
 import { SearchResponse } from '../../../server/@types/searchEform'
 
-const getSearchByTypeResponse = (type: number, typeName: string): SearchResponse => {
+const getSearchByTypeResponse = (typeName: string): SearchResponse => {
   return {
     results: [
       {

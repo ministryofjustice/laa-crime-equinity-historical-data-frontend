@@ -29,7 +29,7 @@ export default {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
         },
-        jsonBody: getSearchByTypeResponse(type, typeName),
+        jsonBody: getSearchByTypeResponse(typeName),
       },
     }),
   stubCrm5Api: ({ usn }: { usn: number }): SuperAgentRequest =>
