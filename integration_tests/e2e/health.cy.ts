@@ -3,6 +3,7 @@ context('Healthcheck', () => {
     beforeEach(() => {
       cy.task('reset')
       cy.task('stubSdsHealth')
+      cy.task('stubEqHealth')
     })
 
     it('Health check page is visible and UP', () => {
@@ -22,6 +23,7 @@ context('Healthcheck', () => {
     beforeEach(() => {
       cy.task('reset')
       cy.task('stubSdsHealth', 500)
+      cy.task('stubEqHealth')
     })
 
     it('Health check page is visible and DOWN', () => {

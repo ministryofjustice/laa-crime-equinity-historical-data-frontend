@@ -49,7 +49,10 @@ function gatherCheckInfo(aggregateStatus: Record<string, unknown>, currentStatus
   return { ...aggregateStatus, [currentStatus.name]: { status: currentStatus.status, details: currentStatus.message } }
 }
 
-const apiChecks = [service('sdsApi', `${config.apis.sdsApi.url}/health`, config.apis.sdsApi.agent)]
+const apiChecks = [
+  service('eqApi', `${config.apis.eqApi.url}/actuator/health`, config.apis.eqApi.agent),
+  service('sdsApi', `${config.apis.sdsApi.url}/health`, config.apis.sdsApi.agent),
+]
 
 export default function healthCheck(
   applicationInfo: ApplicationInfo,

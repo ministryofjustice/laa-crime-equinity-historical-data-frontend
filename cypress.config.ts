@@ -4,8 +4,7 @@ import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-prepro
 import { defineConfig } from 'cypress'
 import { resetStubs } from './integration_tests/mockApis/wiremock'
 
-import crmApi from './integration_tests/mockApis/crmApi'
-import searchApi from './integration_tests/mockApis/searchApi'
+import eqApi from './integration_tests/mockApis/eqApi'
 import sdsApi from './integration_tests/mockApis/sdsApi'
 
 export default defineConfig({
@@ -34,8 +33,7 @@ export default defineConfig({
 
       on('task', {
         reset: resetStubs,
-        ...crmApi,
-        ...searchApi,
+        ...eqApi,
         ...sdsApi,
       })
       return config
