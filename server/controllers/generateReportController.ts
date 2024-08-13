@@ -44,6 +44,7 @@ export default class GenerateReportController {
           res.render(VIEW_PATH, {
             results: [],
             errors: reportErrors,
+            formValues: reportParams,
             backUrl: manageBackLink(req, CURRENT_URL),
           })
         } else {
