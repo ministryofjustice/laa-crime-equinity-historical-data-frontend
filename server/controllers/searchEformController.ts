@@ -19,11 +19,17 @@ export default class SearchEformController {
       const currentUrl = '/search-eform'
       const backUrl = manageBackLink(req, currentUrl)
 
-      if (!req.query.page) {
+      if (!req.query.page || req.query.fromBack) {
         const searchResults = req.session.searchResults || []
         const formValues = req.session.formValues || {}
+        const { paging } = req.session // Retrieve pagination data
+
+        const baseUrl = `/search-eform?${buildQueryString(formValues)}&`
+
         res.render(VIEW_PATH, {
           results: searchResults,
+          itemsTotal: paging?.itemsTotal || 0, // Ensure itemsTotal is retrieved
+          pagination: paging ? getPagination(paging.number + 1, paging.total, baseUrl) : undefined,
           formValues,
           backUrl,
         })
@@ -62,6 +68,7 @@ export default class SearchEformController {
             // Store search results and form values in session
             req.session.searchResults = results
             req.session.formValues = queryParams
+            req.session.paging = paging
 
             // Record the search page in the history
             manageBackLink(req, currentUrl)

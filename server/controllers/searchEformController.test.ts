@@ -31,6 +31,8 @@ describe('Search Eform Controller', () => {
       backUrl: '/',
       results: [],
       formValues: {},
+      itemsTotal: 0,
+      pagination: undefined,
     })
   })
 
@@ -44,6 +46,7 @@ describe('Search Eform Controller', () => {
           originatedDate: '2022-25-23',
           submittedDate: '2023-15-13',
           providerAccount: '1234AB',
+          providerName: 'Some Provider',
           status: 'Completed',
         },
       ],
@@ -75,6 +78,7 @@ describe('Search Eform Controller', () => {
           originatedDate: '2022-25-23',
           submittedDate: '2023-15-13',
           providerAccount: '1234AB',
+          providerName: 'Some Provider',
           status: 'Completed',
         },
       ],
