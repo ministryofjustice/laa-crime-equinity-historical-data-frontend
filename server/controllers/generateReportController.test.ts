@@ -1,6 +1,6 @@
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import type { NextFunction, Request, Response } from 'express'
-import { CrmReportResponse } from '@eqApi'
+import { CrmReportResponse } from '@crmReport'
 import CrmReportApiService from '../services/crmReportApiService'
 import GenerateReportController from './generateReportController'
 
@@ -59,7 +59,7 @@ const getCrmReportResponse = (): CrmReportResponse => {
       'Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number,Maat ID,Prison Law,Date Received,' +
       'Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit,Total Cost,Additional Expenditure,' +
       'Total Authority,Total Granted,Granting Caseworker\n' +
-      '031022/777,5001613,0D182J,ABELS,Joe modo,78543657,,No,2023-03-16,2023-03-16,Grant,a Psychiatrist,' +
+      '031022/777,123456789,1234AB,Some Firm,Some Client,999999999,,No,2023-03-16,2023-03-16,Grant,a Psychiatrist,' +
       'tyjtjtjt,4.0,50.0,Hour(s),200.0,0.0,200.0,200.0,Sym-G`',
   }
 }

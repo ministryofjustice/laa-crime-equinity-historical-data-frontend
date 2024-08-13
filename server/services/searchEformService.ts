@@ -10,24 +10,24 @@ export default class SearchEformService {
       const response = await this.searchApiClient.search(searchRequest)
       if (response.results.length === 0) {
         logger.error('No results returned by search API')
-        return addErrorsToResponse(500, 'No search results found')
+        return errorResponse(500, 'No search results found')
       }
-      return addCrmLinksToResponse(response)
+      return successResponse(response)
     } catch (error) {
       logger.error('Search API error', error)
-      return addErrorsToResponse(error.status, error.message)
+      return errorResponse(error.status, error.message)
     }
   }
 }
 
-const addErrorsToResponse = (status: number, message: string): SearchResponse => {
+const errorResponse = (status: number, message: string): SearchResponse => {
   return {
     results: [],
     error: { status, message },
   }
 }
 
-const addCrmLinksToResponse = (searchResponse: SearchResponse) => {
+const successResponse = (searchResponse: SearchResponse) => {
   const resultsWithLinks: Array<SearchResult> = searchResponse.results.map(result => {
     return { ...result, crmLink: getCrmLink(result) }
   })

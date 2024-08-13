@@ -1,4 +1,4 @@
-import { CrmReportResponse } from '@eqApi'
+import { CrmReportResponse } from '@crmReport'
 import CrmReportApiClient from '../data/api/crmReportApiClient'
 import CrmReportApiService from './crmReportApiService'
 

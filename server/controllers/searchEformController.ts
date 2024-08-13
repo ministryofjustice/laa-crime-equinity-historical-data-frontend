@@ -6,6 +6,7 @@ import getPagination from '../utils/pagination'
 import { buildQueryString } from '../utils/utils'
 import getProfileAcceptedTypes from '../utils/userProfileGroups'
 import manageBackLink from '../utils/crmBackLink'
+import { getErrors } from '../utils/errorDisplayHelper'
 
 const CURRENT_URL = '/search-eform'
 const SEARCH_PAGE_SIZE = 10
@@ -51,12 +52,12 @@ export default class SearchEformController {
           res.render(VIEW_PATH, { results: [], errors: validationErrors, formValues: searchParams, backUrl })
         } else {
           // perform search
-          const searchRequest = buildSearchRequest(searchParams, getProfileAcceptedTypes(res))
+          const searchRequest = this.buildSearchRequest(searchParams, getProfileAcceptedTypes(res))
           const searchResponse = await this.searchEformService.search(searchRequest)
 
           if (searchResponse.error) {
             // render with errors for search API error
-            const searchErrors = getSearchErrors(searchResponse.error)
+            const searchErrors = getErrors(searchResponse.error, this.getErrorMessage)
             res.render(VIEW_PATH, { results: [], errors: searchErrors, formValues: searchParams, backUrl })
           } else {
             // render with search results
@@ -103,50 +104,35 @@ export default class SearchEformController {
       res.redirect(302, `/search-eform?page=1${queryString ? `&${queryString}` : ''}`)
     }
   }
-}
 
-const getSearchErrors = (error: SearchError): SearchValidationErrors => {
-  return buildSearchValidationErrors(getErrorMessage(error.status))
-}
-
-const buildSearchValidationErrors = (errorMessage: string): SearchValidationErrors => {
-  return {
-    list: [
-      {
-        href: '#',
-        text: errorMessage,
-      },
-    ],
+  private getErrorMessage(errorStatus: number): string {
+    switch (errorStatus) {
+      case 401:
+      case 403:
+        return 'Not authorised to search'
+      case 404:
+        return 'No search result found'
+      default:
+        return 'Something went wrong with the search'
+    }
   }
-}
 
-const getErrorMessage = (errorStatus: number): string => {
-  switch (errorStatus) {
-    case 401:
-    case 403:
-      return 'Not authorised to search'
-    case 404:
-      return 'No search result found'
-    default:
-      return 'Something went wrong with the search'
+  private buildSearchRequest(queryParams: Record<string, string>, profileAcceptedTypes: string): SearchRequest {
+    return {
+      usn: this.undefinedIfEmpty(queryParams.usn),
+      type: this.undefinedIfEmpty(queryParams.type) && Number(queryParams.type),
+      supplierAccountNumber: this.undefinedIfEmpty(queryParams.supplierAccountNumber),
+      clientName: this.undefinedIfEmpty(queryParams.clientName),
+      clientDOB: this.undefinedIfEmpty(queryParams.clientDOB),
+      startDate: this.undefinedIfEmpty(queryParams.startDate),
+      endDate: this.undefinedIfEmpty(queryParams.endDate),
+      page: Number(queryParams.page) - 1, // search api page number starts from 0
+      pageSize: SEARCH_PAGE_SIZE,
+      profileAcceptedTypes,
+    }
   }
-}
 
-const buildSearchRequest = (queryParams: Record<string, string>, profileAcceptedTypes: string): SearchRequest => {
-  return {
-    usn: undefinedIfEmpty(queryParams.usn),
-    type: undefinedIfEmpty(queryParams.type) && Number(queryParams.type),
-    supplierAccountNumber: undefinedIfEmpty(queryParams.supplierAccountNumber),
-    clientName: undefinedIfEmpty(queryParams.clientName),
-    clientDOB: undefinedIfEmpty(queryParams.clientDOB),
-    startDate: undefinedIfEmpty(queryParams.startDate),
-    endDate: undefinedIfEmpty(queryParams.endDate),
-    page: Number(queryParams.page) - 1, // search api page number starts from 0
-    pageSize: SEARCH_PAGE_SIZE,
-    profileAcceptedTypes,
+  private undefinedIfEmpty(field: string): string {
+    return field || undefined
   }
-}
-
-const undefinedIfEmpty = (field: string): string => {
-  return field || undefined
 }

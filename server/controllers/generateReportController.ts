@@ -1,9 +1,9 @@
 import type { Request, RequestHandler, Response } from 'express'
-import { ReportError } from '@eqApi'
 import getProfileAcceptedTypes from '../utils/userProfileGroups'
 import CrmReportApiService from '../services/crmReportApiService'
-import validateReportParams, { ReportValidationErrors } from '../utils/generateReportValidation'
+import validateReportParams from '../utils/generateReportValidation'
 import manageBackLink from '../utils/crmBackLink'
+import { getErrors } from '../utils/errorDisplayHelper'
 
 const CURRENT_URL = '/generate-report'
 const VIEW_PATH = 'pages/generateReport'
@@ -40,46 +40,30 @@ export default class GenerateReportController {
           getProfileAcceptedTypes(res),
         )
         if (reportResponse.error) {
-          const reportErrors = getReportErrors(reportResponse.error)
+          const errors = getErrors(reportResponse.error, this.getErrorMessage)
           res.render(VIEW_PATH, {
             results: [],
-            errors: reportErrors,
+            errors,
             formValues: reportParams,
             backUrl: manageBackLink(req, CURRENT_URL),
           })
         } else {
           res.setHeader('Content-Disposition', `attachment; filename=crm4Report.csv`)
           res.send(reportResponse.text)
-          res.redirect(302, '/generate-report')
         }
       }
     }
   }
-}
 
-const buildReportValidationErrors = (errorMessage: string): ReportValidationErrors => {
-  return {
-    list: [
-      {
-        href: '#',
-        text: errorMessage,
-      },
-    ],
-  }
-}
-
-const getReportErrors = (error: ReportError): ReportValidationErrors => {
-  return buildReportValidationErrors(getErrorMessage(error.status))
-}
-
-const getErrorMessage = (errorStatus: number): string => {
-  switch (errorStatus) {
-    case 401:
-    case 403:
-      return 'Not authorised to generate report'
-    case 404:
-      return 'No report data found'
-    default:
-      return 'Something went wrong with the generate report'
+  private getErrorMessage(errorStatus: number): string {
+    switch (errorStatus) {
+      case 401:
+      case 403:
+        return 'Not authorised to generate report'
+      case 404:
+        return 'No report data found'
+      default:
+        return 'Something went wrong with generate report'
+    }
   }
 }
