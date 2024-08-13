@@ -18,11 +18,7 @@ const schema = Joi.object({
     'string.max': 'USN must be 10 digits or less',
     'string.pattern.base': 'USN must be numeric',
   }),
-  type: Joi.string()
-    .valid('1', '4', '5', '6', '7')
-    .optional()
-    .allow('')
-    .messages({ 'any.only': 'Invalid type specified' }),
+  type: Joi.string().valid('1', '4', '5', '6').optional().allow('').messages({ 'any.only': 'Invalid type specified' }),
   supplierAccountNumber: Joi.string().min(4).max(6).optional().allow('').messages({
     'string.min': 'Supplier account number must be at least 4 characters',
     'string.max': 'Supplier account number must be 6 characters or less',

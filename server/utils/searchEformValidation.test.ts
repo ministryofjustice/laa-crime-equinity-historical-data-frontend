@@ -1,7 +1,7 @@
-import validateSearchEform from './searchEformValidation'
+import validateSearchParams from './searchEformValidation'
 
 describe('Search Eform Validation', () => {
-  it('should validate form fields', () => {
+  it('should validate search parameters', () => {
     const formData = {
       usn: '123456789',
       supplierAccountNumber: '1234AB',
@@ -11,12 +11,12 @@ describe('Search Eform Validation', () => {
       endDate: '2023-11-02',
     }
 
-    const result = validateSearchEform(formData)
+    const result = validateSearchParams(formData)
 
     expect(result).toBeNull()
   })
 
-  it('should return error for an empty form', () => {
+  it('should return error for empty search parameters', () => {
     const formData = {
       usn: '',
       supplierAccountNumber: '',
@@ -26,7 +26,7 @@ describe('Search Eform Validation', () => {
       endDate: '',
     }
 
-    const result = validateSearchEform(formData)
+    const result = validateSearchParams(formData)
 
     expect(result).toEqual({
       list: [
@@ -56,7 +56,7 @@ describe('Search Eform Validation', () => {
       [fieldName]: fieldValue,
     }
 
-    const result = validateSearchEform(formData)
+    const result = validateSearchParams(formData)
 
     expect(result).toEqual({
       list: [
@@ -82,7 +82,7 @@ describe('Search Eform Validation', () => {
       usn: '123456789',
     }
 
-    const result = validateSearchEform(formData)
+    const result = validateSearchParams(formData)
 
     expect(result).toEqual({
       list: [
@@ -109,7 +109,7 @@ describe('Search Eform Validation', () => {
       endDate: '2000-11-02',
     }
 
-    const result = validateSearchEform(formData)
+    const result = validateSearchParams(formData)
 
     expect(result).toEqual({
       list: [

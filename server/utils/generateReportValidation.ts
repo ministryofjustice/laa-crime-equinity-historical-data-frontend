@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { differenceInDays, parseISO } from 'date-fns'
+import { differenceInDays } from 'date-fns'
 import { SearchValidationErrors } from './searchEformValidation'
 
 type ErrorMessage = Record<string, { text: string }>
@@ -15,7 +15,11 @@ export type ReportValidationErrors = {
 }
 
 const schema = Joi.object({
-  crmType: Joi.string().required().messages({ 'string.empty': 'CRM type must be selected' }),
+  crmType: Joi.string()
+    .required()
+    .empty('')
+    .valid('crm4', 'crm5', 'crm14')
+    .messages({ 'any.required': 'CRM type must be selected', 'any.only': 'Invalid CRM type specified' }),
   startDate: Joi.date().required().iso().empty('').messages({
     'any.required': 'Start date must be specified',
     'date.format': 'Start date must be a valid date',
@@ -24,6 +28,7 @@ const schema = Joi.object({
     'any.required': 'End date must be specified',
     'date.format': 'End date must be a valid date',
     'date.min': 'Your End date cannot be earlier than your Start date',
+    'any.ref': 'End date requires a valid Start date',
   }),
 })
   .options({ allowUnknown: true, abortEarly: false })
@@ -54,8 +59,10 @@ const buildErrors = (error: Joi.ValidationError): SearchValidationErrors => {
   const messages: Record<string, { text: string }> = {}
   error.details.forEach(errorDetail => {
     const fieldName = errorDetail.path[0]
-    list.push({ href: `#${fieldName}`, text: errorDetail.message })
-    messages[fieldName] = { text: errorDetail.message }
+    list.push({ href: `#${fieldName || ''}`, text: errorDetail.message })
+    if (fieldName) {
+      messages[fieldName] = { text: errorDetail.message }
+    }
   })
   return { list, messages }
 }
