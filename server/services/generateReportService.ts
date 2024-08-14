@@ -2,7 +2,7 @@ import { CrmReportResponse } from '@crmReport'
 import CrmReportApiClient from '../data/api/crmReportApiClient'
 import logger from '../../logger'
 
-export default class CrmReportApiService {
+export default class GenerateReportService {
   constructor(private readonly crmReportApiClient: CrmReportApiClient) {}
 
   async getCrmReport(startDate: string, endDate: string, profileAcceptedTypes: string): Promise<CrmReportResponse> {

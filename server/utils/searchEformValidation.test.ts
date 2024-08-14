@@ -1,8 +1,9 @@
 import validateSearchParams from './searchEformValidation'
+import validateReportParams from './generateReportValidation'
 
 describe('Search Eform Validation', () => {
   it('should validate search parameters', () => {
-    const formData = {
+    const searchParams: Record<string, string> = {
       usn: '123456789',
       supplierAccountNumber: '1234AB',
       clientName: 'John Doe',
@@ -11,13 +12,13 @@ describe('Search Eform Validation', () => {
       endDate: '2023-11-02',
     }
 
-    const result = validateSearchParams(formData)
+    const result = validateSearchParams(searchParams)
 
     expect(result).toBeNull()
   })
 
   it('should return error for empty search parameters', () => {
-    const formData = {
+    const searchParams: Record<string, string> = {
       usn: '',
       supplierAccountNumber: '',
       clientName: '',
@@ -26,7 +27,7 @@ describe('Search Eform Validation', () => {
       endDate: '',
     }
 
-    const result = validateSearchParams(formData)
+    const result = validateSearchParams(searchParams)
 
     expect(result).toEqual({
       list: [
@@ -77,12 +78,12 @@ describe('Search Eform Validation', () => {
     ['Invalid page specified', 'page', '0'],
     ['Invalid page specified', 'page', 'w'],
   ])('should return "%s" error for %s = %s', (errorMessage: string, fieldName: string, fieldValue: string) => {
-    const formData = {
+    const searchParams: Record<string, string> = {
       [fieldName]: fieldValue,
       usn: '123456789',
     }
 
-    const result = validateSearchParams(formData)
+    const result = validateSearchParams(searchParams)
 
     expect(result).toEqual({
       list: [
@@ -100,7 +101,7 @@ describe('Search Eform Validation', () => {
   })
 
   it('should return multiple errors', () => {
-    const formData = {
+    const searchParams: Record<string, string> = {
       usn: 'abcd',
       supplierAccountNumber: '12A',
       clientName: 'J',
@@ -109,7 +110,7 @@ describe('Search Eform Validation', () => {
       endDate: '2000-11-02',
     }
 
-    const result = validateSearchParams(formData)
+    const result = validateSearchParams(searchParams)
 
     expect(result).toEqual({
       list: [
@@ -125,6 +126,32 @@ describe('Search Eform Validation', () => {
         supplierAccountNumber: { text: 'Supplier account number must be at least 4 characters' },
         usn: { text: 'USN must be numeric' },
         endDate: { text: 'Your End date cannot be earlier than your Start date' },
+      },
+    })
+  })
+
+  it('should return errors for missing Start Date', () => {
+    const searchParams: Record<string, string> = {
+      usn: '123456789',
+      supplierAccountNumber: '1234AB',
+      clientName: 'John Doe',
+      clientDOB: '1960-02-12',
+      startDate: '',
+      endDate: '2023-11-02',
+    }
+    const result = validateSearchParams(searchParams)
+
+    expect(result).toEqual({
+      list: [
+        {
+          href: '#endDate',
+          text: 'End date requires a valid Start date',
+        },
+      ],
+      messages: {
+        endDate: {
+          text: 'End date requires a valid Start date',
+        },
       },
     })
   })

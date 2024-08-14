@@ -27,6 +27,7 @@ const schema = Joi.object({
   endDate: Joi.date().iso().min(Joi.ref('startDate')).optional().allow('').messages({
     'date.format': 'End date must be a valid date',
     'date.min': 'Your End date cannot be earlier than your Start date',
+    'any.ref': 'End date requires a valid Start date',
   }),
   page: Joi.number()
     .min(1)

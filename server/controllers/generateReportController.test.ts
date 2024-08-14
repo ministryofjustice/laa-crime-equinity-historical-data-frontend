@@ -1,16 +1,16 @@
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import type { NextFunction, Request, Response } from 'express'
 import { CrmReportResponse } from '@crmReport'
-import CrmReportApiService from '../services/crmReportApiService'
+import GenerateReportService from '../services/generateReportService'
 import GenerateReportController from './generateReportController'
 
-jest.mock('../services/crmReportApiService')
+jest.mock('../services/generateReportService')
 jest.mock('../utils/userProfileGroups', () => {
   return jest.fn().mockReturnValue('1,4,5,6')
 })
 
 describe('generateReportController', () => {
-  let mockCrmReportApiService: jest.Mocked<CrmReportApiService>
+  let mockGenerateReportService: jest.Mocked<GenerateReportService>
   let request: DeepMocked<Request>
   let response: DeepMocked<Response>
   const next: DeepMocked<NextFunction> = createMock<NextFunction>({})
@@ -18,11 +18,11 @@ describe('generateReportController', () => {
   beforeEach(() => {
     request = createMock<Request>({})
     response = createMock<Response>({})
-    mockCrmReportApiService = new CrmReportApiService(null) as jest.Mocked<CrmReportApiService>
+    mockGenerateReportService = new GenerateReportService(null) as jest.Mocked<GenerateReportService>
   })
 
   it('should render generate report page', async () => {
-    const generateReportController = new GenerateReportController(mockCrmReportApiService)
+    const generateReportController = new GenerateReportController(mockGenerateReportService)
     const requestHandler = generateReportController.show()
 
     await requestHandler(request, response, next)
@@ -33,9 +33,9 @@ describe('generateReportController', () => {
   it('should download the requested CRM report', async () => {
     const crmReportResponse = getCrmReportResponse()
 
-    mockCrmReportApiService.getCrmReport.mockResolvedValue(crmReportResponse)
+    mockGenerateReportService.getCrmReport.mockResolvedValue(crmReportResponse)
 
-    const generateReportController = new GenerateReportController(mockCrmReportApiService)
+    const generateReportController = new GenerateReportController(mockGenerateReportService)
     const requestHandler = generateReportController.submit()
     request.body = {
       crmType: 'crm4',
@@ -48,11 +48,11 @@ describe('generateReportController', () => {
     expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crm4Report.csv')
     expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
 
-    expect(mockCrmReportApiService.getCrmReport).toHaveBeenCalledWith('2023-03-01', '2023-03-30', '1,4,5,6')
+    expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith('2023-03-01', '2023-03-30', '1,4,5,6')
   })
 
   it('should render generate report page with field errors', async () => {
-    const generateReportController = new GenerateReportController(mockCrmReportApiService)
+    const generateReportController = new GenerateReportController(mockGenerateReportService)
     const requestHandler = generateReportController.submit()
     request.body = {
       crmType: '',
@@ -100,9 +100,9 @@ describe('generateReportController', () => {
       },
     }
 
-    mockCrmReportApiService.getCrmReport.mockResolvedValue(crmReportResponse)
+    mockGenerateReportService.getCrmReport.mockResolvedValue(crmReportResponse)
 
-    const generateReportController = new GenerateReportController(mockCrmReportApiService)
+    const generateReportController = new GenerateReportController(mockGenerateReportService)
     const requestHandler = generateReportController.submit()
     request.body = {
       crmType: 'crm4',

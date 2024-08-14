@@ -1,6 +1,6 @@
 import type { Request, RequestHandler, Response } from 'express'
 import getProfileAcceptedTypes from '../utils/userProfileGroups'
-import CrmReportApiService from '../services/crmReportApiService'
+import GenerateReportService from '../services/generateReportService'
 import validateReportParams from '../utils/generateReportValidation'
 import manageBackLink from '../utils/crmBackLink'
 import { buildErrors } from '../utils/errorDisplayHelper'
@@ -9,7 +9,7 @@ const CURRENT_URL = '/generate-report'
 const VIEW_PATH = 'pages/generateReport'
 
 export default class GenerateReportController {
-  constructor(private readonly crmReportApiService: CrmReportApiService) {}
+  constructor(private readonly generateReportService: GenerateReportService) {}
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
@@ -34,7 +34,7 @@ export default class GenerateReportController {
           backUrl: manageBackLink(req, CURRENT_URL),
         })
       } else {
-        const reportResponse = await this.crmReportApiService.getCrmReport(
+        const reportResponse = await this.generateReportService.getCrmReport(
           req.body.startDate,
           req.body.endDate,
           getProfileAcceptedTypes(res),
