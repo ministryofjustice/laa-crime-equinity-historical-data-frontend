@@ -41,7 +41,6 @@ describe('generateReportController', () => {
       crmType: 'crm4',
       startDate: '2023-03-01',
       endDate: '2023-03-30',
-      profileAcceptedTypes: '1,4,5,6',
     }
 
     await requestHandler(request, response, next)
@@ -50,6 +49,86 @@ describe('generateReportController', () => {
     expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
 
     expect(mockCrmReportApiService.getCrmReport).toHaveBeenCalledWith('2023-03-01', '2023-03-30', '1,4,5,6')
+  })
+
+  it('should render generate report page with field errors', async () => {
+    const generateReportController = new GenerateReportController(mockCrmReportApiService)
+    const requestHandler = generateReportController.submit()
+    request.body = {
+      crmType: '',
+      startDate: '2023-03-01',
+      endDate: '2023-03-30',
+    }
+
+    await requestHandler(request, response, next)
+
+    expect(response.render).toHaveBeenCalledWith('pages/generateReport', {
+      results: [],
+      errors: {
+        list: [
+          {
+            href: '#crmType',
+            text: 'CRM type must be selected',
+          },
+        ],
+        messages: {
+          crmType: {
+            text: 'CRM type must be selected',
+          },
+        },
+      },
+      backUrl: '/',
+      formValues: {
+        crmType: '',
+        startDate: '2023-03-01',
+        endDate: '2023-03-30',
+      },
+    })
+  })
+
+  it.each([
+    ['Not authorised to generate report', 401],
+    ['Not authorised to generate report', 403],
+    ['No report data found', 404],
+    ['Something went wrong with generate report', 500],
+  ])('should render generate page with "%s" error for status %s', async (errorMessage, errorStatus) => {
+    const crmReportResponse: CrmReportResponse = {
+      text: null,
+      error: {
+        status: errorStatus,
+        message: 'error',
+      },
+    }
+
+    mockCrmReportApiService.getCrmReport.mockResolvedValue(crmReportResponse)
+
+    const generateReportController = new GenerateReportController(mockCrmReportApiService)
+    const requestHandler = generateReportController.submit()
+    request.body = {
+      crmType: 'crm4',
+      startDate: '2023-03-01',
+      endDate: '2023-03-30',
+    }
+
+    await requestHandler(request, response, next)
+
+    expect(response.render).toHaveBeenCalledWith('pages/generateReport', {
+      results: [],
+      errors: {
+        list: [
+          {
+            href: '#',
+            text: errorMessage,
+          },
+        ],
+      },
+      backUrl: '/',
+      formValues: {
+        crmType: 'crm4',
+        startDate: '2023-03-01',
+        endDate: '2023-03-30',
+      },
+    })
   })
 })
 
