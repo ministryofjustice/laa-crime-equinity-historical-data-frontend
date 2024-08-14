@@ -2,86 +2,98 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
-{% set pageTitle = applicationName + " - Home" %}
+{% set pageTitle = applicationName + " - Generate Reports" %}
 {% set mainClasses = "app-container govuk-body" %}
 
-  {% block content %}
-      <div class="govuk-width-container">
-          <main class="govuk-main-wrapper">
-              <h1 class="govuk-heading-l">Generate reports</h1>
-              <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
-              <span class="govuk-caption-m govuk-!-margin-bottom-4">To generate reports, choose the eForm type that you would like to generate and attribute it a date range. </span>
+{% block content %}
+    <div class="govuk-width-container">
+        <main class="govuk-main-wrapper">
 
-              <div class="form-background govuk-!-padding-top-4 govuk-!-padding-left-4">
-                  <form action="/generate-report" method="POST">
-                      <div class="govuk-grid-row">
-                          <div class="govuk-grid-column-one-half">
+            {% if downloadUrl %}
+                <input type="hidden" id="download-url" value="{{ downloadUrl }}">
+            {% endif %}
 
-                              {{ govukSelect({
-                                  id: "eform_type",
-                                  name: "eform_type",
-                                  label: {
-                                      text: "Eform type"
-                                  },
-                                  items: [
-                                      {
-                                          value: "crm4",
-                                          text: "CRM 4"
-                                      },
-                                      {
-                                          value: "crm5",
-                                          text: "CRM 5"
-                                      },
-                                      {
-                                          value: "crm7",
-                                          text: "CRM 7"
-                                      },
-                                      {
-                                          value: "crm14",
-                                          text: "CRM 14"
-                                      }
-                                  ]
-                              }) }}
-                          </div>
-                      </div>
-                      <div class="govuk-grid-row">
-                          <div class="govuk-grid-column-one-quarter">
-                              {{ govukInput({
-                                  label: {
-                                      text: "Start date"
-                                  },
-                                  id: "start-date",
-                                  name: "startDate",
-                                  type: "date"
-                              }) }}
-                          </div>
-                          <div class="govuk-grid-column-one-quarter">
-                              {{ govukInput({
-                                  label: {
-                                      text: "End date"
-                                  },
-                                  classes: "govuk-!-width-full",
-                                  id: "end-date",
-                                  name: "endDate",
-                                  type: "date"
-                              }) }}
-                          </div>
-                      </div>
-                      <div class="govuk-grid-row">
-                          <div class="govuk-grid-column-full">
-                              <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
-                              {{ govukButton({
-                                  action: '#',
-                                  method: 'post',
-                                  text: 'Download report'
-                              }) }}
-                          </div>
-                      </div>
-                  </form>
-              </div>
-          </main>
-      </div>
+            <!-- Display success message -->
+            {% if successMessage %}
+                {{ govukNotificationBanner({
+                    titleText: "Success",
+                    text: successMessage,
+                    type: "success"
+                }) }}
+            {% endif %}
 
+            <!-- Display error summary -->
+            {% if errorSummary %}
+                {{ govukErrorSummary({
+                    titleText: "There is a problem",
+                    errorList: errorSummary
+                }) }}
+            {% endif %}
 
-  {% endblock %}
+            <h1 class="govuk-heading-l">Generate reports</h1>
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
+            <span class="govuk-caption-m govuk-!-margin-bottom-4">To generate reports, choose the eForm type that you would like to generate and attribute it a date range.</span>
+            <!-- Form for generating report -->
+            <div class="form-background govuk-!-padding-top-4 govuk-!-padding-left-4">
+                <form action="/generate-report" method="POST">
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-half">
+                            {{ govukSelect({
+                                id: "eform_type",
+                                name: "eform_type",
+                                label: {
+                                    text: "Eform type"
+                                },
+                                items: [
+                                    { value: "crm4", text: "CRM 4" },
+                                    { value: "crm5", text: "CRM 5" },
+                                    { value: "crm7", text: "CRM 7" },
+                                    { value: "crm14", text: "CRM 14" }
+                                ],
+                                value: formData.eform_type
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-quarter">
+                            {{ govukInput({
+                                label: { text: "Start date" },
+                                id: "start-date",
+                                name: "startDate",
+                                type: "date",
+                                value: formData.startDate,
+                                errorMessage: errors.startDate
+                            }) }}
+                        </div>
+                        <div class="govuk-grid-column-one-quarter">
+                            {{ govukInput({
+                                label: { text: "End date" },
+                                id: "end-date",
+                                name: "endDate",
+                                type: "date",
+                                value: formData.startDate,
+                                errorMessage: errors.endDate
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-full">
+                            <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
+                            {{ govukButton({
+                                action: '#',
+                                method: 'post',
+                                text: 'Download report'
+                            }) }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+{% block pageScripts %}
+    <script src="/assets/triggerDownload.js"></script>
+{% endblock %}
