@@ -4,7 +4,7 @@ import SearchEformService from '../services/searchEformService'
 import validateSearchParams from '../utils/searchEformValidation'
 import getPagination from '../utils/pagination'
 import { buildQueryString } from '../utils/utils'
-import getProfileAcceptedTypes from '../utils/userProfileGroups'
+import { getProfileAcceptedTypes } from '../utils/userProfileGroups'
 import manageBackLink from '../utils/crmBackLink'
 import { buildErrors } from '../utils/errorDisplayHelper'
 

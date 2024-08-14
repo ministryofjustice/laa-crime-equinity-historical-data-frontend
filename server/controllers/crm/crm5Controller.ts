@@ -3,7 +3,7 @@ import { Crm5Response } from '@crm5'
 import CrmApiService from '../../services/crmApiService'
 import CrmDisplayService from '../../services/crmDisplayService'
 import manageBackLink from '../../utils/crmBackLink'
-import getProfileAcceptedTypes from '../../utils/userProfileGroups'
+import { getProfileAcceptedTypes } from '../../utils/userProfileGroups'
 
 export default class Crm5Controller {
   constructor(
