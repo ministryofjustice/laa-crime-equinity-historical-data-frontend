@@ -22,7 +22,7 @@ describe('Generate Report Validation', () => {
       'endDate',
       { crmType: 'crm4', startDate: '2024-01-01', endDate: '2023-12-01' },
     ],
-  ])('should return error for %s', (errorMessage: string, fieldName: string, reportParams: Record<string, string>) => {
+  ])('should return "%s" error', (errorMessage: string, fieldName: string, reportParams: Record<string, string>) => {
     const result = validateReportParams(reportParams)
 
     expect(result).toEqual({
@@ -37,6 +37,25 @@ describe('Generate Report Validation', () => {
           text: errorMessage,
         },
       },
+    })
+  })
+
+  it('should return "Date range cannot not be more than 1 month" error', () => {
+    const reportParams: Record<string, string> = {
+      crmType: 'crm4',
+      startDate: '2024-01-01',
+      endDate: '2024-04-01',
+    }
+    const result = validateReportParams(reportParams)
+
+    expect(result).toEqual({
+      list: [
+        {
+          href: `#`,
+          text: 'Date range cannot not be more than 1 month',
+        },
+      ],
+      messages: {},
     })
   })
 
@@ -67,25 +86,6 @@ describe('Generate Report Validation', () => {
           text: 'Start date must be specified',
         },
       },
-    })
-  })
-
-  it('should return "Date range cannot not be more than 1 month" errors', () => {
-    const reportParams: Record<string, string> = {
-      crmType: 'crm4',
-      startDate: '2024-01-01',
-      endDate: '2024-04-01',
-    }
-    const result = validateReportParams(reportParams)
-
-    expect(result).toEqual({
-      list: [
-        {
-          href: `#`,
-          text: 'Date range cannot not be more than 1 month',
-        },
-      ],
-      messages: {},
     })
   })
 

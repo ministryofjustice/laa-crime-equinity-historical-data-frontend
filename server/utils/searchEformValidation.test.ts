@@ -1,5 +1,4 @@
 import validateSearchParams from './searchEformValidation'
-import validateReportParams from './generateReportValidation'
 
 describe('Search Eform Validation', () => {
   it('should validate search parameters', () => {
@@ -53,11 +52,11 @@ describe('Search Eform Validation', () => {
     ['Start date must be a valid date', 'startDate', '5555-55-55'],
     ['End date must be a valid date', 'endDate', '5555-55-55'],
   ])('should return "%s" error for %s = %s', (errorMessage: string, fieldName: string, fieldValue: string) => {
-    const formData = {
+    const searchParams: Record<string, string> = {
       [fieldName]: fieldValue,
     }
 
-    const result = validateSearchParams(formData)
+    const result = validateSearchParams(searchParams)
 
     expect(result).toEqual({
       list: [
