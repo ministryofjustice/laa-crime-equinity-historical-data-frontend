@@ -1,18 +1,6 @@
 import Joi from 'joi'
 import { differenceInDays } from 'date-fns'
-import { SearchValidationErrors } from './searchEformValidation'
-
-type ErrorMessage = Record<string, { text: string }>
-
-type ErrorSummary = {
-  href: string
-  text: string
-}
-
-export type ReportValidationErrors = {
-  list: Array<ErrorSummary>
-  messages?: ErrorMessage
-}
+import { buildValidationErrors, Errors } from './errorDisplayHelper'
 
 const schema = Joi.object({
   crmType: Joi.string()
@@ -42,27 +30,11 @@ const schema = Joi.object({
   })
   .message('Date range cannot not be more than 1 month')
 
-export default function validateReportParams(params: Record<string, string>): ReportValidationErrors | null {
+export default function validateReportParams(params: Record<string, string>): Errors {
   const { error } = schema.validate(params)
   if (error?.details) {
-    return buildErrors(error)
+    return buildValidationErrors(error)
   }
 
   return null
-}
-
-const buildErrors = (error: Joi.ValidationError): SearchValidationErrors => {
-  const list: Array<{
-    href: string
-    text: string
-  }> = []
-  const messages: Record<string, { text: string }> = {}
-  error.details.forEach(errorDetail => {
-    const fieldName = errorDetail.path[0]
-    list.push({ href: `#${fieldName || ''}`, text: errorDetail.message })
-    if (fieldName) {
-      messages[fieldName] = { text: errorDetail.message }
-    }
-  })
-  return { list, messages }
 }

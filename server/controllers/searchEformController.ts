@@ -1,12 +1,12 @@
 import type { Request, RequestHandler, Response } from 'express'
-import type { SearchRequest, SearchError } from '@searchEform'
+import type { SearchRequest } from '@searchEform'
 import SearchEformService from '../services/searchEformService'
-import validateSearchParams, { SearchValidationErrors } from '../utils/searchEformValidation'
+import validateSearchParams from '../utils/searchEformValidation'
 import getPagination from '../utils/pagination'
 import { buildQueryString } from '../utils/utils'
 import getProfileAcceptedTypes from '../utils/userProfileGroups'
 import manageBackLink from '../utils/crmBackLink'
-import { getErrors } from '../utils/errorDisplayHelper'
+import { buildErrors } from '../utils/errorDisplayHelper'
 
 const CURRENT_URL = '/search-eform'
 const SEARCH_PAGE_SIZE = 10
@@ -57,7 +57,7 @@ export default class SearchEformController {
 
           if (searchResponse.error) {
             // render with errors for search API error
-            const searchErrors = getErrors(searchResponse.error, this.getErrorMessage)
+            const searchErrors = buildErrors(searchResponse.error, this.getErrorMessage)
             res.render(VIEW_PATH, { results: [], errors: searchErrors, formValues: searchParams, backUrl })
           } else {
             // render with search results

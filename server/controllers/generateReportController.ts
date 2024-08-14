@@ -3,7 +3,7 @@ import getProfileAcceptedTypes from '../utils/userProfileGroups'
 import CrmReportApiService from '../services/crmReportApiService'
 import validateReportParams from '../utils/generateReportValidation'
 import manageBackLink from '../utils/crmBackLink'
-import { getErrors } from '../utils/errorDisplayHelper'
+import { buildErrors } from '../utils/errorDisplayHelper'
 
 const CURRENT_URL = '/generate-report'
 const VIEW_PATH = 'pages/generateReport'
@@ -40,7 +40,7 @@ export default class GenerateReportController {
           getProfileAcceptedTypes(res),
         )
         if (reportResponse.error) {
-          const errors = getErrors(reportResponse.error, this.getErrorMessage)
+          const errors = buildErrors(reportResponse.error, this.getErrorMessage)
           res.render(VIEW_PATH, {
             results: [],
             errors,
@@ -48,7 +48,7 @@ export default class GenerateReportController {
             backUrl: manageBackLink(req, CURRENT_URL),
           })
         } else {
-          res.setHeader('Content-Disposition', `attachment; filename=crm4Report.csv`)
+          res.setHeader('Content-Disposition', 'attachment; filename=crm4Report.csv')
           res.send(reportResponse.text)
         }
       }
