@@ -2,16 +2,27 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "../components/backLink.njk" import backLink %}
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
 
   {% block content %}
       <div class="govuk-width-container">
+          {{ backLink(backUrl) }}
           <main class="govuk-main-wrapper">
+
+              {% if errors.list | length %}
+                  {{ govukErrorSummary({
+                      titleText: "There is a problem",
+                      errorList: errors.list
+                  }) }}
+              {% endif %}
+
               <h1 class="govuk-heading-l">Generate reports</h1>
               <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
-              <span class="govuk-caption-m govuk-!-margin-bottom-4">To generate reports, choose the eForm type that you would like to generate and attribute it a date range. </span>
+              <span class="govuk-caption-m govuk-!-margin-bottom-4">To generate reports, choose the CRM type that you would like to generate and attribute it a date range. </span>
 
               <div class="form-background govuk-!-padding-top-4 govuk-!-padding-left-4">
                   <form action="/generate-report" method="POST">
@@ -19,12 +30,19 @@
                           <div class="govuk-grid-column-one-half">
 
                               {{ govukSelect({
-                                  id: "eform_type",
-                                  name: "eform_type",
+                                  id: "crmType",
+                                  name: "crmType",
+                                  value: formValues.crmType,
+                                  errorMessage: errors.messages.crmType,
                                   label: {
-                                      text: "Eform type"
+                                      text: "CRM type"
                                   },
                                   items: [
+                                      {
+                                          value: "",
+                                          text: "Choose CRM type",
+                                          selected: true
+                                      },
                                       {
                                           value: "crm4",
                                           text: "CRM 4"
@@ -51,9 +69,11 @@
                                   label: {
                                       text: "Start date"
                                   },
-                                  id: "start-date",
+                                  id: "startDate",
                                   name: "startDate",
-                                  type: "date"
+                                  value: formValues.startDate,
+                                  type: "date",
+                                  errorMessage: errors.messages.startDate
                               }) }}
                           </div>
                           <div class="govuk-grid-column-one-quarter">
@@ -62,9 +82,11 @@
                                       text: "End date"
                                   },
                                   classes: "govuk-!-width-full",
-                                  id: "end-date",
+                                  id: "endDate",
                                   name: "endDate",
-                                  type: "date"
+                                  value: formValues.endDate,
+                                  type: "date",
+                                  errorMessage: errors.messages.endDate
                               }) }}
                           </div>
                       </div>

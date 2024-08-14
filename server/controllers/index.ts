@@ -7,7 +7,7 @@ import GenerateReportController from './generateReportController'
 export const controllers = (services: Services) => {
   const downloadEvidenceController = new DownloadEvidenceController(services.downloadEvidenceService)
   const searchEformController = new SearchEformController(services.searchEformService)
-  const generateReportController = new GenerateReportController(services.crmReportApiService)
+  const generateReportController = new GenerateReportController(services.generateReportService)
   return { downloadEvidenceController, generateReportController, searchEformController, ...crmControllers(services) }
 }
 
