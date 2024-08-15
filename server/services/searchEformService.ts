@@ -27,7 +27,7 @@ const errorResponse = (status: number, message: string): SearchResponse => {
   }
 }
 
-const successResponse = (searchResponse: SearchResponse) => {
+const successResponse = (searchResponse: SearchResponse): SearchResponse => {
   const resultsWithLinks: Array<SearchResult> = searchResponse.results.map(result => {
     return { ...result, crmLink: getCrmLink(result) }
   })
@@ -38,7 +38,7 @@ const successResponse = (searchResponse: SearchResponse) => {
   }
 }
 
-const getCrmLink = (result: SearchResult) => {
+const getCrmLink = (result: SearchResult): string => {
   const urlPath = crmTypeToUrlPath[result.type]
   return urlPath ? `/${urlPath}/${result.usn}` : ''
 }

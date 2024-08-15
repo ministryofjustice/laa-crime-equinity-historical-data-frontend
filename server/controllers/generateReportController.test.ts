@@ -50,7 +50,12 @@ describe('generateReportController', () => {
     expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crm4Report.csv')
     expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
 
-    expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith('2023-03-01', '2023-03-30', '1,4,5,6')
+    expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
+      crmType: 'crm4',
+      startDate: '2023-03-01',
+      endDate: '2023-03-30',
+      profileAcceptedTypes: '1,4,5,6',
+    })
   })
 
   it('should render generate report page with field errors', async () => {

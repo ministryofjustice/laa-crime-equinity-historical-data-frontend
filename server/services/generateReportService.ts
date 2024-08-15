@@ -1,13 +1,13 @@
-import { CrmReportResponse } from '@crmReport'
-import CrmReportApiClient from '../data/api/crmReportApiClient'
+import { CrmReportRequest, CrmReportResponse } from '@crmReport'
+import ReportApiClient from '../data/api/reportApiClient'
 import logger from '../../logger'
 
 export default class GenerateReportService {
-  constructor(private readonly crmReportApiClient: CrmReportApiClient) {}
+  constructor(private readonly crmReportApiClient: ReportApiClient) {}
 
-  async getCrmReport(startDate: string, endDate: string, profileAcceptedTypes: string): Promise<CrmReportResponse> {
+  async getCrmReport(reportRequest: CrmReportRequest): Promise<CrmReportResponse> {
     try {
-      return await this.crmReportApiClient.getCrmReport(startDate, endDate, profileAcceptedTypes)
+      return await this.crmReportApiClient.getCrmReport(reportRequest)
     } catch (error) {
       logger.error('Report API error', error)
       return errorResponse(error.status, error.message)
