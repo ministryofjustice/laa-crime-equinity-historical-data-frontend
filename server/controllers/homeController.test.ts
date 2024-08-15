@@ -12,7 +12,7 @@ describe('HomeController', () => {
     response = createMock<Response>({})
   })
 
-  it('Should return a list of home page', async () => {
+  it('should render the home page', async () => {
     const homeController = new HomeController()
     const requestHandler = homeController.show()
 
