@@ -1,4 +1,5 @@
-import { CrmReportResponse, EqApiHeader } from '@eqApi'
+import { EqApiHeader } from '@eqApi'
+import { CrmReportResponse } from '@crmReport'
 import RestClient from '../restClient'
 import config from '../../config'
 

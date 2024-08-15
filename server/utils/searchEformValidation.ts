@@ -1,16 +1,5 @@
 import Joi from 'joi'
-
-type ErrorMessage = Record<string, { text: string }>
-
-type ErrorSummary = {
-  href: string
-  text: string
-}
-
-export type SearchValidationErrors = {
-  list: Array<ErrorSummary>
-  messages?: ErrorMessage
-}
+import { buildValidationErrors, Errors } from './errorDisplayHelper'
 
 const schema = Joi.object({
   usn: Joi.string().pattern(/^\d+$/).min(4).max(10).optional().allow('').messages({
@@ -18,11 +7,7 @@ const schema = Joi.object({
     'string.max': 'USN must be 10 digits or less',
     'string.pattern.base': 'USN must be numeric',
   }),
-  type: Joi.string()
-    .valid('1', '4', '5', '6', '7')
-    .optional()
-    .allow('')
-    .messages({ 'any.only': 'Invalid type specified' }),
+  type: Joi.string().valid('1', '4', '5', '6').optional().allow('').messages({ 'any.only': 'Invalid type specified' }),
   supplierAccountNumber: Joi.string().min(4).max(6).optional().allow('').messages({
     'string.min': 'Supplier account number must be at least 4 characters',
     'string.max': 'Supplier account number must be 6 characters or less',
@@ -42,6 +27,7 @@ const schema = Joi.object({
   endDate: Joi.date().iso().min(Joi.ref('startDate')).optional().allow('').messages({
     'date.format': 'End date must be a valid date',
     'date.min': 'Your End date cannot be earlier than your Start date',
+    'any.ref': 'End date requires a valid Start date',
   }),
   page: Joi.number()
     .min(1)
@@ -50,36 +36,20 @@ const schema = Joi.object({
     .messages({ 'number.min': 'Invalid page specified', 'number.base': 'Invalid page specified' }),
 }).options({ allowUnknown: true, abortEarly: false })
 
-export default function validateSearchQuery(data: Record<string, string>): SearchValidationErrors | null {
-  if (isSearchQueryEmpty(data)) {
+export default function validateSearchParams(params: Record<string, string>): Errors {
+  if (searchParamsIsEmpty(params)) {
     return { list: [{ href: '#', text: 'Enter at least one search field' }] }
   }
 
-  const { error } = schema.validate(data)
+  const { error } = schema.validate(params)
   if (error?.details) {
-    return buildErrors(error)
+    return buildValidationErrors(error)
   }
 
   return null
 }
 
-const isSearchQueryEmpty = (searchQuery: Record<string, string>): boolean => {
+const searchParamsIsEmpty = (params: Record<string, string>): boolean => {
   // ignore page query parameter
-  return !Object.keys(searchQuery).some(
-    (key: string) => key !== 'page' && searchQuery[key] && searchQuery[key].length > 0,
-  )
-}
-
-const buildErrors = (error: Joi.ValidationError): SearchValidationErrors => {
-  const list: Array<{
-    href: string
-    text: string
-  }> = []
-  const messages: Record<string, { text: string }> = {}
-  error.details.forEach(errorDetail => {
-    const fieldName = errorDetail.path[0]
-    list.push({ href: `#${fieldName}`, text: errorDetail.message })
-    messages[fieldName] = { text: errorDetail.message }
-  })
-  return { list, messages }
+  return !Object.keys(params).some((key: string) => key !== 'page' && params[key] && params[key].length > 0)
 }

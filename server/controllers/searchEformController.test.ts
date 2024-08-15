@@ -22,7 +22,7 @@ describe('Search Eform Controller', () => {
     mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
   })
 
-  it('should render initial eform', async () => {
+  it('should render initial search eform', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.show()
     await requestHandler(request, response, next)
@@ -36,7 +36,7 @@ describe('Search Eform Controller', () => {
     })
   })
 
-  it('should render eform with search results', async () => {
+  it('should render search eform with search results', async () => {
     const searchResponse = {
       results: [
         {
@@ -119,7 +119,7 @@ describe('Search Eform Controller', () => {
     })
   })
 
-  it('should render eform with field errors', async () => {
+  it('should render search eform with field errors', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.show()
     request.query = {
@@ -159,7 +159,7 @@ describe('Search Eform Controller', () => {
     expect(mockSearchEformService.search).not.toHaveBeenCalled()
   })
 
-  it('should render eform with error when empty form submitted', async () => {
+  it('should render search eform with error when empty form submitted', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.show()
     request.query = {
@@ -199,7 +199,7 @@ describe('Search Eform Controller', () => {
     ['Not authorised to search', 403],
     ['No search result found', 404],
     ['Something went wrong with the search', 500],
-  ])('should render eform with errors for "%s" api error and status %s', async (errorMessage, errorStatus) => {
+  ])('should render search eform with "%s" error for status %s', async (errorMessage, errorStatus) => {
     const searchResponse: SearchResponse = {
       results: [],
       error: {
@@ -254,7 +254,7 @@ describe('Search Eform Controller', () => {
     })
   })
 
-  it('should submit eform', async () => {
+  it('should submit search eform', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.submit()
     request.body = {

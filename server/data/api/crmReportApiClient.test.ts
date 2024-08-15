@@ -1,5 +1,5 @@
 import nock from 'nock'
-import { CrmReportResponse } from '@eqApi'
+import { CrmReportResponse } from '@crmReport'
 import CrmReportApiClient from './crmReportApiClient'
 import config from '../../config'
 
