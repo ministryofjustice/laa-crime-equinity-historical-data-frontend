@@ -17,6 +17,10 @@ declare module 'express-session' {
     history: string[]
     searchResults: SearchResult[]
     formValues: Record<string, string>
+    errors?: Record<string, { text: string }>
+    errorSummary?: Array<{ href: string; text: string }>
+    successMessage?: string
+    downloadUrl?: string
     pkceCodes: PkceCodes
     authCodeUrlRequest: AuthorizationUrlRequest
     authCodeRequest: AuthorizationCodeRequest

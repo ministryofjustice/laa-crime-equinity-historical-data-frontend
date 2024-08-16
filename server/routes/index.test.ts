@@ -9,10 +9,14 @@ import { appWithAllRoutes } from './testutils/appSetup'
 import CrmApiService from '../services/crmApiService'
 import SearchEformService from '../services/searchEformService'
 import CrmDisplayService from '../services/crmDisplayService'
+import GenerateReportService from '../services/generateReportService'
+import getProfileAcceptedTypes from '../utils/userProfileGroups'
 
 jest.mock('../services/crmApiService')
 jest.mock('../services/searchEformService')
 jest.mock('../services/crmDisplayService')
+jest.mock('../services/generateReportService')
+jest.mock('../utils/userProfileGroups')
 
 let app: Express
 
@@ -22,6 +26,7 @@ let mockCrm7Service: jest.Mocked<CrmApiService<Crm7Response>>
 let mockCrm14Service: jest.Mocked<CrmApiService<Crm14Response>>
 let mockSearchEformService: jest.Mocked<SearchEformService>
 let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
+let mockGenerateReportService: jest.Mocked<GenerateReportService>
 
 beforeEach(() => {
   mockCrm4Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm4Response>>
@@ -30,6 +35,8 @@ beforeEach(() => {
   mockCrm14Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm14Response>>
   mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
   mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
+  mockGenerateReportService = new GenerateReportService(null) as jest.Mocked<GenerateReportService>
+  jest.mocked(getProfileAcceptedTypes).mockReturnValue('1,4,5,6')
   app = appWithAllRoutes({
     services: {
       crm4Service: mockCrm4Service,
@@ -38,6 +45,7 @@ beforeEach(() => {
       crm14Service: mockCrm14Service,
       searchEformService: mockSearchEformService,
       crmDisplayService: mockCrmDisplayService,
+      generateReportService: mockGenerateReportService,
     },
   })
 })
@@ -345,6 +353,37 @@ describe('routes', () => {
         .expect('Content-Type', /html/)
         .expect(res => {
           expect(res.text).toContain('Generate reports')
+        })
+    })
+  })
+
+  describe('GET /generate-report/download', () => {
+    it('should download the generated report', async () => {
+      const reportData = 'sample,csv,data\n1,2,3'
+
+      mockGenerateReportService.getCrmReport.mockResolvedValue({
+        text: reportData,
+      })
+
+      return request(app)
+        .get('/generate-report/download?startDate=2023-03-01&endDate=2023-03-30')
+        .expect('Content-Type', /text\/csv/)
+        .expect('Content-Disposition', 'attachment; filename=crmReport.csv')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toBe(reportData)
+          expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith('2023-03-01', '2023-03-30', '1,4,5,6')
+        })
+    })
+
+    it('should handle errors during report generation', async () => {
+      mockGenerateReportService.getCrmReport.mockRejectedValue(new Error('Error generating report'))
+
+      return request(app)
+        .get('/generate-report/download?startDate=2023-03-01&endDate=2023-03-30')
+        .expect(500)
+        .expect(res => {
+          expect(res.text).toContain('Error generating report')
         })
     })
   })
