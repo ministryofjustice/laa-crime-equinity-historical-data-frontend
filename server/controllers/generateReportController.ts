@@ -65,7 +65,7 @@ export default class GenerateReportController {
         } else {
           req.session.successMessage = 'The report is being downloaded.'
           req.session.downloadUrl = `/generate-report/download?startDate=${req.body.startDate}&endDate=${req.body.endDate}`
-          req.session.formData = reportParams
+          req.session.formValues = reportParams
           res.redirect('/generate-report')
         }
       }
@@ -76,17 +76,15 @@ export default class GenerateReportController {
     return async (req: Request, res: Response): Promise<void> => {
       const { startDate, endDate } = req.query
 
-      try {
-        const response = await this.generateReportService.getCrmReport(
-          startDate as string,
-          endDate as string,
-          getProfileAcceptedTypes(res),
-        )
-        res.setHeader('Content-Disposition', 'attachment; filename=crmReport.csv')
-        res.send(response.text)
-      } catch (error) {
-        res.status(500).send('Error generating report')
-      }
+      const profileAcceptedTypes = getProfileAcceptedTypes(res)
+      const response = await this.generateReportService.getCrmReport(
+        startDate as string,
+        endDate as string,
+        profileAcceptedTypes,
+      )
+      res.setHeader('Content-Type', 'text/csv')
+      res.setHeader('Content-Disposition', 'attachment; filename=crmReport.csv')
+      res.send(response.text)
     }
   }
 

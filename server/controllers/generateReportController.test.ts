@@ -16,7 +16,12 @@ describe('GenerateReportController', () => {
   const next: DeepMocked<NextFunction> = createMock<NextFunction>({})
 
   beforeEach(() => {
-    request = createMock<Request>({})
+    request = createMock<Request>({
+      session: {
+        successMessage: 'Download successful',
+        downloadUrl: '/download-url',
+      },
+    })
     response = createMock<Response>({})
     mockGenerateReportService = new GenerateReportService(null) as jest.Mocked<GenerateReportService>
   })
@@ -29,11 +34,13 @@ describe('GenerateReportController', () => {
 
     expect(response.render).toHaveBeenCalledWith('pages/generateReport', {
       backUrl: '/',
-      successMessage: undefined,
-      downloadUrl: undefined,
+      successMessage: 'Download successful',
+      downloadUrl: '/download-url',
       formValues: {},
       errors: {},
     })
+    expect(request.session.successMessage).toBeNull()
+    expect(request.session.downloadUrl).toBeNull()
   })
 
   it('should download the requested CRM report', async () => {
@@ -132,6 +139,42 @@ describe('GenerateReportController', () => {
         endDate: '2023-03-30',
       },
     })
+  })
+
+  it('should handle /generate-report/download route and generate the report', async () => {
+    const crmReportResponse = getCrmReportResponse()
+    mockGenerateReportService.getCrmReport.mockResolvedValue(crmReportResponse)
+
+    const generateReportController = new GenerateReportController(mockGenerateReportService)
+    const requestHandler = generateReportController.download()
+
+    request.query = {
+      startDate: '2023-03-01',
+      endDate: '2023-03-30',
+    }
+
+    await requestHandler(request, response, next)
+
+    expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crmReport.csv')
+    expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
+    expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith('2023-03-01', '2023-03-30', '1,4,5,6')
+  })
+
+  it('should handle errors during /generate-report/download route', async () => {
+    const error = new Error('Error generating report')
+    mockGenerateReportService.getCrmReport.mockRejectedValue(error)
+
+    const generateReportController = new GenerateReportController(mockGenerateReportService)
+    const requestHandler = generateReportController.download()
+
+    request.query = {
+      startDate: '2023-03-01',
+      endDate: '2023-03-30',
+    }
+
+    await expect(requestHandler(request, response, next)).rejects.toThrow('Error generating report')
+
+    expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith('2023-03-01', '2023-03-30', '1,4,5,6')
   })
 })
 

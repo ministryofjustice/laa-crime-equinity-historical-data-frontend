@@ -21,7 +21,6 @@ declare module 'express-session' {
     errorSummary?: Array<{ href: string; text: string }>
     successMessage?: string
     downloadUrl?: string
-    formData?: Record<string, string>
     pkceCodes: PkceCodes
     authCodeUrlRequest: AuthorizationUrlRequest
     authCodeRequest: AuthorizationCodeRequest
