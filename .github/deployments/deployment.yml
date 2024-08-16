@@ -138,3 +138,8 @@ spec:
                 secretKeyRef:
                   name: appsecret
                   key: ALLOWED_USER_PROFILE_GROUPS
+            - name: REPORTING_USER_PROFILE_GROUP
+              valueFrom:
+                secretKeyRef:
+                  name: appsecret
+                  key: REPORTING_USER_PROFILE_GROUP

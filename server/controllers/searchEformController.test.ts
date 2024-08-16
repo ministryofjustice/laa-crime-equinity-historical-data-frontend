@@ -7,7 +7,9 @@ import SearchEformService from '../services/searchEformService'
 
 jest.mock('../services/searchEformService')
 jest.mock('../utils/userProfileGroups', () => {
-  return jest.fn().mockReturnValue('1,4,5,6')
+  return {
+    getProfileAcceptedTypes: jest.fn().mockReturnValue('1,4,5,6'),
+  }
 })
 
 describe('Search Eform Controller', () => {
