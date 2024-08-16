@@ -51,7 +51,8 @@ export default class GenerateReportController {
           })
         } else {
           // return downloadable report
-          res.setHeader('Content-Disposition', `attachment; filename=${reportParams.crmType}Report.csv`)
+          const reportFilename = `${reportParams.crmType}Report.csv`
+          res.setHeader('Content-Disposition', `attachment; filename=${reportFilename}`)
           res.send(crmReportResponse.text)
         }
       }

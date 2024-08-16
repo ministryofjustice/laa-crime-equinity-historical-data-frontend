@@ -1,15 +1,15 @@
 import nock from 'nock'
 import { CrmReportResponse } from '@crmReport'
-import ReportApiClient from './reportApiClient'
+import CrmReportApiClient from './crmReportApiClient'
 import config from '../../config'
 
 describe('CRM Report Api Client', () => {
   let fakeRestClient: nock.Scope
-  let reportApiClient: ReportApiClient
+  let reportApiClient: CrmReportApiClient
 
   beforeEach(() => {
     fakeRestClient = nock(config.apis.eqApi.url)
-    reportApiClient = new ReportApiClient({
+    reportApiClient = new CrmReportApiClient({
       'EQ-API-CLIENT-ID': 'some-client-id',
       'EQ-API-SECRET': 'some-secret',
     })

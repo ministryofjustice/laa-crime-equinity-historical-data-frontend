@@ -1,14 +1,14 @@
 import { CrmReportResponse } from '@crmReport'
 import GenerateReportService from './generateReportService'
-import ReportApiClient from '../data/api/reportApiClient'
+import CrmReportApiClient from '../data/api/crmReportApiClient'
 
-jest.mock('../data/api/reportApiClient')
+jest.mock('../data/api/crmReportApiClient')
 
 describe('Generate Report Service', () => {
-  let mockCrmReportApiClient: jest.Mocked<ReportApiClient>
+  let mockCrmReportApiClient: jest.Mocked<CrmReportApiClient>
 
   beforeEach(() => {
-    mockCrmReportApiClient = new ReportApiClient(null) as jest.Mocked<ReportApiClient>
+    mockCrmReportApiClient = new CrmReportApiClient(null) as jest.Mocked<CrmReportApiClient>
   })
 
   it('should return crm report', async () => {

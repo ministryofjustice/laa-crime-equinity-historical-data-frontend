@@ -13,7 +13,7 @@ import applicationInfoSupplier from '../applicationInfo'
 import CrmApiClient from './api/crmApiClient'
 import SdsApiClient from './api/sdsApiClient'
 import SearchApiClient from './api/searchApiClient'
-import ReportApiClient from './api/reportApiClient'
+import CrmReportApiClient from './api/crmReportApiClient'
 
 import config from '../config'
 
@@ -34,7 +34,7 @@ export const dataAccess = () => ({
   crm5ApiClient: new CrmApiClient<Crm5Response>(eqiApiHeaders, 'crm5'),
   crm7ApiClient: new CrmApiClient<Crm7Response>(eqiApiHeaders, 'crm7'),
   crm14ApiClient: new CrmApiClient<Crm14Response>(eqiApiHeaders, 'crm14'),
-  reportApiClient: new ReportApiClient(eqiApiHeaders),
+  reportApiClient: new CrmReportApiClient(eqiApiHeaders),
   sdsApiClient: new SdsApiClient(),
   searchApiClient: new SearchApiClient(eqiApiHeaders),
 })
