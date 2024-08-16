@@ -5,11 +5,11 @@ import config from '../../config'
 
 describe('CRM Report Api Client', () => {
   let fakeRestClient: nock.Scope
-  let reportApiClient: CrmReportApiClient
+  let crmReportApiClient: CrmReportApiClient
 
   beforeEach(() => {
     fakeRestClient = nock(config.apis.eqApi.url)
-    reportApiClient = new CrmReportApiClient({
+    crmReportApiClient = new CrmReportApiClient({
       'EQ-API-CLIENT-ID': 'some-client-id',
       'EQ-API-SECRET': 'some-secret',
     })
@@ -27,7 +27,7 @@ describe('CRM Report Api Client', () => {
       .matchHeader('authorization', 'Bearer no_auth')
       .reply(200, expectedResponse)
 
-    const result = await reportApiClient.getCrmReport({
+    const result = await crmReportApiClient.getCrmReport({
       crmType: 'crm4',
       startDate: '2023-03-01',
       endDate: '2023-03-30',

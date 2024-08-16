@@ -14,7 +14,7 @@ export const services = () => {
     crm14ApiClient,
     sdsApiClient,
     searchApiClient,
-    reportApiClient,
+    crmReportApiClient,
   } = dataAccess()
 
   const crm4Service = new CrmApiService(crm4ApiClient)
@@ -23,7 +23,7 @@ export const services = () => {
   const crm14Service = new CrmApiService(crm14ApiClient)
   const crmDisplayService = new CrmDisplayService()
   const downloadEvidenceService = new DownloadEvidenceService(sdsApiClient)
-  const generateReportService = new GenerateReportService(reportApiClient)
+  const generateReportService = new GenerateReportService(crmReportApiClient)
   const searchEformService = new SearchEformService(searchApiClient)
 
   return {
