@@ -105,27 +105,6 @@ describe('GenerateReportController', () => {
         },
       })
     })
-  })
-
-  describe('download()', () => {
-    it('should handle /generate-report/download route and generate the report', async () => {
-      const crmReportResponse = getCrmReportResponse()
-      mockGenerateReportService.getCrmReport.mockResolvedValue(crmReportResponse)
-
-      const generateReportController = new GenerateReportController(mockGenerateReportService)
-      const requestHandler = generateReportController.download()
-
-      request.query = {
-        startDate: '2023-03-01',
-        endDate: '2023-03-30',
-      }
-
-      await requestHandler(request, response, next)
-
-      expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crmReport.csv')
-      expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
-      expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith('2023-03-01', '2023-03-30', '1,4,5,6')
-    })
 
     it.each([
       ['Not authorised to generate report', 401],
@@ -144,8 +123,9 @@ describe('GenerateReportController', () => {
       mockGenerateReportService.getCrmReport.mockResolvedValue(crmReportResponse)
 
       const generateReportController = new GenerateReportController(mockGenerateReportService)
-      const requestHandler = generateReportController.download()
-      request.query = {
+      const requestHandler = generateReportController.submit()
+      request.body = {
+        crmType: 'crm4',
         startDate: '2023-03-01',
         endDate: '2023-03-30',
       }
@@ -169,6 +149,27 @@ describe('GenerateReportController', () => {
           endDate: '2023-03-30',
         },
       })
+    })
+  })
+
+  describe('download()', () => {
+    it('should handle /generate-report/download route and generate the report', async () => {
+      const crmReportResponse = getCrmReportResponse()
+      mockGenerateReportService.getCrmReport.mockResolvedValue(crmReportResponse)
+
+      const generateReportController = new GenerateReportController(mockGenerateReportService)
+      const requestHandler = generateReportController.download()
+
+      request.query = {
+        startDate: '2023-03-01',
+        endDate: '2023-03-30',
+      }
+
+      await requestHandler(request, response, next)
+
+      expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crmReport.csv')
+      expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
+      expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith('2023-03-01', '2023-03-30', '1,4,5,6')
     })
   })
 })

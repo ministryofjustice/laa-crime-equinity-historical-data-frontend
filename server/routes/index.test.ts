@@ -390,6 +390,15 @@ describe('routes', () => {
 
   describe('POST /generate-report', () => {
     it('should post generate report form and redirect to download', () => {
+      mockGenerateReportService.getCrmReport.mockResolvedValue({
+        text:
+          'Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number,Maat ID,Prison Law,Date Received,' +
+          'Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit,Total Cost,Additional Expenditure,' +
+          'Total Authority,Total Granted,Granting Caseworker\n' +
+          '031022/777,123456789,1234AB,Some Firm,Some Client,999999999,,No,2023-03-16,2023-03-16,Grant,a Psychiatrist,' +
+          'tyjtjtjt,4.0,50.0,Hour(s),200.0,0.0,200.0,200.0,Sym-G`',
+      })
+
       return request(app)
         .post('/generate-report')
         .send({
