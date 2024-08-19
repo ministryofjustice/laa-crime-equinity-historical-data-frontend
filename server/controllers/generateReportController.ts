@@ -15,7 +15,6 @@ export default class GenerateReportController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      this.checkReportingAllowed(res)
       const { successMessage, downloadUrl } = req.session
       req.session.successMessage = null
       req.session.downloadUrl = null
@@ -32,7 +31,6 @@ export default class GenerateReportController {
 
   submit(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      this.checkReportingAllowed(res)
       const reportParams: Record<string, string> = {
         crmType: req.body.crmType as string,
         startDate: req.body.startDate as string,
@@ -48,58 +46,47 @@ export default class GenerateReportController {
           backUrl: manageBackLink(req, CURRENT_URL),
         })
       } else {
-        const reportResponse = await this.generateReportService.getCrmReport(
-          req.body.startDate,
-          req.body.endDate,
-          getProfileAcceptedTypes(res),
-        )
-
-        // Check for any errors in the report response
-        if (reportResponse.error) {
-          const errorStatus = reportResponse.error.status
-          const errorMessage = this.getErrorMessage(errorStatus)
-          const errors = buildErrors(reportResponse.error, () => errorMessage)
-
-          res.render(VIEW_PATH, {
-            results: [],
-            errors,
-            formValues: reportParams,
-            backUrl: manageBackLink(req, CURRENT_URL),
-          })
-        } else {
-          req.session.successMessage = 'The report is being downloaded.'
-          req.session.downloadUrl = `/generate-report/download?startDate=${req.body.startDate}&endDate=${req.body.endDate}`
-          req.session.formValues = reportParams
-          res.redirect('/generate-report')
-        }
+        req.session.successMessage = 'The report is being downloaded.'
+        req.session.downloadUrl = `/generate-report/download?startDate=${req.body.startDate}&endDate=${req.body.endDate}`
+        req.session.formValues = reportParams
+        res.redirect('/generate-report')
       }
     }
   }
 
   download(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      this.checkReportingAllowed(res)
       const { startDate, endDate } = req.query
 
       const profileAcceptedTypes = getProfileAcceptedTypes(res)
-      const response = await this.generateReportService.getCrmReport(
+      const reportResponse = await this.generateReportService.getCrmReport(
         startDate as string,
         endDate as string,
         profileAcceptedTypes,
       )
-      res.setHeader('Content-Type', 'text/csv')
-      res.setHeader('Content-Disposition', 'attachment; filename=crmReport.csv')
-      res.send(response.text)
-    }
-  }
 
-  private checkReportingAllowed(res: Response): void {
-    if (!isReportingAllowed(res)) {
-      // throw forbidden error
-      logger.error('Not authorised to generate report')
-      const error = new Error('Forbidden') as SanitisedError
-      error.status = 403
-      throw error
+      // Check for any errors in the report response
+      if (reportResponse.error) {
+        const errorStatus = reportResponse.error.status
+        const errorMessage = this.getErrorMessage(errorStatus)
+        const errors = buildErrors(reportResponse.error, () => errorMessage)
+
+        const reportParams: Record<string, string> = {
+          crmType: 'crm4',
+          startDate: startDate as string,
+          endDate: endDate as string,
+        }
+        res.render(VIEW_PATH, {
+          results: [],
+          errors,
+          formValues: reportParams,
+          backUrl: manageBackLink(req, CURRENT_URL),
+        })
+      } else {
+        res.setHeader('Content-Type', 'text/csv')
+        res.setHeader('Content-Disposition', 'attachment; filename=crmReport.csv')
+        res.send(reportResponse.text)
+      }
     }
   }
 

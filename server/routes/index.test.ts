@@ -375,6 +375,49 @@ describe('routes', () => {
           expect(res.text).toContain('Generate reports')
         })
     })
+
+    it('should render error page with forbidden error', () => {
+      mockIsReportingAllowed.mockReturnValue(false)
+
+      return request(app)
+        .get('/generate-report')
+        .expect(403)
+        .expect(res => {
+          expect(res.text).toContain('Error: Forbidden')
+        })
+    })
+  })
+
+  describe('POST /generate-report', () => {
+    it('should post generate report form and redirect to download', () => {
+      return request(app)
+        .post('/generate-report')
+        .send({
+          crmType: 'crm4',
+          startDate: '2023-03-01',
+          endDate: '2023-03-30',
+        })
+        .expect(res => {
+          expect(res.status).toEqual(302)
+          expect(res.headers.location).toEqual('/generate-report')
+        })
+    })
+
+    it('should render error page with forbidden error', () => {
+      mockIsReportingAllowed.mockReturnValue(false)
+
+      return request(app)
+        .post('/generate-report')
+        .send({
+          crmType: 'crm4',
+          startDate: '2022-11-01',
+          endDate: '2023-11-02',
+        })
+        .expect(403)
+        .expect(res => {
+          expect(res.text).toContain('Error: Forbidden')
+        })
+    })
   })
 
   describe('GET /generate-report/download', () => {
@@ -393,6 +436,17 @@ describe('routes', () => {
         .expect(res => {
           expect(res.text).toBe(reportData)
           expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith('2023-03-01', '2023-03-30', '1,4,5,6')
+        })
+    })
+
+    it('should render error page with forbidden error', () => {
+      mockIsReportingAllowed.mockReturnValue(false)
+
+      return request(app)
+        .get('/generate-report/download?startDate=2023-03-01&endDate=2023-03-30')
+        .expect(403)
+        .expect(res => {
+          expect(res.text).toContain('Error: Forbidden')
         })
     })
 
