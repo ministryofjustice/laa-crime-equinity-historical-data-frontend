@@ -2,7 +2,7 @@ import type { Response } from 'express'
 
 import config from '../config'
 
-function getProfileAcceptedTypes(res: Response): string {
+export default function getProfileAcceptedTypes(res: Response): string {
   const ssoUserGroups = res.locals.ssoUserGroups || []
   const allowedUserProfileGroups = config.auth.allowedUserProfileGroups.split(',')
 
@@ -17,5 +17,3 @@ function getProfileAcceptedTypes(res: Response): string {
     .filter(Boolean)
     .join(',')
 }
-
-export default getProfileAcceptedTypes
