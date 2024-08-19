@@ -4,106 +4,120 @@
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "../components/backLink.njk" import backLink %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
-{% set pageTitle = applicationName + " - Home" %}
+{% set pageTitle = applicationName + " - Generate Reports" %}
 {% set mainClasses = "app-container govuk-body" %}
 
-  {% block content %}
-      <div class="govuk-width-container">
-          {{ backLink(backUrl) }}
-          <main class="govuk-main-wrapper">
+{% block content %}
+    <div class="govuk-width-container">
+        {{ backLink(backUrl) }}
+        <main class="govuk-main-wrapper">
 
-              {% if errors.list | length %}
-                  {{ govukErrorSummary({
-                      titleText: "There is a problem",
-                      errorList: errors.list
-                  }) }}
-              {% endif %}
+            {% if downloadUrl %}
+                <input type="hidden" id="download-url" value="{{ downloadUrl }}">
+            {% endif %}
 
-              <h1 class="govuk-heading-l">Generate reports</h1>
-              <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
-              <span class="govuk-caption-m govuk-!-margin-bottom-4">To generate reports, choose the CRM type that you would like to generate and attribute it a date range. </span>
+            <!-- Display success message -->
+            {% if successMessage %}
+                {{ govukNotificationBanner({
+                    titleText: "Success",
+                    text: successMessage,
+                    type: "success"
+                }) }}
+            {% endif %}
 
-              <div class="form-background govuk-!-padding-top-4 govuk-!-padding-left-4">
-                  <form action="/generate-report" method="POST">
-                      <div class="govuk-grid-row">
-                          <div class="govuk-grid-column-one-half">
+            {% if errors.list | length %}
+                {{ govukErrorSummary({
+                    titleText: "There is a problem",
+                    errorList: errors.list
+                }) }}
+            {% endif %}
 
-                              {{ govukSelect({
-                                  id: "crmType",
-                                  name: "crmType",
-                                  value: formValues.crmType,
-                                  errorMessage: errors.messages.crmType,
-                                  label: {
-                                      text: "CRM type"
-                                  },
-                                  items: [
-                                      {
-                                          value: "",
-                                          text: "Choose CRM type",
-                                          selected: true
-                                      },
-                                      {
-                                          value: "crm4",
-                                          text: "CRM 4"
-                                      },
-                                      {
-                                          value: "crm5",
-                                          text: "CRM 5"
-                                      },
-                                      {
-                                          value: "crm7",
-                                          text: "CRM 7"
-                                      },
-                                      {
-                                          value: "crm14",
-                                          text: "CRM 14"
-                                      }
-                                  ]
-                              }) }}
-                          </div>
-                      </div>
-                      <div class="govuk-grid-row">
-                          <div class="govuk-grid-column-one-quarter">
-                              {{ govukInput({
-                                  label: {
-                                      text: "Start date"
-                                  },
-                                  id: "startDate",
-                                  name: "startDate",
-                                  value: formValues.startDate,
-                                  type: "date",
-                                  errorMessage: errors.messages.startDate
-                              }) }}
-                          </div>
-                          <div class="govuk-grid-column-one-quarter">
-                              {{ govukInput({
-                                  label: {
-                                      text: "End date"
-                                  },
-                                  classes: "govuk-!-width-full",
-                                  id: "endDate",
-                                  name: "endDate",
-                                  value: formValues.endDate,
-                                  type: "date",
-                                  errorMessage: errors.messages.endDate
-                              }) }}
-                          </div>
-                      </div>
-                      <div class="govuk-grid-row">
-                          <div class="govuk-grid-column-full">
-                              <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
-                              {{ govukButton({
-                                  action: '#',
-                                  method: 'post',
-                                  text: 'Download report'
-                              }) }}
-                          </div>
-                      </div>
-                  </form>
-              </div>
-          </main>
-      </div>
+            <h1 class="govuk-heading-l">Generate reports</h1>
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
+            <span class="govuk-caption-m govuk-!-margin-bottom-4">To generate reports, choose the CRM type that you would like to generate and attribute it a date range. </span>
 
-
-  {% endblock %}
+            <div class="form-background govuk-!-padding-top-4 govuk-!-padding-left-4">
+                <form action="/generate-report" method="POST">
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-half">
+                            {{ govukSelect({
+                                id: "crmType",
+                                name: "crmType",
+                                value: formValues.crmType,
+                                errorMessage: errors.messages.crmType,
+                                label: {
+                                    text: "CRM type"
+                                },
+                                items: [
+                                    {
+                                        value: "",
+                                        text: "Choose CRM type",
+                                        selected: true
+                                    },
+                                    {
+                                        value: "crm4",
+                                        text: "CRM 4"
+                                    },
+                                    {
+                                        value: "crm5",
+                                        text: "CRM 5"
+                                    },
+                                    {
+                                        value: "crm7",
+                                        text: "CRM 7"
+                                    },
+                                    {
+                                        value: "crm14",
+                                        text: "CRM 14"
+                                    }
+                                ]
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-quarter">
+                            {{ govukInput({
+                                label: {
+                                    text: "Start date"
+                                },
+                                id: "startDate",
+                                name: "startDate",
+                                value: formValues.startDate,
+                                type: "date",
+                                errorMessage: errors.messages.startDate
+                            }) }}
+                        </div>
+                        <div class="govuk-grid-column-one-quarter">
+                            {{ govukInput({
+                                label: {
+                                    text: "End date"
+                                },
+                                classes: "govuk-!-width-full",
+                                id: "endDate",
+                                name: "endDate",
+                                value: formValues.endDate,
+                                type: "date",
+                                errorMessage: errors.messages.endDate
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-full">
+                            <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
+                            {{ govukButton({
+                                action: '#',
+                                method: 'post',
+                                text: 'Download report'
+                            }) }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+{% block pageScripts %}
+    <script src="/assets/triggerDownload.js"></script>
+{% endblock %}
