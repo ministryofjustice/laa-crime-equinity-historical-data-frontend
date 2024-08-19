@@ -13,6 +13,7 @@ export default function routes({
   crm14Controller,
   downloadEvidenceController,
   generateReportController,
+  homeController,
 }: Controllers): Router {
   const router = Router()
 
@@ -37,9 +38,7 @@ export default function routes({
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (routePath: string, handler: RequestHandler) => router.post(routePath, asyncMiddleware(handler))
 
-  get('/', (req: Request, res: Response): void => {
-    res.render('pages/index')
-  })
+  get('/', homeController.show())
 
   get('/search-eform', searchEformController.show())
 

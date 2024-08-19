@@ -1,9 +1,8 @@
 import type { Response } from 'express'
-
 import config from '../config'
 
-export default function getProfileAcceptedTypes(res: Response): string {
-  const ssoUserGroups = res.locals.ssoUserGroups || []
+const getProfileAcceptedTypes = (res: Response): string => {
+  const ssoUserGroups = getSsoUserGroups(res)
   const allowedUserProfileGroups = config.auth.allowedUserProfileGroups.split(',')
 
   return allowedUserProfileGroups
@@ -17,3 +16,12 @@ export default function getProfileAcceptedTypes(res: Response): string {
     .filter(Boolean)
     .join(',')
 }
+
+const isReportingAllowed = (res: Response): boolean => {
+  const ssoUserGroups = getSsoUserGroups(res)
+  return ssoUserGroups.includes(config.auth.reportingUserProfileGroup)
+}
+
+const getSsoUserGroups = (res: Response): string[] => res.locals.ssoUserGroups || []
+
+export { getProfileAcceptedTypes, isReportingAllowed }

@@ -6,7 +6,9 @@ import GenerateReportController from './generateReportController'
 
 jest.mock('../services/generateReportService')
 jest.mock('../utils/userProfileGroups', () => {
-  return jest.fn().mockReturnValue('1,4,5,6')
+  return {
+    getProfileAcceptedTypes: jest.fn().mockReturnValue('1,4,5,6'),
+  }
 })
 
 describe('GenerateReportController', () => {

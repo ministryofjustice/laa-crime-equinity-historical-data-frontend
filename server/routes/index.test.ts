@@ -10,7 +10,7 @@ import CrmApiService from '../services/crmApiService'
 import SearchEformService from '../services/searchEformService'
 import CrmDisplayService from '../services/crmDisplayService'
 import GenerateReportService from '../services/generateReportService'
-import getProfileAcceptedTypes from '../utils/userProfileGroups'
+import { getProfileAcceptedTypes } from '../utils/userProfileGroups'
 
 jest.mock('../services/crmApiService')
 jest.mock('../services/searchEformService')

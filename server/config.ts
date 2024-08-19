@@ -48,9 +48,10 @@ export default {
     clientId: get('CLIENT_ID', 'xxx', requiredInProduction),
     clientSecret: get('CLIENT_SECRET', 'xxx', requiredInProduction),
     tenantId: get('TENANT_ID', 'xxx', requiredInProduction),
-    allowedUserProfileGroups: get('ALLOWED_USER_PROFILE_GROUPS', '', requiredInProduction),
     redirectUri: get('REDIRECT_URI', 'http://localhost:3000/auth/redirect'),
     postLogoutRedirectUri: get('POST_LOGOUT_REDIRECT_URI', 'http://localhost:3000/auth/redirect'),
+    allowedUserProfileGroups: get('ALLOWED_USER_PROFILE_GROUPS', '', requiredInProduction),
+    reportingUserProfileGroup: get('REPORTING_USER_PROFILE_GROUP', '', requiredInProduction),
     disabled: get('AUTH_DISABLED', 'false') === 'true',
   },
   redis: {

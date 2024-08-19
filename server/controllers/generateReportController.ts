@@ -1,5 +1,5 @@
 import type { Request, RequestHandler, Response } from 'express'
-import getProfileAcceptedTypes from '../utils/userProfileGroups'
+import { getProfileAcceptedTypes } from '../utils/userProfileGroups'
 import GenerateReportService from '../services/generateReportService'
 import validateReportParams from '../utils/generateReportValidation'
 import manageBackLink from '../utils/crmBackLink'
