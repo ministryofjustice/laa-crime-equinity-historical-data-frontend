@@ -9,13 +9,17 @@ import { appWithAllRoutes } from './testutils/appSetup'
 import CrmApiService from '../services/crmApiService'
 import SearchEformService from '../services/searchEformService'
 import CrmDisplayService from '../services/crmDisplayService'
+import { getProfileAcceptedTypes, isReportingAllowed } from '../utils/userProfileGroups'
 
 jest.mock('../services/crmApiService')
 jest.mock('../services/searchEformService')
 jest.mock('../services/crmDisplayService')
+jest.mock('../utils/userProfileGroups')
 
 let app: Express
 
+let mockGetProfileAcceptedTypes: jest.Mock
+let mockIsReportingAllowed: jest.Mock
 let mockCrm4Service: jest.Mocked<CrmApiService<Crm4Response>>
 let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
 let mockCrm7Service: jest.Mocked<CrmApiService<Crm7Response>>
@@ -24,6 +28,8 @@ let mockSearchEformService: jest.Mocked<SearchEformService>
 let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
 
 beforeEach(() => {
+  mockGetProfileAcceptedTypes = getProfileAcceptedTypes as jest.Mock
+  mockIsReportingAllowed = isReportingAllowed as jest.Mock
   mockCrm4Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm4Response>>
   mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
   mockCrm7Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm7Response>>
@@ -40,6 +46,8 @@ beforeEach(() => {
       crmDisplayService: mockCrmDisplayService,
     },
   })
+  mockGetProfileAcceptedTypes.mockReturnValue('1,4,5,6')
+  mockIsReportingAllowed.mockReturnValue(true)
 })
 
 afterEach(() => {
@@ -54,6 +62,20 @@ describe('routes', () => {
         .expect('Content-Type', /html/)
         .expect(res => {
           expect(res.text).toContain('Equiniti Historical Data')
+          expect(res.text).toContain('Generate eForm reports')
+          expect(res.text).toContain('View eForm records')
+        })
+    })
+
+    it('should render index page without generate reports ', () => {
+      mockIsReportingAllowed.mockReturnValue(false)
+      return request(app)
+        .get('/')
+        .expect('Content-Type', /html/)
+        .expect(res => {
+          expect(res.text).toContain('Equiniti Historical Data')
+          expect(res.text).not.toContain('Generate eForm reports') // hidden
+          expect(res.text).toContain('View eForm records')
         })
     })
   })
