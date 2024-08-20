@@ -102,13 +102,4 @@ export default class GenerateReportController {
         return 'Something went wrong with generate report'
     }
   }
-
-  private buildCrmReportRequest(reportParams: Record<string, string>, profileAcceptedTypes: string): CrmReportRequest {
-    return {
-      crmType: reportParams.crmType,
-      startDate: reportParams.startDate,
-      endDate: reportParams.endDate,
-      profileAcceptedTypes,
-    }
-  }
 }

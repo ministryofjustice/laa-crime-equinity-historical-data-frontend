@@ -28,9 +28,9 @@ describe('Generate Report Service', () => {
     expect(result).toEqual(expectedResponse)
     expect(mockCrmReportApiClient.getCrmReport).toHaveBeenCalledWith({
       crmType: 'crm4',
+      startDate: '2024-01-01',
       endDate: '2024-31-01',
       profileAcceptedTypes: '1,4,5,6',
-      startDate: '2024-01-01',
     })
   })
 })
