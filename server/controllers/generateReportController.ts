@@ -65,7 +65,8 @@ export default class GenerateReportController {
             backUrl: manageBackLink(req, CURRENT_URL),
           })
         } else {
-          req.session.successMessage = 'The report is being downloaded.'
+          const reportFilename = `${reportParams.crmType}Report.csv`
+          req.session.successMessage = `The CRM report is being downloaded - ${reportFilename}`
           req.session.downloadUrl = `/generate-report/download?crmType=${reportParams.crmType}&startDate=${reportParams.startDate}&endDate=${reportParams.endDate}`
           req.session.formValues = reportParams
           res.redirect('/generate-report')

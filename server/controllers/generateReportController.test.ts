@@ -66,7 +66,7 @@ describe('GenerateReportController', () => {
       await requestHandler(request, response, next)
 
       expect(response.redirect).toHaveBeenCalledWith('/generate-report')
-      expect(request.session.successMessage).toEqual('The report is being downloaded.')
+      expect(request.session.successMessage).toEqual('The CRM report is being downloaded - crm4Report.csv')
       expect(request.session.downloadUrl).toEqual(
         '/generate-report/download?crmType=crm4&startDate=2023-03-01&endDate=2023-03-30',
       )
