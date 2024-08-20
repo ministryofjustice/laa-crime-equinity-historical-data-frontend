@@ -9,27 +9,38 @@ import { appWithAllRoutes } from './testutils/appSetup'
 import CrmApiService from '../services/crmApiService'
 import SearchEformService from '../services/searchEformService'
 import CrmDisplayService from '../services/crmDisplayService'
+import GenerateReportService from '../services/generateReportService'
+import { getProfileAcceptedTypes, isReportingAllowed } from '../utils/userProfileGroups'
 
 jest.mock('../services/crmApiService')
 jest.mock('../services/searchEformService')
 jest.mock('../services/crmDisplayService')
+jest.mock('../services/generateReportService')
+jest.mock('../utils/userProfileGroups')
 
 let app: Express
 
+let mockGetProfileAcceptedTypes: jest.Mock
+let mockIsReportingAllowed: jest.Mock
 let mockCrm4Service: jest.Mocked<CrmApiService<Crm4Response>>
 let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
 let mockCrm7Service: jest.Mocked<CrmApiService<Crm7Response>>
 let mockCrm14Service: jest.Mocked<CrmApiService<Crm14Response>>
 let mockSearchEformService: jest.Mocked<SearchEformService>
 let mockCrmDisplayService: jest.Mocked<CrmDisplayService>
+let mockGenerateReportService: jest.Mocked<GenerateReportService>
 
 beforeEach(() => {
+  mockGetProfileAcceptedTypes = getProfileAcceptedTypes as jest.Mock
+  mockIsReportingAllowed = isReportingAllowed as jest.Mock
   mockCrm4Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm4Response>>
   mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
   mockCrm7Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm7Response>>
   mockCrm14Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm14Response>>
   mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
   mockCrmDisplayService = new CrmDisplayService() as jest.Mocked<CrmDisplayService>
+  mockGenerateReportService = new GenerateReportService(null) as jest.Mocked<GenerateReportService>
+  jest.mocked(getProfileAcceptedTypes).mockReturnValue('1,4,5,6')
   app = appWithAllRoutes({
     services: {
       crm4Service: mockCrm4Service,
@@ -38,8 +49,11 @@ beforeEach(() => {
       crm14Service: mockCrm14Service,
       searchEformService: mockSearchEformService,
       crmDisplayService: mockCrmDisplayService,
+      generateReportService: mockGenerateReportService,
     },
   })
+  mockGetProfileAcceptedTypes.mockReturnValue('1,4,5,6')
+  mockIsReportingAllowed.mockReturnValue(true)
 })
 
 afterEach(() => {
@@ -54,6 +68,20 @@ describe('routes', () => {
         .expect('Content-Type', /html/)
         .expect(res => {
           expect(res.text).toContain('Equiniti Historical Data')
+          expect(res.text).toContain('Generate eForm reports')
+          expect(res.text).toContain('View eForm records')
+        })
+    })
+
+    it('should render index page without generate reports ', () => {
+      mockIsReportingAllowed.mockReturnValue(false)
+      return request(app)
+        .get('/')
+        .expect('Content-Type', /html/)
+        .expect(res => {
+          expect(res.text).toContain('Equiniti Historical Data')
+          expect(res.text).not.toContain('Generate eForm reports') // hidden
+          expect(res.text).toContain('View eForm records')
         })
     })
   })
@@ -345,6 +373,105 @@ describe('routes', () => {
         .expect('Content-Type', /html/)
         .expect(res => {
           expect(res.text).toContain('Generate reports')
+        })
+    })
+
+    it('should render error page with forbidden error', () => {
+      mockIsReportingAllowed.mockReturnValue(false)
+
+      return request(app)
+        .get('/generate-report')
+        .expect(403)
+        .expect(res => {
+          expect(res.text).toContain('Error: Forbidden')
+        })
+    })
+  })
+
+  describe('POST /generate-report', () => {
+    it('should post generate report form and redirect to download', () => {
+      mockGenerateReportService.getCrmReport.mockResolvedValue({
+        text:
+          'Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number,Maat ID,Prison Law,Date Received,' +
+          'Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit,Total Cost,Additional Expenditure,' +
+          'Total Authority,Total Granted,Granting Caseworker\n' +
+          '031022/777,123456789,1234AB,Some Firm,Some Client,999999999,,No,2023-03-16,2023-03-16,Grant,a Psychiatrist,' +
+          'tyjtjtjt,4.0,50.0,Hour(s),200.0,0.0,200.0,200.0,Sym-G`',
+      })
+
+      return request(app)
+        .post('/generate-report')
+        .send({
+          crmType: 'crm4',
+          startDate: '2023-03-01',
+          endDate: '2023-03-30',
+        })
+        .expect(res => {
+          expect(res.status).toEqual(302)
+          expect(res.headers.location).toEqual('/generate-report')
+        })
+    })
+
+    it('should render error page with forbidden error', () => {
+      mockIsReportingAllowed.mockReturnValue(false)
+
+      return request(app)
+        .post('/generate-report')
+        .send({
+          crmType: 'crm4',
+          startDate: '2022-11-01',
+          endDate: '2023-11-02',
+        })
+        .expect(403)
+        .expect(res => {
+          expect(res.text).toContain('Error: Forbidden')
+        })
+    })
+  })
+
+  describe('GET /generate-report/download', () => {
+    it('should download the generated report', async () => {
+      const reportData = 'sample,csv,data\n1,2,3'
+
+      mockGenerateReportService.getCrmReport.mockResolvedValue({
+        text: reportData,
+      })
+
+      return request(app)
+        .get('/generate-report/download?crmType=crm4&startDate=2023-03-01&endDate=2023-03-30')
+        .expect('Content-Type', /text\/csv/)
+        .expect('Content-Disposition', 'attachment; filename=crm4Report.csv')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toBe(reportData)
+          expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
+            crmType: 'crm4',
+            startDate: '2023-03-01',
+            endDate: '2023-03-30',
+            profileAcceptedTypes: '1,4,5,6',
+          })
+        })
+    })
+
+    it('should render error page with forbidden error', () => {
+      mockIsReportingAllowed.mockReturnValue(false)
+
+      return request(app)
+        .get('/generate-report/download?startDate=2023-03-01&endDate=2023-03-30')
+        .expect(403)
+        .expect(res => {
+          expect(res.text).toContain('Error: Forbidden')
+        })
+    })
+
+    it('should handle errors during report generation', async () => {
+      mockGenerateReportService.getCrmReport.mockRejectedValue(new Error('Error generating report'))
+
+      return request(app)
+        .get('/generate-report/download?startDate=2023-03-01&endDate=2023-03-30')
+        .expect(500)
+        .expect(res => {
+          expect(res.text).toContain('Error generating report')
         })
     })
   })

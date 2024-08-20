@@ -14,8 +14,17 @@ export default class GenerateReportController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
+      const { successMessage, downloadUrl } = req.session
+      req.session.successMessage = null
+      req.session.downloadUrl = null
       const backUrl = manageBackLink(req, CURRENT_URL)
-      res.render(VIEW_PATH, { backUrl })
+      res.render(VIEW_PATH, {
+        successMessage,
+        downloadUrl,
+        backUrl,
+        formValues: req.session.formValues || {},
+        errors: {},
+      })
     }
   }
 
@@ -27,6 +36,7 @@ export default class GenerateReportController {
         endDate: req.body.endDate as string,
       }
       const validationErrors = validateReportParams(reportParams)
+
       if (validationErrors) {
         // render with validation errors
         res.render(VIEW_PATH, {
@@ -37,9 +47,14 @@ export default class GenerateReportController {
         })
       } else {
         // perform generate report
-        const crmReportRequest = this.buildCrmReportRequest(reportParams, getProfileAcceptedTypes(res))
-        const crmReportResponse = await this.generateReportService.getCrmReport(crmReportRequest)
+        const crmReportResponse = await this.generateReportService.getCrmReport({
+          crmType: reportParams.crmType,
+          startDate: reportParams.startDate,
+          endDate: reportParams.endDate,
+          profileAcceptedTypes: getProfileAcceptedTypes(res),
+        })
 
+        // check for any errors in the report response
         if (crmReportResponse.error) {
           // render with errors for report API error
           const errors = buildErrors(crmReportResponse.error, this.getErrorMessage)
@@ -50,12 +65,29 @@ export default class GenerateReportController {
             backUrl: manageBackLink(req, CURRENT_URL),
           })
         } else {
-          // return downloadable report
-          const reportFilename = `${reportParams.crmType}Report.csv`
-          res.setHeader('Content-Disposition', `attachment; filename=${reportFilename}`)
-          res.send(crmReportResponse.text)
+          req.session.successMessage = 'The report is being downloaded.'
+          req.session.downloadUrl = `/generate-report/download?crmType=${reportParams.crmType}&startDate=${reportParams.startDate}&endDate=${reportParams.endDate}`
+          req.session.formValues = reportParams
+          res.redirect('/generate-report')
         }
       }
+    }
+  }
+
+  download(): RequestHandler {
+    return async (req: Request, res: Response): Promise<void> => {
+      const { crmType, startDate, endDate } = req.query
+      const crmReportResponse = await this.generateReportService.getCrmReport({
+        crmType,
+        startDate: startDate as string,
+        endDate: endDate as string,
+        profileAcceptedTypes: getProfileAcceptedTypes(res),
+      })
+
+      const reportFilename = `${crmType}Report.csv`
+      res.setHeader('Content-Type', 'text/csv')
+      res.setHeader('Content-Disposition', `attachment; filename=${reportFilename}`)
+      res.send(crmReportResponse.text)
     }
   }
 
