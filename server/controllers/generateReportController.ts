@@ -1,5 +1,4 @@
 import type { Request, RequestHandler, Response } from 'express'
-import { CrmReportRequest } from '@crmReport'
 import { getProfileAcceptedTypes } from '../utils/userProfileGroups'
 import GenerateReportService from '../services/generateReportService'
 import validateReportParams from '../utils/generateReportValidation'
@@ -65,7 +64,7 @@ export default class GenerateReportController {
             backUrl: manageBackLink(req, CURRENT_URL),
           })
         } else {
-          const reportFilename = `${reportParams.crmType}Report.csv`
+          const reportFilename = this.getReportFilename(reportParams.crmType)
           req.session.successMessage = `The CRM report is being downloaded - ${reportFilename}`
           req.session.downloadUrl = `/generate-report/download?crmType=${reportParams.crmType}&startDate=${reportParams.startDate}&endDate=${reportParams.endDate}`
           req.session.formValues = reportParams
@@ -77,15 +76,21 @@ export default class GenerateReportController {
 
   download(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      const { crmType, startDate, endDate } = req.query
+      const reportParams: Record<string, string> = {
+        crmType: req.query.crmType as string,
+        startDate: req.query.startDate as string,
+        endDate: req.query.endDate as string,
+      }
+
+      // perform generate report
       const crmReportResponse = await this.generateReportService.getCrmReport({
-        crmType,
-        startDate: startDate as string,
-        endDate: endDate as string,
+        crmType: reportParams.crmType,
+        startDate: reportParams.startDate,
+        endDate: reportParams.endDate,
         profileAcceptedTypes: getProfileAcceptedTypes(res),
       })
 
-      const reportFilename = `${crmType}Report.csv`
+      const reportFilename = this.getReportFilename(reportParams.crmType)
       res.setHeader('Content-Type', 'text/csv')
       res.setHeader('Content-Disposition', `attachment; filename=${reportFilename}`)
       res.send(crmReportResponse.text)
@@ -102,5 +107,9 @@ export default class GenerateReportController {
       default:
         return 'Something went wrong with generate report'
     }
+  }
+
+  private getReportFilename(crmType: string): string {
+    return `${crmType}Report.csv`
   }
 }
