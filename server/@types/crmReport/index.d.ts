@@ -5,8 +5,14 @@ type CrmReportError = {
 
 type CrmReportRequest = {
   crmType: CrmType
-  startDate: string
-  endDate: string
+  decisionFromDate: string
+  decisionToDate: string
+  submittedFromDate?: string
+  submittedToDate?: string
+  createdFromDate?: string
+  createdToDate?: string
+  lastSubmittedFromDate?: string
+  lastSubmittedToDate?: string
   profileAcceptedTypes: string
 }
 

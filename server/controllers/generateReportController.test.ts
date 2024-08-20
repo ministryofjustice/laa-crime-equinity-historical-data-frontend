@@ -59,8 +59,8 @@ describe('GenerateReportController', () => {
       const requestHandler = generateReportController.submit()
       request.body = {
         crmType: 'crm4',
-        startDate: '2023-03-01',
-        endDate: '2023-03-30',
+        decisionFromDate: '2023-03-01',
+        decisionToDate: '2023-03-30',
       }
 
       await requestHandler(request, response, next)
@@ -68,9 +68,13 @@ describe('GenerateReportController', () => {
       expect(response.redirect).toHaveBeenCalledWith('/generate-report')
       expect(request.session.successMessage).toEqual('The CRM report is being downloaded - crm4Report.csv')
       expect(request.session.downloadUrl).toEqual(
-        '/generate-report/download?crmType=crm4&startDate=2023-03-01&endDate=2023-03-30',
+        '/generate-report/download?crmType=crm4&decisionFromDate=2023-03-01&decisionToDate=2023-03-30',
       )
-      expect(request.session.formValues).toEqual({ crmType: 'crm4', endDate: '2023-03-30', startDate: '2023-03-01' })
+      expect(request.session.formValues).toEqual({
+        crmType: 'crm4',
+        decisionToDate: '2023-03-30',
+        decisionFromDate: '2023-03-01',
+      })
     })
 
     it('should render generate report page with field errors', async () => {
@@ -78,8 +82,8 @@ describe('GenerateReportController', () => {
       const requestHandler = generateReportController.submit()
       request.body = {
         crmType: '',
-        startDate: '2023-03-01',
-        endDate: '2023-03-30',
+        decisionFromDate: '2023-03-01',
+        decisionToDate: '2023-03-30',
       }
 
       await requestHandler(request, response, next)
@@ -102,8 +106,8 @@ describe('GenerateReportController', () => {
         backUrl: '/',
         formValues: {
           crmType: '',
-          startDate: '2023-03-01',
-          endDate: '2023-03-30',
+          decisionFromDate: '2023-03-01',
+          decisionToDate: '2023-03-30',
         },
       })
     })
@@ -128,8 +132,8 @@ describe('GenerateReportController', () => {
       const requestHandler = generateReportController.submit()
       request.body = {
         crmType: 'crm4',
-        startDate: '2023-03-01',
-        endDate: '2023-03-30',
+        decisionFromDate: '2023-03-01',
+        decisionToDate: '2023-03-30',
       }
 
       await requestHandler(request, response, next)
@@ -147,8 +151,8 @@ describe('GenerateReportController', () => {
         backUrl: '/',
         formValues: {
           crmType: 'crm4',
-          startDate: '2023-03-01',
-          endDate: '2023-03-30',
+          decisionFromDate: '2023-03-01',
+          decisionToDate: '2023-03-30',
         },
       })
     })
@@ -164,8 +168,8 @@ describe('GenerateReportController', () => {
 
       request.query = {
         crmType: 'crm4',
-        startDate: '2023-03-01',
-        endDate: '2023-03-30',
+        decisionFromDate: '2023-03-01',
+        decisionToDate: '2023-03-30',
       }
 
       await requestHandler(request, response, next)
@@ -175,8 +179,8 @@ describe('GenerateReportController', () => {
       expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
       expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
         crmType: 'crm4',
-        startDate: '2023-03-01',
-        endDate: '2023-03-30',
+        decisionFromDate: '2023-03-01',
+        decisionToDate: '2023-03-30',
         profileAcceptedTypes: '1,4,5,6',
       })
     })

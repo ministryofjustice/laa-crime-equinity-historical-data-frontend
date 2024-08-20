@@ -8,21 +8,21 @@ const schema = Joi.object({
     .empty('')
     .valid('crm4', 'crm5', 'crm14')
     .messages({ 'any.required': 'CRM type must be selected', 'any.only': 'Invalid CRM type specified' }),
-  startDate: Joi.date().required().iso().empty('').messages({
-    'any.required': 'Start date must be specified',
-    'date.format': 'Start date must be a valid date',
+  decisionFromDate: Joi.date().required().iso().empty('').messages({
+    'any.required': 'Decision date from must be specified',
+    'date.format': 'Decision date from must be a valid date',
   }),
-  endDate: Joi.date().required().iso().empty('').min(Joi.ref('startDate')).messages({
-    'any.required': 'End date must be specified',
-    'date.format': 'End date must be a valid date',
-    'date.min': 'Your End date cannot be earlier than your Start date',
-    'any.ref': 'End date requires a valid Start date',
+  decisionToDate: Joi.date().required().iso().empty('').min(Joi.ref('decisionFromDate')).messages({
+    'any.required': 'Decision date to must be specified',
+    'date.format': 'Decision date to must be a valid date',
+    'date.min': 'Your Decision date to cannot be earlier than your Decision date from',
+    'any.ref': 'Decision date to requires a valid Decision date from',
   }),
 })
   .options({ allowUnknown: true, abortEarly: false })
   .custom(value => {
-    const { startDate, endDate } = value
-    const result = differenceInDays(endDate, startDate)
+    const { decisionFromDate, decisionToDate } = value
+    const result = differenceInDays(decisionToDate, decisionFromDate)
     if (result > 31) {
       throw Error('Invalid date range')
     }

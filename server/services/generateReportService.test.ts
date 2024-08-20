@@ -20,16 +20,16 @@ describe('Generate Report Service', () => {
 
     const result = await generateReportService.getCrmReport({
       crmType: 'crm4',
-      startDate: '2024-01-01',
-      endDate: '2024-31-01',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-31-01',
       profileAcceptedTypes: '1,4,5,6',
     })
 
     expect(result).toEqual(expectedResponse)
     expect(mockCrmReportApiClient.getCrmReport).toHaveBeenCalledWith({
       crmType: 'crm4',
-      startDate: '2024-01-01',
-      endDate: '2024-31-01',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-31-01',
       profileAcceptedTypes: '1,4,5,6',
     })
   })

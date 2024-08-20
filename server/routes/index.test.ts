@@ -403,8 +403,8 @@ describe('routes', () => {
         .post('/generate-report')
         .send({
           crmType: 'crm4',
-          startDate: '2023-03-01',
-          endDate: '2023-03-30',
+          decisionFromDate: '2023-03-01',
+          decisionToDate: '2023-03-30',
         })
         .expect(res => {
           expect(res.status).toEqual(302)
@@ -438,7 +438,7 @@ describe('routes', () => {
       })
 
       return request(app)
-        .get('/generate-report/download?crmType=crm4&startDate=2023-03-01&endDate=2023-03-30')
+        .get('/generate-report/download?crmType=crm4&decisionFromDate=2023-03-01&decisionToDate=2023-03-30')
         .expect('Content-Type', /text\/csv/)
         .expect('Content-Disposition', 'attachment; filename=crm4Report.csv')
         .expect(200)
@@ -446,8 +446,8 @@ describe('routes', () => {
           expect(res.text).toBe(reportData)
           expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
             crmType: 'crm4',
-            startDate: '2023-03-01',
-            endDate: '2023-03-30',
+            decisionFromDate: '2023-03-01',
+            decisionToDate: '2023-03-30',
             profileAcceptedTypes: '1,4,5,6',
           })
         })
@@ -468,7 +468,7 @@ describe('routes', () => {
       mockGenerateReportService.getCrmReport.mockRejectedValue(new Error('Error generating report'))
 
       return request(app)
-        .get('/generate-report/download?startDate=2023-03-01&endDate=2023-03-30')
+        .get('/generate-report/download?decisionFromDate=2023-03-01&decisionToDate=2023-03-30')
         .expect(500)
         .expect(res => {
           expect(res.text).toContain('Error generating report')

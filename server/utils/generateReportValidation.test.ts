@@ -4,8 +4,8 @@ describe('Generate Report Validation', () => {
   it('should validate report parameters', () => {
     const reportParams: Record<string, string> = {
       crmType: 'crm4',
-      startDate: '2024-01-01',
-      endDate: '2024-01-10',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-01-10',
     }
 
     const result = validateReportParams(reportParams)
@@ -14,13 +14,25 @@ describe('Generate Report Validation', () => {
   })
 
   it.each([
-    ['CRM type must be selected', 'crmType', { crmType: '', startDate: '2024-01-01', endDate: '2024-01-10' }],
-    ['Invalid CRM type specified', 'crmType', { crmType: 'xxx', startDate: '2024-01-01', endDate: '2024-01-10' }],
-    ['End date must be specified', 'endDate', { crmType: 'crm4', startDate: '2024-01-01', endDate: '' }],
     [
-      'Your End date cannot be earlier than your Start date',
-      'endDate',
-      { crmType: 'crm4', startDate: '2024-01-01', endDate: '2023-12-01' },
+      'CRM type must be selected',
+      'crmType',
+      { crmType: '', decisionFromDate: '2024-01-01', decisionToDate: '2024-01-10' },
+    ],
+    [
+      'Invalid CRM type specified',
+      'crmType',
+      { crmType: 'xxx', decisionFromDate: '2024-01-01', decisionToDate: '2024-01-10' },
+    ],
+    [
+      'Decision date to must be specified',
+      'decisionToDate',
+      { crmType: 'crm4', decisionFromDate: '2024-01-01', decisionToDate: '' },
+    ],
+    [
+      'Your Decision date to cannot be earlier than your Decision date from',
+      'decisionToDate',
+      { crmType: 'crm4', decisionFromDate: '2024-01-01', decisionToDate: '2023-12-01' },
     ],
   ])('should return "%s" error', (errorMessage: string, fieldName: string, reportParams: Record<string, string>) => {
     const result = validateReportParams(reportParams)
@@ -43,8 +55,8 @@ describe('Generate Report Validation', () => {
   it('should return "Date range cannot not be more than 1 month" error', () => {
     const reportParams: Record<string, string> = {
       crmType: 'crm4',
-      startDate: '2024-01-01',
-      endDate: '2024-04-01',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-04-01',
     }
     const result = validateReportParams(reportParams)
 
@@ -59,31 +71,31 @@ describe('Generate Report Validation', () => {
     })
   })
 
-  it('should return errors for missing Start Date', () => {
+  it('should return errors for missing Decision date from', () => {
     const reportParams: Record<string, string> = {
       crmType: 'crm4',
-      startDate: '',
-      endDate: '2024-04-01',
+      decisionFromDate: '',
+      decisionToDate: '2024-04-01',
     }
     const result = validateReportParams(reportParams)
 
     expect(result).toEqual({
       list: [
         {
-          href: '#startDate',
-          text: 'Start date must be specified',
+          href: '#decisionFromDate',
+          text: 'Decision date from must be specified',
         },
         {
-          href: '#endDate',
-          text: 'End date requires a valid Start date',
+          href: '#decisionToDate',
+          text: 'Decision date to requires a valid Decision date from',
         },
       ],
       messages: {
-        endDate: {
-          text: 'End date requires a valid Start date',
+        decisionToDate: {
+          text: 'Decision date to requires a valid Decision date from',
         },
-        startDate: {
-          text: 'Start date must be specified',
+        decisionFromDate: {
+          text: 'Decision date from must be specified',
         },
       },
     })
@@ -92,8 +104,8 @@ describe('Generate Report Validation', () => {
   it('should return multiple errors', () => {
     const reportParams: Record<string, string> = {
       crmType: 'xxx',
-      startDate: '5555-55-55',
-      endDate: '5555-55-55',
+      decisionFromDate: '5555-55-55',
+      decisionToDate: '5555-55-55',
     }
 
     const result = validateReportParams(reportParams)
@@ -101,13 +113,13 @@ describe('Generate Report Validation', () => {
     expect(result).toEqual({
       list: [
         { href: '#crmType', text: 'Invalid CRM type specified' },
-        { href: '#startDate', text: 'Start date must be a valid date' },
-        { href: '#endDate', text: 'End date must be a valid date' },
+        { href: '#decisionFromDate', text: 'Decision date from must be a valid date' },
+        { href: '#decisionToDate', text: 'Decision date to must be a valid date' },
       ],
       messages: {
         crmType: { text: 'Invalid CRM type specified' },
-        startDate: { text: 'Start date must be a valid date' },
-        endDate: { text: 'End date must be a valid date' },
+        decisionFromDate: { text: 'Decision date from must be a valid date' },
+        decisionToDate: { text: 'Decision date to must be a valid date' },
       },
     })
   })

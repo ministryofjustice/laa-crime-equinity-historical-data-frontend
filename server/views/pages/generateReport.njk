@@ -36,7 +36,7 @@
 
             <h1 class="govuk-heading-l">Generate reports</h1>
             <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
-            <span class="govuk-caption-m govuk-!-margin-bottom-4">To generate reports, choose the CRM type that you would like to generate and attribute it a date range. </span>
+            <span class="govuk-caption-m govuk-!-margin-bottom-4">To generate reports, choose the CRM type that you would like to generate and attribute it a date range.</span>
 
             <div class="form-background govuk-!-padding-top-4 govuk-!-padding-left-4">
                 <form action="/generate-report" method="POST">
@@ -76,26 +76,103 @@
                         <div class="govuk-grid-column-one-quarter">
                             {{ govukInput({
                                 label: {
-                                    text: "Start date"
+                                    text: "Decision date from"
                                 },
-                                id: "startDate",
-                                name: "startDate",
-                                value: formValues.startDate,
+                                id: "decisionFromDate",
+                                name: "decisionFromDate",
+                                value: formValues.decisionFromDate,
                                 type: "date",
-                                errorMessage: errors.messages.startDate
+                                errorMessage: errors.messages.decisionFromDate
                             }) }}
                         </div>
                         <div class="govuk-grid-column-one-quarter">
                             {{ govukInput({
                                 label: {
-                                    text: "End date"
+                                    text: "Decision date to"
                                 },
                                 classes: "govuk-!-width-full",
-                                id: "endDate",
-                                name: "endDate",
-                                value: formValues.endDate,
+                                id: "decisionToDate",
+                                name: "decisionToDate",
+                                value: formValues.decisionToDate,
                                 type: "date",
-                                errorMessage: errors.messages.endDate
+                                errorMessage: errors.messages.decisionToDate
+                            }) }}
+                        </div>
+                    </div>
+                    <div id="crm14Container" class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-quarter">
+                            {{ govukInput({
+                                label: {
+                                    text: "Submitted date from"
+                                },
+                                id: "submittedFromDate",
+                                name: "submittedFromDate",
+                                value: formValues.submittedFromDate,
+                                type: "date",
+                                errorMessage: errors.messages.submittedFromDate
+                            }) }}
+                        </div>
+                        <div class="govuk-grid-column-one-quarter">
+                            {{ govukInput({
+                                label: {
+                                    text: "Submitted date to"
+                                },
+                                classes: "govuk-!-width-full",
+                                id: "submittedToDate",
+                                name: "submittedToDate",
+                                value: formValues.submittedToDate,
+                                type: "date",
+                                errorMessage: errors.messages.submittedToDate
+                            }) }}
+                        </div>
+                        <div class="govuk-grid-column-one-quarter">
+                            {{ govukInput({
+                                label: {
+                                    text: "Created date from"
+                                },
+                                id: "createdFromDate",
+                                name: "createdFromDate",
+                                value: formValues.createdFromDate,
+                                type: "date",
+                                errorMessage: errors.messages.createdFromDate
+                            }) }}
+                        </div>
+                        <div class="govuk-grid-column-one-quarter">
+                            {{ govukInput({
+                                label: {
+                                    text: "Created date to"
+                                },
+                                classes: "govuk-!-width-full",
+                                id: "createdToDate",
+                                name: "createdToDate",
+                                value: formValues.createdToDate,
+                                type: "date",
+                                errorMessage: errors.messages.createdToDate
+                            }) }}
+                        </div>
+                        <div class="govuk-grid-column-one-quarter">
+                            {{ govukInput({
+                                label: {
+                                    text: "Last submitted date from"
+                                },
+                                id: "lastSubmittedFromDate",
+                                name: "lastSubmittedFromDate",
+                                value: formValues.lastSubmittedFromDate,
+                                type: "date",
+                                errorMessage: errors.messages.lastSubmittedFromDate
+                            }) }}
+                        </div>
+                        <div class="govuk-grid-column-one-quarter">
+                            {{ govukInput({
+                                label: {
+                                    text: "Last submitted date to"
+                                },
+                                classes: "govuk-!-width-full",
+                                id: "lastSubmittedToDate",
+                                name: "lastSubmittedToDate",
+                                value: formValues.lastSubmittedToDate,
+                                type: "date",
+                                errorMessage: errors.messages.lastSubmittedToDate
                             }) }}
                         </div>
                     </div>
@@ -115,5 +192,6 @@
     </div>
 {% endblock %}
 {% block pageScripts %}
+    <script src="/assets/toggleGenerateReport.js"></script>
     <script src="/assets/triggerDownload.js"></script>
 {% endblock %}

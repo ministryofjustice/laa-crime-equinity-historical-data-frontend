@@ -31,8 +31,8 @@ export default class GenerateReportController {
     return async (req: Request, res: Response): Promise<void> => {
       const reportParams: Record<string, string> = {
         crmType: req.body.crmType as string,
-        startDate: req.body.startDate as string,
-        endDate: req.body.endDate as string,
+        decisionFromDate: req.body.decisionFromDate as string,
+        decisionToDate: req.body.decisionToDate as string,
       }
       const validationErrors = validateReportParams(reportParams)
 
@@ -48,8 +48,8 @@ export default class GenerateReportController {
         // perform generate report
         const crmReportResponse = await this.generateReportService.getCrmReport({
           crmType: reportParams.crmType,
-          startDate: reportParams.startDate,
-          endDate: reportParams.endDate,
+          decisionFromDate: reportParams.decisionFromDate,
+          decisionToDate: reportParams.decisionToDate,
           profileAcceptedTypes: getProfileAcceptedTypes(res),
         })
 
@@ -66,7 +66,7 @@ export default class GenerateReportController {
         } else {
           const reportFilename = this.getReportFilename(reportParams.crmType)
           req.session.successMessage = `The CRM report is being downloaded - ${reportFilename}`
-          req.session.downloadUrl = `/generate-report/download?crmType=${reportParams.crmType}&startDate=${reportParams.startDate}&endDate=${reportParams.endDate}`
+          req.session.downloadUrl = `/generate-report/download?crmType=${reportParams.crmType}&decisionFromDate=${reportParams.decisionFromDate}&decisionToDate=${reportParams.decisionToDate}`
           req.session.formValues = reportParams
           res.redirect('/generate-report')
         }
@@ -78,15 +78,15 @@ export default class GenerateReportController {
     return async (req: Request, res: Response): Promise<void> => {
       const reportParams: Record<string, string> = {
         crmType: req.query.crmType as string,
-        startDate: req.query.startDate as string,
-        endDate: req.query.endDate as string,
+        decisionFromDate: req.query.decisionFromDate as string,
+        decisionToDate: req.query.decisionToDate as string,
       }
 
       // perform generate report
       const crmReportResponse = await this.generateReportService.getCrmReport({
         crmType: reportParams.crmType,
-        startDate: reportParams.startDate,
-        endDate: reportParams.endDate,
+        decisionFromDate: reportParams.decisionFromDate,
+        decisionToDate: reportParams.decisionToDate,
         profileAcceptedTypes: getProfileAcceptedTypes(res),
       })
 

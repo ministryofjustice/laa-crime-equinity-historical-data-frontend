@@ -29,8 +29,8 @@ describe('CRM Report Api Client', () => {
 
     const result = await crmReportApiClient.getCrmReport({
       crmType: 'crm4',
-      startDate: '2023-03-01',
-      endDate: '2023-03-30',
+      decisionFromDate: '2023-03-01',
+      decisionToDate: '2023-03-30',
       profileAcceptedTypes: '1,4,5,6',
     })
 

@@ -11,9 +11,9 @@ export default class CrmReportApiClient {
   }
 
   async getCrmReport(crmReportRequest: CrmReportRequest): Promise<CrmReportResponse> {
-    const { crmType, startDate, endDate, profileAcceptedTypes } = crmReportRequest
+    const { crmType, decisionFromDate, decisionToDate, profileAcceptedTypes } = crmReportRequest
     return CrmReportApiClient.restClient('Report API client', 'no_auth').get<CrmReportResponse>({
-      path: `/api/internal/v1/equinity/report/${crmType}/${startDate}/${endDate}`,
+      path: `/api/internal/v1/equinity/report/${crmType}/${decisionFromDate}/${decisionToDate}`,
       headers: {
         ...this.headers,
         profileAcceptedTypes,
