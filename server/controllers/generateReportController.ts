@@ -13,13 +13,13 @@ export default class GenerateReportController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      const { successMessage, downloadUrl } = req.session
+      const { successMessage, csvContent } = req.session
       req.session.successMessage = null
-      req.session.downloadUrl = null
+      req.session.csvContent = null
       const backUrl = manageBackLink(req, CURRENT_URL)
       res.render(VIEW_PATH, {
         successMessage,
-        downloadUrl,
+        csvContent,
         backUrl,
         formValues: req.session.formValues || {},
         errors: {},
@@ -34,6 +34,7 @@ export default class GenerateReportController {
         startDate: req.body.startDate as string,
         endDate: req.body.endDate as string,
       }
+
       const validationErrors = validateReportParams(reportParams)
 
       if (validationErrors) {
@@ -44,47 +45,40 @@ export default class GenerateReportController {
           backUrl: manageBackLink(req, CURRENT_URL),
         })
       } else {
-        const reportResponse = await this.generateReportService.getCrmReport(
-          req.body.startDate,
-          req.body.endDate,
-          getProfileAcceptedTypes(res),
-        )
+        try {
+          const reportResponse = await this.generateReportService.getCrmReport(
+            req.body.startDate,
+            req.body.endDate,
+            getProfileAcceptedTypes(res),
+          )
 
-        // Check for any errors in the report response
-        if (reportResponse.error) {
-          const errorStatus = reportResponse.error.status
-          const errorMessage = this.getErrorMessage(errorStatus)
-          const errors = buildErrors(reportResponse.error, () => errorMessage)
+          if (reportResponse.error) {
+            const errorStatus = reportResponse.error.status
+            const errorMessage = this.getErrorMessage(errorStatus)
+            const errors = buildErrors(reportResponse.error, () => errorMessage)
 
+            res.render(VIEW_PATH, {
+              results: [],
+              errors,
+              formValues: reportParams,
+              backUrl: manageBackLink(req, CURRENT_URL),
+            })
+          } else {
+            req.session.successMessage = 'The report was successfully generated and downloaded.'
+            req.session.csvContent = reportResponse.text
+            req.session.formValues = reportParams
+
+            res.redirect('/generate-report')
+          }
+        } catch (error) {
           res.render(VIEW_PATH, {
             results: [],
-            errors,
+            errors: { list: [{ text: 'Something went wrong while generating the report.' }] },
             formValues: reportParams,
             backUrl: manageBackLink(req, CURRENT_URL),
           })
-        } else {
-          req.session.successMessage = 'The report is being downloaded.'
-          req.session.downloadUrl = `/generate-report/download?startDate=${req.body.startDate}&endDate=${req.body.endDate}`
-          req.session.formValues = reportParams
-          res.redirect('/generate-report')
         }
       }
-    }
-  }
-
-  download(): RequestHandler {
-    return async (req: Request, res: Response): Promise<void> => {
-      const { startDate, endDate } = req.query
-
-      const profileAcceptedTypes = getProfileAcceptedTypes(res)
-      const response = await this.generateReportService.getCrmReport(
-        startDate as string,
-        endDate as string,
-        profileAcceptedTypes,
-      )
-      res.setHeader('Content-Type', 'text/csv')
-      res.setHeader('Content-Disposition', 'attachment; filename=crmReport.csv')
-      res.send(response.text)
     }
   }
 
@@ -96,7 +90,7 @@ export default class GenerateReportController {
       case 404:
         return 'No report data found'
       default:
-        return 'Something went wrong with generate report'
+        return 'Something went wrong with generating the report'
     }
   }
 }
