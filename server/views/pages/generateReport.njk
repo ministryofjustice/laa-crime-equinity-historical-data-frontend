@@ -43,7 +43,7 @@
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-one-half">
                             {{ govukSelect({
-                                id: "crmType",
+                                id: "crm-type",
                                 name: "crmType",
                                 value: formValues.crmType,
                                 errorMessage: errors.messages.crmType,
@@ -78,7 +78,7 @@
                                 label: {
                                     text: "Decision date from"
                                 },
-                                id: "decisionFromDate",
+                                id: "decision-from-date",
                                 name: "decisionFromDate",
                                 value: formValues.decisionFromDate,
                                 type: "date",
@@ -91,7 +91,7 @@
                                     text: "Decision date to"
                                 },
                                 classes: "govuk-!-width-full",
-                                id: "decisionToDate",
+                                id: "decision-to-date",
                                 name: "decisionToDate",
                                 value: formValues.decisionToDate,
                                 type: "date",
@@ -99,81 +99,88 @@
                             }) }}
                         </div>
                     </div>
-                    <div id="crm14Container" class="govuk-grid-row">
-                        <div class="govuk-grid-column-one-quarter">
-                            {{ govukInput({
-                                label: {
-                                    text: "Submitted date from"
-                                },
-                                id: "submittedFromDate",
-                                name: "submittedFromDate",
-                                value: formValues.submittedFromDate,
-                                type: "date",
-                                errorMessage: errors.messages.submittedFromDate
-                            }) }}
+                    <div id="crm14Container"
+                         class="{% if formValues.crmType !== 'crm14' %}hideContainer{% endif %}">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-one-quarter">
+                                {{ govukInput({
+                                    label: {
+                                        text: "Submitted date from"
+                                    },
+                                    id: "submitted-from-date",
+                                    name: "submittedFromDate",
+                                    value: formValues.submittedFromDate,
+                                    type: "date",
+                                    errorMessage: errors.messages.submittedFromDate
+                                }) }}
+                            </div>
+                            <div class="govuk-grid-column-one-quarter">
+                                {{ govukInput({
+                                    label: {
+                                        text: "Submitted date to"
+                                    },
+                                    classes: "govuk-!-width-full",
+                                    id: "submitted-to-date",
+                                    name: "submittedToDate",
+                                    value: formValues.submittedToDate,
+                                    type: "date",
+                                    errorMessage: errors.messages.submittedToDate
+                                }) }}
+                            </div>
                         </div>
-                        <div class="govuk-grid-column-one-quarter">
-                            {{ govukInput({
-                                label: {
-                                    text: "Submitted date to"
-                                },
-                                classes: "govuk-!-width-full",
-                                id: "submittedToDate",
-                                name: "submittedToDate",
-                                value: formValues.submittedToDate,
-                                type: "date",
-                                errorMessage: errors.messages.submittedToDate
-                            }) }}
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-one-quarter">
+                                {{ govukInput({
+                                    label: {
+                                        text: "Created date from"
+                                    },
+                                    id: "created-from-date",
+                                    name: "createdFromDate",
+                                    value: formValues.createdFromDate,
+                                    type: "date",
+                                    errorMessage: errors.messages.createdFromDate
+                                }) }}
+                            </div>
+                            <div class="govuk-grid-column-one-quarter">
+                                {{ govukInput({
+                                    label: {
+                                        text: "Created date to"
+                                    },
+                                    classes: "govuk-!-width-full",
+                                    id: "created-to-date",
+                                    name: "createdToDate",
+                                    value: formValues.createdToDate,
+                                    type: "date",
+                                    errorMessage: errors.messages.createdToDate
+                                }) }}
+                            </div>
                         </div>
-                        <div class="govuk-grid-column-one-quarter">
-                            {{ govukInput({
-                                label: {
-                                    text: "Created date from"
-                                },
-                                id: "createdFromDate",
-                                name: "createdFromDate",
-                                value: formValues.createdFromDate,
-                                type: "date",
-                                errorMessage: errors.messages.createdFromDate
-                            }) }}
-                        </div>
-                        <div class="govuk-grid-column-one-quarter">
-                            {{ govukInput({
-                                label: {
-                                    text: "Created date to"
-                                },
-                                classes: "govuk-!-width-full",
-                                id: "createdToDate",
-                                name: "createdToDate",
-                                value: formValues.createdToDate,
-                                type: "date",
-                                errorMessage: errors.messages.createdToDate
-                            }) }}
-                        </div>
-                        <div class="govuk-grid-column-one-quarter">
-                            {{ govukInput({
-                                label: {
-                                    text: "Last submitted date from"
-                                },
-                                id: "lastSubmittedFromDate",
-                                name: "lastSubmittedFromDate",
-                                value: formValues.lastSubmittedFromDate,
-                                type: "date",
-                                errorMessage: errors.messages.lastSubmittedFromDate
-                            }) }}
-                        </div>
-                        <div class="govuk-grid-column-one-quarter">
-                            {{ govukInput({
-                                label: {
-                                    text: "Last submitted date to"
-                                },
-                                classes: "govuk-!-width-full",
-                                id: "lastSubmittedToDate",
-                                name: "lastSubmittedToDate",
-                                value: formValues.lastSubmittedToDate,
-                                type: "date",
-                                errorMessage: errors.messages.lastSubmittedToDate
-                            }) }}
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-one-quarter">
+                                {{ govukInput({
+                                    label: {
+                                        text: "Last submitted date from"
+                                    },
+                                    id: "last-submitted-from-date",
+                                    name: "lastSubmittedFromDate",
+                                    value: formValues.lastSubmittedFromDate,
+                                    type: "date",
+                                    errorMessage: errors.messages.lastSubmittedFromDate
+                                }) }}
+                            </div>
+                            <div class="govuk-grid-column-one-quarter">
+                                {{ govukInput({
+                                    label: {
+                                        text: "Last submitted date to"
+                                    },
+                                    classes: "govuk-!-width-full",
+                                    id: "last-submitted-to-date",
+                                    name: "lastSubmittedToDate",
+                                    value: formValues.lastSubmittedToDate,
+                                    type: "date",
+                                    errorMessage: errors.messages.lastSubmittedToDate
+                                }) }}
+                            </div>
                         </div>
                     </div>
                     <div class="govuk-grid-row">
@@ -192,6 +199,5 @@
     </div>
 {% endblock %}
 {% block pageScripts %}
-    <script src="/assets/toggleGenerateReport.js"></script>
-    <script src="/assets/triggerDownload.js"></script>
+    <script src="/assets/generateReport.js"></script>
 {% endblock %}

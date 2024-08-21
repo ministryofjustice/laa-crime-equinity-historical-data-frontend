@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // trigger report download
+  const downloadUrl = document.getElementById('download-url')
+  if (downloadUrl) {
+    window.location.href = downloadUrl.value
+  }
+
+  // toggle CRM 14 fields
   const crmTypeDropDown = document.getElementById('crmType')
   if (crmTypeDropDown) {
     crmTypeDropDown.addEventListener('change', function () {
