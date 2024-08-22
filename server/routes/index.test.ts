@@ -438,13 +438,18 @@ describe('routes', () => {
       })
 
       return request(app)
-        .get('/generate-report/download?startDate=2023-03-01&endDate=2023-03-30')
+        .get('/generate-report/download?crmType=crm4&startDate=2023-03-01&endDate=2023-03-30')
         .expect('Content-Type', /text\/csv/)
-        .expect('Content-Disposition', 'attachment; filename=crmReport.csv')
+        .expect('Content-Disposition', 'attachment; filename=crm4Report.csv')
         .expect(200)
         .expect(res => {
           expect(res.text).toBe(reportData)
-          expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith('2023-03-01', '2023-03-30', '1,4,5,6')
+          expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
+            crmType: 'crm4',
+            startDate: '2023-03-01',
+            endDate: '2023-03-30',
+            profileAcceptedTypes: '1,4,5,6',
+          })
         })
     })
 

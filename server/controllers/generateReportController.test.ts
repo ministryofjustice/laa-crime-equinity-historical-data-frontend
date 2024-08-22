@@ -66,8 +66,10 @@ describe('GenerateReportController', () => {
       await requestHandler(request, response, next)
 
       expect(response.redirect).toHaveBeenCalledWith('/generate-report')
-      expect(request.session.successMessage).toEqual('The report is being downloaded.')
-      expect(request.session.downloadUrl).toEqual('/generate-report/download?startDate=2023-03-01&endDate=2023-03-30')
+      expect(request.session.successMessage).toEqual('The CRM report is being downloaded - crm4Report.csv')
+      expect(request.session.downloadUrl).toEqual(
+        '/generate-report/download?crmType=crm4&startDate=2023-03-01&endDate=2023-03-30',
+      )
       expect(request.session.formValues).toEqual({ crmType: 'crm4', endDate: '2023-03-30', startDate: '2023-03-01' })
     })
 
@@ -161,15 +163,22 @@ describe('GenerateReportController', () => {
       const requestHandler = generateReportController.download()
 
       request.query = {
+        crmType: 'crm4',
         startDate: '2023-03-01',
         endDate: '2023-03-30',
       }
 
       await requestHandler(request, response, next)
 
-      expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crmReport.csv')
+      expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'text/csv')
+      expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crm4Report.csv')
       expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
-      expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith('2023-03-01', '2023-03-30', '1,4,5,6')
+      expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
+        crmType: 'crm4',
+        startDate: '2023-03-01',
+        endDate: '2023-03-30',
+        profileAcceptedTypes: '1,4,5,6',
+      })
     })
   })
 })

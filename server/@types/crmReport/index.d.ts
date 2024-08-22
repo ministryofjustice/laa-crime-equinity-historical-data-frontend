@@ -1,9 +1,18 @@
-export type ReportError = {
+type CrmReportError = {
   status: number
   message: string
 }
 
-export type CrmReportResponse = {
-  text: string
-  error?: ReportError
+type CrmReportRequest = {
+  crmType: CrmType
+  startDate: string
+  endDate: string
+  profileAcceptedTypes: string
 }
+
+type CrmReportResponse = {
+  text: string
+  error?: CrmReportError
+}
+
+export { CrmReportRequest, CrmReportResponse, CrmReportError }

@@ -1,6 +1,6 @@
 import { CrmReportResponse } from '@crmReport'
-import CrmReportApiClient from '../data/api/crmReportApiClient'
 import GenerateReportService from './generateReportService'
+import CrmReportApiClient from '../data/api/crmReportApiClient'
 
 jest.mock('../data/api/crmReportApiClient')
 
@@ -8,7 +8,7 @@ describe('Generate Report Service', () => {
   let mockCrmReportApiClient: jest.Mocked<CrmReportApiClient>
 
   beforeEach(() => {
-    mockCrmReportApiClient = new CrmReportApiClient(null, null) as jest.Mocked<CrmReportApiClient>
+    mockCrmReportApiClient = new CrmReportApiClient(null) as jest.Mocked<CrmReportApiClient>
   })
 
   it('should return crm report', async () => {
@@ -18,10 +18,20 @@ describe('Generate Report Service', () => {
 
     const generateReportService = new GenerateReportService(mockCrmReportApiClient)
 
-    const result = await generateReportService.getCrmReport('01/03/2022', '30/03/2024', '1,4,5,6')
+    const result = await generateReportService.getCrmReport({
+      crmType: 'crm4',
+      startDate: '2024-01-01',
+      endDate: '2024-31-01',
+      profileAcceptedTypes: '1,4,5,6',
+    })
 
     expect(result).toEqual(expectedResponse)
-    expect(mockCrmReportApiClient.getCrmReport).toHaveBeenCalledWith('01/03/2022', '30/03/2024', '1,4,5,6')
+    expect(mockCrmReportApiClient.getCrmReport).toHaveBeenCalledWith({
+      crmType: 'crm4',
+      startDate: '2024-01-01',
+      endDate: '2024-31-01',
+      profileAcceptedTypes: '1,4,5,6',
+    })
   })
 })
 
