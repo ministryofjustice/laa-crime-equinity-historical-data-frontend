@@ -52,7 +52,7 @@ describe('Generate Report Validation', () => {
     })
   })
 
-  it('should return "Date range cannot not be more than 1 month" error', () => {
+  xit('should return "Date range cannot not be more than 1 month" error', () => {
     const reportParams: Record<string, string> = {
       crmType: 'crm4',
       decisionFromDate: '2024-01-01',

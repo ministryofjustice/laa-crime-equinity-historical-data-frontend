@@ -1,4 +1,5 @@
 import type { Request, RequestHandler, Response } from 'express'
+import { DateRange } from '@crmReport'
 import { getProfileAcceptedTypes } from '../utils/userProfileGroups'
 import GenerateReportService from '../services/generateReportService'
 import validateReportParams from '../utils/generateReportValidation'
@@ -13,17 +14,8 @@ export default class GenerateReportController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      const { successMessage, downloadUrl } = req.session
-      req.session.successMessage = null
-      req.session.downloadUrl = null
       const backUrl = manageBackLink(req, CURRENT_URL)
-      res.render(VIEW_PATH, {
-        successMessage,
-        downloadUrl,
-        backUrl,
-        formValues: req.session.formValues || {},
-        errors: {},
-      })
+      res.render(VIEW_PATH, { backUrl })
     }
   }
 
@@ -33,6 +25,12 @@ export default class GenerateReportController {
         crmType: req.body.crmType as string,
         decisionFromDate: req.body.decisionFromDate as string,
         decisionToDate: req.body.decisionToDate as string,
+        submittedFromDate: req.body.submittedFromDate as string,
+        submittedToDate: req.body.submittedToDate as string,
+        createdFromDate: req.body.createdFromDate as string,
+        createdToDate: req.body.createdToDate as string,
+        lastSubmittedFromDate: req.body.lastSubmittedFromDate as string,
+        lastSubmittedToDate: req.body.lastSubmittedToDate as string,
       }
       const validationErrors = validateReportParams(reportParams)
 
@@ -48,8 +46,8 @@ export default class GenerateReportController {
         // perform generate report
         const crmReportResponse = await this.generateReportService.getCrmReport({
           crmType: reportParams.crmType,
-          decisionFromDate: reportParams.decisionFromDate,
-          decisionToDate: reportParams.decisionToDate,
+          decisionFromDate: reportParams.decisionFromDate as string,
+          decisionToDate: reportParams.decisionToDate as string,
           profileAcceptedTypes: getProfileAcceptedTypes(res),
         })
 
@@ -64,36 +62,10 @@ export default class GenerateReportController {
             backUrl: manageBackLink(req, CURRENT_URL),
           })
         } else {
-          const reportFilename = this.getReportFilename(reportParams.crmType)
-          req.session.successMessage = `The CRM report is being downloaded - ${reportFilename}`
-          req.session.downloadUrl = `/generate-report/download?crmType=${reportParams.crmType}&decisionFromDate=${reportParams.decisionFromDate}&decisionToDate=${reportParams.decisionToDate}`
-          req.session.formValues = reportParams
-          res.redirect('/generate-report')
+          res.setHeader('Content-Disposition', `attachment; filename=${reportParams.crmType}Report.csv`)
+          res.send(crmReportResponse.text)
         }
       }
-    }
-  }
-
-  download(): RequestHandler {
-    return async (req: Request, res: Response): Promise<void> => {
-      const reportParams: Record<string, string> = {
-        crmType: req.query.crmType as string,
-        decisionFromDate: req.query.decisionFromDate as string,
-        decisionToDate: req.query.decisionToDate as string,
-      }
-
-      // perform generate report
-      const crmReportResponse = await this.generateReportService.getCrmReport({
-        crmType: reportParams.crmType,
-        decisionFromDate: reportParams.decisionFromDate,
-        decisionToDate: reportParams.decisionToDate,
-        profileAcceptedTypes: getProfileAcceptedTypes(res),
-      })
-
-      const reportFilename = this.getReportFilename(reportParams.crmType)
-      res.setHeader('Content-Type', 'text/csv')
-      res.setHeader('Content-Disposition', `attachment; filename=${reportFilename}`)
-      res.send(crmReportResponse.text)
     }
   }
 
@@ -107,9 +79,5 @@ export default class GenerateReportController {
       default:
         return 'Something went wrong with generate report'
     }
-  }
-
-  private getReportFilename(crmType: string): string {
-    return `${crmType}Report.csv`
   }
 }
