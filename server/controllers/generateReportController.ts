@@ -1,4 +1,7 @@
 import type { Request, RequestHandler, Response } from 'express'
+import { v4 as uuidv4 } from 'uuid'
+import path from 'path'
+import fs from 'fs'
 import { getProfileAcceptedTypes } from '../utils/userProfileGroups'
 import GenerateReportService from '../services/generateReportService'
 import validateReportParams from '../utils/generateReportValidation'
@@ -13,13 +16,13 @@ export default class GenerateReportController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      const { successMessage, csvContent } = req.session
+      const { successMessage, downloadUrl } = req.session
       req.session.successMessage = null
-      req.session.csvContent = null
+      req.session.downloadUrl = null
       const backUrl = manageBackLink(req, CURRENT_URL)
       res.render(VIEW_PATH, {
         successMessage,
-        csvContent,
+        downloadUrl,
         backUrl,
         formValues: req.session.formValues || {},
         errors: {},
@@ -64,8 +67,18 @@ export default class GenerateReportController {
               backUrl: manageBackLink(req, CURRENT_URL),
             })
           } else {
+            const dir = path.join(__dirname, '../../tmp')
+            if (!fs.existsSync(dir)) {
+              fs.mkdirSync(dir)
+            }
+            // Save the report to a temporary file
+            const fileName = `crmReport-${uuidv4()}.csv`
+            const filePath = path.join(__dirname, '../../tmp', fileName)
+
+            fs.writeFileSync(filePath, reportResponse.text)
+
             req.session.successMessage = 'The report was successfully generated and downloaded.'
-            req.session.csvContent = reportResponse.text
+            req.session.downloadUrl = `/download-report/${fileName}`
             req.session.formValues = reportParams
 
             res.redirect('/generate-report')
@@ -78,6 +91,26 @@ export default class GenerateReportController {
             backUrl: manageBackLink(req, CURRENT_URL),
           })
         }
+      }
+    }
+  }
+
+  download(): RequestHandler {
+    return (req: Request, res: Response) => {
+      const { fileName } = req.params
+      const filePath = path.join(__dirname, '../../tmp', fileName)
+
+      if (fs.existsSync(filePath)) {
+        res.download(filePath, fileName, err => {
+          if (err) {
+            res.status(500).send('Error downloading file')
+          } else {
+            //  delete the file after download if it's not needed anymore
+            fs.unlinkSync(filePath)
+          }
+        })
+      } else {
+        res.status(404).send('File not found')
       }
     }
   }

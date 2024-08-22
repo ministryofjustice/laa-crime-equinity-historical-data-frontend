@@ -14,8 +14,8 @@
         {{ backLink(backUrl) }}
         <main class="govuk-main-wrapper">
 
-            {% if csvContent %}
-                <input type="hidden" id="csv-content" value="{{ csvContent }}">
+            {% if downloadUrl %}
+                <input type="hidden" id="download-url" value="{{ downloadUrl }}">
             {% endif %}
 
             <!-- Display success message -->
