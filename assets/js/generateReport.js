@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   // toggle CRM 14 fields
-  const crmTypeDropDown = document.getElementById('crm-type')
+  const crmTypeDropDown = document.getElementById('crmType')
   if (crmTypeDropDown) {
     crmTypeDropDown.addEventListener('change', function () {
       const crm14Container = document.getElementById('crm14Container')

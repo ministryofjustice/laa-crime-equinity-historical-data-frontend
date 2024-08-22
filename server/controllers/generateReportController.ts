@@ -1,5 +1,4 @@
 import type { Request, RequestHandler, Response } from 'express'
-import { DateRange } from '@crmReport'
 import { getProfileAcceptedTypes } from '../utils/userProfileGroups'
 import GenerateReportService from '../services/generateReportService'
 import validateReportParams from '../utils/generateReportValidation'
@@ -48,6 +47,12 @@ export default class GenerateReportController {
           crmType: reportParams.crmType,
           decisionFromDate: reportParams.decisionFromDate as string,
           decisionToDate: reportParams.decisionToDate as string,
+          submittedFromDate: reportParams.submittedFromDate as string,
+          submittedToDate: reportParams.submittedToDate as string,
+          createdFromDate: reportParams.createdFromDate as string,
+          createdToDate: reportParams.createdToDate as string,
+          lastSubmittedFromDate: reportParams.lastSubmittedFromDate as string,
+          lastSubmittedToDate: reportParams.lastSubmittedToDate as string,
           profileAcceptedTypes: getProfileAcceptedTypes(res),
         })
 

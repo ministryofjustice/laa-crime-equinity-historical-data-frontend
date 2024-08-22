@@ -3,16 +3,8 @@ type CrmReportError = {
   message: string
 }
 
-export type DateRange = {
-  fromDate: string
-  toDate: string
-}
 type CrmReportRequest = {
   crmType: CrmType
-  decision?: DateRange
-  submitted?: DateRange
-  created?: DateRange
-  lastSubmitted?: DateRange
   decisionFromDate?: string
   decisionToDate?: string
   submittedFromDate?: string

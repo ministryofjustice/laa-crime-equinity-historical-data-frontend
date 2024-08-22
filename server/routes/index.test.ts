@@ -60,7 +60,7 @@ afterEach(() => {
   jest.resetAllMocks()
 })
 
-xdescribe('routes', () => {
+describe('routes', () => {
   describe('GET /', () => {
     it('should render index page', () => {
       return request(app)
@@ -407,8 +407,13 @@ xdescribe('routes', () => {
           decisionToDate: '2023-03-30',
         })
         .expect(res => {
-          expect(res.status).toEqual(302)
-          expect(res.headers.location).toEqual('/generate-report')
+          // res.setHeader('Content-Disposition', `attachment; filename=${reportParams.crmType}Report.csv`)
+          // res.send(crmReportResponse.text)
+          expect(res.headers['content-disposition']).toEqual('attachment; filename=crm4Report.csv')
+          expect(res.text).toEqual(
+            'Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number,Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted,Granting Caseworker\n' +
+              '031022/777,123456789,1234AB,Some Firm,Some Client,999999999,,No,2023-03-16,2023-03-16,Grant,a Psychiatrist,tyjtjtjt,4.0,50.0,Hour(s),200.0,0.0,200.0,200.0,Sym-G`',
+          )
         })
     })
 
@@ -425,53 +430,6 @@ xdescribe('routes', () => {
         .expect(403)
         .expect(res => {
           expect(res.text).toContain('Error: Forbidden')
-        })
-    })
-  })
-
-  describe('GET /generate-report/download', () => {
-    it('should download the generated report', async () => {
-      const reportData = 'sample,csv,data\n1,2,3'
-
-      mockGenerateReportService.getCrmReport.mockResolvedValue({
-        text: reportData,
-      })
-
-      return request(app)
-        .get('/generate-report/download?crmType=crm4&decisionFromDate=2023-03-01&decisionToDate=2023-03-30')
-        .expect('Content-Type', /text\/csv/)
-        .expect('Content-Disposition', 'attachment; filename=crm4Report.csv')
-        .expect(200)
-        .expect(res => {
-          expect(res.text).toBe(reportData)
-          expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
-            crmType: 'crm4',
-            decisionFromDate: '2023-03-01',
-            decisionToDate: '2023-03-30',
-            profileAcceptedTypes: '1,4,5,6',
-          })
-        })
-    })
-
-    it('should render error page with forbidden error', () => {
-      mockIsReportingAllowed.mockReturnValue(false)
-
-      return request(app)
-        .get('/generate-report/download?startDate=2023-03-01&endDate=2023-03-30')
-        .expect(403)
-        .expect(res => {
-          expect(res.text).toContain('Error: Forbidden')
-        })
-    })
-
-    it('should handle errors during report generation', async () => {
-      mockGenerateReportService.getCrmReport.mockRejectedValue(new Error('Error generating report'))
-
-      return request(app)
-        .get('/generate-report/download?decisionFromDate=2023-03-01&decisionToDate=2023-03-30')
-        .expect(500)
-        .expect(res => {
-          expect(res.text).toContain('Error generating report')
         })
     })
   })

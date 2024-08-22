@@ -1,6 +1,6 @@
-import Joi, { Err } from 'joi'
+import Joi from 'joi'
 import { differenceInDays } from 'date-fns'
-import { buildValidationErrors, Errors } from './errorDisplayHelper'
+import { buildValidationErrors, Errors, ErrorSummary } from './errorDisplayHelper'
 
 const schema = Joi.object({
   crmType: Joi.string()
@@ -12,7 +12,7 @@ const schema = Joi.object({
     'any.required': 'Decision date from must be specified',
     'date.format': 'Decision date from must be a valid date',
     'date.max': 'Your Decision date from cannot be later than your Decision date to',
-    'any.ref': 'End date requires a valid Decision date from',
+    'any.ref': 'Decision date to requires a valid Decision date from',
   }),
   decisionToDate: Joi.date().required().iso().empty('').min(Joi.ref('decisionFromDate')).messages({
     'any.required': 'Decision date to must be specified',
@@ -30,7 +30,7 @@ const schema = Joi.object({
     }
     return value
   })
-  .message('Date range cannot not be more than 1 month')
+  .message('Date range cannot be more than 1 month')
 
 const schemaCrm14 = Joi.object({
   crmType: Joi.string()
@@ -135,29 +135,34 @@ const validateCrm14ReportParams = (params: Record<string, string>): Errors => {
     return buildValidationErrors(error)
   }
 
-  const errors: Errors = { list: [] }
-  if (differenceInDays(params.decisionToDate, params.decisionFromDate) > 14) {
-    errors.list.push({ href: '#', text: 'Decision date range cannot not be more than 1 month' })
-  }
+  const dateRanges = [
+    ['Decision', params.decisionFromDate, params.decisionToDate],
+    ['Submitted', params.submittedFromDate, params.submittedToDate],
+    ['Created', params.createdFromDate, params.createdToDate],
+    ['Last submitted', params.lastSubmittedFromDate, params.lastSubmittedToDate],
+  ]
 
-  if (differenceInDays(params.submittedToDate, params.submittedFromDate) > 14) {
-    errors.list.push({ href: '#', text: 'Submitted date range cannot not be more than 1 month' })
-  }
+  const errorList: Array<ErrorSummary> = dateRanges
+    .map(dateRange => {
+      const [dateName, fromDate, toDate] = dateRange
+      if (differenceInDays(toDate, fromDate) > 14) {
+        return {
+          href: '#',
+          text: `${dateName} date range cannot be more than 2 weeks`,
+        } as ErrorSummary
+      }
+      return null
+    })
+    .filter(Boolean)
 
-  if (differenceInDays(params.createdToDate, params.createdFromDate) > 14) {
-    errors.list.push({ href: '#', text: 'Created date range cannot not be more than 1 month' })
-  }
-
-  if (differenceInDays(params.lastSubmittedToDate, params.lastSubmittedFromDate) > 14) {
-    errors.list.push({ href: '#', text: 'Last submitted date range cannot not be more than 1 month' })
-  }
-
-  if (errors.list.length > 0) {
-    return errors
+  if (errorList.length > 0) {
+    return {
+      list: errorList,
+    }
   }
 
   if (reportsParamsIsEmpty(params)) {
-    return { list: [{ href: '#', text: 'Enter at least one date range must be entered' }] }
+    return { list: [{ href: '#', text: 'Enter at least one date range' }] }
   }
   return null
 }

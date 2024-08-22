@@ -32,25 +32,17 @@ describe('GenerateReportController', () => {
   })
 
   describe('show()', () => {
-    xit('should render generate report page', async () => {
+    it('should render generate report page', async () => {
       const generateReportController = new GenerateReportController(mockGenerateReportService)
       const requestHandler = generateReportController.show()
 
       await requestHandler(request, response, next)
 
-      expect(response.render).toHaveBeenCalledWith('pages/generateReport', {
-        backUrl: '/',
-        successMessage: 'Download successful',
-        downloadUrl: '/download-url',
-        formValues: {},
-        errors: {},
-      })
-      expect(request.session.successMessage).toBeNull()
-      expect(request.session.downloadUrl).toBeNull()
+      expect(response.render).toHaveBeenCalledWith('pages/generateReport', { backUrl: '/' })
     })
   })
 
-  xdescribe('submit()', () => {
+  describe('submit()', () => {
     it('should redirect to download the requested CRM report', async () => {
       const crmReportResponse = getCrmReportResponse()
       mockGenerateReportService.getCrmReport.mockResolvedValue(crmReportResponse)
@@ -65,15 +57,14 @@ describe('GenerateReportController', () => {
 
       await requestHandler(request, response, next)
 
-      expect(response.redirect).toHaveBeenCalledWith('/generate-report')
-      expect(request.session.successMessage).toEqual('The CRM report is being downloaded - crm4Report.csv')
-      expect(request.session.downloadUrl).toEqual(
-        '/generate-report/download?crmType=crm4&decisionFromDate=2023-03-01&decisionToDate=2023-03-30',
-      )
-      expect(request.session.formValues).toEqual({
+      expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crm4Report.csv')
+      expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
+
+      expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
         crmType: 'crm4',
-        decisionToDate: '2023-03-30',
         decisionFromDate: '2023-03-01',
+        decisionToDate: '2023-03-30',
+        profileAcceptedTypes: '1,4,5,6',
       })
     })
 

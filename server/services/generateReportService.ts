@@ -7,6 +7,9 @@ export default class GenerateReportService {
 
   async getCrmReport(crmReportRequest: CrmReportRequest): Promise<CrmReportResponse> {
     try {
+      if (crmReportRequest.crmType === 'crm14') {
+        return await this.crmReportApiClient.getCrm14Report(crmReportRequest)
+      }
       return await this.crmReportApiClient.getCrmReport(crmReportRequest)
     } catch (error) {
       logger.error('Report API error', error)
