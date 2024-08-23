@@ -18,10 +18,7 @@ describe('GenerateReportController', () => {
 
   beforeEach(() => {
     request = createMock<Request>({
-      session: {
-        successMessage: 'Download successful',
-        downloadUrl: '/download-url',
-      },
+      session: {},
     })
     response = createMock<Response>({})
     mockGetProfileAcceptedTypes = getProfileAcceptedTypes as jest.Mock
@@ -40,18 +37,12 @@ describe('GenerateReportController', () => {
 
       expect(response.render).toHaveBeenCalledWith('pages/generateReport', {
         backUrl: '/',
-        successMessage: 'Download successful',
-        downloadUrl: '/download-url',
-        formValues: {},
-        errors: {},
       })
-      expect(request.session.successMessage).toBeNull()
-      expect(request.session.downloadUrl).toBeNull()
     })
   })
 
   describe('submit()', () => {
-    it('should redirect to download the requested CRM report', async () => {
+    it('should send the requested CRM report as a download', async () => {
       const crmReportResponse = getCrmReportResponse()
       mockGenerateReportService.getCrmReport.mockResolvedValue(crmReportResponse)
 
@@ -65,12 +56,9 @@ describe('GenerateReportController', () => {
 
       await requestHandler(request, response, next)
 
-      expect(response.redirect).toHaveBeenCalledWith('/generate-report')
-      expect(request.session.successMessage).toEqual('The CRM report is being downloaded - crm4Report.csv')
-      expect(request.session.downloadUrl).toEqual(
-        '/generate-report/download?crmType=crm4&startDate=2023-03-01&endDate=2023-03-30',
-      )
-      expect(request.session.formValues).toEqual({ crmType: 'crm4', endDate: '2023-03-30', startDate: '2023-03-01' })
+      expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'text/csv')
+      expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crm4Report.csv')
+      expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
     })
 
     it('should render generate report page with field errors', async () => {
@@ -153,34 +141,6 @@ describe('GenerateReportController', () => {
       })
     })
   })
-
-  describe('download()', () => {
-    it('should handle /generate-report/download route and generate the report', async () => {
-      const crmReportResponse = getCrmReportResponse()
-      mockGenerateReportService.getCrmReport.mockResolvedValue(crmReportResponse)
-
-      const generateReportController = new GenerateReportController(mockGenerateReportService)
-      const requestHandler = generateReportController.download()
-
-      request.query = {
-        crmType: 'crm4',
-        startDate: '2023-03-01',
-        endDate: '2023-03-30',
-      }
-
-      await requestHandler(request, response, next)
-
-      expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'text/csv')
-      expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crm4Report.csv')
-      expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
-      expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
-        crmType: 'crm4',
-        startDate: '2023-03-01',
-        endDate: '2023-03-30',
-        profileAcceptedTypes: '1,4,5,6',
-      })
-    })
-  })
 })
 
 const getCrmReportResponse = (): CrmReportResponse => {
@@ -190,6 +150,6 @@ const getCrmReportResponse = (): CrmReportResponse => {
       'Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit,Total Cost,Additional Expenditure,' +
       'Total Authority,Total Granted,Granting Caseworker\n' +
       '031022/777,123456789,1234AB,Some Firm,Some Client,999999999,,No,2023-03-16,2023-03-16,Grant,a Psychiatrist,' +
-      'tyjtjtjt,4.0,50.0,Hour(s),200.0,0.0,200.0,200.0,Sym-G`',
+      'tyjtjtjt,4.0,50.0,Hour(s),200.0,0.0,200.0,200.0,Sym-G',
   }
 }
