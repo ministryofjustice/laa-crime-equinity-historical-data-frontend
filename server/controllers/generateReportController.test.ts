@@ -37,8 +37,6 @@ describe('GenerateReportController', () => {
 
       expect(response.render).toHaveBeenCalledWith('pages/generateReport', {
         backUrl: '/',
-        formValues: {},
-        errors: {},
       })
     })
   })
@@ -140,34 +138,6 @@ describe('GenerateReportController', () => {
           startDate: '2023-03-01',
           endDate: '2023-03-30',
         },
-      })
-    })
-  })
-
-  describe('download()', () => {
-    it('should handle /generate-report/download route and generate the report', async () => {
-      const crmReportResponse = getCrmReportResponse()
-      mockGenerateReportService.getCrmReport.mockResolvedValue(crmReportResponse)
-
-      const generateReportController = new GenerateReportController(mockGenerateReportService)
-      const requestHandler = generateReportController.download()
-
-      request.query = {
-        crmType: 'crm4',
-        startDate: '2023-03-01',
-        endDate: '2023-03-30',
-      }
-
-      await requestHandler(request, response, next)
-
-      expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'text/csv')
-      expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crm4Report.csv')
-      expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
-      expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
-        crmType: 'crm4',
-        startDate: '2023-03-01',
-        endDate: '2023-03-30',
-        profileAcceptedTypes: '1,4,5,6',
       })
     })
   })
