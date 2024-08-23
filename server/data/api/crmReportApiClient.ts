@@ -1,6 +1,7 @@
 import { EqApiHeader } from '@eqApi'
-import { CrmReportRequest, CrmReportResponse } from '@crmReport'
+import { CrmReportRequest } from '@crmReport'
 import { format } from 'date-fns'
+import superagent from 'superagent'
 import RestClient from '../restClient'
 import config from '../../config'
 
@@ -13,19 +14,19 @@ export default class CrmReportApiClient {
     return new RestClient(name, config.apis.eqApi, token)
   }
 
-  async getCrmReport(crmReportRequest: CrmReportRequest): Promise<CrmReportResponse> {
+  async getCrmReport(crmReportRequest: CrmReportRequest): Promise<superagent.Response> {
     const { crmType, decisionFromDate, decisionToDate, profileAcceptedTypes } = crmReportRequest
-    return CrmReportApiClient.restClient('Report API client', 'no_auth').get<CrmReportResponse>({
+    return CrmReportApiClient.restClient('Report API client', 'no_auth').get<superagent.Response>({
       path: `/api/internal/v1/equinity/report/${crmType}/${decisionFromDate}/${decisionToDate}`,
       headers: {
         ...this.headers,
         profileAcceptedTypes,
       },
-      raw: true,
+      raw: true, // handle API plain-text response data
     })
   }
 
-  async getCrm14Report(crmReportRequest: CrmReportRequest) {
+  async getCrm14Report(crmReportRequest: CrmReportRequest): Promise<string> {
     const {
       crmType,
       decisionFromDate,
@@ -38,12 +39,13 @@ export default class CrmReportApiClient {
       lastSubmittedToDate,
       profileAcceptedTypes,
     } = crmReportRequest
-    return CrmReportApiClient.restClient('Report API client', 'no_auth').get<CrmReportResponse>({
+    return CrmReportApiClient.restClient('Report API client', 'no_auth').get<string>({
       path: `/api/internal/v1/equinity/report/${crmType}/`,
       headers: {
         ...this.headers,
         profileAcceptedTypes,
       },
+      responseType: 'blob', // handle API binary response data
       query: {
         filterByDecision: this.getFilterByValue(decisionFromDate, decisionToDate),
         decisionFrom: this.todayDateIfEmpty(decisionFromDate),
@@ -58,7 +60,6 @@ export default class CrmReportApiClient {
         lastSubmittedFrom: this.todayDateIfEmpty(lastSubmittedFromDate),
         lastSubmittedTo: this.todayDateIfEmpty(lastSubmittedToDate),
       },
-      raw: true,
     })
   }
 

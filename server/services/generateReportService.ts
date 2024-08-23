@@ -8,13 +8,24 @@ export default class GenerateReportService {
   async getCrmReport(crmReportRequest: CrmReportRequest): Promise<CrmReportResponse> {
     try {
       if (crmReportRequest.crmType === 'crm14') {
-        return await this.crmReportApiClient.getCrm14Report(crmReportRequest)
+        // Get CRM 14 report
+        const response = await this.crmReportApiClient.getCrm14Report(crmReportRequest)
+        return successResponse(response)
       }
-      return await this.crmReportApiClient.getCrmReport(crmReportRequest)
+
+      // Get CRM 4 or CRM 5 report
+      const response = await this.crmReportApiClient.getCrmReport(crmReportRequest)
+      return successResponse(response.text)
     } catch (error) {
       logger.error('Report API error', error)
       return errorResponse(error.status, error.message)
     }
+  }
+}
+
+const successResponse = (data: string): CrmReportResponse => {
+  return {
+    text: data,
   }
 }
 

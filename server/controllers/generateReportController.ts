@@ -1,4 +1,5 @@
 import type { Request, RequestHandler, Response } from 'express'
+import { CrmReportRequest } from '@crmReport'
 import { getProfileAcceptedTypes } from '../utils/userProfileGroups'
 import GenerateReportService from '../services/generateReportService'
 import validateReportParams from '../utils/generateReportValidation'
@@ -13,8 +14,17 @@ export default class GenerateReportController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
+      const { successMessage, downloadUrl } = req.session
+      req.session.successMessage = null
+      req.session.downloadUrl = null
       const backUrl = manageBackLink(req, CURRENT_URL)
-      res.render(VIEW_PATH, { backUrl })
+      res.render(VIEW_PATH, {
+        successMessage,
+        downloadUrl,
+        backUrl,
+        formValues: req.session.formValues || {},
+        errors: {},
+      })
     }
   }
 
@@ -43,18 +53,8 @@ export default class GenerateReportController {
         })
       } else {
         // perform generate report
-        const crmReportResponse = await this.generateReportService.getCrmReport({
-          crmType: reportParams.crmType,
-          decisionFromDate: reportParams.decisionFromDate as string,
-          decisionToDate: reportParams.decisionToDate as string,
-          submittedFromDate: reportParams.submittedFromDate as string,
-          submittedToDate: reportParams.submittedToDate as string,
-          createdFromDate: reportParams.createdFromDate as string,
-          createdToDate: reportParams.createdToDate as string,
-          lastSubmittedFromDate: reportParams.lastSubmittedFromDate as string,
-          lastSubmittedToDate: reportParams.lastSubmittedToDate as string,
-          profileAcceptedTypes: getProfileAcceptedTypes(res),
-        })
+        const crmReportRequest = this.buildReportRequest(reportParams, getProfileAcceptedTypes(res))
+        const crmReportResponse = await this.generateReportService.getCrmReport(crmReportRequest)
 
         // check for any errors in the report response
         if (crmReportResponse.error) {
@@ -67,10 +67,38 @@ export default class GenerateReportController {
             backUrl: manageBackLink(req, CURRENT_URL),
           })
         } else {
-          res.setHeader('Content-Disposition', `attachment; filename=${reportParams.crmType}Report.csv`)
-          res.send(crmReportResponse.text)
+          const reportFilename = this.getReportFilename(reportParams.crmType)
+          req.session.successMessage = `The CRM report is being downloaded - ${reportFilename}`
+          req.session.downloadUrl = `/generate-report/download?crmType=${reportParams.crmType}&decisionFromDate=${reportParams.decisionFromDate}&decisionToDate=${reportParams.decisionToDate}`
+          req.session.formValues = reportParams
+          res.redirect('/generate-report')
         }
       }
+    }
+  }
+
+  download(): RequestHandler {
+    return async (req: Request, res: Response): Promise<void> => {
+      const reportParams: Record<string, string> = {
+        crmType: req.query.crmType as string,
+        decisionFromDate: req.query.decisionFromDate as string,
+        decisionToDate: req.query.decisionToDate as string,
+        submittedFromDate: req.query.submittedFromDate as string,
+        submittedToDate: req.query.submittedToDate as string,
+        createdFromDate: req.query.createdFromDate as string,
+        createdToDate: req.query.createdToDate as string,
+        lastSubmittedFromDate: req.query.lastSubmittedFromDate as string,
+        lastSubmittedToDate: req.query.lastSubmittedToDate as string,
+      }
+
+      // perform generate report
+      const crmReportRequest = this.buildReportRequest(reportParams, getProfileAcceptedTypes(res))
+      const crmReportResponse = await this.generateReportService.getCrmReport(crmReportRequest)
+
+      const reportFilename = this.getReportFilename(reportParams.crmType)
+      res.setHeader('Content-Type', 'text/csv')
+      res.setHeader('Content-Disposition', `attachment; filename=${reportFilename}`)
+      res.send(crmReportResponse.text)
     }
   }
 
@@ -84,5 +112,24 @@ export default class GenerateReportController {
       default:
         return 'Something went wrong with generate report'
     }
+  }
+
+  private buildReportRequest(reportParams: Record<string, string>, profileAcceptedTypes: string): CrmReportRequest {
+    return {
+      crmType: reportParams.crmType,
+      decisionFromDate: reportParams.decisionFromDate,
+      decisionToDate: reportParams.decisionToDate,
+      submittedFromDate: reportParams.submittedFromDate,
+      submittedToDate: reportParams.submittedToDate,
+      createdFromDate: reportParams.createdFromDate,
+      createdToDate: reportParams.createdToDate,
+      lastSubmittedFromDate: reportParams.lastSubmittedFromDate,
+      lastSubmittedToDate: reportParams.lastSubmittedToDate,
+      profileAcceptedTypes,
+    }
+  }
+
+  private getReportFilename(crmType: string): string {
+    return `${crmType}Report.csv`
   }
 }

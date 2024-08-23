@@ -1,5 +1,6 @@
 import Joi from 'joi'
 import { differenceInDays } from 'date-fns'
+import { CrmReportRequest } from '@crmReport'
 import { buildValidationErrors, Errors, ErrorSummary } from './errorDisplayHelper'
 
 const schema = Joi.object({
@@ -135,7 +136,7 @@ const validateCrm14ReportParams = (params: Record<string, string>): Errors => {
     return buildValidationErrors(error)
   }
 
-  const dateRanges = [
+  const dateRanges: Array<Array<string>> = [
     ['Decision', params.decisionFromDate, params.decisionToDate],
     ['Submitted', params.submittedFromDate, params.submittedToDate],
     ['Created', params.createdFromDate, params.createdToDate],
@@ -161,13 +162,13 @@ const validateCrm14ReportParams = (params: Record<string, string>): Errors => {
     }
   }
 
-  if (reportsParamsIsEmpty(params)) {
+  if (reportParamsIsEmpty(params)) {
     return { list: [{ href: '#', text: 'Enter at least one date range' }] }
   }
   return null
 }
 
-const reportsParamsIsEmpty = (params: Record<string, string>): boolean => {
-  // ignore page query parameter
+const reportParamsIsEmpty = (params: Record<string, string>): boolean => {
+  // ignore crmType parameter
   return !Object.keys(params).some((key: string) => key !== 'crmType' && params[key] && params[key].length > 0)
 }
