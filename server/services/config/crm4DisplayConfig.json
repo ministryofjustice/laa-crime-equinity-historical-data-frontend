@@ -233,8 +233,7 @@
           "fields": [
             {
               "label": "No. of minutes",
-              "apiField": "ExpenditureDetails.Transcription.numMin",
-              "type": "currency"
+              "apiField": "ExpenditureDetails.Transcription.numMin"
             },
             {
               "label": "Cost per minute",
@@ -253,8 +252,7 @@
           "fields": [
             {
               "label": "No. of hours",
-              "apiField": "ExpenditureDetails.Translator.numWords",
-              "type": "currency"
+              "apiField": "ExpenditureDetails.Translator.numWords"
             },
             {
               "label": "Cost of 1000 words",
@@ -273,8 +271,7 @@
           "fields": [
             {
               "label": "Quantity",
-              "apiField": "ExpenditureDetails.Other.quantity",
-              "type": "currency"
+              "apiField": "ExpenditureDetails.Other.quantity"
             },
             {
               "label": "Cost/ Rate",
@@ -293,8 +290,7 @@
           "fields": [
             {
               "label": "No. of pages",
-              "apiField": "ExpenditureDetails.Photocopying.numPages",
-              "type": "currency"
+              "apiField": "ExpenditureDetails.Photocopying.numPages"
             },
             {
               "label": "Cost per page",
