@@ -1,9 +1,9 @@
 import { EqApiHeader } from '@eqApi'
 import { CrmReportRequest } from '@crmReport'
-import { format } from 'date-fns'
 import superagent from 'superagent'
 import RestClient from '../restClient'
 import config from '../../config'
+import { currentIsoDate } from '../../utils/utils'
 
 type FilterBy = 0 | 1
 
@@ -47,27 +47,27 @@ export default class CrmReportApiClient {
       },
       responseType: 'blob', // handle API binary response data
       query: {
-        filterByDecision: this.getFilterByValue(decisionFromDate, decisionToDate),
+        filterByDecision: this.getFilterBy(decisionFromDate, decisionToDate),
         decisionFrom: this.todayDateIfEmpty(decisionFromDate),
         decisionTo: this.todayDateIfEmpty(decisionToDate),
-        filterBySubmit: this.getFilterByValue(submittedFromDate, submittedToDate),
+        filterBySubmit: this.getFilterBy(submittedFromDate, submittedToDate),
         submittedFrom: this.todayDateIfEmpty(submittedFromDate),
         submittedTo: this.todayDateIfEmpty(submittedToDate),
-        filterByCreation: this.getFilterByValue(createdFromDate, createdToDate),
+        filterByCreation: this.getFilterBy(createdFromDate, createdToDate),
         createdFrom: this.todayDateIfEmpty(createdFromDate),
         createdTo: this.todayDateIfEmpty(createdToDate),
-        filterByLastSubmit: this.getFilterByValue(lastSubmittedFromDate, lastSubmittedToDate),
+        filterByLastSubmit: this.getFilterBy(lastSubmittedFromDate, lastSubmittedToDate),
         lastSubmittedFrom: this.todayDateIfEmpty(lastSubmittedFromDate),
         lastSubmittedTo: this.todayDateIfEmpty(lastSubmittedToDate),
       },
     })
   }
 
-  private getFilterByValue(fromDate: string, toDate: string): FilterBy {
+  private getFilterBy(fromDate: string, toDate: string): FilterBy {
     return fromDate && toDate ? 1 : 0
   }
 
   private todayDateIfEmpty(field: string): string {
-    return field || format(new Date(), 'yyyy-MM-dd')
+    return field || currentIsoDate()
   }
 }
