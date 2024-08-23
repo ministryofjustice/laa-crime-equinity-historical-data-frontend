@@ -81,8 +81,6 @@ export default function routes({
 
   post('/generate-report', generateReportController.submit(), checkReportingAllowed)
 
-  get('/generate-report/download', generateReportController.download(), checkReportingAllowed)
-
   get('/download-evidence', downloadEvidenceController.download())
 
   return router

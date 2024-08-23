@@ -389,7 +389,7 @@ describe('routes', () => {
   })
 
   describe('POST /generate-report', () => {
-    it('should post generate report form and redirect to download', () => {
+    it('should generate and download the CRM report as a CSV', () => {
       mockGenerateReportService.getCrmReport.mockResolvedValue({
         text:
           'Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number,Maat ID,Prison Law,Date Received,' +
@@ -406,9 +406,11 @@ describe('routes', () => {
           startDate: '2023-03-01',
           endDate: '2023-03-30',
         })
+        .expect('Content-Type', 'text/csv; charset=utf-8')
+        .expect('Content-Disposition', 'attachment; filename=crm4Report.csv')
+        .expect(200)
         .expect(res => {
-          expect(res.status).toEqual(302)
-          expect(res.headers.location).toEqual('/generate-report')
+          expect(res.text).toContain('Client UFN,Usn,Provider Account,Firm Name,Client Name')
         })
     })
 
@@ -425,53 +427,6 @@ describe('routes', () => {
         .expect(403)
         .expect(res => {
           expect(res.text).toContain('Error: Forbidden')
-        })
-    })
-  })
-
-  describe('GET /generate-report/download', () => {
-    it('should download the generated report', async () => {
-      const reportData = 'sample,csv,data\n1,2,3'
-
-      mockGenerateReportService.getCrmReport.mockResolvedValue({
-        text: reportData,
-      })
-
-      return request(app)
-        .get('/generate-report/download?crmType=crm4&startDate=2023-03-01&endDate=2023-03-30')
-        .expect('Content-Type', /text\/csv/)
-        .expect('Content-Disposition', 'attachment; filename=crm4Report.csv')
-        .expect(200)
-        .expect(res => {
-          expect(res.text).toBe(reportData)
-          expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
-            crmType: 'crm4',
-            startDate: '2023-03-01',
-            endDate: '2023-03-30',
-            profileAcceptedTypes: '1,4,5,6',
-          })
-        })
-    })
-
-    it('should render error page with forbidden error', () => {
-      mockIsReportingAllowed.mockReturnValue(false)
-
-      return request(app)
-        .get('/generate-report/download?startDate=2023-03-01&endDate=2023-03-30')
-        .expect(403)
-        .expect(res => {
-          expect(res.text).toContain('Error: Forbidden')
-        })
-    })
-
-    it('should handle errors during report generation', async () => {
-      mockGenerateReportService.getCrmReport.mockRejectedValue(new Error('Error generating report'))
-
-      return request(app)
-        .get('/generate-report/download?startDate=2023-03-01&endDate=2023-03-30')
-        .expect(500)
-        .expect(res => {
-          expect(res.text).toContain('Error generating report')
         })
     })
   })

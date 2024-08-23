@@ -13,13 +13,12 @@ export default class GenerateReportController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      const { successMessage, downloadUrl } = req.session
-      req.session.successMessage = null
-      req.session.downloadUrl = null
+      // Clear session errors
+      req.session.errors = null
+      req.session.errorSummary = null
+
       const backUrl = manageBackLink(req, CURRENT_URL)
       res.render(VIEW_PATH, {
-        successMessage,
-        downloadUrl,
         backUrl,
         formValues: req.session.formValues || {},
         errors: {},
@@ -64,11 +63,9 @@ export default class GenerateReportController {
             backUrl: manageBackLink(req, CURRENT_URL),
           })
         } else {
-          const reportFilename = this.getReportFilename(reportParams.crmType)
-          req.session.successMessage = `The CRM report is being downloaded - ${reportFilename}`
-          req.session.downloadUrl = `/generate-report/download?crmType=${reportParams.crmType}&startDate=${reportParams.startDate}&endDate=${reportParams.endDate}`
-          req.session.formValues = reportParams
-          res.redirect('/generate-report')
+          res.setHeader('Content-Type', 'text/csv')
+          res.setHeader('Content-Disposition', `attachment; filename=${this.getReportFilename(reportParams.crmType)}`)
+          res.send(crmReportResponse.text)
         }
       }
     }
