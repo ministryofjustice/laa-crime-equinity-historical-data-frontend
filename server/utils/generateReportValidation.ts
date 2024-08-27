@@ -1,6 +1,5 @@
 import Joi from 'joi'
 import { differenceInDays } from 'date-fns'
-import { CrmReportRequest } from '@crmReport'
 import { buildValidationErrors, Errors, ErrorSummary } from './errorDisplayHelper'
 
 const schema = Joi.object({
@@ -24,14 +23,14 @@ const schema = Joi.object({
 })
   .options({ allowUnknown: true, abortEarly: false })
   .custom(value => {
-    const { startDate, endDate } = value
-    const result = differenceInDays(endDate, startDate)
+    const { decisionFromDate, decisionToDate } = value
+    const result = differenceInDays(decisionToDate, decisionFromDate)
     if (result > 31) {
       throw Error('Invalid date range')
     }
     return value
   })
-  .message('Date range cannot be more than 1 month')
+  .message('Decision date range cannot be more than 1 month')
 
 const schemaCrm14 = Joi.object({
   crmType: Joi.string()
@@ -159,6 +158,7 @@ const validateCrm14ReportParams = (params: Record<string, string>): Errors => {
   if (errorList.length > 0) {
     return {
       list: errorList,
+      messages: {},
     }
   }
 
