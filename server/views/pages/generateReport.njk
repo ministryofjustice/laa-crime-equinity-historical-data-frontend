@@ -14,29 +14,18 @@
         {{ backLink(backUrl) }}
         <main class="govuk-main-wrapper">
 
-            {% if downloadUrl %}
-                <input type="hidden" id="download-url" value="{{ downloadUrl }}">
-            {% endif %}
-
-            <!-- Display success message -->
-            {% if successMessage %}
-                {{ govukNotificationBanner({
-                    titleText: "Success",
-                    text: successMessage,
-                    type: "success"
-                }) }}
-            {% endif %}
-
             {% if errors.list | length %}
-                {{ govukErrorSummary({
-                    titleText: "There is a problem",
-                    errorList: errors.list
-                }) }}
+                <div id="error-summary">
+                    {{ govukErrorSummary({
+                        titleText: "There is a problem",
+                        errorList: errors.list
+                    }) }}
+                </div>
             {% endif %}
 
             <h1 class="govuk-heading-l">Generate reports</h1>
             <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Search by</h2>
-            <span class="govuk-caption-m govuk-!-margin-bottom-4">To generate reports, choose the CRM type that you would like to generate and attribute it a date range.</span>
+            <span class="govuk-caption-m govuk-!-margin-bottom-4">To generate reports, choose the CRM type that you would like to generate and attribute it a date range. Click the Download report button to download the generated report. </span>
 
             <div class="form-background govuk-!-padding-top-4 govuk-!-padding-left-4">
                 <form action="/generate-report" method="POST">
@@ -199,5 +188,6 @@
     </div>
 {% endblock %}
 {% block pageScripts %}
+    <script src="/assets/clearErrors.js"></script>
     <script src="/assets/generateReport.js"></script>
 {% endblock %}
