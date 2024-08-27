@@ -21,9 +21,9 @@ describe('GenerateReportController', () => {
     response = createMock<Response>({})
     mockGetProfileAcceptedTypes = getProfileAcceptedTypes as jest.Mock
     mockIsReportingAllowed = isReportingAllowed as jest.Mock
-    mockGenerateReportService = new GenerateReportService(null) as jest.Mocked<GenerateReportService>
     mockGetProfileAcceptedTypes.mockReturnValue('1,4,5,6')
     mockIsReportingAllowed.mockReturnValue(true)
+    mockGenerateReportService = new GenerateReportService(null) as jest.Mocked<GenerateReportService>
   })
 
   describe('show()', () => {
@@ -50,6 +50,12 @@ describe('GenerateReportController', () => {
         crmType: 'crm4',
         decisionFromDate: '2023-03-01',
         decisionToDate: '2023-03-30',
+        submittedFromDate: '2023-03-01',
+        submittedToDate: '2023-03-30',
+        createdFromDate: '2023-03-01',
+        createdToDate: '2023-03-30',
+        lastSubmittedFromDate: '2023-03-01',
+        lastSubmittedToDate: '2023-03-30',
       }
 
       await requestHandler(request, response, next)
@@ -57,6 +63,18 @@ describe('GenerateReportController', () => {
       expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'text/csv')
       expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crm4Report.csv')
       expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
+      expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
+        createdFromDate: '2023-03-01',
+        createdToDate: '2023-03-30',
+        crmType: 'crm4',
+        decisionFromDate: '2023-03-01',
+        decisionToDate: '2023-03-30',
+        lastSubmittedFromDate: '2023-03-01',
+        lastSubmittedToDate: '2023-03-30',
+        profileAcceptedTypes: '1,4,5,6',
+        submittedFromDate: '2023-03-01',
+        submittedToDate: '2023-03-30',
+      })
     })
 
     it('should render generate report page with field errors', async () => {
@@ -92,6 +110,7 @@ describe('GenerateReportController', () => {
           decisionToDate: '2023-03-30',
         },
       })
+      expect(mockGenerateReportService.getCrmReport).not.toHaveBeenCalled()
     })
 
     it.each([
