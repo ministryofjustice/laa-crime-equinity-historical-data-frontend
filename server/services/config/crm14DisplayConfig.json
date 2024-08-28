@@ -468,15 +468,11 @@
       "sectionId": "crm15-income-1",
       "title": "CRM 15 - Income: 1",
       "showWhen": {
-        "conditionsMet": "any",
+        "conditionsMet": "all",
         "conditions": [
           {
-            "apiField": "privateCompany",
-            "equals": "Yes"
-          },
-          {
-            "apiField": "partnerPrivateCompany",
-            "equals": "Yes"
+            "apiField": "hasCrm15",
+            "equals": "true"
           }
         ]
       },
@@ -494,15 +490,11 @@
       "sectionId": "crm15-income-2",
       "title": "CRM 15 - Income: 2",
       "showWhen": {
-        "conditionsMet": "any",
+        "conditionsMet": "all",
         "conditions": [
           {
-            "apiField": "privateCompany",
-            "equals": "Yes"
-          },
-          {
-            "apiField": "partnerPrivateCompany",
-            "equals": "Yes"
+            "apiField": "hasCrm15",
+            "equals": "true"
           }
         ]
       },
@@ -520,15 +512,11 @@
       "sectionId": "crm15-outgoings",
       "title": "CRM 15 - Outgoings",
       "showWhen": {
-        "conditionsMet": "any",
+        "conditionsMet": "all",
         "conditions": [
           {
-            "apiField": "privateCompany",
-            "equals": "Yes"
-          },
-          {
-            "apiField": "partnerPrivateCompany",
-            "equals": "Yes"
+            "apiField": "hasCrm15",
+            "equals": "true"
           }
         ]
       },
@@ -546,15 +534,11 @@
       "sectionId": "crm15-land-and-property",
       "title": "CRM 15 - Land & Property",
       "showWhen": {
-        "conditionsMet": "any",
+        "conditionsMet": "all",
         "conditions": [
           {
-            "apiField": "privateCompany",
-            "equals": "Yes"
-          },
-          {
-            "apiField": "partnerPrivateCompany",
-            "equals": "Yes"
+            "apiField": "hasCrm15",
+            "equals": "true"
           }
         ]
       },
@@ -572,15 +556,11 @@
       "sectionId": "crm15-savings",
       "title": "CRM 15 - Savings",
       "showWhen": {
-        "conditionsMet": "any",
+        "conditionsMet": "all",
         "conditions": [
           {
-            "apiField": "privateCompany",
-            "equals": "Yes"
-          },
-          {
-            "apiField": "partnerPrivateCompany",
-            "equals": "Yes"
+            "apiField": "hasCrm15",
+            "equals": "true"
           }
         ]
       },
