@@ -685,19 +685,6 @@
       ]
     },
     {
-      "sectionId": "evidence",
-      "title": "Evidence",
-      "subsections": [
-        {
-          "title": "Evidence",
-          "customDisplay": {
-            "name": "crmEvidence",
-            "apiField": "evidenceFiles.files"
-          }
-        }
-      ]
-    },
-    {
       "sectionId": "office-use-only",
       "title": "Office Use Only",
       "subsections": [
@@ -706,6 +693,19 @@
           "customDisplay": {
             "name": "crm5OfficeUseOnly",
             "apiField": "OfficeUseOnly"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "evidence",
+      "title": "Evidence",
+      "subsections": [
+        {
+          "title": "Evidence",
+          "customDisplay": {
+            "name": "crmEvidence",
+            "apiField": "evidenceFiles.files"
           }
         }
       ]

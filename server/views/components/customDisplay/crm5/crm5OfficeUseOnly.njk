@@ -5,20 +5,20 @@
 {% macro crm5OfficeUseOnly(data) %}
     {# Quality Control Section #}
     {% set decisionOptions = {
-        "Grant": "Grant",
-        "PartGrant": "Part Grant",
-        "Reject": "Reject",
-        "ReferForICA": "Refer For ICA"
+        "G": "Grant",
+        "PG": "Part Grant",
+        "R": "Reject",
+        "Refer": "Refer For ICA"
     } %}
 
-    {% if data.qualityControl.decision == 'PostReferGranted' %}
+    {% if data.qualityControl.decision == 'G' %}
         {% set reasonLabel = "Notes" %}
     {% else %}
         {% set reasonLabel = "Reason for decision" %}
     {% endif %}
 
     {% set fieldsQualityControl = [
-        { label: "Decision", value: data.qualityControl.decision },
+        { label: "Decision", value: decisionOptions[data.qualityControl.decision] },
         { label: reasonLabel, value: data.qualityControl.decisionReason }
     ] %}
     {{ formSubsection('Quality Control', fieldsQualityControl) }}
