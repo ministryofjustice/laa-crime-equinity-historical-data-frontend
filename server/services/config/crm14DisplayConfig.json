@@ -468,13 +468,8 @@
       "sectionId": "crm15-income-1",
       "title": "CRM 15 - Income: 1",
       "showWhen": {
-        "conditionsMet": "all",
-        "conditions": [
-          {
-            "apiField": "hasCrm15",
-            "equals": "true"
-          }
-        ]
+        "apiField": "hasCrm15",
+        "equals": "true"
       },
       "subsections": [
         {
@@ -490,13 +485,8 @@
       "sectionId": "crm15-income-2",
       "title": "CRM 15 - Income: 2",
       "showWhen": {
-        "conditionsMet": "all",
-        "conditions": [
-          {
-            "apiField": "hasCrm15",
-            "equals": "true"
-          }
-        ]
+        "apiField": "hasCrm15",
+        "equals": "true"
       },
       "subsections": [
         {
@@ -512,13 +502,8 @@
       "sectionId": "crm15-outgoings",
       "title": "CRM 15 - Outgoings",
       "showWhen": {
-        "conditionsMet": "all",
-        "conditions": [
-          {
-            "apiField": "hasCrm15",
-            "equals": "true"
-          }
-        ]
+        "apiField": "hasCrm15",
+        "equals": "true"
       },
       "subsections": [
         {
@@ -534,13 +519,8 @@
       "sectionId": "crm15-land-and-property",
       "title": "CRM 15 - Land & Property",
       "showWhen": {
-        "conditionsMet": "all",
-        "conditions": [
-          {
-            "apiField": "hasCrm15",
-            "equals": "true"
-          }
-        ]
+        "apiField": "hasCrm15",
+        "equals": "true"
       },
       "subsections": [
         {
@@ -556,13 +536,8 @@
       "sectionId": "crm15-savings",
       "title": "CRM 15 - Savings",
       "showWhen": {
-        "conditionsMet": "all",
-        "conditions": [
-          {
-            "apiField": "hasCrm15",
-            "equals": "true"
-          }
-        ]
+        "apiField": "hasCrm15",
+        "equals": "true"
       },
       "subsections": [
         {
@@ -713,6 +688,10 @@
     {
       "sectionId": "evidence",
       "title": "Evidence",
+      "hideWhen": {
+        "apiField": "evidenceFiles.files",
+        "equals": ""
+      },
       "subsections": [
         {
           "title": "Evidence",

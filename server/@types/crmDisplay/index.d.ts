@@ -29,14 +29,9 @@ type Subsection = {
   customDisplay?: CustomDisplay
 }
 
-type Condition = {
+type ShowOrHideWhen = {
   apiField: string
   equals: string
-}
-
-type ShowOrHideWhen = {
-  conditionsMet?: string
-  conditions: Array<Condition>
 }
 
 type Section = {

@@ -1,5 +1,5 @@
 import { CrmResponse } from '@eqApi'
-import { Condition, Section, ShowOrHideWhen } from '@crmDisplay'
+import { Section, ShowOrHideWhen } from '@crmDisplay'
 import _ from 'lodash'
 
 export const includeSection = <T extends CrmResponse>(section: Section, crmResponse: T): boolean => {
@@ -21,16 +21,10 @@ export const getApiFieldValue = <T extends CrmResponse>(crmResponse: T, apiField
 }
 
 const conditionsMet = <T extends CrmResponse>(showOrHideWhen: ShowOrHideWhen, crmResponse: T): boolean => {
-  if (showOrHideWhen.conditionsMet === 'all') {
-    // all condition must be true
-    return showOrHideWhen.conditions.every(condition => conditionIsTrue(condition, crmResponse))
-  }
-
-  // any condition is true
-  return showOrHideWhen.conditions.some(condition => conditionIsTrue(condition, crmResponse))
+  return conditionIsTrue(showOrHideWhen, crmResponse)
 }
 
-const conditionIsTrue = <T extends CrmResponse>(condition: Condition, crmResponse: T): boolean => {
-  const apiFieldValue = getApiFieldValue(crmResponse, condition.apiField)
-  return condition.equals === String(apiFieldValue)
+const conditionIsTrue = <T extends CrmResponse>(showOrHideWhen: ShowOrHideWhen, crmResponse: T): boolean => {
+  const apiFieldValue = getApiFieldValue(crmResponse, showOrHideWhen.apiField)
+  return showOrHideWhen.equals === String(apiFieldValue)
 }
