@@ -10,7 +10,14 @@ export const includeSection = <T extends CrmResponse>(section: Section, crmRespo
 }
 
 export const getApiFieldValue = <T extends CrmResponse>(crmResponse: T, apiFieldName: string): string => {
-  return _.get(crmResponse, `formDetails.${apiFieldName}`) || _.get(crmResponse, apiFieldName) || ''
+  let apiFieldValue = _.get(crmResponse, `formDetails.${apiFieldName}`)
+  if (_.isNil(apiFieldValue)) {
+    apiFieldValue = _.get(crmResponse, apiFieldName)
+    if (_.isNil(apiFieldValue)) {
+      return ''
+    }
+  }
+  return apiFieldValue as string
 }
 
 const conditionsMet = <T extends CrmResponse>(showOrHideWhen: ShowOrHideWhen, crmResponse: T): boolean => {

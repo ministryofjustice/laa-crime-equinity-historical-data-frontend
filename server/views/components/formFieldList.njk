@@ -4,7 +4,9 @@
 
     <dl class="govuk-summary-list">
         {% for field in fields %}
-            {{ formField(field) }}
+            {% if field.value !== null and field.value !== '' %}
+                {{ formField(field) }}
+            {% endif %}
         {% endfor %}
     </dl>
 
