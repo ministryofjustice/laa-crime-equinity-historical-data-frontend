@@ -1,6 +1,7 @@
-import { CrmReportResponse } from '@crmReport'
-import CrmReportApiClient from '../data/api/crmReportApiClient'
+import superagent from 'superagent'
 import GenerateReportService from './generateReportService'
+import CrmReportApiClient from '../data/api/crmReportApiClient'
+import { SanitisedError } from '../sanitisedError'
 
 jest.mock('../data/api/crmReportApiClient')
 
@@ -8,30 +9,99 @@ describe('Generate Report Service', () => {
   let mockCrmReportApiClient: jest.Mocked<CrmReportApiClient>
 
   beforeEach(() => {
-    mockCrmReportApiClient = new CrmReportApiClient(null, null) as jest.Mocked<CrmReportApiClient>
+    mockCrmReportApiClient = new CrmReportApiClient(null) as jest.Mocked<CrmReportApiClient>
   })
 
   it('should return crm report', async () => {
-    const expectedResponse = successResponse()
+    const responseData = {
+      text: 'sample,csv,data\n1,2,3',
+    } as superagent.Response
 
-    mockCrmReportApiClient.getCrmReport.mockResolvedValue(expectedResponse)
+    mockCrmReportApiClient.getCrmReport.mockResolvedValue(responseData)
 
     const generateReportService = new GenerateReportService(mockCrmReportApiClient)
 
-    const result = await generateReportService.getCrmReport('01/03/2022', '30/03/2024', '1,4,5,6')
+    const result = await generateReportService.getCrmReport({
+      crmType: 'crm4',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-31-01',
+      profileAcceptedTypes: '1,4,5,6',
+    })
 
-    expect(result).toEqual(expectedResponse)
-    expect(mockCrmReportApiClient.getCrmReport).toHaveBeenCalledWith('01/03/2022', '30/03/2024', '1,4,5,6')
+    expect(result).toEqual({ text: 'sample,csv,data\n1,2,3' })
+    expect(mockCrmReportApiClient.getCrmReport).toHaveBeenCalledWith({
+      crmType: 'crm4',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-31-01',
+      profileAcceptedTypes: '1,4,5,6',
+    })
+  })
+
+  it('should return crm report when crmType = crm14', async () => {
+    mockCrmReportApiClient.getCrm14Report.mockResolvedValue('sample,csv,data\n4,5,6')
+
+    const generateReportService = new GenerateReportService(mockCrmReportApiClient)
+
+    const result = await generateReportService.getCrmReport({
+      crmType: 'crm14',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-31-01',
+      submittedFromDate: '',
+      submittedToDate: '',
+      createdFromDate: '2024-01-01',
+      createdToDate: '2024-31-01',
+      lastSubmittedFromDate: '',
+      lastSubmittedToDate: '',
+      profileAcceptedTypes: '1,4,5,6',
+    })
+
+    expect(result).toEqual({ text: 'sample,csv,data\n4,5,6' })
+    expect(mockCrmReportApiClient.getCrm14Report).toHaveBeenCalledWith({
+      crmType: 'crm14',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-31-01',
+      submittedFromDate: '',
+      submittedToDate: '',
+      createdFromDate: '2024-01-01',
+      createdToDate: '2024-31-01',
+      lastSubmittedFromDate: '',
+      lastSubmittedToDate: '',
+      profileAcceptedTypes: '1,4,5,6',
+    })
+  })
+
+  it('should return error', async () => {
+    const error: SanitisedError = {
+      name: 'some error',
+      message: 'some message',
+      stack: 'some stack',
+      status: 404,
+      text: 'error',
+    }
+    mockCrmReportApiClient.getCrmReport.mockRejectedValue(error)
+
+    const generateReportService = new GenerateReportService(mockCrmReportApiClient)
+
+    const result = await generateReportService.getCrmReport({
+      crmType: 'crm4',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-31-01',
+      profileAcceptedTypes: '1,4,5,6',
+    })
+
+    expect(result).toEqual({
+      error: {
+        message: 'some message',
+        status: 404,
+      },
+      text: null,
+    })
+
+    expect(mockCrmReportApiClient.getCrmReport).toHaveBeenCalledWith({
+      crmType: 'crm4',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-31-01',
+      profileAcceptedTypes: '1,4,5,6',
+    })
   })
 })
-
-const successResponse = (): CrmReportResponse => {
-  return {
-    text:
-      'Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number,Maat ID,Prison Law,Date Received,' +
-      'Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit,Total Cost,Additional Expenditure,' +
-      'Total Authority,Total Granted,Granting Caseworker\n' +
-      '031022/777,123456789,1234AB,Some Firm,Some Client,999999999,,No,2023-03-16,2023-03-16,Grant,a Psychiatrist,' +
-      'tyjtjtjt,4.0,50.0,Hour(s),200.0,0.0,200.0,200.0,Sym-G`',
-  }
-}

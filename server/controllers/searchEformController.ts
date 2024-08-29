@@ -48,7 +48,7 @@ export default class SearchEformController {
 
         const validationErrors = validateSearchParams(searchParams)
         if (validationErrors) {
-          // render with search query validation errors
+          // render with validation errors
           res.render(VIEW_PATH, { results: [], errors: validationErrors, formValues: searchParams, backUrl })
         } else {
           // perform search

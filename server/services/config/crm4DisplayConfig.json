@@ -219,6 +219,102 @@
           ]
         },
         {
+          "title": "DNA report",
+          "fields": [
+            {
+              "label": "Total cost of DNA test",
+              "apiField": "ExpenditureDetails.DnaReport.dnaCost",
+              "type": "currency"
+            }
+          ]
+        },
+        {
+          "title": "Transcription / Translation and Transcription",
+          "fields": [
+            {
+              "label": "No. of minutes",
+              "apiField": "ExpenditureDetails.Transcription.numMin"
+            },
+            {
+              "label": "Cost per minute",
+              "apiField": "ExpenditureDetails.Transcription.costPerMin",
+              "type": "currency"
+            },
+            {
+              "label": "Total cost of Transcription",
+              "apiField": "ExpenditureDetails.Transcription.total",
+              "type": "currency"
+            }
+          ]
+        },
+        {
+          "title": "Translator",
+          "fields": [
+            {
+              "label": "No. of hours",
+              "apiField": "ExpenditureDetails.Translator.numWords"
+            },
+            {
+              "label": "Cost of 1000 words",
+              "apiField": "ExpenditureDetails.Translator.costPerWord",
+              "type": "currency"
+            },
+            {
+              "label": "Total cost of translations",
+              "apiField": "ExpenditureDetails.Translator.total",
+              "type": "currency"
+            }
+          ]
+        },
+        {
+          "title": "Other",
+          "fields": [
+            {
+              "label": "Quantity",
+              "apiField": "ExpenditureDetails.Other.quantity"
+            },
+            {
+              "label": "Cost/ Rate",
+              "apiField": "ExpenditureDetails.Other.rate",
+              "type": "currency"
+            },
+            {
+              "label": "Total Cost",
+              "apiField": "ExpenditureDetails.Other.total",
+              "type": "currency"
+            }
+          ]
+        },
+        {
+          "title": "Photocopying",
+          "fields": [
+            {
+              "label": "No. of pages",
+              "apiField": "ExpenditureDetails.Photocopying.numPages"
+            },
+            {
+              "label": "Cost per page",
+              "apiField": "ExpenditureDetails.Photocopying.costPerPage",
+              "type": "currency"
+            },
+            {
+              "label": "Total cost of Photocopying",
+              "apiField": "ExpenditureDetails.Photocopying.total",
+              "type": "currency"
+            }
+          ]
+        },
+        {
+          "title": "Travel Accommodation",
+          "fields": [
+            {
+              "label": "Cost Basis",
+              "apiField": "ExpenditureDetails.Accommodation.costBasis",
+              "type": "currency"
+            }
+          ]
+        },
+        {
           "title": "Additional Expenditure",
           "customDisplay": {
             "name": "crm4AdditionalExpenditure",

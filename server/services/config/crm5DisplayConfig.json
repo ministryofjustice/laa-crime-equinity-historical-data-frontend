@@ -685,6 +685,19 @@
       ]
     },
     {
+      "sectionId": "office-use-only",
+      "title": "Office Use Only",
+      "subsections": [
+        {
+          "title": "Office Use Only",
+          "customDisplay": {
+            "name": "crm5OfficeUseOnly",
+            "apiField": "OfficeUseOnly"
+          }
+        }
+      ]
+    },
+    {
       "sectionId": "evidence",
       "title": "Evidence",
       "subsections": [

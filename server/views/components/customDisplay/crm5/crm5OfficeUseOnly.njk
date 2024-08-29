@@ -1,0 +1,35 @@
+{% from "../../formFieldList.njk" import formFieldList %}
+{% from "../../formSubsection.njk" import formSubsection %}
+{% from "../../formField.njk" import formField %}
+
+{% macro crm5OfficeUseOnly(data) %}
+    {# Quality Control Section #}
+    {% set decisionOptions = {
+        "G": "Grant",
+        "PG": "Part Grant",
+        "R": "Reject",
+        "Refer": "Refer For ICA"
+    } %}
+
+    {% if data.qualityControl.decision == 'G' %}
+        {% set reasonLabel = "Notes" %}
+    {% else %}
+        {% set reasonLabel = "Reason for decision" %}
+    {% endif %}
+
+    {% set fieldsQualityControl = [
+        { label: "Decision", value: decisionOptions[data.qualityControl.decision] },
+        { label: reasonLabel, value: data.qualityControl.decisionReason }
+    ] %}
+    {{ formSubsection('Quality Control', fieldsQualityControl) }}
+
+    {# Authority Section #}
+    {% set fieldsAuthority = [
+        { label: "New Limit Request", value: data.authority.newLimitRequest | formatCurrency },
+        { label: "Upper Limit Extended To", value: data.authority.upperLimitExtended | formatCurrency },
+        { label: "Signed Authority", value: data.authority.signedAuth },
+        { label: "Decision Date", value: data.authority.signedAuthDate | formatDate }
+    ] %}
+    {{ formSubsection('Authority', fieldsAuthority) }}
+
+{% endmacro %}

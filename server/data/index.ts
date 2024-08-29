@@ -34,9 +34,9 @@ export const dataAccess = () => ({
   crm5ApiClient: new CrmApiClient<Crm5Response>(eqiApiHeaders, 'crm5'),
   crm7ApiClient: new CrmApiClient<Crm7Response>(eqiApiHeaders, 'crm7'),
   crm14ApiClient: new CrmApiClient<Crm14Response>(eqiApiHeaders, 'crm14'),
+  crmReportApiClient: new CrmReportApiClient(eqiApiHeaders),
   sdsApiClient: new SdsApiClient(),
   searchApiClient: new SearchApiClient(eqiApiHeaders),
-  crmReportApiClient: new CrmReportApiClient(eqiApiHeaders, 'crm4'),
 })
 
 export type DataAccess = ReturnType<typeof dataAccess>
