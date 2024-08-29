@@ -68,7 +68,7 @@
                                                         {% else %}
                                                             {{ formField(field) }}
                                                         {% endif %}
-                                                        {% elif loop.last %}
+                                                    {% elif loop.last %}
                                                         {% if field.type == 'timeAndCost' %}
                                                             {{ timeAndCost(field, false, true) }}
                                                             {% elif field.type == 'totalAndCost' %}
