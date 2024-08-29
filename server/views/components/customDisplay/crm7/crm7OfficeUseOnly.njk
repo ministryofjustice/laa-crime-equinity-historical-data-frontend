@@ -6,13 +6,13 @@
     {# Quality Control Section #}
     {% set decisionOptions = {
         "G": "Grant",
-        "PartGrant": "Part Grant",
-        "Reject": "Reject",
-        "ReferForICA": "Refer For ICA"
+        "PG": "Part Grant",
+        "R": "Reject",
+        "Refer": "Refer For ICA"
     } %}
 
     {% set fieldsQualityControl = [
-        { label: "Decision", value: data.qualityControl.decision },
+        { label: "Decision", value: decisionOptions[data.qualityControl.decision] },
         { label: "Reason for decision", value: data.qualityControl.decisionReason },
         { label: "Destruction Date", value: data.qualityControl.destructionDate | formatDate }
     ] %}
