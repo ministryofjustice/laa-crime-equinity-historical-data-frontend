@@ -390,27 +390,24 @@ describe('routes', () => {
 
   describe('POST /generate-report', () => {
     it('should generate and download the CRM report as a CSV', () => {
+      const reportData = 'sample,csv,data\n1,2,3'
+
       mockGenerateReportService.getCrmReport.mockResolvedValue({
-        text:
-          'Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number,Maat ID,Prison Law,Date Received,' +
-          'Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit,Total Cost,Additional Expenditure,' +
-          'Total Authority,Total Granted,Granting Caseworker\n' +
-          '031022/777,123456789,1234AB,Some Firm,Some Client,999999999,,No,2023-03-16,2023-03-16,Grant,a Psychiatrist,' +
-          'tyjtjtjt,4.0,50.0,Hour(s),200.0,0.0,200.0,200.0,Sym-G`',
+        text: reportData,
       })
 
       return request(app)
         .post('/generate-report')
         .send({
           crmType: 'crm4',
-          startDate: '2023-03-01',
-          endDate: '2023-03-30',
+          decisionFromDate: '2023-03-01',
+          decisionToDate: '2023-03-30',
         })
         .expect('Content-Type', 'text/csv; charset=utf-8')
         .expect('Content-Disposition', 'attachment; filename=crm4Report.csv')
         .expect(200)
         .expect(res => {
-          expect(res.text).toContain('Client UFN,Usn,Provider Account,Firm Name,Client Name')
+          expect(res.text).toEqual('sample,csv,data\n1,2,3')
         })
     })
 

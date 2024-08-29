@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // clear errors
   const downloadButton = document.querySelector('button[type="submit"]') // Assuming the download button is of type "submit"
-
   downloadButton.addEventListener('click', function () {
     // Clear error summary
     const errorSummary = document.getElementById('error-summary')
@@ -25,4 +25,15 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
   })
+
+  // toggle CRM 14 fields
+  const crmTypeDropDown = document.getElementById('crmType')
+  if (crmTypeDropDown) {
+    crmTypeDropDown.addEventListener('change', function () {
+      const crm14Container = document.getElementById('crm14Container')
+      if (crm14Container) {
+        crm14Container.style.display = crmTypeDropDown.value === 'crm14' ? 'block' : 'none'
+      }
+    })
+  }
 })

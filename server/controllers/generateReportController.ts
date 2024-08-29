@@ -1,4 +1,5 @@
 import type { Request, RequestHandler, Response } from 'express'
+import { CrmReportRequest } from '@crmReport'
 import { getProfileAcceptedTypes } from '../utils/userProfileGroups'
 import GenerateReportService from '../services/generateReportService'
 import validateReportParams from '../utils/generateReportValidation'
@@ -24,8 +25,14 @@ export default class GenerateReportController {
     return async (req: Request, res: Response): Promise<void> => {
       const reportParams: Record<string, string> = {
         crmType: req.body.crmType as string,
-        startDate: req.body.startDate as string,
-        endDate: req.body.endDate as string,
+        decisionFromDate: req.body.decisionFromDate as string,
+        decisionToDate: req.body.decisionToDate as string,
+        submittedFromDate: req.body.submittedFromDate as string,
+        submittedToDate: req.body.submittedToDate as string,
+        createdFromDate: req.body.createdFromDate as string,
+        createdToDate: req.body.createdToDate as string,
+        lastSubmittedFromDate: req.body.lastSubmittedFromDate as string,
+        lastSubmittedToDate: req.body.lastSubmittedToDate as string,
       }
       const validationErrors = validateReportParams(reportParams)
 
@@ -39,12 +46,8 @@ export default class GenerateReportController {
         })
       } else {
         // perform generate report
-        const crmReportResponse = await this.generateReportService.getCrmReport({
-          crmType: reportParams.crmType,
-          startDate: reportParams.startDate,
-          endDate: reportParams.endDate,
-          profileAcceptedTypes: getProfileAcceptedTypes(res),
-        })
+        const crmReportRequest = this.buildReportRequest(reportParams, getProfileAcceptedTypes(res))
+        const crmReportResponse = await this.generateReportService.getCrmReport(crmReportRequest)
 
         // check for any errors in the report response
         if (crmReportResponse.error) {
@@ -74,6 +77,21 @@ export default class GenerateReportController {
         return 'No report data found'
       default:
         return 'Something went wrong with generate report'
+    }
+  }
+
+  private buildReportRequest(reportParams: Record<string, string>, profileAcceptedTypes: string): CrmReportRequest {
+    return {
+      crmType: reportParams.crmType,
+      decisionFromDate: reportParams.decisionFromDate,
+      decisionToDate: reportParams.decisionToDate,
+      submittedFromDate: reportParams.submittedFromDate,
+      submittedToDate: reportParams.submittedToDate,
+      createdFromDate: reportParams.createdFromDate,
+      createdToDate: reportParams.createdToDate,
+      lastSubmittedFromDate: reportParams.lastSubmittedFromDate,
+      lastSubmittedToDate: reportParams.lastSubmittedToDate,
+      profileAcceptedTypes,
     }
   }
 

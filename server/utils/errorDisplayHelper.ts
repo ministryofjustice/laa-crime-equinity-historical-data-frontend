@@ -41,4 +41,4 @@ const buildValidationErrors = (error: Joi.ValidationError): Errors => {
   return { list, messages }
 }
 
-export { buildErrors, buildValidationErrors, Errors }
+export { buildErrors, buildValidationErrors, Errors, ErrorSummary }
