@@ -18,7 +18,7 @@
     ] %}
     {{ formSubsection('Quality Control', fieldsQualityControl) }}
 
-{#    Authority Section#}
+    {# Authority Section #}
     {% set fieldsAuthority = [
         { label: "Signed Authority", value: data.authority.signedAuth },
         { label: "Decision Date", value: data.authority.signedAuthDate | formatDate }
