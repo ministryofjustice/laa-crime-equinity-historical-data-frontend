@@ -5,25 +5,35 @@
 {% macro formSubsection(title, data, isTableData = false, tableClass = "") %}
 
     {% if isTableData %}
-        {% if data.rows.length > 0 %}
-        <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
-            <div class="govuk-summary-card__title-wrapper">
-                <h3 class="govuk-summary-card__title">{{ title }}</h3>
+        {% if data.rows.length > 0 %} {# render non-empty section #}
+            <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h3 class="govuk-summary-card__title">{{ title }}</h3>
+                </div>
+                <div class="govuk-summary-card__content">
+                    {{ formTable(data, tableClass) }}
+                </div>
             </div>
-            <div class="govuk-summary-card__content">
-                {{ formTable(data, tableClass) }}
-            </div>
-        </div>
         {% endif %}
     {% else %}
-        <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
-            <div class="govuk-summary-card__title-wrapper">
-                <h3 class="govuk-summary-card__title">{{ title }}</h3>
+        {# check if section is empty #}
+        {% set sectionIsEmpty = true %}
+        {% for field in data %}
+            {% if (field.value | isNotEmpty) %}
+                {% set sectionIsEmpty = false %}
+            {% endif %}
+        {% endfor %}
+
+        {% if sectionIsEmpty === false %} {# render non-empty section #}
+            <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h3 class="govuk-summary-card__title">{{ title }}</h3>
+                </div>
+                <div class="govuk-summary-card__content">
+                    {{ formFieldList(data) }}
+                </div>
             </div>
-            <div class="govuk-summary-card__content">
-                {{ formFieldList(data) }}
-            </div>
-        </div>
+        {% endif %}
     {% endif %}
 
 {% endmacro %}

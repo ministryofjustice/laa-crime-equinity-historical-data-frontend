@@ -32,3 +32,7 @@ export const buildQueryString = (params: Record<string, string | number>): strin
     .filter(Boolean)
     .join('&')
 }
+
+export const isNotEmpty = (value: string): boolean => {
+  return value !== undefined && value !== null && value !== ''
+}

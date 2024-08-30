@@ -119,15 +119,18 @@
             },
             {
               "label": "Disbursements",
-              "apiField": "summary.officeUse.disbursements"
+              "apiField": "summary.officeUse.disbursements",
+              "type": "currency"
             },
             {
               "label": "Travel Cost",
-              "apiField": "summary.officeUse.travelCost"
+              "apiField": "summary.officeUse.travelCost",
+              "type": "currency"
             },
             {
               "label": "Waiting Cost",
-              "apiField": "summary.officeUse.waitingCost"
+              "apiField": "summary.officeUse.waitingCost",
+              "type": "currency"
             }
           ]
         }
@@ -495,7 +498,8 @@
             },
             {
               "label": "Disbursements Allowed",
-              "apiField": "claimTotals.officeUse.disbursements"
+              "apiField": "claimTotals.officeUse.disbursements",
+              "type": "currency"
             },
             {
               "label": "Travel Net Allowed",
