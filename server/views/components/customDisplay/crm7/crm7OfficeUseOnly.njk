@@ -12,16 +12,16 @@
     } %}
 
     {% set fieldsQualityControl = [
-        { label: "Decision", value: decisionOptions[data.qualityControl.decision] },
-        { label: "Reason for decision", value: data.qualityControl.decisionReason },
-        { label: "Destruction Date", value: data.qualityControl.destructionDate | formatDate }
+        { label: "Decision", value: decisionOptions[data.QualityControl.decision] },
+        { label: "Reason for decision", value: data.QualityControl.decisionReason },
+        { label: "Destruction Date", value: data.QualityControl.destructionDate | formatDate }
     ] %}
     {{ formSubsection('Quality Control', fieldsQualityControl) }}
 
     {# Authority Section #}
     {% set fieldsAuthority = [
-        { label: "Signed Authority", value: data.authority.signedAuth },
-        { label: "Decision Date", value: data.authority.signedAuthDate | formatDate }
+        { label: "Signed Authority", value: data.Authority.signedAuth },
+        { label: "Decision Date", value: data.Authority.signedAuthDate | formatDate }
     ] %}
     {{ formSubsection('Authority', fieldsAuthority) }}
 
