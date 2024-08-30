@@ -1,6 +1,7 @@
 {% from "./crmEvidence.njk" import crmEvidence %}
 {% from "./crm4/crm4AdditionalExpenditure.njk" import crm4AdditionalExpenditure %}
 {% from "./crm4/crm4AlternativeQuotes.njk" import crm4AlternativeQuotes %}
+{% from "./crm4/crm4OfficeUseOnly.njk" import crm4OfficeUseOnly %}
 {% from "./crm7/crm7CaseDisposal.njk" import crm7CaseDisposal %}
 {% from "./crm7/crm7Disbursements.njk" import crm7Disbursements %}
 {% from "./crm7/crm7ClaimForCosts.njk" import crm7ClaimForCosts %}
@@ -25,6 +26,8 @@
         {{ crm4AdditionalExpenditure(params.value) }}
     {% elif params.name == 'crm4AlternativeQuotes' %}
         {{ crm4AlternativeQuotes(params.value) }}
+    {% elif params.name == 'crm4OfficeUseOnly' %}
+        {{ crm4OfficeUseOnly(params.value) }}
     {% elif params.name == 'crm7CaseDisposal' %}
         {{ crm7CaseDisposal(params.value) }}
     {% elif params.name == 'crm7Disbursements' %}
