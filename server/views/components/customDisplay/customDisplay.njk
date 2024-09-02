@@ -6,6 +6,7 @@
 {% from "./crm7/crm7Disbursements.njk" import crm7Disbursements %}
 {% from "./crm7/crm7ClaimForCosts.njk" import crm7ClaimForCosts %}
 {% from "./crm7/crm7ScheduleOfTime.njk" import crm7ScheduleOfTime %}
+{% from "./crm7/crm7OfficeUseOnly.njk" import crm7OfficeUseOnly %}
 {% from "./crm14/crm14AboutTheInformation.njk" import crm14AboutTheInformation %}
 {% from "./crm14/crm14InterestsOfJustice.njk" import crm14InterestsOfJustice %}
 {% from "./crm14/crm14Declarations.njk" import crm14Declarations %}
@@ -36,6 +37,8 @@
         {{ crm7ClaimForCosts(params.value) }}
     {% elif params.name == 'crm7ScheduleOfTime' %}
         {{ crm7ScheduleOfTime(params.value) }}
+    {% elif params.name == 'crm7OfficeUseOnly' %}
+        {{ crm7OfficeUseOnly(params.value) }}
     {% elif params.name == 'crm14InterestsOfJustice' %}
         {{ crm14InterestsOfJustice(params.value) }}
         {% elif params.name == 'crm14AboutTheInformation' %}
