@@ -64,7 +64,7 @@
     {{ formSubsection('Translator', tableTranslator, true) }}
 
     {# Additional Expenditure Section #}
-    {% if data.additionalExpenditure.length > 0 %}
+{#    {% if data.AdditionalExpenditure.length > 0 %}#}
         {% set tableAdditionalExpenditure = {
             head: [
                 { text: "Description" },
@@ -88,7 +88,7 @@
         {% endfor %}
 
         {{ formSubsection('Additional Expenditure', tableAdditionalExpenditure, true) }}
-    {% endif %}
+{#    {% endif %}#}
 
     {# Travel Section #}
     {% set tableTravel = {
@@ -111,6 +111,73 @@
         ]
     } %}
     {{ formSubsection('Travel', tableTravel, true) }}
+
+    {# DNA Report Section #}
+    {% if data.DnaReport %}
+        {% set tableDnaReport = {
+            head: [
+                { text: "Requested DNA Cost" },
+                { text: "Authorised DNA Cost" }
+            ],
+            rows: [
+                [
+                    { text: data.DnaReport.requested.dnaCost | formatCurrency },
+                    { text: data.DnaReport.authorised.dnaCost | formatCurrency }
+                ]
+            ]
+        } %}
+        {{ formSubsection('DNA Report', tableDnaReport, true) }}
+    {% endif %}
+
+    {# Accommodation Section #}
+    {% set fieldsAccommodation = [
+        { label: "Accommodation Cost Basis", value: data.Accommodation.costBasis }
+    ] %}
+    {{ formSubsection('Accommodation', fieldsAccommodation) }}
+
+    {# Transcription Section #}
+    {% set tableTranscription = {
+        head: [
+            { text: "Number of Minutes" },
+            { text: "Cost Per Minute" },
+            { text: "Total Cost" }
+        ],
+        rows: [
+            [
+                { text: data.Transcription.requested.numMin },
+                { text: data.Transcription.requested.costPerMin | formatCurrency },
+                { text: data.Transcription.requested.total | formatCurrency }
+            ],
+            [
+                { text: data.Transcription.authorised.numMin },
+                { text: data.Transcription.authorised.costPerMin | formatCurrency },
+                { text: data.Transcription.authorised.total | formatCurrency }
+            ]
+        ]
+    } %}
+    {{ formSubsection('Transcription', tableTranscription, true) }}
+
+    {# Photocopying Section #}
+    {% set tablePhotocopying = {
+        head: [
+            { text: "Number of Pages" },
+            { text: "Cost Per Page" },
+            { text: "Total Cost" }
+        ],
+        rows: [
+            [
+                { text: data.Photocopying.requested.numPages },
+                { text: data.Photocopying.requested.costPerPage | formatCurrency },
+                { text: data.Photocopying.requested.total | formatCurrency }
+            ],
+            [
+                { text: data.Photocopying.authorised.numPages },
+                { text: data.Photocopying.authorised.costPerPage | formatCurrency },
+                { text: data.Photocopying.authorised.total | formatCurrency }
+            ]
+        ]
+    } %}
+    {{ formSubsection('Photocopying', tablePhotocopying, true) }}
 
     {# Authority Section #}
     {% set fieldsAuthority = [
