@@ -35,10 +35,12 @@ describe('crmDisplayHelper', () => {
     it('should return false if hideWhen condition met', () => {
       const customSection: Section = {
         ...section,
-        hideWhen: {
-          apiField: 'hasPreviousApplication',
-          equals: 'Yes',
-        },
+        hideWhen: [
+          {
+            apiField: 'hasPreviousApplication',
+            equals: 'Yes',
+          },
+        ],
       }
 
       const crmResponse: CrmResponse = {
@@ -57,14 +59,18 @@ describe('crmDisplayHelper', () => {
     it('should return false if hideWhen and showWhen condition met', () => {
       const customSection: Section = {
         ...section,
-        showWhen: {
-          apiField: 'hasPreviousApplication',
-          equals: 'Yes',
-        },
-        hideWhen: {
-          apiField: 'appealedPrevDecision',
-          equals: 'Yes',
-        },
+        showWhen: [
+          {
+            apiField: 'hasPreviousApplication',
+            equals: 'Yes',
+          },
+        ],
+        hideWhen: [
+          {
+            apiField: 'appealedPrevDecision',
+            equals: 'Yes',
+          },
+        ],
       }
 
       const crmResponse: CrmResponse = {
@@ -83,10 +89,12 @@ describe('crmDisplayHelper', () => {
     it('should return false if showWhen condition not met', () => {
       const customSection: Section = {
         ...section,
-        showWhen: {
-          apiField: 'hasPreviousApplication',
-          equals: 'Yes',
-        },
+        showWhen: [
+          {
+            apiField: 'hasPreviousApplication',
+            equals: 'Yes',
+          },
+        ],
       }
 
       const crmResponse: CrmResponse = {
@@ -119,10 +127,12 @@ describe('crmDisplayHelper', () => {
     it('should return true if hideWhen condition not met', () => {
       const customSection: Section = {
         ...section,
-        hideWhen: {
-          apiField: 'hasPreviousApplication',
-          equals: 'Yes',
-        },
+        hideWhen: [
+          {
+            apiField: 'hasPreviousApplication',
+            equals: 'Yes',
+          },
+        ],
       }
 
       const crmResponse: CrmResponse = {
@@ -141,10 +151,12 @@ describe('crmDisplayHelper', () => {
     it('should return true if showWhen conditions met', () => {
       const customSection: Section = {
         ...section,
-        showWhen: {
-          apiField: 'hasPreviousApplication',
-          equals: 'Yes',
-        },
+        showWhen: [
+          {
+            apiField: 'hasPreviousApplication',
+            equals: 'Yes',
+          },
+        ],
       }
 
       const crmResponse: CrmResponse = {

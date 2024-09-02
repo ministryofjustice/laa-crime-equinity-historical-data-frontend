@@ -604,11 +604,13 @@
     },
     {
       "sectionId": "evidence",
-      "title": "Evidence",
-      "hideWhen": {
-        "apiField": "evidenceFiles.files",
-        "equals": ""
-      },
+      "title": "Ev[idence",
+      "hideWhen": [
+        {
+          "apiField": "evidenceFiles.files",
+          "equals": ""
+        }
+      ],
       "subsections": [
         {
           "title": "Evidence",

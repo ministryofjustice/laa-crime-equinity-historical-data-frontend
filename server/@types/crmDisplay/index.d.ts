@@ -37,8 +37,8 @@ type ShowOrHideWhen = {
 type Section = {
   sectionId: string
   title: string
-  showWhen?: ShowOrHideWhen
-  hideWhen?: ShowOrHideWhen
+  showWhen?: Array<ShowOrHideWhen>
+  hideWhen?: Array<ShowOrHideWhen>
   subsections: Array<Subsection>
 }
 

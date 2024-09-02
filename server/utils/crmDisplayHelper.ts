@@ -20,8 +20,8 @@ export const getApiFieldValue = <T extends CrmResponse>(crmResponse: T, apiField
   return apiFieldValue as string
 }
 
-const conditionsMet = <T extends CrmResponse>(showOrHideWhen: ShowOrHideWhen, crmResponse: T): boolean => {
-  return conditionIsTrue(showOrHideWhen, crmResponse)
+const conditionsMet = <T extends CrmResponse>(showOrHideWhen: Array<ShowOrHideWhen>, crmResponse: T): boolean => {
+  return showOrHideWhen.every(condition => conditionIsTrue(condition, crmResponse))
 }
 
 const conditionIsTrue = <T extends CrmResponse>(showOrHideWhen: ShowOrHideWhen, crmResponse: T): boolean => {

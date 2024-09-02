@@ -439,10 +439,12 @@
     {
       "sectionId": "evidence",
       "title": "Evidence",
-      "hideWhen": {
-        "apiField": "evidenceFiles.files",
-        "equals": ""
-      },
+      "hideWhen": [
+        {
+          "apiField": "evidenceFiles.files",
+          "equals": ""
+        }
+      ],
       "subsections": [
         {
           "title": "Evidence",

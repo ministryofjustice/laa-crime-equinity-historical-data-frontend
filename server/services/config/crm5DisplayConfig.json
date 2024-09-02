@@ -177,14 +177,18 @@
     {
       "sectionId": "capital-details",
       "title": "Capital Details",
-      "showWhen": {
-        "apiField": "hasPreviousApplication",
-        "equals": "No"
-      },
-      "hideWhen": {
-        "apiField": "CaseDetails.cwCriminalProceeding",
-        "equals": "true"
-      },
+      "showWhen": [
+        {
+          "apiField": "hasPreviousApplication",
+          "equals": "No"
+        }
+      ],
+      "hideWhen": [
+        {
+          "apiField": "CaseDetails.cwCriminalProceeding",
+          "equals": "true"
+        }
+      ],
       "subsections": [
         {
           "title": "Capital Details",
@@ -223,14 +227,18 @@
     {
       "sectionId": "income-details",
       "title": "Income Details",
-      "showWhen": {
-        "apiField": "hasPreviousApplication",
-        "equals": "No"
-      },
-      "hideWhen": {
-        "apiField": "CaseDetails.cwCriminalProceeding",
-        "equals": "true"
-      },
+      "showWhen": [
+        {
+          "apiField": "hasPreviousApplication",
+          "equals": "No"
+        }
+      ],
+      "hideWhen": [
+        {
+          "apiField": "CaseDetails.cwCriminalProceeding",
+          "equals": "true"
+        }
+      ],
       "subsections": [
         {
           "title": "Income Details",
@@ -318,10 +326,12 @@
     {
       "sectionId": "proceedings",
       "title": "Proceedings",
-      "showWhen": {
-        "apiField": "CaseDetails.levelOfWork",
-        "equals": "Advocacy"
-      },
+      "showWhen": [
+        {
+          "apiField": "CaseDetails.levelOfWork",
+          "equals": "Advocacy"
+        }
+      ],
       "subsections": [
         {
           "title": "Type of proceedings",
@@ -359,10 +369,12 @@
     {
       "sectionId": "statement-of-case",
       "title": "Statement of Case",
-      "showWhen": {
-        "apiField": "CaseDetails.levelOfWork",
-        "equals": "Advocacy"
-      },
+      "showWhen": [
+        {
+          "apiField": "CaseDetails.levelOfWork",
+          "equals": "Advocacy"
+        }
+      ],
       "subsections": [
         {
           "title": "Statement of Case",
@@ -378,10 +390,12 @@
     {
       "sectionId": "advice-and-assistance",
       "title": "Advice and Assistance",
-      "showWhen": {
-        "apiField": "CaseDetails.levelOfWork",
-        "equals": "Advice"
-      },
+      "showWhen": [
+        {
+          "apiField": "CaseDetails.levelOfWork",
+          "equals": "Advice"
+        }
+      ],
       "subsections": [
         {
           "title": "Advice and Assistance",
@@ -414,10 +428,12 @@
     {
       "sectionId": "solicitors-declaration",
       "title": "Solicitor's Declaration",
-      "showWhen": {
-        "apiField": "hasPreviousApplication",
-        "equals": "No"
-      },
+      "showWhen": [
+        {
+          "apiField": "hasPreviousApplication",
+          "equals": "No"
+        }
+      ],
       "subsections": [
         {
           "title": "Solicitor's Declaration",
@@ -668,10 +684,12 @@
     {
       "sectionId": "evidence",
       "title": "Evidence",
-      "hideWhen": {
-        "apiField": "evidenceFiles.files",
-        "equals": ""
-      },
+      "hideWhen": [
+        {
+          "apiField": "evidenceFiles.files",
+          "equals": ""
+        }
+      ],
       "subsections": [
         {
           "title": "Evidence",
