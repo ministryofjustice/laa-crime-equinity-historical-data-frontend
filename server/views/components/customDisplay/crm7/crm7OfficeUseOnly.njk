@@ -1,0 +1,28 @@
+{% from "../../formFieldList.njk" import formFieldList %}
+{% from "../../formSubsection.njk" import formSubsection %}
+{% from "../../formField.njk" import formField %}
+
+{% macro crm7OfficeUseOnly(data) %}
+    {# Quality Control Section #}
+    {% set decisionOptions = {
+        "G": "Grant",
+        "PG": "Part Grant",
+        "R": "Reject",
+        "Refer": "Refer For ICA"
+    } %}
+
+    {% set fieldsQualityControl = [
+        { label: "Decision", value: decisionOptions[data.QualityControl.decision] },
+        { label: "Reason for decision", value: data.QualityControl.decisionReason },
+        { label: "Destruction Date", value: data.QualityControl.destructionDate | formatDate }
+    ] %}
+    {{ formSubsection('Quality Control', fieldsQualityControl) }}
+
+    {# Authority Section #}
+    {% set fieldsAuthority = [
+        { label: "Signed Authority", value: data.Authority.signedAuth },
+        { label: "Decision Date", value: data.Authority.signedAuthDate | formatDate }
+    ] %}
+    {{ formSubsection('Authority', fieldsAuthority) }}
+
+{% endmacro %}

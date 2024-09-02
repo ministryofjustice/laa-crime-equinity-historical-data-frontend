@@ -14,7 +14,7 @@
                         <div class="govuk-grid-column-one-half">
                             <div class="govuk-body govuk-!-static-margin-bottom-0 govuk-brand-colour ">
                                 <strong>
-                                    {{ formFieldByType(field) }}
+                                {{ formFieldByType(field) }}
                                 </strong>
                             </div>
                         </div>
@@ -41,15 +41,15 @@
 {% macro formFieldByType(field) %}
     {% if field.type === 'currency' %}
         {{ field.value | formatCurrency }}
-        {% elif field.type === 'date' %}
+    {% elif field.type === 'date' %}
         {{ field.value | formatDate }}
-        {% elif field.type === 'time' %}
+    {% elif field.type === 'time' %}
         {{ field.value | formatTime }}
-        {% elif field.type === 'percent' %}
+    {% elif field.type === 'percent' %}
         {{ field.value | formatPercentage }}
-        {% elif field.type === 'link' %}
+    {% elif field.type === 'link' %}
         <a href="{{ field.value.href }}" class="govuk-link govuk-link--no-visited-state">{{ field.value.text }}</a>
-        {% elif field.type === 'every' %}
+    {% elif field.type === 'every' %}
         {{ field.value | transformValue('every') }}
     {% else %}
         {{ field.value }}

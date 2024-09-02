@@ -594,13 +594,11 @@
       "title": "Office Use Only",
       "subsections": [
         {
-          "title": "Quality Control",
-          "fields": [
-            {
-              "label": "Decision",
-              "apiField": "decisionOfficeUseOnly"
-            }
-          ]
+          "title": "Office Use Only",
+          "customDisplay": {
+            "name": "crm7OfficeUseOnly",
+            "apiField": "OfficeUseOnly"
+          }
         }
       ]
     },

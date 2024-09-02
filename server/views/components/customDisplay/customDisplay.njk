@@ -5,6 +5,7 @@
 {% from "./crm7/crm7Disbursements.njk" import crm7Disbursements %}
 {% from "./crm7/crm7ClaimForCosts.njk" import crm7ClaimForCosts %}
 {% from "./crm7/crm7ScheduleOfTime.njk" import crm7ScheduleOfTime %}
+{% from "./crm7/crm7OfficeUseOnly.njk" import crm7OfficeUseOnly %}
 {% from "./crm14/crm14AboutTheInformation.njk" import crm14AboutTheInformation %}
 {% from "./crm14/crm14InterestsOfJustice.njk" import crm14InterestsOfJustice %}
 {% from "./crm14/crm14Declarations.njk" import crm14Declarations %}
@@ -16,6 +17,7 @@
 {% from "./crm15/crm15Outgoings.njk" import crm15Outgoings %}
 {% from "./crm15/crm15LandProperty.njk" import crm15LandProperty %}
 {% from "./crm15/crm15Savings.njk" import crm15Savings %}
+{% from "./crm5/crm5OfficeUseOnly.njk" import crm5OfficeUseOnly %}
 
 {% macro customDisplay(params) %}
     {% if params.name == 'crmEvidence' %}
@@ -32,6 +34,8 @@
         {{ crm7ClaimForCosts(params.value) }}
     {% elif params.name == 'crm7ScheduleOfTime' %}
         {{ crm7ScheduleOfTime(params.value) }}
+    {% elif params.name == 'crm7OfficeUseOnly' %}
+        {{ crm7OfficeUseOnly(params.value) }}
     {% elif params.name == 'crm14InterestsOfJustice' %}
         {{ crm14InterestsOfJustice(params.value) }}
         {% elif params.name == 'crm14AboutTheInformation' %}
@@ -56,6 +60,8 @@
     {{ crm15LandProperty(params.value) }}
         {% elif params.name == 'crm15Savings' %}
     {{ crm15Savings(params.value) }}
+        {% elif params.name == 'crm5OfficeUseOnly' %}
+    {{ crm5OfficeUseOnly(params.value) }}
     {% endif %}
 
 {% endmacro %}

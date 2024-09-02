@@ -1,11 +1,9 @@
 {% from "./formField.njk" import formField %}
 
 {% macro formFieldList(fields) %}
-
-    <dl class="govuk-summary-list">
-        {% for field in fields %}
-            {{ formField(field) }}
-        {% endfor %}
-    </dl>
-
+<dl class="govuk-summary-list">
+    {% for field in fields %}
+        {{ formField(field) }}
+    {% endfor %}
+</dl>
 {% endmacro %}
