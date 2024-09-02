@@ -19,8 +19,7 @@
                 <tr class="govuk-table__row">
                     {% for cell in row %}
                         {% if cell.isHeader %}
-                            <th class="govuk-table__header {{ cell.class }}" scope="row"
-                                {% if cell.colspan %}colspan="{{ cell.colspan }}"{% endif %}>{{ cell.text }}</th>
+                            <th class="govuk-table__header {{ cell.class }}" scope="row" {% if cell.colspan %}colspan="{{ cell.colspan }}"{% endif %}>{{ cell.text }}</th>
                         {% else %}
                             <td class="govuk-table__cell {{ cell.class }}"
                                 {% if cell.colspan %}colspan="{{ cell.colspan }}"{% endif %}

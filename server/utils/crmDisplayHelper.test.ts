@@ -32,7 +32,7 @@ describe('crmDisplayHelper', () => {
       ],
     }
 
-    it('should return false if hideWhen condition met', () => {
+    it('should return false if hideWhen conditions met', () => {
       const customSection: Section = {
         ...section,
         hideWhen: [
@@ -40,13 +40,17 @@ describe('crmDisplayHelper', () => {
             apiField: 'hasPreviousApplication',
             equals: 'Yes',
           },
+          {
+            apiField: 'appealedPrevDecision',
+            equals: 'No',
+          },
         ],
       }
 
       const crmResponse: CrmResponse = {
         formDetails: {
           usn: 1234567,
-          hasPreviousApplication: 'Yes', // ensure hideWhen condition met
+          hasPreviousApplication: 'Yes',
           appealedPrevDecision: 'No',
         },
       }
@@ -54,6 +58,34 @@ describe('crmDisplayHelper', () => {
       const result = includeSection(customSection, crmResponse)
 
       expect(result).toBe(false)
+    })
+
+    it('should return true if hideWhen conditions not met', () => {
+      const customSection: Section = {
+        ...section,
+        hideWhen: [
+          {
+            apiField: 'hasPreviousApplication',
+            equals: 'Yes',
+          },
+          {
+            apiField: 'appealedPrevDecision',
+            equals: 'No',
+          },
+        ],
+      }
+
+      const crmResponse: CrmResponse = {
+        formDetails: {
+          usn: 1234567,
+          hasPreviousApplication: 'Yes', // hideWhen condition met
+          appealedPrevDecision: 'Yes', // hideWhen condition not met
+        },
+      }
+
+      const result = includeSection(customSection, crmResponse)
+
+      expect(result).toBe(true)
     })
 
     it('should return false if hideWhen and showWhen condition met', () => {
@@ -76,8 +108,8 @@ describe('crmDisplayHelper', () => {
       const crmResponse: CrmResponse = {
         formDetails: {
           usn: 1234567,
-          hasPreviousApplication: 'Yes', // ensure hideWhen condition met
-          appealedPrevDecision: 'Yes', // ensure showWhen condition met
+          hasPreviousApplication: 'Yes', // hideWhen condition met
+          appealedPrevDecision: 'Yes', // showWhen condition met
         },
       }
 
@@ -100,8 +132,8 @@ describe('crmDisplayHelper', () => {
       const crmResponse: CrmResponse = {
         formDetails: {
           usn: 1234567,
-          hasPreviousApplication: 'No', // ensure hideWhen condition met
-          appealedPrevDecision: 'Yes', // ensure showWhen condition met
+          hasPreviousApplication: 'No', // showWhen condition not met
+          appealedPrevDecision: 'Yes',
         },
       }
 
@@ -138,7 +170,7 @@ describe('crmDisplayHelper', () => {
       const crmResponse: CrmResponse = {
         formDetails: {
           usn: 1234567,
-          hasPreviousApplication: 'No',
+          hasPreviousApplication: 'No', // hideWhen condition not met
           appealedPrevDecision: 'No',
         },
       }
@@ -156,20 +188,52 @@ describe('crmDisplayHelper', () => {
             apiField: 'hasPreviousApplication',
             equals: 'Yes',
           },
+          {
+            apiField: 'appealedPrevDecision',
+            equals: 'Yes',
+          },
         ],
       }
 
       const crmResponse: CrmResponse = {
         formDetails: {
           usn: 1234567,
-          hasPreviousApplication: 'Yes',
-          appealedPrevDecision: 'Yes',
+          hasPreviousApplication: 'Yes', // showWhen condition met
+          appealedPrevDecision: 'Yes', // showWhen condition met
         },
       }
 
       const result = includeSection(customSection, crmResponse)
 
       expect(result).toBe(true)
+    })
+
+    it('should return false if showWhen conditions not met', () => {
+      const customSection: Section = {
+        ...section,
+        showWhen: [
+          {
+            apiField: 'hasPreviousApplication',
+            equals: 'Yes',
+          },
+          {
+            apiField: 'appealedPrevDecision',
+            equals: 'Yes',
+          },
+        ],
+      }
+
+      const crmResponse: CrmResponse = {
+        formDetails: {
+          usn: 1234567,
+          hasPreviousApplication: 'Yes', // showWhen condition met
+          appealedPrevDecision: 'No', // showWhen condition not met
+        },
+      }
+
+      const result = includeSection(customSection, crmResponse)
+
+      expect(result).toBe(false)
     })
   })
 
