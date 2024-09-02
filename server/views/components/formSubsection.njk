@@ -17,14 +17,14 @@
         {% endif %}
     {% else %}
         {# check if section is empty #}
-        {% set sectionIsEmpty = true %}
+        {% set sectionIsNotEmpty = false %}
         {% for field in data %}
             {% if (field.value | isNotEmpty) %}
-                {% set sectionIsEmpty = false %}
+                {% set sectionIsNotEmpty = true %}
             {% endif %}
         {% endfor %}
 
-        {% if sectionIsEmpty === false %} {# render non-empty section #}
+        {% if sectionIsNotEmpty %} {# render non-empty section #}
             <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
                 <div class="govuk-summary-card__title-wrapper">
                     <h3 class="govuk-summary-card__title">{{ title }}</h3>
