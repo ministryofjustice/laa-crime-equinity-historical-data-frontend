@@ -140,11 +140,11 @@
               "apiField": "ClientDetails.maritalStatus"
             },
             {
-              "label": "Client has no fixed abode",
-              "apiField": "ClientDetails.clientNfa"
+              "subHeading": "Address"
             },
             {
-              "subHeading": "Address"
+              "label": "Client has no fixed abode",
+              "apiField": "ClientDetails.clientNfa"
             },
             {
               "label": "Client has no fixed abode",
