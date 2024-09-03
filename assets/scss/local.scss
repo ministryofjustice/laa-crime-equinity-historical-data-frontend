@@ -17,7 +17,7 @@
 }
 
 .govuk-summary-list__key, .govuk-summary-list__value {
-  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .hideContainer {
