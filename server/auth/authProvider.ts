@@ -1,5 +1,5 @@
 import axios from 'axios'
-import msal from '@azure/msal-node'
+import msal, { ServerError } from '@azure/msal-node'
 import { Configuration } from '@azure/msal-node/src/config/Configuration'
 import type { Request, Response, NextFunction } from 'express'
 import { AuthorizationCodeRequest } from '@azure/msal-node/src/request/AuthorizationCodeRequest'
@@ -7,6 +7,7 @@ import { AuthorizationUrlRequest } from '@azure/msal-node/src/request/Authorizat
 import { CloudDiscoveryMetadata } from '@azure/msal-common/src/authority/CloudDiscoveryMetadata'
 import { ClientCredentialRequest } from '@azure/msal-node/src/request/ClientCredentialRequest'
 import { msalConfig } from './authConfig'
+import logger from '../../logger'
 
 type Options = {
   code?: string
@@ -89,10 +90,16 @@ class AuthProvider {
         return next(new Error('Error: response not found'))
       }
 
+      if (!req.session.pkceCodes) {
+        // if pkceCodes are missing in the session, redirect to signin to re-trigger the auth flow
+        logger.warn('Session pkceCodes not found, re-triggering auth flow')
+        return res.redirect('/auth/signin')
+      }
+
       const authCodeRequest = {
         ...req.session.authCodeRequest,
         code: req.body.code,
-        codeVerifier: req.session.pkceCodes.verifier,
+        codeVerifier: req.session.pkceCodes?.verifier,
       }
 
       try {

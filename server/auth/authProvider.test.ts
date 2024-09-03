@@ -54,6 +54,30 @@ describe('authProvider', () => {
     expect(response.redirect).toHaveBeenCalledWith('/')
   })
 
+  it('should handle redirect request when pkceCodes are missing', async () => {
+    fakeAuthClient.post('/oauth2/v2.0/token').reply(200, {
+      access_token: 'some-access-token',
+    })
+
+    const requestHandler = authProvider.handleRedirect()
+
+    request.session = session
+    request.session.pkceCodes = null
+    request.session.authCodeRequest = {
+      redirectUri: '/oauth2/v2.0/token',
+    } as AuthorizationCodeRequest
+    request.session.tokenCache = null
+
+    request.body = {
+      code: 'someCode',
+      state: 'eyJzdWNjZXNzUmVkaXJlY3QiOiIvIn0=', // base64 encoded {"successRedirect":"/"}
+    }
+
+    await requestHandler(request, response, next)
+
+    expect(response.redirect).toHaveBeenCalledWith('/auth/signin')
+  })
+
   it('should handle logout request', async () => {
     const requestHandler = authProvider.logout()
 
