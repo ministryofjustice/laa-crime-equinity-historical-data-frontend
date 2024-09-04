@@ -99,7 +99,7 @@ class AuthProvider {
       const authCodeRequest = {
         ...req.session.authCodeRequest,
         code: req.body.code,
-        codeVerifier: req.session.pkceCodes?.verifier,
+        codeVerifier: req.session.pkceCodes.verifier,
       }
 
       try {
@@ -119,6 +119,10 @@ class AuthProvider {
         const state = JSON.parse(this.cryptoProvider.base64Decode(req.body.state))
         return res.redirect(state.successRedirect)
       } catch (error) {
+        if (error instanceof ServerError && error.errorCode === 'invalid_grant') {
+          logger.warn('Failed to authenticate due to invalid grant, re-triggering auth flow', error)
+          return res.redirect('/auth/signin')
+        }
         return next(error)
       }
     }
