@@ -17,7 +17,7 @@ metadata:
       }
       error_page 403 @custom_403;
 spec:
-  ingressClassName: default    
+  ingressClassName: nginx    
   tls:
     - hosts:
         - ${CP_NAMESPACE}.apps.live.cloud-platform.service.justice.gov.uk
