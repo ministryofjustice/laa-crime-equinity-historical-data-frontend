@@ -2,19 +2,38 @@
 {% from "./formFieldList.njk" import formFieldList %}
 {% from "./formTable.njk" import formTable %}
 
-
 {% macro formSubsection(title, data, isTableData = false, tableClass = "") %}
-    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
-        <div class="govuk-summary-card__title-wrapper">
-            <h3 class="govuk-summary-card__title">{{ title }}</h3>
-        </div>
-        <div class="govuk-summary-card__content">
-            {% if isTableData %}
-                {{ formTable(data, tableClass) }}
-            {% else %}
-                {{ formFieldList(data) }}
+
+    {% if isTableData %}
+        {% if data.rows.length > 0 %} {# render non-empty section #}
+            <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h3 class="govuk-summary-card__title">{{ title }}</h3>
+                </div>
+                <div class="govuk-summary-card__content">
+                    {{ formTable(data, tableClass) }}
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        {# check if section is empty #}
+        {% set sectionIsNotEmpty = false %}
+        {% for field in data %}
+            {% if (field.value | isNotEmpty) %}
+                {% set sectionIsNotEmpty = true %}
             {% endif %}
-        </div>
-    </div>
+        {% endfor %}
+
+        {% if sectionIsNotEmpty %} {# render non-empty section #}
+            <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h3 class="govuk-summary-card__title">{{ title }}</h3>
+                </div>
+                <div class="govuk-summary-card__content">
+                    {{ formFieldList(data) }}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
 
 {% endmacro %}

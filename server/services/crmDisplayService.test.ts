@@ -34,7 +34,13 @@ describe('CRM Display Service', () => {
       DetailsOfApplication: 'Some Details of Application',
     },
     evidenceFiles: {
-      files: [],
+      files: [
+        {
+          key: 'somefile.att',
+          type: 'somefile',
+          name: 'somefile.pdf',
+        },
+      ],
     },
   }
 

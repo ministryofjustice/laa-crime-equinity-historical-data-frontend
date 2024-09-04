@@ -45,6 +45,7 @@ export interface Crm5Response extends CrmResponse {
       middleName: string
       surname: string
       maritalStatus: string
+      clientNfa: boolean
       dateOfBirth: string
       nationalInsuranceNumber: string
       address: {

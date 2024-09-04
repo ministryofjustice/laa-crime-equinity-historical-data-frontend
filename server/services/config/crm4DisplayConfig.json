@@ -452,6 +452,12 @@
     {
       "sectionId": "evidence",
       "title": "Evidence",
+      "hideWhen": [
+        {
+          "apiField": "evidenceFiles.files",
+          "equals": ""
+        }
+      ],
       "subsections": [
         {
           "title": "Evidence",
