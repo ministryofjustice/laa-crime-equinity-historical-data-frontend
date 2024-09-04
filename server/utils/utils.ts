@@ -38,3 +38,7 @@ export const buildQueryString = (params: Record<string, string | number>): strin
 export const currentIsoDate = (): string => {
   return format(new Date(), 'yyyy-MM-dd')
 }
+
+export const isNotEmpty = (value: string): boolean => {
+  return value !== undefined && value !== null && value !== ''
+}

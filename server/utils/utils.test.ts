@@ -1,4 +1,4 @@
-import { buildQueryString, convertToTitleCase, initialiseName } from './utils'
+import { buildQueryString, convertToTitleCase, isNotEmpty, initialiseName } from './utils'
 
 describe('convert to title case', () => {
   it.each([
@@ -40,5 +40,18 @@ describe('buildQueryString', () => {
     [{ usn: 1234567, page: 1, pageSize: 10 }, 'usn=1234567'], // page & pageSize excluded
   ])('given %s returns "%s"', (input: { [key: string]: string | number }, expected: string) => {
     expect(buildQueryString(input)).toEqual(expected)
+  })
+})
+
+describe('isNotEmpty', () => {
+  it.each([
+    ['test', true],
+    [0, true],
+    [false, true],
+    [undefined, false],
+    [null, false],
+    ['', false],
+  ])('given "%s" returns %s', (input: string, expected: boolean) => {
+    expect(isNotEmpty(input)).toEqual(expected)
   })
 })

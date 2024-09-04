@@ -4,7 +4,8 @@
     {# Render "Alternative Quotes" subsection #}
     {% set fields = [
         { label: "Have you obtained any alternative quotes?", value: data.alternativeQuote },
-        { label: "How many alternative quotes have been obtained?", value: data.numberOfQuotes}
+        { label: "How many alternative quotes have been obtained?", value: data.numberOfQuotes },
+        { label: "If none, please provide a reason for not getting alternatives", value: data.reason }
     ] %}
     {{ formSubsection('Alternative Quotes', fields) }}
 
