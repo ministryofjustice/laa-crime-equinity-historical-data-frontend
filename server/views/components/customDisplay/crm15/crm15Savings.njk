@@ -31,7 +31,6 @@
                     data.numOtherCashInvestments, data.numPartnerOtherCashInvestments, data.numJointOtherCashInvestments) }}
 
                 {% if (data.bankAccounts | length) > 0 %}
-                    <div class="govuk-summary-list__row govuk-grid-row">
                         {% set tableData = {
                             head: [
                                 { text: "Bank, building society or other"},
@@ -58,7 +57,6 @@
                             {% set list = tableData.rows.push(tableRow) %}
                         {% endfor %}
                         {{ formTable(tableData) }}
-                    </div>
                 {% endif %}
 
                 {{ youYourPartner("Is the salary, wages or benefits of you or your partner paid to one of the accounts?",
@@ -133,6 +131,7 @@
 
                 {{ youYourPartnerJoint("Other lump sum investments?", data.otherLumpSum, data.partnerOtherLumpSum, data.jointOtherLumpSum) }}
 
+                {% if (data.investments.length > 0) %}
                 <div class="govuk-summary-list__row govuk-grid-row">
                     {% set tableData = {
                         head: [
@@ -155,6 +154,7 @@
                     {% endfor %}
                     {{ formTable(tableData) }}
                 </div>
+                {%  endif  %}
 
                 {{ youYourPartner("Do you or your partner stand to benefit from a trust fund in the United Kingdom or overseas?",
                     data.trustFund, data.partnerTrustFund) }}

@@ -42,6 +42,8 @@
     {# Render "Time Totals" subsection #}
     {% set timeTotalsData = {
         head: [
+            { text: "Travel" },
+            { text: "Waiting" },
             { text: "Attendance Counsel" },
             { text: "Attendance no Counsel" },
             { text: "Preparation" },
@@ -49,6 +51,8 @@
         ],
         rows: [
             [
+                { text: data.timeTotals.travel },
+                { text: data.timeTotals.waiting },
                 { text: data.timeTotals.attendanceCounsel },
                 { text: data.timeTotals.attendanceNoCounsel },
                 { text: data.timeTotals.preparation },
@@ -62,6 +66,8 @@
     {# Render "Cost Totals" subsection #}
     {% set costTotalsData = {
         head: [
+            { text: "Travel" },
+            { text: "Waiting" },
             { text: "Attendance Counsel" },
             { text: "Attendance no Counsel" },
             { text: "Preparation" },
@@ -69,6 +75,8 @@
         ],
         rows: [
             [
+                { text: data.costTotals.travel | formatCurrency },
+                { text: data.costTotals.waiting | formatCurrency },
                 { text: data.costTotals.attendanceCounsel | formatCurrency },
                 { text: data.costTotals.attendanceNoCounsel | formatCurrency },
                 { text: data.costTotals.preparation | formatCurrency },

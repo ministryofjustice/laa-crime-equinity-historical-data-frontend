@@ -226,13 +226,13 @@ jobs:
   deploy-archive:
     runs-on: ubuntu-latest
     needs: deploy-staging
-    environment: prod
+    environment: archive
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read # This is required for actions/checkout
     env:
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-      APP_ENV: "prod"
+      APP_ENV: "archive"
       IMAGE_TAG: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v4

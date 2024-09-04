@@ -112,7 +112,7 @@ export default class CrmDisplayService {
           // otherwise return field as is
           return field
         })
-        .filter(field => isSubHeading(field) || field.value)
+        .filter(field => isSubHeading(field) || field.value !== '')
     }
     return undefined
   }

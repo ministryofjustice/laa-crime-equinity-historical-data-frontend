@@ -467,15 +467,12 @@
     {
       "sectionId": "crm15-income-1",
       "title": "CRM 15 - Income: 1",
-      "showWhen": {
-        "conditionsMet": "all",
-        "conditions": [
-          {
-            "apiField": "hasCrm15",
-            "equals": "true"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasCrm15",
+          "equals": "true"
+        }
+      ],
       "subsections": [
         {
           "title": "Your Income and Your Partner's Income",
@@ -489,15 +486,12 @@
     {
       "sectionId": "crm15-income-2",
       "title": "CRM 15 - Income: 2",
-      "showWhen": {
-        "conditionsMet": "all",
-        "conditions": [
-          {
-            "apiField": "hasCrm15",
-            "equals": "true"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasCrm15",
+          "equals": "true"
+        }
+      ],
       "subsections": [
         {
           "title": "Your Income and Your Partner's Income",
@@ -511,15 +505,12 @@
     {
       "sectionId": "crm15-outgoings",
       "title": "CRM 15 - Outgoings",
-      "showWhen": {
-        "conditionsMet": "all",
-        "conditions": [
-          {
-            "apiField": "hasCrm15",
-            "equals": "true"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasCrm15",
+          "equals": "true"
+        }
+      ],
       "subsections": [
         {
           "title": "Your outgoings and your partner's outgoings",
@@ -533,15 +524,22 @@
     {
       "sectionId": "crm15-land-and-property",
       "title": "CRM 15 - Land & Property",
-      "showWhen": {
-        "conditionsMet": "all",
-        "conditions": [
-          {
-            "apiField": "hasCrm15",
-            "equals": "true"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasCrm15",
+          "equals": "true"
+        }
+      ],
+      "hideWhen": [
+        {
+          "apiField": "crm15Details.landProperty.ownProperty",
+          "equals": ""
+        },
+        {
+          "apiField": "crm15Details.landProperty.partnerOwnProperty",
+          "equals": ""
+        }
+      ],
       "subsections": [
         {
           "title": "Your outgoings and your partner's outgoings",
@@ -555,15 +553,12 @@
     {
       "sectionId": "crm15-savings",
       "title": "CRM 15 - Savings",
-      "showWhen": {
-        "conditionsMet": "all",
-        "conditions": [
-          {
-            "apiField": "hasCrm15",
-            "equals": "true"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasCrm15",
+          "equals": "true"
+        }
+      ],
       "subsections": [
         {
           "title": "Your Savings and Investments and those of Your Partner",
@@ -713,6 +708,12 @@
     {
       "sectionId": "evidence",
       "title": "Evidence",
+      "hideWhen": [
+        {
+          "apiField": "evidenceFiles.files",
+          "equals": ""
+        }
+      ],
       "subsections": [
         {
           "title": "Evidence",
