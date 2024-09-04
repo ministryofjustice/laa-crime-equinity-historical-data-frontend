@@ -76,7 +76,7 @@
         rows: [
             [
                 { text: data.costTotals.travel },
-                { text: data.costTotals.waiting },
+                { text: data.costTotals.waiting | formatCurrency },
                 { text: data.costTotals.attendanceCounsel | formatCurrency },
                 { text: data.costTotals.attendanceNoCounsel | formatCurrency },
                 { text: data.costTotals.preparation | formatCurrency },
