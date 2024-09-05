@@ -70,7 +70,7 @@
     {{ formSubsection('Translator', tableTranslator, true) }}
 
     {# Additional Expenditure Section #}
-{#    {% if data.AdditionalExpenditure.length > 0 %}#}
+
         {% set tableAdditionalExpenditure = {
             head: [
                 { text: "Description" },
@@ -100,7 +100,7 @@
         {% endfor %}
 
         {{ formSubsection('Additional Expenditure', tableAdditionalExpenditure, true) }}
-{#    {% endif %}#}
+
 
     {# Travel Section #}
     {% set tableTravel = {
