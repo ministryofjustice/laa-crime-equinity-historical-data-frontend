@@ -35,7 +35,7 @@
                 { text: data.Preparation.requested.total | formatCurrency }
             ],
             [
-                { text: "Authorised", isHeader: true },
+                { text: "Allowed", isHeader: true },
                 { text: data.Preparation.authorised.hours },
                 { text: data.Preparation.authorised.hourlyRate | formatCurrency },
                 { text: data.Preparation.authorised.total | formatCurrency }
@@ -48,9 +48,9 @@
     {% set tableTranslator = {
         head: [
             { text: "" },
-            { text: "Number of Words" },
-            { text: "Cost Per Word" },
-            { text: "Total Cost" }
+            { text: "No. of Words" },
+            { text: "Cost Per 1000 Words" },
+            { text: "Total Cost of Translation" }
         ],
         rows: [
             [
@@ -60,7 +60,7 @@
                 { text: data.Translator.requested.total | formatCurrency }
             ],
             [
-                { text: "Authorised", isHeader: true },
+                { text: "Allowed", isHeader: true },
                 { text: data.Translator.authorised.numWords },
                 { text: data.Translator.authorised.costPerWord | formatCurrency },
                 { text: data.Translator.authorised.total | formatCurrency }
@@ -77,6 +77,9 @@
                 { text: "Justification" },
                 { text: "Quantity" },
                 { text: "Rate" },
+                { text: "Total" },
+                { text: "Allowed Qty" },
+                { text: "Allowed Rate" },
                 { text: "Total" }
             ],
             rows: []
@@ -88,7 +91,10 @@
                 { text: item.justification },
                 { text: item.quantity },
                 { text: item.rate | formatCurrency },
-                { text: item.total | formatCurrency }
+                { text: item.total | formatCurrency },
+                { text: item.authorisedQuantity },
+                { text: item.authorisedRate | formatCurrency },
+                { text: item.authorisedTotal | formatCurrency }
             ] %}
             {% set _ = tableAdditionalExpenditure.rows.push(tableRow) %}
         {% endfor %}
@@ -100,9 +106,9 @@
     {% set tableTravel = {
         head: [
             { text: "" },
-            { text: "Hours" },
-            { text: "Rate" },
-            { text: "Total" }
+            { text: "No. of Hours" },
+            { text: "Hourly Rate" },
+            { text: "Total cost of Travel" }
         ],
         rows: [
             [
@@ -112,7 +118,7 @@
                 { text: data.Travel.requested.total | formatCurrency }
             ],
             [
-                { text: "Authorised", isHeader: true },
+                { text: "Allowed", isHeader: true },
                 { text: data.Travel.authorised.hours },
                 { text: data.Travel.authorised.rate | formatCurrency },
                 { text: data.Travel.authorised.total | formatCurrency }
@@ -160,7 +166,7 @@
                 { text: data.Transcription.requested.total | formatCurrency }
             ],
             [
-                { text: "Authorised", isHeader: true },
+                { text: "Allowed", isHeader: true },
                 { text: data.Transcription.authorised.numMin },
                 { text: data.Transcription.authorised.costPerMin | formatCurrency },
                 { text: data.Transcription.authorised.total | formatCurrency }
@@ -185,7 +191,7 @@
                 { text: data.Photocopying.requested.total | formatCurrency }
             ],
             [
-                { text: "Authorised", isHeader: true },
+                { text: "Allowed", isHeader: true },
                 { text: data.Photocopying.authorised.numPages },
                 { text: data.Photocopying.authorised.costPerPage | formatCurrency },
                 { text: data.Photocopying.authorised.total | formatCurrency }
