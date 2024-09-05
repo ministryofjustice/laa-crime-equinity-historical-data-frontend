@@ -1,29 +1,31 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // clear errors
-  const downloadButton = document.querySelector('button[type="submit"]') // Assuming the download button is of type "submit"
-  downloadButton.addEventListener('click', function () {
-    // Clear error summary
-    const errorSummary = document.getElementById('error-summary')
-    if (errorSummary) {
-      errorSummary.remove()
-    }
+  const formElement = document.querySelector('form')
 
-    // Clear individual field errors
-    const errorFields = document.querySelectorAll('.govuk-form-group--error')
-    errorFields.forEach(function (errorField) {
-      // Remove the error message paragraph
-      const errorMessage = errorField.querySelector('.govuk-error-message')
-      if (errorMessage) {
-        errorMessage.remove()
+  // Handle form submission
+  formElement.addEventListener('submit', function () {
+    // Set a timeout
+    setTimeout(function () {
+      const errorSummary = document.getElementById('error-summary')
+      if (errorSummary) {
+        errorSummary.remove()
       }
 
-      // Remove error classes from the form group and input/select elements
-      errorField.classList.remove('govuk-form-group--error')
-      const inputElement = errorField.querySelector('.govuk-input--error, .govuk-select--error')
-      if (inputElement) {
-        inputElement.classList.remove('govuk-input--error', 'govuk-select--error')
-      }
-    })
+      // Clear individual field errors
+      const errorFields = document.querySelectorAll('.govuk-form-group--error')
+      errorFields.forEach(function (errorField) {
+        const errorMessage = errorField.querySelector('.govuk-error-message')
+        if (errorMessage) {
+          errorMessage.remove()
+        }
+
+        // Remove error classes from the form group and input/select elements
+        errorField.classList.remove('govuk-form-group--error')
+        const inputElement = errorField.querySelector('.govuk-input--error, .govuk-select--error')
+        if (inputElement) {
+          inputElement.classList.remove('govuk-input--error', 'govuk-select--error')
+        }
+      })
+    }, 250)
   })
 
   // toggle CRM 14 fields
