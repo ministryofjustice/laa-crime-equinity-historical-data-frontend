@@ -42,3 +42,7 @@ export const currentIsoDate = (): string => {
 export const isNotEmpty = (value: string): boolean => {
   return value !== undefined && value !== null && value !== ''
 }
+
+export const formatBooleanToYesNo = (value: boolean): string => {
+  return value ? 'Yes' : 'No'
+}

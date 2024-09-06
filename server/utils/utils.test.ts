@@ -1,4 +1,4 @@
-import { buildQueryString, convertToTitleCase, isNotEmpty, initialiseName } from './utils'
+import { buildQueryString, convertToTitleCase, isNotEmpty, initialiseName, formatBooleanToYesNo } from './utils'
 
 describe('convert to title case', () => {
   it.each([
@@ -53,5 +53,14 @@ describe('isNotEmpty', () => {
     ['', false],
   ])('given "%s" returns %s', (input: string, expected: boolean) => {
     expect(isNotEmpty(input)).toEqual(expected)
+  })
+})
+
+describe('formatBooleanToYesNo', () => {
+  it.each([
+    [true, 'Yes'],
+    [false, 'No'],
+  ])('given %s returns "%s"', (input: boolean, expected: string) => {
+    expect(formatBooleanToYesNo(input)).toEqual(expected)
   })
 })
