@@ -20,7 +20,6 @@ const schema = Joi.object({
   decisionFromDate: Joi.date().required().iso().empty('').messages({
     'any.required': 'Decision date from must be specified',
     'date.format': 'Decision date from must be a valid date',
-    'date.max': 'Your Decision date from cannot be later than your Decision date to',
     'any.ref': 'Decision date to requires a valid Decision date from',
   }),
   decisionToDate: Joi.date().required().iso().empty('').min(Joi.ref('decisionFromDate')).messages({
@@ -53,7 +52,6 @@ const schemaCrm14 = Joi.object({
     .allow('')
     .messages({
       'date.format': 'Decision date from must be a valid date',
-      'date.max': 'Your Decision date from cannot be later than your Decision date to',
       'any.ref': 'Decision date from requires a valid Decision date to',
     })
     .custom(checkToDate('decisionToDate')),

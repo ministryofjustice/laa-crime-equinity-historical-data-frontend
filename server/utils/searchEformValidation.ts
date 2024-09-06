@@ -1,4 +1,5 @@
 import Joi from 'joi'
+import { isBefore } from 'date-fns'
 import { buildValidationErrors, Errors } from './errorDisplayHelper'
 
 const schema = Joi.object({
@@ -22,19 +23,39 @@ const schema = Joi.object({
     'date.max': 'Client date of birth must be a valid date',
   }),
   startDate: Joi.date().iso().optional().allow('').messages({
-    'date.format': 'Start date must be a valid date',
+    'date.format': 'Submitted date from must be a valid date',
   }),
-  endDate: Joi.date().iso().min(Joi.ref('startDate')).optional().allow('').messages({
-    'date.format': 'End date must be a valid date',
-    'date.min': 'Your End date cannot be earlier than your Start date',
-    'any.ref': 'End date requires a valid Start date',
+  endDate: Joi.date().iso().optional().allow('').messages({
+    'date.format': 'Submitted date to must be a valid date',
   }),
   page: Joi.number()
     .min(1)
     .optional()
     .allow('')
     .messages({ 'number.min': 'Invalid page specified', 'number.base': 'Invalid page specified' }),
-}).options({ allowUnknown: true, abortEarly: false })
+})
+  .options({ allowUnknown: true, abortEarly: false })
+  .custom((value, helpers) => {
+    const { startDate, endDate } = value
+    if (!startDate && endDate) {
+      return helpers.error('startDate.missing', undefined, { path: ['startDate'] })
+    }
+
+    if (startDate && !endDate) {
+      return helpers.error('endDate.missing', undefined, { path: ['endDate'] })
+    }
+
+    if (isBefore(endDate, startDate)) {
+      return helpers.error('endDate.earlier', undefined, { path: ['endDate'] })
+    }
+
+    return value
+  })
+  .messages({
+    'startDate.missing': "Enter 'Submitted date from'",
+    'endDate.missing': "Enter 'Submitted date to'",
+    'endDate.earlier': "Your 'Submitted date to' cannot be earlier than your 'Submitted date from'",
+  })
 
 export default function validateSearchParams(params: Record<string, string>): Errors {
   if (searchParamsIsEmpty(params)) {
