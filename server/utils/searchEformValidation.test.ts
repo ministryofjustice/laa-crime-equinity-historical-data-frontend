@@ -178,4 +178,30 @@ describe('Search Eform Validation', () => {
       },
     })
   })
+
+  it('should return errors for missing End Date', () => {
+    const searchParams: Record<string, string> = {
+      usn: '123456789',
+      supplierAccountNumber: '1234AB',
+      clientName: 'John Doe',
+      clientDOB: '1960-02-12',
+      startDate: '2022-11-01',
+      endDate: '',
+    }
+    const result = validateSearchParams(searchParams)
+
+    expect(result).toEqual({
+      list: [
+        {
+          href: '#endDate',
+          text: "Enter 'Submission date to'",
+        },
+      ],
+      messages: {
+        endDate: {
+          text: "Enter 'Submission date to'",
+        },
+      },
+    })
+  })
 })
