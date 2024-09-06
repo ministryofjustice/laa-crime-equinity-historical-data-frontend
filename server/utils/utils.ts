@@ -43,12 +43,6 @@ export const isNotEmpty = (value: string): boolean => {
   return value !== undefined && value !== null && value !== ''
 }
 
-export const formatBooleanToYesNo = (value: boolean | string | null | undefined): string => {
-  if (value === true || value === 'true') {
-    return 'Yes'
-  }
-  if (value === false || value === 'false') {
-    return 'No'
-  }
-  return value ? value.toString() : ''
+export const formatBooleanToYesNo = (value: boolean): string => {
+  return value ? 'Yes' : 'No'
 }
