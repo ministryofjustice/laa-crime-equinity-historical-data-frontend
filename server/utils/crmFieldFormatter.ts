@@ -11,9 +11,11 @@ export const formatCurrency = (value: string): string => {
   return currencyFormat.format(number)
 }
 
-export const formatDate = (value: string): string => {
+export const formatDate = (value: string, dateFormat?: string): string => {
   const date = Date.parse(value)
   if (Number.isNaN(date)) return value
+  if (dateFormat) return format(date, dateFormat)
+
   return format(date, 'd MMMM yyyy')
 }
 
