@@ -71,8 +71,8 @@
                     {%- set tableRow = [
                         { text: [clientName, usn] | join | safe },
                         { text: type | safe },
-                        { text: originatedDate | formatDate('dd-MM-yyyy') | safe },
-                        { text: submittedDate | formatDate('dd-MM-yyyy') | safe },
+                        { text: originatedDate | formatDate('dd/MM/yyyy') | safe },
+                        { text: submittedDate | formatDate('dd/MM/yyyy') | safe },
                         { text: providerAccount | safe },
                         { text: statusColour | safe }
                     ] -%}
