@@ -49,8 +49,8 @@ describe('Search Eform Validation', () => {
     ['Client name must be at least 3 characters', 'clientName', 'J'],
     ['Client date of birth must be a valid date', 'clientDOB', '5555-55-55'],
     ['Client date of birth must be a valid date', 'clientDOB', `${new Date().getFullYear() + 1}-01-01`], // future date
-    ['Submitted date from must be a valid date', 'startDate', '5555-55-55'],
-    ['Submitted date to must be a valid date', 'endDate', '5555-55-55'],
+    ['Submission date from must be a valid date', 'startDate', '5555-55-55'],
+    ['Submission date to must be a valid date', 'endDate', '5555-55-55'],
   ])('should return "%s" error for %s = %s', (errorMessage: string, fieldName: string, fieldValue: string) => {
     const searchParams: Record<string, string> = {
       [fieldName]: fieldValue,
@@ -142,12 +142,12 @@ describe('Search Eform Validation', () => {
       list: [
         {
           href: '#endDate',
-          text: "Your 'Submitted date to' cannot be earlier than your 'Submitted date from'",
+          text: "Your 'Submission date to' cannot be earlier than your 'Submission date from'",
         },
       ],
       messages: {
         endDate: {
-          text: "Your 'Submitted date to' cannot be earlier than your 'Submitted date from'",
+          text: "Your 'Submission date to' cannot be earlier than your 'Submission date from'",
         },
       },
     })
@@ -168,12 +168,12 @@ describe('Search Eform Validation', () => {
       list: [
         {
           href: '#startDate',
-          text: "Enter 'Submitted date from'",
+          text: "Enter 'Submission date from'",
         },
       ],
       messages: {
         startDate: {
-          text: "Enter 'Submitted date from'",
+          text: "Enter 'Submission date from'",
         },
       },
     })

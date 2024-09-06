@@ -23,10 +23,10 @@ const schema = Joi.object({
     'date.max': 'Client date of birth must be a valid date',
   }),
   startDate: Joi.date().iso().optional().allow('').messages({
-    'date.format': 'Submitted date from must be a valid date',
+    'date.format': 'Submission date from must be a valid date',
   }),
   endDate: Joi.date().iso().optional().allow('').messages({
-    'date.format': 'Submitted date to must be a valid date',
+    'date.format': 'Submission date to must be a valid date',
   }),
   page: Joi.number()
     .min(1)
@@ -52,9 +52,9 @@ const schema = Joi.object({
     return value
   })
   .messages({
-    'startDate.missing': "Enter 'Submitted date from'",
-    'endDate.missing': "Enter 'Submitted date to'",
-    'endDate.earlier': "Your 'Submitted date to' cannot be earlier than your 'Submitted date from'",
+    'startDate.missing': "Enter 'Submission date from'",
+    'endDate.missing': "Enter 'Submission date to'",
+    'endDate.earlier': "Your 'Submission date to' cannot be earlier than your 'Submission date from'",
   })
 
 export default function validateSearchParams(params: Record<string, string>): Errors {
