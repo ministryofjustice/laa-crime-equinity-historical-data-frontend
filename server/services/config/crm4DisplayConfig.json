@@ -36,7 +36,8 @@
             },
             {
               "label": "Address",
-              "apiField": "CaseDetails.Firm.firmAddress"
+              "apiField": "CaseDetails.Firm.firmAddress",
+              "type": "multiline"
             },
             {
               "label": "DX",
