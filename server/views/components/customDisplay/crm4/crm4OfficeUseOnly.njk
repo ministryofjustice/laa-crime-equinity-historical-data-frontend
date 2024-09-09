@@ -203,6 +203,7 @@
     {# Authority Section #}
     {% set fieldsAuthority = [
         { label: "Amount Allowed", value: data.Authority.allowedAmount | formatCurrency },
+        { label: "Destruction date", value: data.Authority.destructionDate | formatDate },
         { label: "Signed Authority", value: data.Authority.signedAuth }
     ] %}
     {{ formSubsection('Authority', fieldsAuthority) }}
