@@ -81,7 +81,7 @@
               "apiField": "CaseDetails.ClientDetails.prisonLaw"
             },
             {
-              "label": "Rep order no. / case no.",
+              "label": "Rep order no. / Case no.",
               "apiField": "CaseDetails.ClientDetails.repOrderNumber"
             },
             {
@@ -106,7 +106,7 @@
               "apiField": "CaseDetails.ClientDetails.firstName"
             },
             {
-              "label": "Date Of Birth",
+              "label": "Date of Birth",
               "apiField": "CaseDetails.ClientDetails.dateOfBirth",
               "type": "date"
             }
@@ -116,7 +116,7 @@
           "title": "Details of Proceedings",
           "fields": [
             {
-              "label": "Is Your Client Detained?",
+              "label": "Is your client detained?",
               "apiField": "CaseDetails.ProceedingDetails.isClientDetained"
             },
             {
@@ -124,8 +124,9 @@
               "apiField": "CaseDetails.ProceedingDetails.detainedDetails"
             },
             {
-              "label": "Court Type",
-              "apiField": "CaseDetails.ProceedingDetails.courtType"
+              "label": "Court type",
+              "apiField": "CaseDetails.ProceedingDetails.courtType",
+              "transform": "courtType"
             },
             {
               "label": "Have you accessed the Psychiatric Liaison Service provided within the Central Criminal Court?",
@@ -136,7 +137,7 @@
               "apiField": "CaseDetails.ProceedingDetails.psychiatricDetails"
             },
             {
-              "label": "Main Offence",
+              "label": "Main offence",
               "apiField": "CaseDetails.ProceedingDetails.mainOffence"
             },
             {
@@ -144,12 +145,12 @@
               "apiField": "CaseDetails.ProceedingDetails.actualPlea"
             },
             {
-              "label": "Date of Next Hearing",
+              "label": "Date of next hearing",
               "apiField": "CaseDetails.ProceedingDetails.dateOfHearing",
               "type": "date"
             },
             {
-              "label": "Purpose of Next Hearing",
+              "label": "Purpose of next hearing",
               "apiField": "CaseDetails.ProceedingDetails.purposeOfHearing"
             }
           ]

@@ -4,7 +4,7 @@ type SubHeading = {
   subHeading: string
 }
 
-type FieldType = 'currency' | 'date' | 'time' | 'percent' | 'timeAndCost' | 'totalAndCost'
+type FieldType = 'currency' | 'date' | 'time' | 'percent' | 'link' | 'timeAndCost' | 'totalAndCost'
 
 type ConfigField = {
   label: string
