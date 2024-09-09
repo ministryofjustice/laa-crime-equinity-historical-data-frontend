@@ -51,6 +51,8 @@
         <a href="{{ field.value.href }}" class="govuk-link govuk-link--no-visited-state">{{ field.value.text }}</a>
     {% elif field.type === 'every' %}
         {{ field.value | transformValue('every') }}
+    {% elif field.value === true or field.value === false %}
+        {{ field.value | formatYesNo }}
     {% else %}
         {{ field.value }}
     {% endif %}

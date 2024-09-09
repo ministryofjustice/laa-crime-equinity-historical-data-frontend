@@ -181,19 +181,19 @@
               "apiField": "ExpenditureDetails.Details.priorAuthority"
             },
             {
-              "label": "Name of Expert",
+              "label": "Name of expert",
               "apiField": "ExpenditureDetails.Details.expertName"
             },
             {
-              "label": "Company Name",
+              "label": "Company name",
               "apiField": "ExpenditureDetails.Details.companyName"
             },
             {
-              "label": "Type / Status of Expert",
+              "label": "Type / Status of expert",
               "apiField": "ExpenditureDetails.Details.statusExpert"
             },
             {
-              "label": "Postcode of Expert",
+              "label": "Postcode of expert",
               "apiField": "ExpenditureDetails.Details.postCodeExpert"
             }
           ]

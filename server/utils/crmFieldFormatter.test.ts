@@ -24,6 +24,11 @@ describe('CRM Field Formatter', () => {
       expect(result).toEqual('14 November 2024')
     })
 
+    it('should format date in dd-mm-yyyy format', () => {
+      const result = formatDate('2024-11-14T00:00:00.000+00:00', 'dd-MM-yyyy')
+      expect(result).toEqual('14-11-2024')
+    })
+
     it('should format date without leading zeros', () => {
       const result = formatDate('2024-02-01T00:00:00.000+00:00')
       expect(result).toEqual('1 February 2024')
