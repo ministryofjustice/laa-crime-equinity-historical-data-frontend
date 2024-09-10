@@ -1,0 +1,98 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formSubsection.njk" import formSubsection %}
+{% from "../../formTable.njk" import formTable %}
+
+{% macro crm14OfficeUseOnly(data) %}
+
+    {# Benefit Check Section #}
+    {% set fieldsBenefitCheck = [
+        { label: "Overall Check", value: data.benefitCheck.dwpOverallCheck },
+        { label: "Result Refer To", value: data.benefitCheck.dwpResultReferTo },
+        { label: "Check Surname", value: data.benefitCheck.dwpCheckSurname },
+        { label: "Check NINO", value: data.benefitCheck.dwpCheckNino },
+        { label: "Check Benefit To Repeat", value: data.benefitCheck.dwpCheckBenefitCheckToRepeat },
+        { label: "Partner Surname", value: data.benefitCheck.dwpCheckPartnerSurname },
+        { label: "Partner NINO", value: data.benefitCheck.dwpCheckPartnerNino }
+    ] %}
+    {{ formSubsection('Benefit Check', fieldsBenefitCheck) }}
+
+    {# Message History Section #}
+    {% if data.messageHistory.length > 0 %}
+        {% set tableMessageHistory = {
+            head: [
+                { text: "Sender" },
+                { text: "Message" },
+                { text: "Sender Unique Name" },
+                { text: "Date" }
+            ],
+            rows: []
+        } %}
+
+        {% for message in data.messageHistory %}
+            {% set tableRow = [
+                { text: message.senderDisplay },
+                { text: message.message },
+                { text: message.senderUniqueName },
+                { text: message.date }
+            ] %}
+            {% set _ = tableMessageHistory.rows.push(tableRow) %}
+        {% endfor %}
+
+        {{ formSubsection('Message History', tableMessageHistory, true) }}
+    {% endif %}
+
+    {# Return Provider Section #}
+    {% set fieldsReturnProvider = [
+        { label: "Return Reason", value: data.returnProvider.returnReason },
+        { label: "Return Reason Details", value: data.returnProvider.returnReasonDetails }
+    ] %}
+    {{ formSubsection('Return Provider', fieldsReturnProvider) }}
+
+    {# Funding Decisions Section #}
+    {% if data.fundingDecisions.length > 0 %}
+        {% set tableFundingDecisions = {
+            head: [
+                { text: "MAAT Number" },
+                { text: "Case Number" },
+                { text: "Justice Test" },
+                { text: "Means Test Result Type" },
+                { text: "Official Sign Name" },
+                { text: "Appropriate Officer Name" },
+                { text: "Justice Test Reasons" },
+                { text: "Overall Result Mags/CCFS" },
+                { text: "Means Test Appeal to CC" },
+                { text: "Overall Non-Means Result" },
+                { text: "Means Test Result Mags/CCFS" },
+                { text: "Means Test Result CC" },
+                { text: "Overall Appeal to CC" },
+                { text: "Overall Result Type" },
+                { text: "Overall Result CC" }
+            ],
+            rows: []
+        } %}
+
+        {% for decision in data.fundingDecisions %}
+            {% set tableRow = [
+                { text: decision.maatNumber },
+                { text: decision.caseNumber },
+                { text: decision.justiceTest },
+                { text: decision.meansTestResultType },
+                { text: decision.officialSignName },
+                { text: decision.appropriateOfficerName },
+                { text: decision.justiceTestReasons },
+                { text: decision.overallResultMagsorcfs },
+                { text: decision.meansTestResultAppealtocc },
+                { text: decision.overallResultNonMeans },
+                { text: decision.meansTestResultMagsorcfs },
+                { text: decision.meansTestResultCc },
+                { text: decision.overallResultAppealtocc },
+                { text: decision.overallResultType },
+                { text: decision.overallResultCc }
+            ] %}
+            {% set _ = tableFundingDecisions.rows.push(tableRow) %}
+        {% endfor %}
+
+        {{ formSubsection('Funding Decisions', tableFundingDecisions, true) }}
+    {% endif %}
+
+{% endmacro %}
