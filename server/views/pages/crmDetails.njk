@@ -57,7 +57,7 @@
                                             {% for field in subsection.fields %}
                                                 {% if field.subHeading %}
                                                     <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
-                                                        <p class="govuk-brand-colour govuk-heading-s govuk-!-margin-top-{% if hasPreviousContent %}8{% else %}4{% endif %}">{{ field.subHeading }}</p>
+                                                        <p class="govuk-heading-s govuk-!-margin-top-{% if hasPreviousContent %}8{% else %}4{% endif %}">{{ field.subHeading }}</p>
                                                     </div>
                                                 {% else %}
                                                     {% if loop.first %}
