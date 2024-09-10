@@ -19,22 +19,33 @@
     {# Message History Section #}
     {% if data.messageHistory.length > 0 %}
         {% set tableMessageHistory = {
-            head: [
-                { text: "Sender" },
-                { text: "Message" },
-                { text: "Sender Unique Name" },
-                { text: "Date" }
-            ],
+            head: [],
             rows: []
         } %}
 
+        {% for key, label in {
+            senderDisplay: "Sender",
+            message: "Message",
+            senderUniqueName: "Sender Unique Name",
+            date: "Date"
+        } %}
+            {% if data.messageHistory[0][key] %}
+                {% set _ = tableMessageHistory.head.push({ text: label }) %}
+            {% endif %}
+        {% endfor %}
+
         {% for message in data.messageHistory %}
-            {% set tableRow = [
-                { text: message.senderDisplay },
-                { text: message.message },
-                { text: message.senderUniqueName },
-                { text: message.date }
-            ] %}
+            {% set tableRow = [] %}
+            {% for key, _ in {
+                senderDisplay: "Sender",
+                message: "Message",
+                senderUniqueName: "Sender Unique Name",
+                date: "Date"
+            } %}
+                {% if message[key] %}
+                    {% set _ = tableRow.push({ text: message[key] }) %}
+                {% endif %}
+            {% endfor %}
             {% set _ = tableMessageHistory.rows.push(tableRow) %}
         {% endfor %}
 
@@ -51,44 +62,55 @@
     {# Funding Decisions Section #}
     {% if data.fundingDecisions.length > 0 %}
         {% set tableFundingDecisions = {
-            head: [
-                { text: "MAAT Number" },
-                { text: "Case Number" },
-                { text: "Justice Test" },
-                { text: "Means Test Result Type" },
-                { text: "Official Sign Name" },
-                { text: "Appropriate Officer Name" },
-                { text: "Justice Test Reasons" },
-                { text: "Overall Result Mags/CCFS" },
-                { text: "Means Test Appeal to CC" },
-                { text: "Overall Non-Means Result" },
-                { text: "Means Test Result Mags/CCFS" },
-                { text: "Means Test Result CC" },
-                { text: "Overall Appeal to CC" },
-                { text: "Overall Result Type" },
-                { text: "Overall Result CC" }
-            ],
+            head: [],
             rows: []
         } %}
 
+        {% for key, label in {
+            maatNumber: "MAAT Number",
+            caseNumber: "Case Number",
+            justiceTest: "Justice Test",
+            meansTestResultType: "Means Test Result Type",
+            officialSignName: "Official Sign Name",
+            appropriateOfficerName: "Appropriate Officer Name",
+            justiceTestReasons: "Justice Test Reasons",
+            overallResultMagsorcfs: "Overall Result Mags/CCFS",
+            meansTestResultAppealtocc: "Means Test Appeal to CC",
+            overallResultNonMeans: "Overall Non-Means Result",
+            meansTestResultMagsorcfs: "Means Test Result Mags/CCFS",
+            meansTestResultCc: "Means Test Result CC",
+            overallResultAppealtocc: "Overall Appeal to CC",
+            overallResultType: "Overall Result Type",
+            overallResultCc: "Overall Result CC"
+        } %}
+            {% if data.fundingDecisions[0][key] %}
+                {% set _ = tableFundingDecisions.head.push({ text: label }) %}
+            {% endif %}
+        {% endfor %}
+
         {% for decision in data.fundingDecisions %}
-            {% set tableRow = [
-                { text: decision.maatNumber },
-                { text: decision.caseNumber },
-                { text: decision.justiceTest },
-                { text: decision.meansTestResultType },
-                { text: decision.officialSignName },
-                { text: decision.appropriateOfficerName },
-                { text: decision.justiceTestReasons },
-                { text: decision.overallResultMagsorcfs },
-                { text: decision.meansTestResultAppealtocc },
-                { text: decision.overallResultNonMeans },
-                { text: decision.meansTestResultMagsorcfs },
-                { text: decision.meansTestResultCc },
-                { text: decision.overallResultAppealtocc },
-                { text: decision.overallResultType },
-                { text: decision.overallResultCc }
-            ] %}
+            {% set tableRow = [] %}
+            {% for key, _ in {
+                maatNumber: "MAAT Number",
+                caseNumber: "Case Number",
+                justiceTest: "Justice Test",
+                meansTestResultType: "Means Test Result Type",
+                officialSignName: "Official Sign Name",
+                appropriateOfficerName: "Appropriate Officer Name",
+                justiceTestReasons: "Justice Test Reasons",
+                overallResultMagsorcfs: "Overall Result Mags/CCFS",
+                meansTestResultAppealtocc: "Means Test Appeal to CC",
+                overallResultNonMeans: "Overall Non-Means Result",
+                meansTestResultMagsorcfs: "Means Test Result Mags/CCFS",
+                meansTestResultCc: "Means Test Result CC",
+                overallResultAppealtocc: "Overall Appeal to CC",
+                overallResultType: "Overall Result Type",
+                overallResultCc: "Overall Result CC"
+            } %}
+                {% if decision[key] %}
+                    {% set _ = tableRow.push({ text: decision[key] }) %}
+                {% endif %}
+            {% endfor %}
             {% set _ = tableFundingDecisions.rows.push(tableRow) %}
         {% endfor %}
 
