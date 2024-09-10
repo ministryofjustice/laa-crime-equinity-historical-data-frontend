@@ -3,8 +3,8 @@ import {
   convertToTitleCase,
   formatBooleanToYesNo,
   formatMultiline,
-  isNotEmpty,
   initialiseName,
+  isNotEmpty,
 } from './utils'
 
 describe('buildQueryString', () => {
@@ -55,19 +55,6 @@ describe('formatMultiline', () => {
   )
 })
 
-describe('isNotEmpty', () => {
-  it.each([
-    ['test', true],
-    [0, true],
-    [false, true],
-    [undefined, false],
-    [null, false],
-    ['', false],
-  ])('given "%s" returns %s', (input: string, expected: boolean) => {
-    expect(isNotEmpty(input)).toEqual(expected)
-  })
-})
-
 describe('initialise name', () => {
   it.each([
     [null, null, null],
@@ -78,5 +65,18 @@ describe('initialise name', () => {
     ['Double barrelled', 'Robert-John Smith-Jones-Wilson', 'R. Smith-Jones-Wilson'],
   ])('%s initialiseName(%s, %s)', (_: string, a: string, expected: string) => {
     expect(initialiseName(a)).toEqual(expected)
+  })
+})
+
+describe('isNotEmpty', () => {
+  it.each([
+    ['test', true],
+    [0, true],
+    [false, true],
+    [undefined, false],
+    [null, false],
+    ['', false],
+  ])('given "%s" returns %s', (input: string, expected: boolean) => {
+    expect(isNotEmpty(input)).toEqual(expected)
   })
 })
