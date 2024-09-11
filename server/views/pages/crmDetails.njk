@@ -57,32 +57,32 @@
                                             {% for field in subsection.fields %}
                                                 {% if field.subHeading %}
                                                     <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
-                                                        <p class="govuk-brand-colour govuk-heading-s govuk-!-margin-top-{% if hasPreviousContent %}8{% else %}4{% endif %}">{{ field.subHeading }}</p>
+                                                        <p class="govuk-heading-s govuk-!-margin-top-{% if hasPreviousContent %}8{% else %}4{% endif %}">{{ field.subHeading }}</p>
                                                     </div>
                                                 {% else %}
                                                     {% if loop.first %}
-                                                        {% if field.type == 'timeAndCost' %}
+                                                        {% if field.type === 'timeAndCost' %}
                                                             {{ timeAndCost(field, true) }}
-                                                            {% elif field.type == 'totalAndCost' %}
+                                                            {% elif field.type === 'totalAndCost' %}
                                                             {{ totalAndCost(field, true) }}
                                                         {% else %}
                                                             {{ formField(field) }}
                                                         {% endif %}
                                                     {% elif loop.last %}
-                                                        {% if field.type == 'timeAndCost' %}
+                                                        {% if field.type === 'timeAndCost' %}
                                                             {{ timeAndCost(field, false, true) }}
-                                                            {% elif field.type == 'totalAndCost' %}
+                                                            {% elif field.type === 'totalAndCost' %}
                                                             {{ totalAndCost(field, false, true) }}
                                                         {% else %}
-                                                            {{ formField(field, section.sectionId == 'costs') }}
+                                                            {{ formField(field, section.sectionId === 'costs') }}
                                                         {% endif %}
                                                     {% else %}
-                                                        {% if field.type == 'timeAndCost' %}
+                                                        {% if field.type === 'timeAndCost' %}
                                                             {{ timeAndCost(field) }}
-                                                            {% elif field.type == 'totalAndCost' %}
+                                                            {% elif field.type === 'totalAndCost' %}
                                                             {{ totalAndCost(field) }}
                                                         {% else %}
-                                                            {{ formField(field, section.sectionId == 'costs') }}
+                                                            {{ formField(field, section.sectionId === 'costs') }}
                                                         {% endif %}
                                                     {% endif %}
                                                     {% set hasPreviousContent = true %}

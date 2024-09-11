@@ -1,22 +1,30 @@
-type TransformType = 'every'
+export type TransformType = 'courtType' | 'every' | 'levelOfWork'
 
-const everyMapping: Record<string, string> = {
-  '52': '1 week',
-  '26': '2 weeks',
-  '13': '4 weeks',
-  '12': 'Month',
-  '1': 'Year',
+const mappings: Record<TransformType, Record<string, string>> = {
+  courtType: {
+    M: 'Magistrate court',
+    C: 'Crown Court (excluding Central Criminal Court)',
+    CC: 'Crown court (Central Criminal Court)',
+  },
+  every: {
+    '52': '1 week',
+    '26': '2 weeks',
+    '13': '4 weeks',
+    '12': 'Month',
+    '1': 'Year',
+  },
+  levelOfWork: {
+    Advice: 'Advice & Assistance',
+    Advocacy: 'Advocacy Assistance',
+  },
 }
 
 const transformValue = (value: string, transformType: TransformType): string => {
-  switch (transformType) {
-    case 'every': {
-      return everyMapping[value] || value
-    }
-    default: {
-      return value
-    }
+  const mapping = mappings[transformType]
+  if (mapping) {
+    return mapping[value] || value
   }
+  return value
 }
 
 export default transformValue

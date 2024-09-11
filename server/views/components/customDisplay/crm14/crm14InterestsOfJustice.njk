@@ -43,7 +43,7 @@
                 {{ formField({ label: "Please supply the reason(s)", value: data.notSameSolicitorReason }) }}
                 {{ formField({ label: "Are there any other criminal cases or charges against you or your partner which are still in progress?", value: data.otherCases }) }}
 
-                {% if data.otherCases == 'Yes' %}
+                {% if data.otherCases === 'Yes' %}
                     {{ formFieldHeading("You") }}
                     {{ formField({ label: "The charges", value: data.otherCaseCharges.you.charges }) }}
                     {{ formField({ label: "The Court hearing the case", value: data.otherCaseCharges.you.court }) }}

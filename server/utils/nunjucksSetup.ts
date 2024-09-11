@@ -2,7 +2,7 @@
 import path from 'path'
 import nunjucks from 'nunjucks'
 import express from 'express'
-import { initialiseName, isNotEmpty, formatBooleanToYesNo } from './utils'
+import { initialiseName, isNotEmpty, formatBooleanToYesNo, formatMultiline } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
 import { formatCurrency, formatDate, formatPercentage, formatTime, splitCamelCase } from './crmFieldFormatter'
@@ -43,13 +43,14 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
     },
   )
 
-  njkEnv.addFilter('isNotEmpty', isNotEmpty)
   njkEnv.addFilter('formatCurrency', formatCurrency)
   njkEnv.addFilter('formatDate', formatDate)
-  njkEnv.addFilter('formatTime', formatTime)
+  njkEnv.addFilter('formatMultiline', formatMultiline)
   njkEnv.addFilter('formatPercentage', formatPercentage)
+  njkEnv.addFilter('formatTime', formatTime)
+  njkEnv.addFilter('formatYesNo', formatBooleanToYesNo)
   njkEnv.addFilter('initialiseName', initialiseName)
+  njkEnv.addFilter('isNotEmpty', isNotEmpty)
   njkEnv.addFilter('splitCamelCase', splitCamelCase)
   njkEnv.addFilter('transformValue', transformValue)
-  njkEnv.addFilter('formatYesNo', formatBooleanToYesNo)
 }

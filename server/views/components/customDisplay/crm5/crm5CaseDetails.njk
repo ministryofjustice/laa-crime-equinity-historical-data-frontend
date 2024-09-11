@@ -1,0 +1,29 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formFieldHeading.njk" import formFieldHeading %}
+
+{% macro crm5CaseDetails(data) %}
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Case Details</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                {{ formField({ label: "Level of work", value: data.levelOfWork, transform: "levelOfWork"} ) }}
+
+                {{ formFieldHeading("Class of work") }}
+
+                {% if data.levelOfWork === "Advice" %}
+                    {{ formField({ label: "Criminal Investigations", value: data.cwCriminalInvestigation }) }}
+                    {{ formField({ label: "Appeals and Reviews", value: data.cwAppealsReview }) }}
+                    {{ formField({ label: "CCRC", value: data.cwCcrc }) }}
+                {% else %}
+                    {{ formField({ label: "Criminal Proceedings", value: data.cwCriminalProceeding }) }}
+                {% endif %}
+
+                {{ formField({ label: "Prison Law", value: data.cwPrisonLaw }) }}
+
+            </dl>
+        </div>
+    </div>
+{% endmacro %}

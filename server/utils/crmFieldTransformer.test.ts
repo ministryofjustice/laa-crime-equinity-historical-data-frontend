@@ -1,15 +1,14 @@
-import transformValue from './crmFieldTransformer'
+import transformValue, { TransformType } from './crmFieldTransformer'
 
 describe('CRM Field Transformer', () => {
   it.each([
-    ['52', '1 week'],
-    ['26', '2 weeks'],
-    ['13', '4 weeks'],
-    ['12', 'Month'],
-    ['1', 'Year'],
-    ['999', '999'], // not transformed
-  ])('should transform "every" value - %s', (value, transformedValue: string) => {
-    const result = transformValue(value, 'every')
-    expect(result).toEqual(transformedValue)
+    ['courtType', 'M', 'Magistrate court'],
+    ['every', '52', '1 week'],
+    ['levelOfWork', 'Advice', 'Advice & Assistance'],
+    ['every', '999', '999'], // not transformed for unknown value
+    ['blah', 'abc', 'abc'], // not transformed for unknown transform type
+  ])('should transform "%s" value - %s', (transformType: TransformType, value: string, expected: string) => {
+    const result = transformValue(value, transformType)
+    expect(result).toEqual(expected)
   })
 })

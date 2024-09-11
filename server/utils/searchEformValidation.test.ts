@@ -142,12 +142,12 @@ describe('Search Eform Validation', () => {
       list: [
         {
           href: '#endDate',
-          text: "Your 'Submission date to' cannot be earlier than your 'Submission date from'",
+          text: "Your 'Submission date to' must be the same as or after your 'Submission date from'",
         },
       ],
       messages: {
         endDate: {
-          text: "Your 'Submission date to' cannot be earlier than your 'Submission date from'",
+          text: "Your 'Submission date to' must be the same as or after your 'Submission date from'",
         },
       },
     })

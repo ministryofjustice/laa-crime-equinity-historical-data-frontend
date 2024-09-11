@@ -39,10 +39,14 @@ export const currentIsoDate = (): string => {
   return format(new Date(), 'yyyy-MM-dd')
 }
 
-export const isNotEmpty = (value: string): boolean => {
-  return value !== undefined && value !== null && value !== ''
-}
-
 export const formatBooleanToYesNo = (value: boolean): string => {
   return value ? 'Yes' : 'No'
+}
+
+export const formatMultiline = (value: string) => {
+  return value.replace(/\n/g, '<br>')
+}
+
+export const isNotEmpty = (value: string): boolean => {
+  return value !== undefined && value !== null && value !== ''
 }

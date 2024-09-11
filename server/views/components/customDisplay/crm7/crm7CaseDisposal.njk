@@ -9,11 +9,11 @@
     ] %}
     {{ formSubsection('Case Disposal', fields) }}
 
-    {% if data.category == 'Category 1' %}
+    {% if data.category === 'Category 1' %}
         {% set fieldValue = data.option.type1 %}
-    {% elif  data.category == 'Category 2' %}
+    {% elif  data.category === 'Category 2' %}
         {% set fieldValue = data.option.type2 %}
-    {% elif data.category == 'Category 3' %}
+    {% elif data.category === 'Category 3' %}
         {% set fieldValue = data.option.type3 %}
     {% else %}
         {% set fieldValue = '' %}
