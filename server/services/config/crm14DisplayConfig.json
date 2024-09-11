@@ -52,11 +52,11 @@
             },
             {
               "label": "USN",
-              "apiField": "legalRepresentativeUse.legalRepUse.???"
+              "apiField": "legalRepresentativeUse.legalRepUse.prevAppUsn"
             },
             {
               "label": "MAAT ID",
-              "apiField": "legalRepresentativeUse.legalRepUse.???"
+              "apiField": "legalRepresentativeUse.legalRepUse.prevAppMaat"
             },
             {
               "label": "Is this application subject to the usual means / passported test?",
@@ -108,7 +108,7 @@
             },
             {
               "label": "Appeal Lodged Date",
-              "apiField": "legalRepresentativeUse.legalRepUse.???",
+              "apiField": "legalRepresentativeUse.legalRepUse.appealLodgedDate",
               "type": "date"
             }
           ]
@@ -241,7 +241,7 @@
             },
             {
               "label": "Are you charged with an adult?",
-              "apiField": "aboutYouPart2.???"
+              "apiField": "aboutYouPart2.chargedWithAdult"
             },
             {
               "label": "Do you have a partner?",
@@ -253,11 +253,11 @@
             },
             {
               "label": "Date of separation",
-              "apiField": "aboutYouPart2.???"
+              "apiField": "aboutYouPart2.dateOfSeparation"
             },
             {
               "label": "You are and your partner are",
-              "apiField": "aboutYouPart2.???"
+              "apiField": "aboutYouPart2.relationship"
             }
           ]
         }
@@ -309,7 +309,7 @@
             },
             {
               "label": "Please specify",
-              "apiField": "aboutYouPartner.???"
+              "apiField": "aboutYouPartner.partnerInvolvement"
             },
             {
               "label": "Does your partner have a conflict of interest?",
