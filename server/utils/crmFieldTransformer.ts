@@ -1,4 +1,4 @@
-export type TransformType = 'courtType' | 'every'
+export type TransformType = 'courtType' | 'every' | 'levelOfWork'
 
 const mappings: Record<TransformType, Record<string, string>> = {
   courtType: {
@@ -12,6 +12,10 @@ const mappings: Record<TransformType, Record<string, string>> = {
     '13': '4 weeks',
     '12': 'Month',
     '1': 'Year',
+  },
+  levelOfWork: {
+    Advice: 'Advice & Assistance',
+    Advocacy: 'Advocacy Assistance',
   },
 }
 
