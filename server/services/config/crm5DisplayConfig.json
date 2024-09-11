@@ -79,35 +79,10 @@
         },
         {
           "title": "Case Details",
-          "fields": [
-            {
-              "label": "Level of work:",
-              "apiField": "CaseDetails.levelOfWork"
-            },
-            {
-              "subHeading": "Class of work"
-            },
-            {
-              "label": "",
-              "apiField": "CaseDetails.cwCriminalProceeding"
-            },
-            {
-              "label": "",
-              "apiField": "CaseDetails.cwCriminalInvestigation"
-            },
-            {
-              "label": "",
-              "apiField": "CaseDetails.cwAppealsReview"
-            },
-            {
-              "label": "",
-              "apiField": "CaseDetails.cwCcrc"
-            },
-            {
-              "label": "",
-              "apiField": "CaseDetails.cwPrisonLaw"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm5CaseDetails",
+            "apiField": "CaseDetails"
+          }
         }
       ]
     },
