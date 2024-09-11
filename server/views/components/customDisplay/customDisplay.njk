@@ -13,6 +13,7 @@
 {% from "./crm14/crm14PrivacyNotice.njk" import crm14PrivacyNotice %}
 {% from "./crm14/crm14Income.njk" import crm14Income %}
 {% from "./crm14/crm14EvidencePart2.njk" import crm14EvidencePart2 %}
+{% from "./crm14/crm14OfficeUseOnly.njk" import crm14OfficeUseOnly %}
 {% from "./crm15/crm15Income1.njk" import crm15Income1 %}
 {% from "./crm15/crm15Income2.njk" import crm15Income2 %}
 {% from "./crm15/crm15Outgoings.njk" import crm15Outgoings %}
@@ -53,6 +54,8 @@
     {{ crm14Income(params.value) }}
         {% elif params.name === 'crm14EvidencePart2' %}
     {{ crm14EvidencePart2(params.value) }}
+        {% elif params.name === 'crm14OfficeUseOnly' %}
+    {{ crm14OfficeUseOnly(params.value) }}
         {% elif params.name === 'crm15Income1' %}
     {{ crm15Income1(params.value) }}
         {% elif params.name === 'crm15Income2' %}
