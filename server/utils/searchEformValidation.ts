@@ -54,7 +54,7 @@ const schema = Joi.object({
   .messages({
     'startDate.missing': "Enter 'Submission date from'",
     'endDate.missing': "Enter 'Submission date to'",
-    'endDate.earlier': "Your 'Submission date to' cannot be earlier than your 'Submission date from'",
+    'endDate.earlier': "Your 'Submission date to' must be the same as or after your 'Submission date from'",
   })
 
 export default function validateSearchParams(params: Record<string, string>): Errors {

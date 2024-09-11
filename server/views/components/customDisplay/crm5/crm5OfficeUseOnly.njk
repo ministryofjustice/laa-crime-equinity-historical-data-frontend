@@ -11,7 +11,7 @@
         "Refer": "Refer For ICA"
     } %}
 
-    {% if data.QualityControl.decision == 'G' %}
+    {% if data.QualityControl.decision === 'G' %}
         {% set reasonLabel = "Notes" %}
     {% else %}
         {% set reasonLabel = "Reason for decision" %}

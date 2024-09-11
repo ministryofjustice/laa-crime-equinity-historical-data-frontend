@@ -8,7 +8,7 @@
 ] %}
     {{ formSubsection('Your Income and Your Partner\'s Income', fieldsQ1) }}
 
-    {% if data.receiveBenefits == 'Yes' %}
+    {% if data.receiveBenefits === 'Yes' %}
         <!-- Benefits for You -->
         {% set benefitsYou = [] %}
         {% for benefit, value in data.benefits.you %}
