@@ -245,7 +245,8 @@
             },
             {
               "label": "Do you have a partner?",
-              "apiField": "aboutYouPart2.havePartner"
+              "apiField": "aboutYouPart2.havePartner",
+              "transform": "yesNo"
             },
             {
               "label": "You are",
@@ -305,7 +306,8 @@
             },
             {
               "label": "Is your partner a victim, prosecution witness or a co-defendant in the case for which you require legal aid?",
-              "apiField": "aboutYouPartner.coDefendant"
+              "apiField": "aboutYouPartner.coDefendant",
+              "transform": "yesNo"
             },
             {
               "label": "Please specify",
@@ -313,7 +315,8 @@
             },
             {
               "label": "Does your partner have a conflict of interest?",
-              "apiField": "aboutYouPartner.conflictOfInterest"
+              "apiField": "aboutYouPartner.conflictOfInterest",
+              "transform": "yesNo"
             },
             {
               "label": "Is your partner's usual home address different from yours?",
@@ -424,19 +427,23 @@
             },
             {
               "label": "Will your case be heard in a magistrates' court?",
-              "apiField": "evidencePart1.heardInMagistrateCourt"
+              "apiField": "evidencePart1.heardInMagistrateCourt",
+              "transform": "yesNo"
             },
             {
               "label": "Are you employed (excluding being self employed)?",
-              "apiField": "evidencePart1.employed"
+              "apiField": "evidencePart1.employed",
+              "transform": "yesNo"
             },
             {
               "label": "Have you ceased employment within the last 3 months?",
-              "apiField": "evidencePart1.employmentCeased"
+              "apiField": "evidencePart1.employmentCeased",
+              "transform": "yesNo"
             },
             {
               "label": "Have you lost your job as a result of being in custody?",
-              "apiField": "evidencePart1.lostJobDuetoCustody"
+              "apiField": "evidencePart1.lostJobDuetoCustody",
+              "transform": "yesNo"
             },
             {
               "label": "When did this occur?",

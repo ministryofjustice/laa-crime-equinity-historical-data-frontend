@@ -1,4 +1,4 @@
-export type TransformType = 'courtType' | 'every' | 'levelOfWork'
+import { TransformType } from '@crmDisplay'
 
 const mappings: Record<TransformType, Record<string, string>> = {
   courtType: {
@@ -16,6 +16,10 @@ const mappings: Record<TransformType, Record<string, string>> = {
   levelOfWork: {
     Advice: 'Advice & Assistance',
     Advocacy: 'Advocacy Assistance',
+  },
+  yesNo: {
+    1: 'Yes',
+    0: 'No',
   },
 }
 

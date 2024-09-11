@@ -1,4 +1,5 @@
-import transformValue, { TransformType } from './crmFieldTransformer'
+import { TransformType } from '@crmDisplay'
+import transformValue from './crmFieldTransformer'
 
 describe('CRM Field Transformer', () => {
   it.each([
