@@ -473,7 +473,12 @@
             {
               "label": "Please give details of work that has been completed to date",
               "apiField": "DetailsOfWorkCompleted"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Details of Application",
+          "fields": [
             {
               "label": "Please explain what additional work is to be carried out and explain how this is necessary to the progress of the case and/or the benefit of the client.",
               "apiField": "DetailsOfApplication"
