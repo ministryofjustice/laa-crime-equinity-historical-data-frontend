@@ -12,7 +12,7 @@ type ConfigField = {
   label: string
   apiField: string
   type?: FieldType
-  value?: string | TimeAndCost | TotalAndCost
+  value?: boolean | number | string | TimeAndCost | TotalAndCost
   transform?: TransformType
 }
 

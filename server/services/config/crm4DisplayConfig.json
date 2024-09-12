@@ -317,7 +317,6 @@
           ]
         },
         {
-          "title": "Additional Expenditure",
           "customDisplay": {
             "name": "crm4AdditionalExpenditure",
             "apiField": "ExpenditureDetails.AdditionalExpenditure"
@@ -360,7 +359,6 @@
       "title": "Alternative Quotes",
       "subsections": [
         {
-          "title": "Alternative Quotes",
           "customDisplay": {
             "name": "crm4AlternativeQuotes",
             "apiField": "AlternativeQuotes"
@@ -443,7 +441,6 @@
       "title": "Office Use Only",
       "subsections": [
         {
-          "title": "For Office Use Only",
           "customDisplay": {
             "name": "crm4OfficeUseOnly",
             "apiField": "OfficeUseOnly"
@@ -462,7 +459,6 @@
       ],
       "subsections": [
         {
-          "title": "Evidence",
           "customDisplay": {
             "name": "crmEvidence",
             "apiField": "evidenceFiles.files"

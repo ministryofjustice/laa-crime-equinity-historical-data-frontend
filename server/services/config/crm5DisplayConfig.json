@@ -79,7 +79,6 @@
           ]
         },
         {
-          "title": "Case Details",
           "customDisplay": {
             "name": "crm5CaseDetails",
             "apiField": "CaseDetails"
@@ -660,7 +659,6 @@
       "title": "Office Use Only",
       "subsections": [
         {
-          "title": "Office Use Only",
           "customDisplay": {
             "name": "crm5OfficeUseOnly",
             "apiField": "OfficeUseOnly"
@@ -679,7 +677,6 @@
       ],
       "subsections": [
         {
-          "title": "Evidence",
           "customDisplay": {
             "name": "crmEvidence",
             "apiField": "evidenceFiles.files"
