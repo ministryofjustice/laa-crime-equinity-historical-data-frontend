@@ -6,11 +6,14 @@ type SubHeading = {
 
 type FieldType = 'currency' | 'date' | 'time' | 'percent' | 'link' | 'timeAndCost' | 'totalAndCost'
 
+type TransformType = 'courtType' | 'every' | 'levelOfWork' | 'yesNo'
+
 type ConfigField = {
   label: string
   apiField: string
   type?: FieldType
   value?: string | TimeAndCost | TotalAndCost
+  transform?: TransformType
 }
 
 type CustomDisplayType = 'crm4AdditionalExpenditure'
@@ -73,4 +76,5 @@ export type {
   ShowOrHideWhen,
   SubHeading,
   Subsection,
+  TransformType,
 }

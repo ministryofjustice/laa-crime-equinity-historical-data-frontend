@@ -28,7 +28,7 @@ const schema = Joi.object({
             type: Joi.string()
               .valid('currency', 'date', 'multiline', 'percent', 'time', 'timeAndCost', 'totalAndCost')
               .optional(),
-            transform: Joi.string().optional(),
+            transform: Joi.string().valid('courtType', 'every', 'levelOfWork', 'yesNo').optional(),
           },
           {
             subHeading: Joi.string().required(),
