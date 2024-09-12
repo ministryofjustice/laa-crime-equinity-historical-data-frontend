@@ -61,15 +61,15 @@
               "type": "multiline"
             },
             {
-              "label": "Telephone Number",
+              "label": "Telephone number",
               "apiField": "Firm.firmPhone"
             },
             {
-              "label": "Contact Name",
+              "label": "Contact name",
               "apiField": "Firm.firmContactName"
             },
             {
-              "label": "Name of Solicitor or Fellow of the Institute of Legal Executives instructed",
+              "label": "Name of solicitor or fellow of the Institute of Legal Executives instructed",
               "apiField": "Firm.firmSolicitorName"
             },
             {
@@ -129,15 +129,15 @@
               "apiField": "ClientDetails.noFixedAbode"
             },
             {
-              "label": "Address Line 1",
+              "label": "Address line 1",
               "apiField": "ClientDetails.address.addressLine1"
             },
             {
-              "label": "Address Line 2",
+              "label": "Address line 2",
               "apiField": "ClientDetails.address.addressLine2"
             },
             {
-              "label": "Address Line 3",
+              "label": "Address line 3",
               "apiField": "ClientDetails.address.addressLine3"
             },
             {
@@ -292,7 +292,7 @@
               "type": "currency"
             },
             {
-              "label": "Less Total deductions",
+              "label": "Less total deductions",
               "apiField": "IncomeDetails.totalDeductions",
               "type": "currency"
             },
@@ -327,7 +327,7 @@
               "apiField": "Proceedings.TypeOfProceedings.appealProceedings"
             },
             {
-              "label": "Prison Law:",
+              "label": "Prison law:",
               "apiField": "Proceedings.TypeOfProceedings.prisonLaw"
             }
           ]
