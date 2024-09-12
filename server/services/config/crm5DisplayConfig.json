@@ -492,30 +492,30 @@
       "title": "Costs",
       "subsections": [
         {
-          "title": "Costs Accrued To Date",
+          "title": "Costs Accrued to Date",
           "fields": [
             {
-              "label": "Attendance Time",
+              "label": "Attendance time",
               "apiField": "AllCosts.AccruedCosts.Attendance",
               "type": "timeAndCost"
             },
             {
-              "label": "Preparation Time",
+              "label": "Preparation time",
               "apiField": "AllCosts.AccruedCosts.Preparation",
               "type": "timeAndCost"
             },
             {
-              "label": "Advocacy Time",
+              "label": "Advocacy time",
               "apiField": "AllCosts.AccruedCosts.Advocacy",
               "type": "timeAndCost"
             },
             {
-              "label": "Travel Time",
+              "label": "Travel time",
               "apiField": "AllCosts.AccruedCosts.Travel",
               "type": "timeAndCost"
             },
             {
-              "label": "Waiting Time",
+              "label": "Waiting time",
               "apiField": "AllCosts.AccruedCosts.Waiting",
               "type": "timeAndCost"
             },
@@ -525,7 +525,7 @@
               "type": "totalAndCost"
             },
             {
-              "label": "Telephone Calls",
+              "label": "Telephone calls",
               "apiField": "AllCosts.AccruedCosts.TelephoneCalls",
               "type": "totalAndCost"
             },
@@ -540,7 +540,7 @@
               "type": "currency"
             },
             {
-              "label": "Total Costs To Date",
+              "label": "Total costs to date",
               "apiField": "AllCosts.AccruedCosts.TotalCost.cost",
               "type": "currency"
             }
@@ -550,27 +550,27 @@
           "title": "Anticipated Costs",
           "fields": [
             {
-              "label": "Attendance Time",
+              "label": "Attendance time",
               "apiField": "AllCosts.AnticipatedCosts.Attendance",
               "type": "timeAndCost"
             },
             {
-              "label": "Preparation Time",
+              "label": "Preparation time",
               "apiField": "AllCosts.AnticipatedCosts.Preparation",
               "type": "timeAndCost"
             },
             {
-              "label": "Advocacy Time",
+              "label": "Advocacy time",
               "apiField": "AllCosts.AnticipatedCosts.Advocacy",
               "type": "timeAndCost"
             },
             {
-              "label": "Travel Time",
+              "label": "Travel time",
               "apiField": "AllCosts.AnticipatedCosts.Travel",
               "type": "timeAndCost"
             },
             {
-              "label": "Waiting Time",
+              "label": "Waiting time",
               "apiField": "AllCosts.AnticipatedCosts.Waiting",
               "type": "timeAndCost"
             },
@@ -580,7 +580,7 @@
               "type": "totalAndCost"
             },
             {
-              "label": "Telephone Calls",
+              "label": "Telephone calls",
               "apiField": "AllCosts.AnticipatedCosts.TelephoneCalls",
               "type": "totalAndCost"
             },
@@ -595,12 +595,12 @@
               "type": "currency"
             },
             {
-              "label": "Total Anticipated Costs",
+              "label": "Total anticipated costs",
               "apiField": "AllCosts.AnticipatedCosts.TotalCost.cost",
               "type": "currency"
             },
             {
-              "label": "NEW LIMIT REQUEST",
+              "label": "New limit request",
               "apiField": "AllCosts.NewLimitRequest.cost",
               "type": "currency"
             }
@@ -616,7 +616,7 @@
           "title": "Case History",
           "fields": [
             {
-              "label": "Summary of Case History",
+              "label": "Summary of case history",
               "apiField": "CaseHistory.summary"
             }
           ]

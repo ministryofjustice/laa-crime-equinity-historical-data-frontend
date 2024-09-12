@@ -41,9 +41,14 @@ describe('CRM Field Formatter', () => {
   })
 
   describe('formatTime', () => {
-    it('should format time', () => {
+    it('should format time into hours and minutes', () => {
       const result = formatTime('15:32:11')
-      expect(result).toEqual('15:32')
+      expect(result).toEqual('15 hrs 32 mins')
+    })
+
+    it('should format time with single-digit hours and minutes', () => {
+      const result = formatTime('5:07:00')
+      expect(result).toEqual('05 hrs 07 mins')
     })
 
     it('should not format time if not a valid time', () => {
