@@ -24,7 +24,7 @@ export const formatTime = (value: string): string => {
   if (Number.isNaN(timeAsDate)) return value
   const formattedTime = format(timeAsDate, 'HH:mm')
   const [hours, minutes] = formattedTime.split(':')
-  return `${hours} hrs ${minutes} mns`
+  return `${hours} hrs ${minutes} mins`
 }
 
 export const formatPercentage = (value: string): string => {
