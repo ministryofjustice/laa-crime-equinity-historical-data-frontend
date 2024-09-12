@@ -144,27 +144,28 @@
           "title": "Solicitor Details",
           "fields": [
             {
-              "label": "Name of Firm",
+              "label": "Name of firm",
               "apiField": "solicitorDetails.firmName"
             },
             {
               "label": "Address / DX",
-              "apiField": "solicitorDetails.address"
+              "apiField": "solicitorDetails.address",
+              "type": "multiline"
             },
             {
               "label": "Account No.",
               "apiField": "solicitorDetails.providerAccount"
             },
             {
-              "label": "Telephone Number",
+              "label": "Telephone number",
               "apiField": "solicitorDetails.telephone"
             },
             {
-              "label": "Contact Name",
+              "label": "Contact name",
               "apiField": "solicitorDetails.contactName"
             },
             {
-              "label": "Name of Solicitor or Fellow of the Institute of Legal Executives instructed",
+              "label": "Name of solicitor or fellow of the Institute of Legal Executives instructed",
               "apiField": "solicitorDetails.solicitorName"
             },
             {
