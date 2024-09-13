@@ -261,11 +261,11 @@
           "title": "Claim Details",
           "fields": [
             {
-              "label": "Was counsel instructed (Assigned)?",
+              "label": "Was counsel instructed (assigned)?",
               "apiField": "claimDetails.wasCounselAssigned"
             },
             {
-              "label": "Was counsel instructed (Unassigned - maximum fee principle applied)?",
+              "label": "Was counsel instructed (unassigned - maximum fee principle applied)?",
               "apiField": "claimDetails.wasCounselUnassigned"
             },
             {
