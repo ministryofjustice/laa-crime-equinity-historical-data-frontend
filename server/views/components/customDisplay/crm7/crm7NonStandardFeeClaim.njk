@@ -1,0 +1,32 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formFieldHeading.njk" import formFieldHeading %}
+
+{% macro crm7NonStandardFeeClaim(data) %}
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Reason(s) for Non-Standard Fee Claim</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                {{ formFieldHeading("Tell us why you are claiming a non-standard fee by ticking the box(es) that apply in this case") }}
+
+                {{ formField({ label: "Core costs exceed higher limit", value: data.reason.isCoreCostExceededLimit }) }}
+                {{ formField({ label: "Enhanced rates claimed", value: data.reason.isEnhancedRatesClaim }) }}
+                {{ formField({ label: "Counsel assigned", value: data.reason.isCounselAssigned }) }}
+                {{ formField({ label: "Extradition", value: data.reason.isExtradition }) }}
+                {{ formField({ label: "Representation order withdrawn", value: data.reason.isRepresentationOrderWithdrawn }) }}
+                {{ formField({ label: "Other", value: data.reason.isOther }) }}
+
+                {% if data.reason.isRepresentationOrderWithdrawn === true %}
+                    {{ formField({ label: "Date order withdrawn", value: data.dateWithdrawn }) }}
+                {% endif %}
+
+                {% if data.reason.isOther === true %}
+                    {{ formField({ label: "Please give details", value: data.additionalDetails }) }}
+                {% endif %}
+
+            </dl>
+        </div>
+    </div>
+{% endmacro %}

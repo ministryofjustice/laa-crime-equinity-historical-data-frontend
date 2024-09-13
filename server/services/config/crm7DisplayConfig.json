@@ -234,45 +234,10 @@
       "title": "Non-Standard Fee Claim",
       "subsections": [
         {
-          "title": "Reason(s) for Non-Standard Fee Claim",
-          "fields": [
-            {
-              "subHeading": "Tell us why you are claiming a non-standard fee by ticking the box(es) that apply in this case"
-            },
-            {
-              "label": "Core costs exceed higher limit",
-              "apiField": "nonStandardFeeClaim.reason.isCoreCostExceededLimit"
-            },
-            {
-              "label": "Enhanced rates claimed",
-              "apiField": "nonStandardFeeClaim.reason.isEnhancedRatesClaim"
-            },
-            {
-              "label": "Counsel assigned",
-              "apiField": "nonStandardFeeClaim.reason.isCounselAssigned"
-            },
-            {
-              "label": "Extradition",
-              "apiField": "nonStandardFeeClaim.reason.isExtradition"
-            },
-            {
-              "label": "Representation Order withdrawn",
-              "apiField": "nonStandardFeeClaim.reason.isRepresentationOrderWithdrawn"
-            },
-            {
-              "label": "Other",
-              "apiField": "nonStandardFeeClaim.reason.isOther"
-            },
-            {
-              "label": "Date Order withdrawn",
-              "apiField": "nonStandardFeeClaim.dateWithdrawn",
-              "type": "date"
-            },
-            {
-              "label": "Please give details",
-              "apiField": "nonStandardFeeClaim.additionalDetails"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm7NonStandardFeeClaim",
+            "apiField": "nonStandardFeeClaim"
+          }
         }
       ]
     },
@@ -281,7 +246,6 @@
       "title": "Case Disposal",
       "subsections": [
         {
-          "title": "Case Disposal",
           "customDisplay": {
             "name": "crm7CaseDisposal",
             "apiField": "caseDisposal"
@@ -387,7 +351,6 @@
       "title": "Schedule Of Time Spent",
       "subsections": [
         {
-          "title": "Schedule Of Time Spent",
           "customDisplay": {
             "name": "crm7ScheduleOfTime",
             "apiField": "scheduleOfTimeSpent"
@@ -400,7 +363,6 @@
       "title": "Claim for Costs",
       "subsections": [
         {
-          "title": "Letters and Telephone Calls",
           "customDisplay": {
             "name": "crm7ClaimForCosts",
             "apiField": "claimOfCosts.lettersAndPhoneCalls"
@@ -413,7 +375,6 @@
       "title": "Disbursements",
       "subsections": [
         {
-          "title": "Disbursements",
           "customDisplay": {
             "name": "crm7Disbursements",
             "apiField": "disbursement"
@@ -595,7 +556,6 @@
       "title": "Office Use Only",
       "subsections": [
         {
-          "title": "Office Use Only",
           "customDisplay": {
             "name": "crm7OfficeUseOnly",
             "apiField": "OfficeUseOnly"
@@ -614,7 +574,6 @@
       ],
       "subsections": [
         {
-          "title": "Evidence",
           "customDisplay": {
             "name": "crmEvidence",
             "apiField": "evidenceFiles.files"
