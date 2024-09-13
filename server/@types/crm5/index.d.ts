@@ -23,6 +23,15 @@ export interface Crm5Response extends CrmResponse {
     appealedPrevDecisionDetails: string
     urgent: string
     urgencyReason: string
+    StandardProperties?: {
+      usn: number
+      dateReceived: string
+      timeReceived: string
+      submitterUserId: string
+      language: string
+      region: string
+      office: string
+    }
     Firm?: {
       firmAddress: string
       firmName: string
