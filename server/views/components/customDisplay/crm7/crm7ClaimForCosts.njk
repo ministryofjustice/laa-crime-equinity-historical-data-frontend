@@ -9,31 +9,31 @@
             { text: "" },
             { text: "Number" },
             { text: "Item rate £:p" },
-            { text: "Uplift Claimed?" },
+            { text: "Uplift claimed?" },
             { text: "Costs" }
         ],
         rows: [
             [
-                { text: "Letters Written", isHeader: true },
+                { text: "Letters written", isHeader: true },
                 { text: data.totals.letters.number },
                 { text: data.totals.letters.rate | formatCurrency },
                 { text: data.totals.letters.uplift | formatPercentage },
                 { text: data.totals.letters.cost | formatCurrency }
             ],
             [
-                { text: "Telephone Calls", isHeader: true },
+                { text: "Telephone calls", isHeader: true },
                 { text: data.totals.telephoneCalls.number },
                 { text: data.totals.telephoneCalls.rate | formatCurrency },
                 { text: data.totals.telephoneCalls.uplift | formatPercentage },
                 { text: data.totals.telephoneCalls.cost | formatCurrency }
             ],
             [
-                { text: "Total Letters and Telephone Calls Costs:", isHeader: true, colspan: "4", class: "govuk-brand-colour", noDataHeader: true },
-                { text: data.totals.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true  }
+                { text: "Total letters and telephone calls costs:", isHeader: true, colspan: "4", noDataHeader: true },
+                { text: data.totals.total | formatCurrency, colspan: "1", class: "govuk-!-font-weight-bold", noDataHeader: true  }
             ],
             [
-                { text: "Solicitor's Core Costs", isHeader: true, colspan: "4", class: "govuk-brand-colour", noDataHeader: true  },
-                { text: data.totals.solicitorCost | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true  }
+                { text: "Solicitor's core costs", isHeader: true, colspan: "4", noDataHeader: true  },
+                { text: data.totals.solicitorCost | formatCurrency, colspan: "1", class: "govuk-!-font-weight-bold", noDataHeader: true  }
             ]
         ]
     } %}
@@ -44,33 +44,33 @@
     {% set tableDataOfficeUse = {
         head: [
             { text: "" },
-            { text: "Allowed Number" },
+            { text: "Allowed number" },
             { text: "Item rate £:p" },
-            { text: "Allowed % Uplift" },
-            { text: "Allowed Costs" }
+            { text: "Allowed % uplift" },
+            { text: "Allowed costs" }
         ],
         rows: [
             [
-                { text: "Letters Written", isHeader: true },
+                { text: "Letters written", isHeader: true },
                 { text: data.officeOnly.letters.number },
                 { text: data.officeOnly.letters.rate | formatCurrency },
                 { text: data.officeOnly.letters.uplift | formatPercentage },
                 { text: data.officeOnly.letters.cost | formatCurrency }
             ],
             [
-                { text: "Telephone Calls", isHeader: true },
+                { text: "Telephone calls", isHeader: true },
                 { text: data.officeOnly.telephoneCalls.number },
                 { text: data.officeOnly.telephoneCalls.rate | formatCurrency },
                 { text: data.officeOnly.telephoneCalls.uplift | formatPercentage },
                 { text: data.officeOnly.telephoneCalls.cost | formatCurrency }
             ],
             [
-                { text: "Total Letters and Telephone Calls Costs:", isHeader: true, colspan: "4", class: "govuk-brand-colour", noDataHeader: true },
-                { text: data.officeOnly.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
+                { text: "Total Letters and Telephone Calls Costs:", isHeader: true, colspan: "4", noDataHeader: true },
+                { text: data.officeOnly.total | formatCurrency, colspan: "1", class: "govuk-!-font-weight-bold", noDataHeader: true }
             ],
             [
-                { text: "Solicitor's Core Costs", isHeader: true, colspan: "4", class: "govuk-brand-colour", noDataHeader: true },
-                { text: data.officeOnly.solicitorCost | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true  }
+                { text: "Solicitor's Core Costs", isHeader: true, colspan: "4", noDataHeader: true },
+                { text: data.officeOnly.solicitorCost | formatCurrency, colspan: "1", class: "govuk-!-font-weight-bold", noDataHeader: true  }
             ],
             [
                 { text: "Assessment reasons", isHeader: true, colspan: "4" },
