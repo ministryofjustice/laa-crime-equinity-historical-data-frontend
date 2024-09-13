@@ -15,11 +15,11 @@
                 {{ formField({ label: "Enhanced rates claimed", value: data.reason.isEnhancedRatesClaim }) }}
                 {{ formField({ label: "Counsel assigned", value: data.reason.isCounselAssigned }) }}
                 {{ formField({ label: "Extradition", value: data.reason.isExtradition }) }}
-                {{ formField({ label: "Representation Order withdrawn", value: data.reason.isRepresentationOrderWithdrawn }) }}
+                {{ formField({ label: "Representation order withdrawn", value: data.reason.isRepresentationOrderWithdrawn }) }}
                 {{ formField({ label: "Other", value: data.reason.isOther }) }}
 
                 {% if data.reason.isRepresentationOrderWithdrawn === true %}
-                    {{ formField({ label: "Date Order withdrawn", value: data.dateWithdrawn }) }}
+                    {{ formField({ label: "Date order withdrawn", value: data.dateWithdrawn }) }}
                 {% endif %}
 
                 {% if data.reason.isOther === true %}
