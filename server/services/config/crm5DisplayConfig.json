@@ -213,36 +213,10 @@
       ],
       "subsections": [
         {
-          "title": "Capital Details",
-          "fields": [
-            {
-              "label": "Is your client under 18 years old?",
-              "apiField": "CapitalDetails.isUnder18"
-            },
-            {
-              "label": "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance or Guarantee State Pension Credit?",
-              "apiField": "CapitalDetails.hasIncomeSupport"
-            },
-            {
-              "label": "How many dependants does your client have?",
-              "apiField": "CapitalDetails.numOfDependants"
-            },
-            {
-              "label": "Client",
-              "apiField": "CapitalDetails.clientSavings",
-              "type": "currency"
-            },
-            {
-              "label": "Partner",
-              "apiField": "CapitalDetails.partnerSavings",
-              "type": "currency"
-            },
-            {
-              "label": "Total",
-              "apiField": "CapitalDetails.totalSavings",
-              "type": "currency"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm5CapitalDetails",
+            "apiField": "CapitalDetails"
+          }
         }
       ]
     },
