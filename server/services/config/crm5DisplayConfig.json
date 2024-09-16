@@ -213,7 +213,6 @@
       ],
       "subsections": [
         {
-          "title": "Capital Details",
           "customDisplay": {
             "name": "crm5CapitalDetails",
             "apiField": "CapitalDetails"
