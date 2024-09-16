@@ -8,10 +8,11 @@
             { text: "Disbursement"},
             { text: "Details" },
             { text: "Miles" },
-            { text: "Net Value" },
+            { text: "Net" },
             { text: "VAT Rate" },
-            { text: "VAT Value" },
-            { text: "Total" }
+            { text: "VAT" },
+            { text: "Total" },
+            { text: "Official use only" }
         ],
         rows: []
     } %}
@@ -33,18 +34,18 @@
 
     {# Render "Disbursements Total" subsection #}
     {% set fields = [
-        { label: "Total Net", value: data.totals.net | formatCurrency},
-        { label: "Total VAT", value: data.totals.vat | formatCurrency},
+        { label: "Total Net", value: data.totals.net | formatCurrency, class: "govuk-brand-colour govuk-!-font-weight-bold"},
+        { label: "Total VAT", value: data.totals.vat | formatCurrency, class: "govuk-brand-colour govuk-!-font-weight-bold"},
         { label: "Grand Total", value: data.totals.total | formatCurrency, class: "govuk-brand-colour govuk-!-font-weight-bold"}
 
     ] %}
-    {{ formSubsection('Disbursements total', fields) }}
+    {{ formSubsection('Disbursements Total', fields) }}
 
 
     {# Render "Office Use Only" subsection #}
     {% set fields = [
-        { label: "Total Net", value: data.officeUse.net | formatCurrency},
-        { label: "Total VAT", value: data.officeUse.vat | formatCurrency},
+        { label: "Total Net", value: data.officeUse.net | formatCurrency, class: "govuk-brand-colour govuk-!-font-weight-bold"},
+        { label: "Total VAT", value: data.officeUse.vat | formatCurrency, class: "govuk-brand-colour govuk-!-font-weight-bold"},
         { label: "Grand Total", value: data.officeUse.total | formatCurrency, class: "govuk-brand-colour govuk-!-font-weight-bold"}
     ] %}
     {{ formSubsection('Office Use', fields) }}
