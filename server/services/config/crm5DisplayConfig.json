@@ -1,6 +1,47 @@
 {
   "sections": [
     {
+      "sectionId": "standard-properties",
+      "title": "Standard Properties",
+      "subsections": [
+        {
+          "title": "Standard Properties",
+          "fields": [
+            {
+              "label": "USN",
+              "apiField": "StandardProperties.usn"
+            },
+            {
+              "label": "Date received",
+              "apiField": "StandardProperties.dateReceived",
+              "type": "date"
+            },
+            {
+              "label": "Time received",
+              "apiField": "StandardProperties.timeReceived",
+              "type": "time"
+            },
+            {
+              "label": "Submitter user ID",
+              "apiField": "StandardProperties.submitterUserId"
+            },
+            {
+              "label": "Submitter language",
+              "apiField": "StandardProperties.language"
+            },
+            {
+              "label": "Region",
+              "apiField": "StandardProperties.region"
+            },
+            {
+              "label": "Office",
+              "apiField": "StandardProperties.office"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "sectionId": "general-information",
       "title": "General Information",
       "subsections": [
@@ -79,7 +120,6 @@
           ]
         },
         {
-          "title": "Case Details",
           "customDisplay": {
             "name": "crm5CaseDetails",
             "apiField": "CaseDetails"
@@ -660,7 +700,6 @@
       "title": "Office Use Only",
       "subsections": [
         {
-          "title": "Office Use Only",
           "customDisplay": {
             "name": "crm5OfficeUseOnly",
             "apiField": "OfficeUseOnly"
@@ -679,7 +718,6 @@
       ],
       "subsections": [
         {
-          "title": "Evidence",
           "customDisplay": {
             "name": "crmEvidence",
             "apiField": "evidenceFiles.files"

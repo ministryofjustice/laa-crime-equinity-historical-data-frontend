@@ -19,26 +19,30 @@ const schema = Joi.object({
           equals: Joi.string().required().allow(''),
         })
         .optional(),
-      subsections: Joi.array().items({
-        title: Joi.string().required(),
-        fields: Joi.array().items(
-          {
-            label: Joi.string().optional().allow(''),
-            apiField: Joi.string().required(),
-            type: Joi.string()
-              .valid('currency', 'date', 'multiline', 'percent', 'time', 'timeAndCost', 'totalAndCost')
-              .optional(),
-            transform: Joi.string().valid('courtType', 'every', 'levelOfWork', 'yesNo').optional(),
-          },
-          {
-            subHeading: Joi.string().required(),
-          },
-        ),
-        customDisplay: {
-          name: Joi.string().required(),
-          apiField: Joi.string().required(),
+      subsections: Joi.array().items(
+        {
+          title: Joi.string().required(),
+          fields: Joi.array().items(
+            {
+              label: Joi.string().optional().allow(''),
+              apiField: Joi.string().required(),
+              type: Joi.string()
+                .valid('currency', 'date', 'multiline', 'percent', 'time', 'timeAndCost', 'totalAndCost')
+                .optional(),
+              transform: Joi.string().valid('courtType', 'every', 'levelOfWork', 'yesNo').optional(),
+            },
+            {
+              subHeading: Joi.string().required(),
+            },
+          ),
         },
-      }),
+        {
+          customDisplay: {
+            name: Joi.string().required(),
+            apiField: Joi.string().required(),
+          },
+        },
+      ),
     }),
 })
 

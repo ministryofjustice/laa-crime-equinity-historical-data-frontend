@@ -347,7 +347,6 @@
       "title": "Interests of Justice: 1",
       "subsections": [
         {
-          "title": "Interests of Justice: 1",
           "customDisplay": {
             "name": "crm14InterestsOfJustice",
             "apiField": "interestOfJusticePart1"
@@ -463,7 +462,6 @@
       "title": "Income",
       "subsections": [
         {
-          "title": "Your Income and Your Partner's Income",
           "customDisplay": {
             "name": "crm14Income",
             "apiField": "income"
@@ -482,7 +480,6 @@
       ],
       "subsections": [
         {
-          "title": "Your Income and Your Partner's Income",
           "customDisplay": {
             "name": "crm15Income1",
             "apiField": "crm15Details.income1"
@@ -501,7 +498,6 @@
       ],
       "subsections": [
         {
-          "title": "Your Income and Your Partner's Income",
           "customDisplay": {
             "name": "crm15Income2",
             "apiField": "crm15Details.income2"
@@ -520,7 +516,6 @@
       ],
       "subsections": [
         {
-          "title": "Your outgoings and your partner's outgoings",
           "customDisplay": {
             "name": "crm15Outgoings",
             "apiField": "crm15Details.outgoings"
@@ -549,7 +544,6 @@
       ],
       "subsections": [
         {
-          "title": "Your outgoings and your partner's outgoings",
           "customDisplay": {
             "name": "crm15LandProperty",
             "apiField": "crm15Details.landProperty"
@@ -568,7 +562,6 @@
       ],
       "subsections": [
         {
-          "title": "Your Savings and Investments and those of Your Partner",
           "customDisplay": {
             "name": "crm15Savings",
             "apiField": "crm15Details.savings"
@@ -581,7 +574,6 @@
       "title": "Evidence: 2",
       "subsections": [
         {
-          "title": "Your Evidence",
           "customDisplay": {
             "name": "crm14EvidencePart2",
             "apiField": "evidencePart2"
@@ -678,7 +670,6 @@
       "title": "About The Information",
       "subsections": [
         {
-          "title": "About the information which you have provided and its protection",
           "customDisplay": {
             "name": "crm14AboutTheInformation",
             "apiField": "aboutInformation"
@@ -691,7 +682,6 @@
       "title": "Declarations",
       "subsections": [
         {
-          "title": "Fraud Notice",
           "customDisplay": {
             "name": "crm14Declarations",
             "apiField": "declarations"
@@ -704,7 +694,6 @@
       "title": "Privacy Notice",
       "subsections": [
         {
-          "title": "Privacy Notice",
           "customDisplay": {
             "name": "crm14PrivacyNotice",
             "apiField": "privacyAgree"
@@ -717,7 +706,6 @@
       "title": "Office Use Only",
       "subsections": [
         {
-          "title": "For Office Use Only",
           "customDisplay": {
             "name": "crm14OfficeUseOnly",
             "apiField": "officeUseOnly"
@@ -736,7 +724,6 @@
       ],
       "subsections": [
         {
-          "title": "Evidence",
           "customDisplay": {
             "name": "crmEvidence",
             "apiField": "evidenceFiles.files"
