@@ -266,7 +266,7 @@
           "title": "Income Details",
           "fields": [
             {
-              "label": "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance, Guarantee State Pension Credit, Working Tax credit plus Child Tax Credit* or Working Tax Credit with disabilities element?",
+              "label": "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance, Guarantee State Pension Credit, Working Tax credit plus Child Tax Credit* or Working Tax Credit with disabilities element? (*where gross income does not exceed £14,213)",
               "apiField": "IncomeDetails.hasIncomeSupport"
             },
             {
