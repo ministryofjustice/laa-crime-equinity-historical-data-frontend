@@ -22,10 +22,11 @@
             { text: item.disbursement | safe, attributes: { 'data-header': 'Disbursement' } },
             { text: item.details | safe, attributes: { 'data-header': 'Details' } },
             { text: item.miles | safe, attributes: { 'data-header': 'Miles' } },
-            { text: item.netValue | safe | formatCurrency, attributes: { 'data-header': 'Net Value' } },
+            { text: item.netValue | safe | formatCurrency, attributes: { 'data-header': 'Net' } },
             { text: item.vatRate | safe, attributes: { 'data-header': 'VAT Rate' } },
-            { text: item.vatValue | safe | formatCurrency, attributes: { 'data-header': 'VAT Value' } },
-            { text: item.total | safe | formatCurrency, attributes: { 'data-header': 'Total' } }
+            { text: item.vatValue | safe | formatCurrency, attributes: { 'data-header': 'VAT' } },
+            { text: item.total | safe | formatCurrency, attributes: { 'data-header': 'Total' } },
+            { text: item.officialUseOnly | safe | formatCurrency, attributes: { 'data-header': 'Official use only' } }
         ] -%}
         {% set list = tableData.rows.push(tableRow) %}
     {% endfor %}
