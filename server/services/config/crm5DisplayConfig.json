@@ -1,6 +1,47 @@
 {
   "sections": [
     {
+      "sectionId": "standard-properties",
+      "title": "Standard Properties",
+      "subsections": [
+        {
+          "title": "Standard Properties",
+          "fields": [
+            {
+              "label": "USN",
+              "apiField": "StandardProperties.usn"
+            },
+            {
+              "label": "Date received",
+              "apiField": "StandardProperties.dateReceived",
+              "type": "date"
+            },
+            {
+              "label": "Time received",
+              "apiField": "StandardProperties.timeReceived",
+              "type": "time"
+            },
+            {
+              "label": "Submitter user ID",
+              "apiField": "StandardProperties.submitterUserId"
+            },
+            {
+              "label": "Submitter language",
+              "apiField": "StandardProperties.language"
+            },
+            {
+              "label": "Region",
+              "apiField": "StandardProperties.region"
+            },
+            {
+              "label": "Office",
+              "apiField": "StandardProperties.office"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "sectionId": "general-information",
       "title": "General Information",
       "subsections": [
@@ -61,15 +102,15 @@
               "type": "multiline"
             },
             {
-              "label": "Telephone Number",
+              "label": "Telephone number",
               "apiField": "Firm.firmPhone"
             },
             {
-              "label": "Contact Name",
+              "label": "Contact name",
               "apiField": "Firm.firmContactName"
             },
             {
-              "label": "Name of Solicitor or Fellow of the Institute of Legal Executives instructed",
+              "label": "Name of solicitor or fellow of the Institute of Legal Executives instructed",
               "apiField": "Firm.firmSolicitorName"
             },
             {
@@ -79,7 +120,6 @@
           ]
         },
         {
-          "title": "Case Details",
           "customDisplay": {
             "name": "crm5CaseDetails",
             "apiField": "CaseDetails"
@@ -129,15 +169,15 @@
               "apiField": "ClientDetails.noFixedAbode"
             },
             {
-              "label": "Address Line 1",
+              "label": "Address line 1",
               "apiField": "ClientDetails.address.addressLine1"
             },
             {
-              "label": "Address Line 2",
+              "label": "Address line 2",
               "apiField": "ClientDetails.address.addressLine2"
             },
             {
-              "label": "Address Line 3",
+              "label": "Address line 3",
               "apiField": "ClientDetails.address.addressLine3"
             },
             {
@@ -201,7 +241,7 @@
           "title": "Income Details",
           "fields": [
             {
-              "label": "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance, Guarantee State Pension Credit, Working Tax credit plus Child Tax Credit* or Working Tax Credit with disabilities element?",
+              "label": "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance, Guarantee State Pension Credit, Working Tax credit plus Child Tax Credit* or Working Tax Credit with disabilities element? (*where gross income does not exceed £14,213)",
               "apiField": "IncomeDetails.hasIncomeSupport"
             },
             {
@@ -267,7 +307,7 @@
               "type": "currency"
             },
             {
-              "label": "Less Total deductions",
+              "label": "Less total deductions",
               "apiField": "IncomeDetails.totalDeductions",
               "type": "currency"
             },
@@ -302,7 +342,7 @@
               "apiField": "Proceedings.TypeOfProceedings.appealProceedings"
             },
             {
-              "label": "Prison Law:",
+              "label": "Prison law:",
               "apiField": "Proceedings.TypeOfProceedings.prisonLaw"
             }
           ]
@@ -448,7 +488,12 @@
             {
               "label": "Please give details of work that has been completed to date",
               "apiField": "DetailsOfWorkCompleted"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Details of Application",
+          "fields": [
             {
               "label": "Please explain what additional work is to be carried out and explain how this is necessary to the progress of the case and/or the benefit of the client.",
               "apiField": "DetailsOfApplication"
@@ -462,30 +507,30 @@
       "title": "Costs",
       "subsections": [
         {
-          "title": "Costs Accrued To Date",
+          "title": "Costs Accrued to Date",
           "fields": [
             {
-              "label": "Attendance Time",
+              "label": "Attendance time",
               "apiField": "AllCosts.AccruedCosts.Attendance",
               "type": "timeAndCost"
             },
             {
-              "label": "Preparation Time",
+              "label": "Preparation time",
               "apiField": "AllCosts.AccruedCosts.Preparation",
               "type": "timeAndCost"
             },
             {
-              "label": "Advocacy Time",
+              "label": "Advocacy time",
               "apiField": "AllCosts.AccruedCosts.Advocacy",
               "type": "timeAndCost"
             },
             {
-              "label": "Travel Time",
+              "label": "Travel time",
               "apiField": "AllCosts.AccruedCosts.Travel",
               "type": "timeAndCost"
             },
             {
-              "label": "Waiting Time",
+              "label": "Waiting time",
               "apiField": "AllCosts.AccruedCosts.Waiting",
               "type": "timeAndCost"
             },
@@ -495,7 +540,7 @@
               "type": "totalAndCost"
             },
             {
-              "label": "Telephone Calls",
+              "label": "Telephone calls",
               "apiField": "AllCosts.AccruedCosts.TelephoneCalls",
               "type": "totalAndCost"
             },
@@ -510,7 +555,7 @@
               "type": "currency"
             },
             {
-              "label": "Total Costs To Date",
+              "label": "Total costs to date",
               "apiField": "AllCosts.AccruedCosts.TotalCost.cost",
               "type": "currency"
             }
@@ -520,27 +565,27 @@
           "title": "Anticipated Costs",
           "fields": [
             {
-              "label": "Attendance Time",
+              "label": "Attendance time",
               "apiField": "AllCosts.AnticipatedCosts.Attendance",
               "type": "timeAndCost"
             },
             {
-              "label": "Preparation Time",
+              "label": "Preparation time",
               "apiField": "AllCosts.AnticipatedCosts.Preparation",
               "type": "timeAndCost"
             },
             {
-              "label": "Advocacy Time",
+              "label": "Advocacy time",
               "apiField": "AllCosts.AnticipatedCosts.Advocacy",
               "type": "timeAndCost"
             },
             {
-              "label": "Travel Time",
+              "label": "Travel time",
               "apiField": "AllCosts.AnticipatedCosts.Travel",
               "type": "timeAndCost"
             },
             {
-              "label": "Waiting Time",
+              "label": "Waiting time",
               "apiField": "AllCosts.AnticipatedCosts.Waiting",
               "type": "timeAndCost"
             },
@@ -550,7 +595,7 @@
               "type": "totalAndCost"
             },
             {
-              "label": "Telephone Calls",
+              "label": "Telephone calls",
               "apiField": "AllCosts.AnticipatedCosts.TelephoneCalls",
               "type": "totalAndCost"
             },
@@ -565,12 +610,12 @@
               "type": "currency"
             },
             {
-              "label": "Total Anticipated Costs",
+              "label": "Total anticipated costs",
               "apiField": "AllCosts.AnticipatedCosts.TotalCost.cost",
               "type": "currency"
             },
             {
-              "label": "NEW LIMIT REQUEST",
+              "label": "New limit request",
               "apiField": "AllCosts.NewLimitRequest.cost",
               "type": "currency"
             }
@@ -586,7 +631,7 @@
           "title": "Case History",
           "fields": [
             {
-              "label": "Summary of Case History",
+              "label": "Summary of case history",
               "apiField": "CaseHistory.summary"
             }
           ]
@@ -630,7 +675,6 @@
       "title": "Office Use Only",
       "subsections": [
         {
-          "title": "Office Use Only",
           "customDisplay": {
             "name": "crm5OfficeUseOnly",
             "apiField": "OfficeUseOnly"
@@ -649,7 +693,6 @@
       ],
       "subsections": [
         {
-          "title": "Evidence",
           "customDisplay": {
             "name": "crmEvidence",
             "apiField": "evidenceFiles.files"

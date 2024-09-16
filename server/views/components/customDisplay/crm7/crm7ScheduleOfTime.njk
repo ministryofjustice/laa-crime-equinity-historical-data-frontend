@@ -6,14 +6,14 @@
     {% set scheduleData = {
         head: [
             { text: "Line" },
-            { text: "Fee Earner Initials" },
+            { text: "Fee earner initials" },
             { text: "Date" },
-            { text: "Cost Type" },
+            { text: "Cost type" },
             { text: "Time" },
-            { text: "Hearing Type Code(s)" },
-            { text: "Person(s) Attended Code(s)" },
-            { text: "Hourly Rate" },
-            { text: "Basic Claim" },
+            { text: "Hearing type code(s)" },
+            { text: "Person(s) attended code(s)" },
+            { text: "Hourly rate" },
+            { text: "Basic claim" },
             { text: "% Uplift" },
             { text: "Claim" }
         ],
@@ -44,8 +44,8 @@
         head: [
             { text: "Travel" },
             { text: "Waiting" },
-            { text: "Attendance Counsel" },
-            { text: "Attendance no Counsel" },
+            { text: "Attendance counsel" },
+            { text: "Attendance no counsel" },
             { text: "Preparation" },
             { text: "Advocacy" }
         ],
@@ -68,8 +68,8 @@
         head: [
             { text: "Travel" },
             { text: "Waiting" },
-            { text: "Attendance Counsel" },
-            { text: "Attendance no Counsel" },
+            { text: "Attendance counsel" },
+            { text: "Attendance no counsel" },
             { text: "Preparation" },
             { text: "Advocacy" }
         ],
@@ -83,12 +83,12 @@
                 { text: data.costTotals.advocacy | formatCurrency }
             ],
             [
-                { text: "Total Basic Claim", isHeader: true, colspan: "3", class: "govuk-brand-colour", noDataHeader: true },
-                { text: data.totals.basic | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
+                { text: "Total basic claim", isHeader: true, colspan: "3", noDataHeader: true },
+                { text: data.totals.basic | formatCurrency, colspan: "1", class: "govuk-!-font-weight-bold", noDataHeader: true }
             ],
             [
-                { text: "Total Claim", isHeader: true, colspan: "3", class: "govuk-brand-colour", noDataHeader: true },
-                { text: data.totals.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
+                { text: "Total claim", isHeader: true, colspan: "3", noDataHeader: true },
+                { text: data.totals.total | formatCurrency, colspan: "1", class: "govuk-!-font-weight-bold", noDataHeader: true }
             ]
         ]
     } %}
@@ -100,12 +100,12 @@
         head: [],
         rows: [
             [
-                { text: "Total Basic Claim Allowed", isHeader: true, colspan: "3", class: "govuk-brand-colour", noDataHeader: true },
-                { text: data.officeUse.basic | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
+                { text: "Total basic claim allowed", isHeader: true, colspan: "3", noDataHeader: true },
+                { text: data.officeUse.basic | formatCurrency, colspan: "1", class: "govuk-!-font-weight-bold", noDataHeader: true }
             ],
             [
-                { text: "Total Claim Allowed", isHeader: true, colspan: "3", class: "govuk-brand-colour", noDataHeader: true },
-                { text: data.officeUse.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
+                { text: "Total claim allowed", isHeader: true, colspan: "3", noDataHeader: true },
+                { text: data.officeUse.total | formatCurrency, colspan: "1", class: "govuk-!-font-weight-bold", noDataHeader: true }
             ]
         ]
     } %}
