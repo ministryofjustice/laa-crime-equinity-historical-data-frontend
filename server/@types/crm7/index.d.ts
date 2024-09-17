@@ -92,6 +92,9 @@ export interface Crm7Response extends CrmResponse {
         radio2: boolean
         radio3: boolean
       }
+      warrantOfArrestDate: string
+      guiltyPleaDate: string
+      otherDetails: string
     }
     claimDetails?: {
       wasCounselAssigned: string
