@@ -391,51 +391,56 @@
           "fields": [
             {
               "label": "Deductions",
-              "apiField": "claimTotals.deductions"
+              "apiField": "claimTotals.deductions",
+              "type": "currency"
             },
             {
-              "label": "Profit Costs Net",
-              "apiField": "claimTotals.total.profit.net"
+              "label": "Profit costs net",
+              "apiField": "claimTotals.total.profit.net",
+              "type": "currency"
             },
             {
-              "label": "Profit Costs VAT rate",
+              "label": "Profit costs VAT rate",
               "apiField": "claimTotals.total.profit.vat",
               "type": "percent"
             },
             {
-              "label": "Profit Costs Total",
+              "label": "Profit costs total",
               "apiField": "claimTotals.total.profit.total",
               "type": "currency"
             },
             {
               "label": "Disbursements",
-              "apiField": "claimTotals.disbursements"
+              "apiField": "claimTotals.total.disbursements",
+              "type": "currency"
             },
             {
-              "label": "Travel Costs Net",
-              "apiField": "claimTotals.total.travel.net"
+              "label": "Travel costs net",
+              "apiField": "claimTotals.total.travel.net",
+              "type": "currency"
             },
             {
-              "label": "Travel Costs VAT rate",
+              "label": "Travel costs VAT rate",
               "apiField": "claimTotals.total.travel.vat",
               "type": "percent"
             },
             {
-              "label": "Travel Costs Total",
+              "label": "Travel costs total",
               "apiField": "claimTotals.total.travel.total",
               "type": "currency"
             },
             {
-              "label": "Waiting Costs Net",
-              "apiField": "claimTotals.total.waiting.net"
+              "label": "Waiting costs net",
+              "apiField": "claimTotals.total.waiting.net",
+              "type": "currency"
             },
             {
-              "label": "Waiting Costs VAT rate",
+              "label": "Waiting costs VAT rate",
               "apiField": "claimTotals.total.waiting.vat",
               "type": "percent"
             },
             {
-              "label": "Waiting Costs Total",
+              "label": "Waiting costs total",
               "apiField": "claimTotals.total.waiting.total",
               "type": "currency"
             }
@@ -445,50 +450,51 @@
           "title": "Claim Totals - Office Use Only",
           "fields": [
             {
-              "label": "Profit Costs Net Allowed",
-              "apiField": "claimTotals.officeUse.profit.net"
+              "label": "Profit costs net allowed",
+              "apiField": "claimTotals.officeUse.profit.net",
+              "type": "currency"
             },
             {
-              "label": "Profit Costs Allowed VAT rate",
+              "label": "Profit costs allowed VAT rate",
               "apiField": "claimTotals.officeUse.profit.vat",
               "type": "percent"
             },
             {
-              "label": "Profit Costs Total Allowed",
+              "label": "Profit costs total allowed",
               "apiField": "claimTotals.officeUse.profit.total",
               "type": "currency"
             },
             {
-              "label": "Disbursements Allowed",
+              "label": "Disbursements allowed",
               "apiField": "claimTotals.officeUse.disbursements",
               "type": "currency"
             },
             {
-              "label": "Travel Net Allowed",
-              "apiField": "claimTotals.officeUse.profit.net"
+              "label": "Travel net allowed",
+              "apiField": "claimTotals.officeUse.travel.net"
             },
             {
-              "label": "Travel Allowed VAT rate",
-              "apiField": "claimTotals.officeUse.profit.vat",
+              "label": "Travel allowed VAT rate",
+              "apiField": "claimTotals.officeUse.travel.vat",
               "type": "percent"
             },
             {
-              "label": "Travel Total Allowed",
-              "apiField": "claimTotals.officeUse.profit.total",
+              "label": "Travel total allowed",
+              "apiField": "claimTotals.officeUse.travel.total",
               "type": "currency"
             },
             {
-              "label": "Waiting Net Allowed",
-              "apiField": "claimTotals.officeUse.profit.net"
+              "label": "Waiting net allowed",
+              "apiField": "claimTotals.officeUse.waiting.net"
             },
             {
-              "label": "Waiting Allowed VAT rate",
-              "apiField": "claimTotals.officeUse.profit.vat",
+              "label": "Waiting allowed VAT rate",
+              "apiField": "claimTotals.officeUse.waiting.vat",
               "type": "percent"
             },
             {
-              "label": "Waiting Total Allowed",
-              "apiField": "claimTotals.officeUse.profit.total",
+              "label": "Waiting total allowed",
+              "apiField": "claimTotals.officeUse.waiting.total",
               "type": "currency"
             }
           ]
