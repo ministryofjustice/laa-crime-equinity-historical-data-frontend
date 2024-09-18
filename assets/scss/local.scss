@@ -28,7 +28,22 @@
   .govuk-custom-no-padding-left-desktop {
     @include govuk-responsive-padding(0, "left");
   }
+
+  .govuk-custom-navigation-left {
+    margin-right: auto;
+  }
+  .govuk-header__logo {
+    &.govuk-custom-width-auto-desktop {
+      width:auto;
+    }
+  }
+  .govuk-phase-banner {
+    &.govuk-custom-no-margin-right-desktop {
+      @include govuk-responsive-margin(0, "right");
+    }
+  }
 }
+
 
 @media print {
   a[href]::after {
