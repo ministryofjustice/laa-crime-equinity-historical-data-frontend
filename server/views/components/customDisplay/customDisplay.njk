@@ -25,69 +25,69 @@
 {% from "./crm15/crm15Savings.njk" import crm15Savings %}
 
 
-{% macro customDisplay(params) %}
-    {% if params.name === 'crmEvidence' %}
-        {{ crmEvidence(params.value) }}
+{% macro customDisplay(customDisplay, crmType) %}
+    {% if customDisplay.name === 'crmEvidence' %}
+        {{ crmEvidence(customDisplay.value, crmType) }}
 
 {# CRM 4 #}
-    {% elif params.name === 'crm4AdditionalExpenditure' %}
-        {{ crm4AdditionalExpenditure(params.value) }}
-    {% elif params.name === 'crm4AlternativeQuotes' %}
-        {{ crm4AlternativeQuotes(params.value) }}
-    {% elif params.name === 'crm4OfficeUseOnly' %}
-        {{ crm4OfficeUseOnly(params.value) }}
+    {% elif customDisplay.name === 'crm4AdditionalExpenditure' %}
+        {{ crm4AdditionalExpenditure(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm4AlternativeQuotes' %}
+        {{ crm4AlternativeQuotes(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm4OfficeUseOnly' %}
+        {{ crm4OfficeUseOnly(customDisplay.value) }}
 
 {# CRM 5 #}
-    {% elif params.name === 'crm5CaseDetails' %}
-        {{ crm5CaseDetails(params.value) }}
-    {% elif params.name === 'crm5CapitalDetails' %}
-        {{ crm5CapitalDetails(params.value) }}
-    {% elif params.name === 'crm5OfficeUseOnly' %}
-        {{ crm5OfficeUseOnly(params.value) }}
+    {% elif customDisplay.name === 'crm5CaseDetails' %}
+        {{ crm5CaseDetails(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm5CapitalDetails' %}
+        {{ crm5CapitalDetails(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm5OfficeUseOnly' %}
+        {{ crm5OfficeUseOnly(customDisplay.value) }}
 
 {# CRM 7 #}
-        {% elif params.name == 'crm7CaseDisposal' %}
-        {{ crm7CaseDisposal(params.value) }}
-    {% elif params.name === 'crm7Disbursements' %}
-        {{ crm7Disbursements(params.value) }}
-    {% elif params.name === 'crm7ClaimForCosts' %}
-        {{ crm7ClaimForCosts(params.value) }}
-    {% elif params.name === 'crm7ScheduleOfTime' %}
-        {{ crm7ScheduleOfTime(params.value) }}
-    {% elif params.name === 'crm7NonStandardFeeClaim' %}
-        {{ crm7NonStandardFeeClaim(params.value) }}
-    {% elif params.name === 'crm7OfficeUseOnly' %}
-        {{ crm7OfficeUseOnly(params.value) }}
+        {% elif customDisplay.name == 'crm7CaseDisposal' %}
+        {{ crm7CaseDisposal(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm7Disbursements' %}
+        {{ crm7Disbursements(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm7ClaimForCosts' %}
+        {{ crm7ClaimForCosts(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm7ScheduleOfTime' %}
+        {{ crm7ScheduleOfTime(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm7NonStandardFeeClaim' %}
+        {{ crm7NonStandardFeeClaim(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm7OfficeUseOnly' %}
+        {{ crm7OfficeUseOnly(customDisplay.value) }}
 
 {# CRM 14 #}
-    {% elif params.name === 'crm14InterestsOfJustice' %}
-        {{ crm14InterestsOfJustice(params.value) }}
-    {% elif params.name === 'crm14AboutTheInformation' %}
-        {{ crm14AboutTheInformation(params.value) }}
-    {% elif params.name === 'crm14InterestsOfJustice' %}
-        {{ crm14InterestsOfJustice(params.value) }}
-    {% elif params.name === 'crm14Declarations' %}
-        {{ crm14Declarations(params.value) }}
-    {% elif params.name === 'crm14PrivacyNotice' %}
-        {{ crm14PrivacyNotice(params.value) }}
-    {% elif params.name === 'crm14Income' %}
-        {{ crm14Income(params.value) }}
-    {% elif params.name === 'crm14EvidencePart2' %}
-        {{ crm14EvidencePart2(params.value) }}
-    {% elif params.name === 'crm14OfficeUseOnly' %}
-        {{ crm14OfficeUseOnly(params.value) }}
+    {% elif customDisplay.name === 'crm14InterestsOfJustice' %}
+        {{ crm14InterestsOfJustice(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm14AboutTheInformation' %}
+        {{ crm14AboutTheInformation(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm14InterestsOfJustice' %}
+        {{ crm14InterestsOfJustice(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm14Declarations' %}
+        {{ crm14Declarations(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm14PrivacyNotice' %}
+        {{ crm14PrivacyNotice(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm14Income' %}
+        {{ crm14Income(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm14EvidencePart2' %}
+        {{ crm14EvidencePart2(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm14OfficeUseOnly' %}
+        {{ crm14OfficeUseOnly(customDisplay.value) }}
 
 {# CRM 15 #}
-    {% elif params.name === 'crm15Income1' %}
-        {{ crm15Income1(params.value) }}
-    {% elif params.name === 'crm15Income2' %}
-        {{ crm15Income2(params.value) }}
-    {% elif params.name === 'crm15Outgoings' %}
-        {{ crm15Outgoings(params.value) }}
-    {% elif params.name === 'crm15LandProperty' %}
-        {{ crm15LandProperty(params.value) }}
-    {% elif params.name === 'crm15Savings' %}
-        {{ crm15Savings(params.value) }}
+    {% elif customDisplay.name === 'crm15Income1' %}
+        {{ crm15Income1(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm15Income2' %}
+        {{ crm15Income2(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm15Outgoings' %}
+        {{ crm15Outgoings(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm15LandProperty' %}
+        {{ crm15LandProperty(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm15Savings' %}
+        {{ crm15Savings(customDisplay.value) }}
 
     {% endif %}
 {% endmacro %}

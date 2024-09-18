@@ -45,7 +45,7 @@
                         <h2 class="govuk-heading-m">{{ section.title }}</h2>
                         {% for subsection in section.subsections %}
                             {% if subsection.customDisplay %}
-                                {{ customDisplay(subsection.customDisplay) }}
+                                {{ customDisplay(subsection.customDisplay, crmType) }}
                             {% elif subsection.fields.length > 0  %}
                                 <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
                                     <div class="govuk-summary-card__title-wrapper">

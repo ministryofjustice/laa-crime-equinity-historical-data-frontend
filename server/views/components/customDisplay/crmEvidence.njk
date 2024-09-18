@@ -1,12 +1,14 @@
 {% from "../formField.njk" import formField %}
 {% from "../formSubsection.njk" import formSubsection %}
 
-{% macro crmEvidence(data) %}
+{% macro crmEvidence(data, crmType) %}
 
     {% set fields = [] %}
 
     {% for item in data %}
-        {% set linkUrl = "/download-evidence?fileKey=" + (item.key | urlencode) + "&fileName=" + (item.name | urlencode) %}
+        {#  prefix fileKey with CRM14/ path if fileKey starts with "att_" #}
+        {% set fileKey = "CRM14/" + item.key if crmType === "CRM 14" and (item.key | truncate(4, true, '')) === "att_" else item.key %}
+        {% set linkUrl = "/download-evidence?fileKey=" + (fileKey | urlencode) + "&fileName=" + (item.name | urlencode) %}
         {% set list = fields.push({ label: item.name, value: { href: linkUrl, text: "download" } , type: 'link' }) %}
     {% endfor %}
 
