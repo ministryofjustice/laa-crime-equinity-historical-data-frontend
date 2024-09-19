@@ -39,12 +39,17 @@ describe('Generate Report Validation', () => {
         { crmType: 'xxx', decisionFromDate: '2024-01-01', decisionToDate: '2024-01-10' },
       ],
       [
-        'Decision date to must be specified',
+        "Enter 'Decision date from'",
+        'decisionFromDate',
+        { crmType: 'crm4', decisionFromDate: '', decisionToDate: '2024-01-10' },
+      ],
+      [
+        "Enter 'Decision date to'",
         'decisionToDate',
         { crmType: 'crm4', decisionFromDate: '2024-01-01', decisionToDate: '' },
       ],
       [
-        'Your Decision date to cannot be earlier than your Decision date from',
+        "Your 'Decision date to' must be the same as or after your 'Decision date from'",
         'decisionToDate',
         { crmType: 'crm4', decisionFromDate: '2024-01-01', decisionToDate: '2023-12-01' },
       ],
@@ -83,36 +88,6 @@ describe('Generate Report Validation', () => {
           },
         ],
         messages: {},
-      })
-    })
-
-    it('should return errors for missing Decision date from', () => {
-      const reportParams: Record<string, string> = {
-        crmType: 'crm4',
-        decisionFromDate: '',
-        decisionToDate: '2024-04-01',
-      }
-      const result = validateReportParams(reportParams)
-
-      expect(result).toEqual({
-        list: [
-          {
-            href: '#decisionFromDate',
-            text: 'Decision date from must be specified',
-          },
-          {
-            href: '#decisionToDate',
-            text: 'Decision date to requires a valid Decision date from',
-          },
-        ],
-        messages: {
-          decisionToDate: {
-            text: 'Decision date to requires a valid Decision date from',
-          },
-          decisionFromDate: {
-            text: 'Decision date from must be specified',
-          },
-        },
       })
     })
 

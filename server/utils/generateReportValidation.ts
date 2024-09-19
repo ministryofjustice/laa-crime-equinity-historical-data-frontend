@@ -1,5 +1,5 @@
 import Joi, { CustomHelpers, CustomValidator } from 'joi'
-import { differenceInDays } from 'date-fns'
+import { differenceInDays, isBefore } from 'date-fns'
 import { buildValidationErrors, Errors, ErrorSummary } from './errorDisplayHelper'
 
 const checkToDate = (toDate: string) => {
@@ -18,27 +18,32 @@ const schema = Joi.object({
     .valid('crm4', 'crm5', 'crm14')
     .messages({ 'any.required': 'CRM type must be selected', 'any.only': 'Invalid CRM type specified' }),
   decisionFromDate: Joi.date().required().iso().empty('').messages({
-    'any.required': 'Decision date from must be specified',
+    'any.required': "Enter 'Decision date from'",
     'date.format': 'Decision date from must be a valid date',
-    'any.ref': 'Decision date to requires a valid Decision date from',
   }),
-  decisionToDate: Joi.date().required().iso().empty('').min(Joi.ref('decisionFromDate')).messages({
-    'any.required': 'Decision date to must be specified',
+  decisionToDate: Joi.date().required().iso().empty('').messages({
+    'any.required': "Enter 'Decision date to'",
     'date.format': 'Decision date to must be a valid date',
-    'date.min': 'Your Decision date to cannot be earlier than your Decision date from',
-    'any.ref': 'Decision date to requires a valid Decision date from',
   }),
 })
   .options({ allowUnknown: true, abortEarly: false })
-  .custom(value => {
+  .custom((value, helpers) => {
     const { decisionFromDate, decisionToDate } = value
+
+    if (isBefore(decisionToDate, decisionFromDate)) {
+      return helpers.error('decisionToDate.earlier', undefined, { path: ['decisionToDate'] })
+    }
+
     const result = differenceInDays(decisionToDate, decisionFromDate)
     if (result > 31) {
-      throw Error('Invalid date range')
+      return helpers.error('decisionDate.range')
     }
     return value
   })
-  .message('Decision date range cannot be more than 1 month')
+  .messages({
+    'decisionToDate.earlier': "Your 'Decision date to' must be the same as or after your 'Decision date from'",
+    'decisionDate.range': 'Decision date range cannot be more than 1 month',
+  })
 
 const schemaCrm14 = Joi.object({
   crmType: Joi.string()
