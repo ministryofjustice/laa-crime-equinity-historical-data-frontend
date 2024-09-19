@@ -98,9 +98,9 @@
     ]
   },
   "dependencies": {
-    "@azure/msal-common": "^14.13.0",
-    "@azure/msal-node": "^2.10.0",
-    "@ministryofjustice/frontend": "^2.1.1",
+    "@azure/msal-common": "^14.14.2",
+    "@azure/msal-node": "^2.13.0",
+    "@ministryofjustice/frontend": "^2.2.0",
     "agentkeepalive": "^4.5.0",
     "applicationinsights": "^2.9.5",
     "axios": "^1.7.4",
