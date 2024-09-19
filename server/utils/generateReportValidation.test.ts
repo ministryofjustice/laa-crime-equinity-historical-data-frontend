@@ -117,21 +117,21 @@ describe('Generate Report Validation', () => {
 
   describe('valid report parameters (CRM 14)', () => {
     it.each([
-      ['Decision dates only', { crmType: 'crm14', decisionFromDate: '2024-01-01', decisionToDate: '2024-01-14' }],
-      ['Submitted dates only', { crmType: 'crm14', submittedFromDate: '2024-01-01', submittedToDate: '2024-01-14' }],
-      ['Created dates only', { crmType: 'crm14', createdFromDate: '2024-01-01', createdToDate: '2024-01-14' }],
+      ['Decision dates only', { crmType: 'crm14', decisionFromDate: '2024-01-01', decisionToDate: '2024-01-10' }],
+      ['Submitted dates only', { crmType: 'crm14', submittedFromDate: '2024-01-01', submittedToDate: '2024-01-10' }],
+      ['Created dates only', { crmType: 'crm14', createdFromDate: '2024-01-01', createdToDate: '2024-01-10' }],
       [
         'Last submitted dates only',
-        { crmType: 'crm14', lastSubmittedFromDate: '2024-01-01', lastSubmittedToDate: '2024-01-14' },
+        { crmType: 'crm14', lastSubmittedFromDate: '2024-01-01', lastSubmittedToDate: '2024-01-10' },
       ],
       [
         'with some dates specified',
         {
           crmType: 'crm14',
           decisionFromDate: '2024-01-01',
-          decisionToDate: '2024-01-14',
+          decisionToDate: '2024-01-10',
           lastSubmittedFromDate: '2024-01-01',
-          lastSubmittedToDate: '2024-01-14',
+          lastSubmittedToDate: '2024-01-10',
         },
       ],
       [
@@ -139,13 +139,13 @@ describe('Generate Report Validation', () => {
         {
           crmType: 'crm14',
           decisionFromDate: '2024-01-01',
-          decisionToDate: '2024-01-14',
+          decisionToDate: '2024-01-10',
           submittedFromDate: '2024-01-01',
-          submittedToDate: '2024-01-14',
+          submittedToDate: '2024-01-10',
           createdFromDate: '2024-01-01',
-          createdToDate: '2024-01-14',
+          createdToDate: '2024-01-10',
           lastSubmittedFromDate: '2024-01-01',
-          lastSubmittedToDate: '2024-01-14',
+          lastSubmittedToDate: '2024-01-10',
         },
       ],
     ])('should validate report parameters with %s', (name, params) => {
@@ -158,50 +158,78 @@ describe('Generate Report Validation', () => {
   describe('validation errors (CRM 14)', () => {
     it.each([
       [
-        'Decision date from requires a valid Decision date to',
+        'missing Decision date from',
         'decisionFromDate',
-        {
-          crmType: 'crm14',
-          decisionFromDate: '2024-01-01',
-        },
+        { crmType: 'crm14', decisionFromDate: '', decisionToDate: '2024-01-14' },
+        "Enter 'Decision date from'",
       ],
       [
-        'Submitted date from requires a valid Submitted date to',
+        'missing Decision date to',
+        'decisionToDate',
+        { crmType: 'crm14', decisionFromDate: '2024-01-01', decisionToDate: '' },
+        "Enter 'Decision date to'",
+      ],
+      [
+        'earlier Decision date to',
+        'decisionToDate',
+        { crmType: 'crm14', decisionFromDate: '2024-01-01', decisionToDate: '2023-12-28' },
+        "Your 'Decision date to' must be the same as or after your 'Decision date from'",
+      ],
+      [
+        'missing Submitted date from',
         'submittedFromDate',
-        {
-          crmType: 'crm14',
-          decisionFromDate: '2024-01-01',
-          decisionToDate: '2024-01-14',
-          submittedFromDate: '2024-01-01',
-        },
+        { crmType: 'crm14', submittedFromDate: '', submittedToDate: '2024-01-14' },
+        "Enter 'Submitted date from'",
       ],
       [
-        'Created date from requires a valid Created date to',
+        'missing Submitted date to',
+        'submittedToDate',
+        { crmType: 'crm14', submittedFromDate: '2024-01-01', submittedToDate: '' },
+        "Enter 'Submitted date to'",
+      ],
+      [
+        'earlier Submitted date to',
+        'submittedToDate',
+        { crmType: 'crm14', submittedFromDate: '2024-01-01', submittedToDate: '2023-12-28' },
+        "Your 'Submitted date to' must be the same as or after your 'Submitted date from'",
+      ],
+      [
+        'missing Created date from',
         'createdFromDate',
-        {
-          crmType: 'crm14',
-          decisionFromDate: '2024-01-01',
-          decisionToDate: '2024-01-14',
-          submittedFromDate: '2024-01-01',
-          submittedToDate: '2024-01-14',
-          createdFromDate: '2024-01-01',
-        },
+        { crmType: 'crm14', createdFromDate: '', createdToDate: '2024-01-14' },
+        "Enter 'Created date from'",
       ],
       [
-        'Last submitted date from requires a valid Last submitted date to',
-        'lastSubmittedFromDate',
-        {
-          crmType: 'crm14',
-          decisionFromDate: '2024-01-01',
-          decisionToDate: '2024-01-14',
-          submittedFromDate: '2024-01-01',
-          submittedToDate: '2024-01-14',
-          createdFromDate: '2024-01-01',
-          createdToDate: '2024-01-14',
-          lastSubmittedFromDate: '2024-01-01',
-        },
+        'missing Created date to',
+        'createdToDate',
+        { crmType: 'crm14', createdFromDate: '2024-01-01', createdToDate: '' },
+        "Enter 'Created date to'",
       ],
-    ])('should return "$error" error', (error, field, params) => {
+      [
+        'earlier Created date to',
+        'createdToDate',
+        { crmType: 'crm14', createdFromDate: '2024-01-01', createdToDate: '2023-12-28' },
+        "Your 'Created date to' must be the same as or after your 'Created date from'",
+      ],
+      [
+        'missing Last submitted date from',
+        'lastSubmittedFromDate',
+        { crmType: 'crm14', lastSubmittedFromDate: '', lastSubmittedToDate: '2024-01-14' },
+        "Enter 'Last submitted date from'",
+      ],
+      [
+        'missing Last submitted date to',
+        'lastSubmittedToDate',
+        { crmType: 'crm14', lastSubmittedFromDate: '2024-01-01', lastSubmittedToDate: '' },
+        "Enter 'Last submitted date to'",
+      ],
+      [
+        'earlier Last submitted date to',
+        'lastSubmittedToDate',
+        { crmType: 'crm14', lastSubmittedFromDate: '2024-01-01', lastSubmittedToDate: '2023-12-28' },
+        "Your 'Last submitted date to' must be the same as or after your 'Last submitted date from'",
+      ],
+    ])('should return error for %s', (reason, field, params, error) => {
       const result = validateReportParams(params)
       expect(result).toEqual({
         list: [
@@ -235,7 +263,7 @@ describe('Generate Report Validation', () => {
         'Last submitted date range cannot be more than 2 weeks',
         { crmType: 'crm14', lastSubmittedFromDate: '2024-01-01', lastSubmittedToDate: '2024-04-01' },
       ],
-    ])('should return "%s" error', (error, params) => {
+    ])('should return error for %s', (error, params) => {
       const result = validateReportParams(params)
       expect(result).toEqual({
         list: [

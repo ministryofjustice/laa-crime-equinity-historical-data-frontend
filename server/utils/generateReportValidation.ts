@@ -2,15 +2,6 @@ import Joi, { CustomHelpers, CustomValidator } from 'joi'
 import { differenceInDays, isBefore } from 'date-fns'
 import { buildValidationErrors, Errors, ErrorSummary } from './errorDisplayHelper'
 
-const checkToDate = (toDate: string) => {
-  return (value: CustomValidator, helpers: CustomHelpers) => {
-    if (!helpers.state.ancestors[0][toDate]) {
-      return helpers.error('any.ref')
-    }
-    return value
-  }
-}
-
 const schema = Joi.object({
   crmType: Joi.string()
     .required()
@@ -51,61 +42,29 @@ const schemaCrm14 = Joi.object({
     .empty('')
     .valid('crm4', 'crm5', 'crm14')
     .messages({ 'any.required': 'CRM type must be selected', 'any.only': 'Invalid CRM type specified' }),
-  decisionFromDate: Joi.date()
-    .optional()
-    .iso()
-    .allow('')
-    .messages({
-      'date.format': 'Decision date from must be a valid date',
-      'any.ref': 'Decision date from requires a valid Decision date to',
-    })
-    .custom(checkToDate('decisionToDate')),
-  decisionToDate: Joi.date().optional().iso().allow('').min(Joi.ref('decisionFromDate')).messages({
+  decisionFromDate: Joi.date().optional().iso().allow('').messages({
+    'date.format': 'Decision date from must be a valid date',
+  }),
+  decisionToDate: Joi.date().optional().iso().allow('').messages({
     'date.format': 'Decision date to must be a valid date',
-    'date.min': 'Your Decision date to cannot be earlier than your Decision date from',
-    'any.ref': 'Decision date to requires a valid Decision date from',
   }),
-  submittedFromDate: Joi.date()
-    .optional()
-    .iso()
-    .allow('')
-    .messages({
-      'date.format': 'Submitted date from must be a valid date',
-      'any.ref': 'Submitted date from requires a valid Submitted date to',
-    })
-    .custom(checkToDate('submittedToDate')),
-  submittedToDate: Joi.date().optional().iso().allow('').min(Joi.ref('submittedFromDate')).messages({
+  submittedFromDate: Joi.date().optional().iso().allow('').messages({
+    'date.format': 'Submitted date from must be a valid date',
+  }),
+  submittedToDate: Joi.date().optional().iso().allow('').messages({
     'date.format': 'Submitted date to must be a valid date',
-    'date.min': 'Your Submitted date to cannot be earlier than your Submitted date from',
-    'any.ref': 'Submitted date to requires a valid Submitted date from',
   }),
-  createdFromDate: Joi.date()
-    .optional()
-    .iso()
-    .allow('')
-    .messages({
-      'date.format': 'Created date from must be a valid date',
-      'any.ref': 'Created date from requires a valid Created date to',
-    })
-    .custom(checkToDate('createdToDate')),
-  createdToDate: Joi.date().optional().iso().allow('').min(Joi.ref('createdFromDate')).messages({
+  createdFromDate: Joi.date().optional().iso().allow('').messages({
+    'date.format': 'Created date from must be a valid date',
+  }),
+  createdToDate: Joi.date().optional().iso().allow('').messages({
     'date.format': 'Created date to must be a valid date',
-    'date.min': 'Your Created date to cannot be earlier than your Created date from',
-    'any.ref': 'Created date to requires a valid Created date from',
   }),
-  lastSubmittedFromDate: Joi.date()
-    .optional()
-    .iso()
-    .allow('')
-    .messages({
-      'date.format': 'Last submitted date from must be a valid date',
-      'any.ref': 'Last submitted date from requires a valid Last submitted date to',
-    })
-    .custom(checkToDate('lastSubmittedToDate')),
-  lastSubmittedToDate: Joi.date().optional().iso().allow('').min(Joi.ref('lastSubmittedFromDate')).messages({
+  lastSubmittedFromDate: Joi.date().optional().iso().allow('').messages({
+    'date.format': 'Last submitted date from must be a valid date',
+  }),
+  lastSubmittedToDate: Joi.date().optional().iso().allow('').messages({
     'date.format': 'Last submitted date to must be a valid date',
-    'date.min': 'Your Last submitted date to cannot be earlier than your Last submitted date from',
-    'any.ref': 'Last submitted date to requires a valid Last submitted date from',
   }),
 }).options({ allowUnknown: true, abortEarly: false })
 
@@ -127,21 +86,42 @@ const validateCrm14ReportParams = (params: Record<string, string>): Errors => {
     return buildValidationErrors(error)
   }
 
-  const dateRanges: Array<Array<string>> = [
-    ['Decision', params.decisionFromDate, params.decisionToDate],
-    ['Submitted', params.submittedFromDate, params.submittedToDate],
-    ['Created', params.createdFromDate, params.createdToDate],
-    ['Last submitted', params.lastSubmittedFromDate, params.lastSubmittedToDate],
+  const dateRangeFields: Array<Array<string>> = [
+    ['Decision', 'decisionFromDate', 'decisionToDate'],
+    ['Submitted', 'submittedFromDate', 'submittedToDate'],
+    ['Created', 'createdFromDate', 'createdToDate'],
+    ['Last submitted', 'lastSubmittedFromDate', 'lastSubmittedToDate'],
   ]
 
-  const errorList: Array<ErrorSummary> = dateRanges
+  const messages: Record<string, { text: string }> = {}
+
+  const errorList: Array<ErrorSummary> = dateRangeFields
     .map(dateRange => {
-      const [dateName, fromDate, toDate] = dateRange
+      const [dateName, fromDateField, toDateField] = dateRange
+      const fromDate = params[fromDateField]
+      const toDate = params[toDateField]
+
+      if (!fromDate && toDate) {
+        const errorMessage = `Enter '${dateName} date from'`
+        messages[fromDateField] = { text: errorMessage }
+        return buildErrorSummary(fromDateField, errorMessage)
+      }
+
+      if (fromDate && !toDate) {
+        const errorMessage = `Enter '${dateName} date to'`
+        messages[toDateField] = { text: errorMessage }
+        return buildErrorSummary(toDateField, errorMessage)
+      }
+
+      if (isBefore(toDate, fromDate)) {
+        const errorMessage = `Your '${dateName} date to' must be the same as or after your '${dateName} date from'`
+        messages[toDateField] = { text: errorMessage }
+        return buildErrorSummary(toDateField, errorMessage)
+      }
+
       if (differenceInDays(toDate, fromDate) > 14) {
-        return {
-          href: '#',
-          text: `${dateName} date range cannot be more than 2 weeks`,
-        } as ErrorSummary
+        const errorMessage = `${dateName} date range cannot be more than 2 weeks`
+        return buildErrorSummary('', errorMessage)
       }
       return null
     })
@@ -150,17 +130,24 @@ const validateCrm14ReportParams = (params: Record<string, string>): Errors => {
   if (errorList.length > 0) {
     return {
       list: errorList,
-      messages: {},
+      messages,
     }
   }
 
-  if (reportParamsIsEmpty(params)) {
+  if (dateParamsIsEmpty(params)) {
     return { list: [{ href: '#', text: 'Enter at least one date range' }] }
   }
   return null
 }
 
-const reportParamsIsEmpty = (params: Record<string, string>): boolean => {
+const dateParamsIsEmpty = (params: Record<string, string>): boolean => {
   // ignore crmType parameter
   return !Object.keys(params).some((key: string) => key !== 'crmType' && params[key] && params[key].length > 0)
+}
+
+const buildErrorSummary = (fieldName: string, errorMessage: string) => {
+  return {
+    href: `#${fieldName}`,
+    text: errorMessage,
+  } as ErrorSummary
 }
