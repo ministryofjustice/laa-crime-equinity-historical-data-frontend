@@ -27,13 +27,13 @@ const schema = Joi.object({
 
     const result = differenceInDays(decisionToDate, decisionFromDate)
     if (result > 31) {
-      return helpers.error('decisionDate.range')
+      return helpers.error('decisionToDate.range')
     }
     return value
   })
   .messages({
     'decisionToDate.earlier': "Your 'Decision date to' must be the same as or after your 'Decision date from'",
-    'decisionDate.range': 'Decision date range cannot be more than 1 month',
+    'decisionToDate.range': 'Decision date range cannot be more than 1 month',
   })
 
 const checkToDate = (toDateField: string) => {

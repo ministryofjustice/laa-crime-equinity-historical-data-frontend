@@ -122,21 +122,21 @@ describe('Generate Report Validation', () => {
 
   describe('valid report parameters (CRM 14)', () => {
     it.each([
-      ['Decision dates only', { crmType: 'crm14', decisionFromDate: '2024-01-01', decisionToDate: '2024-01-10' }],
-      ['Submitted dates only', { crmType: 'crm14', submittedFromDate: '2024-01-01', submittedToDate: '2024-01-10' }],
-      ['Created dates only', { crmType: 'crm14', createdFromDate: '2024-01-01', createdToDate: '2024-01-10' }],
+      ['Decision dates only', { crmType: 'crm14', decisionFromDate: '2024-01-01', decisionToDate: '2024-01-14' }],
+      ['Submitted dates only', { crmType: 'crm14', submittedFromDate: '2024-01-01', submittedToDate: '2024-01-14' }],
+      ['Created dates only', { crmType: 'crm14', createdFromDate: '2024-01-01', createdToDate: '2024-01-14' }],
       [
         'Last submitted dates only',
-        { crmType: 'crm14', lastSubmittedFromDate: '2024-01-01', lastSubmittedToDate: '2024-01-10' },
+        { crmType: 'crm14', lastSubmittedFromDate: '2024-01-01', lastSubmittedToDate: '2024-01-14' },
       ],
       [
         'with some dates specified',
         {
           crmType: 'crm14',
           decisionFromDate: '2024-01-01',
-          decisionToDate: '2024-01-10',
+          decisionToDate: '2024-01-14',
           lastSubmittedFromDate: '2024-01-01',
-          lastSubmittedToDate: '2024-01-10',
+          lastSubmittedToDate: '2024-01-14',
         },
       ],
       [
@@ -144,13 +144,13 @@ describe('Generate Report Validation', () => {
         {
           crmType: 'crm14',
           decisionFromDate: '2024-01-01',
-          decisionToDate: '2024-01-10',
+          decisionToDate: '2024-01-14',
           submittedFromDate: '2024-01-01',
-          submittedToDate: '2024-01-10',
+          submittedToDate: '2024-01-14',
           createdFromDate: '2024-01-01',
-          createdToDate: '2024-01-10',
+          createdToDate: '2024-01-14',
           lastSubmittedFromDate: '2024-01-01',
-          lastSubmittedToDate: '2024-01-10',
+          lastSubmittedToDate: '2024-01-14',
         },
       ],
     ])('should validate report parameters with %s', (name, params) => {
