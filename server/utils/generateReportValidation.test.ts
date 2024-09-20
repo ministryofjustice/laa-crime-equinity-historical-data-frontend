@@ -29,31 +29,36 @@ describe('Generate Report Validation', () => {
   describe('validation errors', () => {
     it.each([
       [
-        'CRM type must be selected',
+        'missing CRM type',
         'crmType',
         { crmType: '', decisionFromDate: '2024-01-01', decisionToDate: '2024-01-10' },
+        'CRM type must be selected',
       ],
       [
-        'Invalid CRM type specified',
+        'invalid CRM type',
         'crmType',
         { crmType: 'xxx', decisionFromDate: '2024-01-01', decisionToDate: '2024-01-10' },
+        'Invalid CRM type specified',
       ],
       [
-        "Enter 'Decision date from'",
+        'missing Decision date from',
         'decisionFromDate',
         { crmType: 'crm4', decisionFromDate: '', decisionToDate: '2024-01-10' },
+        "Enter 'Decision date from'",
       ],
       [
-        "Enter 'Decision date to'",
+        'missing Decision date to',
         'decisionToDate',
         { crmType: 'crm4', decisionFromDate: '2024-01-01', decisionToDate: '' },
+        "Enter 'Decision date to'",
       ],
       [
-        "Your 'Decision date to' must be the same as or after your 'Decision date from'",
+        'earlier Decision date to',
         'decisionToDate',
         { crmType: 'crm4', decisionFromDate: '2024-01-01', decisionToDate: '2023-12-01' },
+        "Your 'Decision date to' must be the same as or after your 'Decision date from'",
       ],
-    ])('should return %s error', (error: string, field, params) => {
+    ])('should return error for %s', (reason: string, field, params, error) => {
       const result = validateReportParams(params)
 
       expect(result).toEqual({
@@ -248,22 +253,26 @@ describe('Generate Report Validation', () => {
 
     it.each([
       [
-        'Decision date range cannot be more than 2 weeks',
+        'invalid Decision date range',
         { crmType: 'crm14', decisionFromDate: '2024-01-01', decisionToDate: '2024-04-01' },
+        'Decision date range cannot be more than 2 weeks',
       ],
       [
-        'Submitted date range cannot be more than 2 weeks',
+        'invalid Submitted date range',
         { crmType: 'crm14', submittedFromDate: '2024-01-01', submittedToDate: '2024-04-01' },
+        'Submitted date range cannot be more than 2 weeks',
       ],
       [
-        'Created date range cannot be more than 2 weeks',
+        'invalid Created date range',
         { crmType: 'crm14', createdFromDate: '2024-01-01', createdToDate: '2024-04-01' },
+        'Created date range cannot be more than 2 weeks',
       ],
       [
-        'Last submitted date range cannot be more than 2 weeks',
+        'invalid Last submitted date range',
         { crmType: 'crm14', lastSubmittedFromDate: '2024-01-01', lastSubmittedToDate: '2024-04-01' },
+        'Last submitted date range cannot be more than 2 weeks',
       ],
-    ])('should return error for %s', (error, params) => {
+    ])('should return error for %s', (reason, params, error) => {
       const result = validateReportParams(params)
       expect(result).toEqual({
         list: [
@@ -273,6 +282,33 @@ describe('Generate Report Validation', () => {
           },
         ],
         messages: {},
+      })
+    })
+
+    it('should return multiple errors', () => {
+      const reportParams: Record<string, string> = {
+        crmType: 'crm14',
+        decisionFromDate: '5555-55-55',
+        decisionToDate: '5555-55-55',
+        submittedFromDate: '5555-55-55',
+        submittedToDate: '5555-55-55',
+      }
+
+      const result = validateReportParams(reportParams)
+
+      expect(result).toEqual({
+        list: [
+          { href: '#decisionFromDate', text: 'Decision date from must be a valid date' },
+          { href: '#decisionToDate', text: 'Decision date to must be a valid date' },
+          { href: '#submittedFromDate', text: 'Submitted date from must be a valid date' },
+          { href: '#submittedToDate', text: 'Submitted date to must be a valid date' },
+        ],
+        messages: {
+          decisionFromDate: { text: 'Decision date from must be a valid date' },
+          decisionToDate: { text: 'Decision date to must be a valid date' },
+          submittedFromDate: { text: 'Submitted date from must be a valid date' },
+          submittedToDate: { text: 'Submitted date to must be a valid date' },
+        },
       })
     })
   })
