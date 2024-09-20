@@ -15,7 +15,7 @@
     {# Quality Control Section #}
     {% set fieldsQualityControl = [
         { label: "Decision", value: decisionOptions[data.QualityControl.decision] },
-        { label: "Reason Details", value: data.QualityControl.decisionReason }
+        { label: "Reason details", value: data.QualityControl.decisionReason }
     ] %}
     {{ formSubsection('Quality Control', fieldsQualityControl) }}
 
@@ -23,8 +23,8 @@
     {% set tablePreparation = {
         head: [
             { text: "" },
-            { text: "Preparation Hours" },
-            { text: "Hourly Rate" },
+            { text: "Preparation hours" },
+            { text: "Hourly rate" },
             { text: "Total" }
         ],
         rows: [
@@ -49,8 +49,8 @@
         head: [
             { text: "" },
             { text: "No. of Words" },
-            { text: "Cost Per 1000 Words" },
-            { text: "Total Cost of Translation" }
+            { text: "Cost per 1000 words" },
+            { text: "Total cost of translation" }
         ],
         rows: [
             [
@@ -71,44 +71,28 @@
 
     {# Additional Expenditure Section #}
 
-        {% set tableAdditionalExpenditure = {
-            head: [
-                { text: "Description" },
-                { text: "Justification" },
-                { text: "Quantity" },
-                { text: "Rate" },
-                { text: "Total" },
-                { text: "Allowed Qty" },
-                { text: "Allowed Rate" },
-                { text: "Total" }
-            ],
-            rows: []
-        } %}
-
-        {% for item in data.AdditionalExpenditure %}
-            {% set tableRow = [
-                { text: item.description },
-                { text: item.justification },
-                { text: item.quantity },
-                { text: item.rate | formatCurrency },
-                { text: item.total | formatCurrency },
-                { text: item.authorisedQuantity },
-                { text: item.authorisedRate | formatCurrency },
-                { text: item.authorisedTotal | formatCurrency }
-            ] %}
-            {% set _ = tableAdditionalExpenditure.rows.push(tableRow) %}
-        {% endfor %}
-
-        {{ formSubsection('Additional Expenditure', tableAdditionalExpenditure, true) }}
+    {% for item in data.AdditionalExpenditure %}
+        {% set fields = [
+            { label: "Description", value: item.description },
+            { label: "Justification", value: item.justification },
+            { label: "Quantity", value: item.quantity },
+            { label: "Rate", value: item.rate | formatCurrency },
+            { label: "Total", value: item.total | formatCurrency },
+            { label: "Allowed quantity", value: item.authorisedQuantity },
+            { label: "Allowed rate", value: item.authorisedRate | formatCurrency },
+            { label: "Allowed total", value: item.authorisedTotal | formatCurrency }
+        ] %}
+        {{ formSubsection('Additional Expenditure', fields) }}
+    {% endfor %}
 
 
     {# Travel Section #}
     {% set tableTravel = {
         head: [
             { text: "" },
-            { text: "No. of Hours" },
-            { text: "Hourly Rate" },
-            { text: "Total cost of Travel" }
+            { text: "No. of hours" },
+            { text: "Hourly rate" },
+            { text: "Total cost of travel" }
         ],
         rows: [
             [
@@ -129,24 +113,19 @@
 
     {# DNA Report Section #}
     {% if data.DnaReport %}
-        {% set tableDnaReport = {
-            head: [
-                { text: "Requested DNA Cost" },
-                { text: "Authorised DNA Cost" }
-            ],
-            rows: [
-                [
-                    { text: data.DnaReport.requested.dnaCost | formatCurrency },
-                    { text: data.DnaReport.authorised.dnaCost | formatCurrency }
-                ]
-            ]
-        } %}
-        {{ formSubsection('DNA Report', tableDnaReport, true) }}
+        {% set fieldsDnaReport = [
+            { label: "Requested", value: data.DnaReport.requested.dnaCost | formatCurrency },
+            { label: "Allowed", value: data.DnaReport.authorised.dnaCost | formatCurrency }
+        ] %}
+
+        {% set columnHeader = "Total cost of DNA Test" %}
+
+        {{ formSubsection('DNA Report', fieldsDnaReport, false, "", columnHeader) }}
     {% endif %}
 
-    {# Accommodation Section #}
+{#     Accommodation Section #}
     {% set fieldsAccommodation = [
-        { label: "Accommodation Cost Basis", value: data.Accommodation.costBasis }
+        { label: "Accommodation cost basis", value: data.Accommodation.costBasis }
     ] %}
     {{ formSubsection('Accommodation', fieldsAccommodation) }}
 
@@ -154,9 +133,9 @@
     {% set tableTranscription = {
         head: [
             { text: "" },
-            { text: "Number of Minutes" },
-            { text: "Cost Per Minute" },
-            { text: "Total Cost" }
+            { text: "Number of minutes" },
+            { text: "Cost per minute" },
+            { text: "Total cost" }
         ],
         rows: [
             [
@@ -179,9 +158,9 @@
     {% set tablePhotocopying = {
         head: [
             { text: "" },
-            { text: "Number of Pages" },
-            { text: "Cost Per Page" },
-            { text: "Total Cost" }
+            { text: "Number of pages" },
+            { text: "Cost per page" },
+            { text: "Total cost" }
         ],
         rows: [
             [
@@ -202,9 +181,9 @@
 
     {# Authority Section #}
     {% set fieldsAuthority = [
-        { label: "Amount Allowed", value: data.Authority.allowedAmount | formatCurrency },
+        { label: "Amount allowed", value: data.Authority.allowedAmount | formatCurrency },
         { label: "Destruction date", value: data.Authority.destructionDate | formatDate },
-        { label: "Signed Authority", value: data.Authority.signedAuth }
+        { label: "Signed authority", value: data.Authority.signedAuth }
     ] %}
     {{ formSubsection('Authority', fieldsAuthority) }}
 
@@ -214,10 +193,10 @@
             head: [
                 { text: "USN" },
                 { text: "Form Type" },
-                { text: "Date Submitted" },
+                { text: "Date submitted" },
                 { text: "State" },
                 { text: "Decision" },
-                { text: "Client Name" }
+                { text: "Client name" }
             ],
             rows: []
         } %}

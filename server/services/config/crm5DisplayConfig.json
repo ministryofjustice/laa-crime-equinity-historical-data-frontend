@@ -397,11 +397,11 @@
           "title": "Advice and Assistance",
           "fields": [
             {
-              "label": "Has your client received Advice & Assistance for this same matter from another solicitor within the six months preceding this application?",
+              "label": "Has your client received advice & assistance for this same matter from another solicitor within the six months preceding this application?",
               "apiField": "AdviceAssistance.transferFromSolicitor"
             },
             {
-              "label": "As you have indicated \"Yes\", please specify which of the following criteria enables your firm to offer further Advice & Assistance on this matter within the 6 month period:",
+              "label": "As you have indicated \"Yes\", please specify which of the following criteria enables your firm to offer further advice & assistance on this matter within the 6 month period:",
               "apiField": "AdviceAssistance.adviceCriteria"
             }
           ]
@@ -410,7 +410,7 @@
           "title": "LAA Advice and Assistance",
           "fields": [
             {
-              "label": "Have you provided Advice and Assistance to a client who has already received it on the same matter within the last six months. Unified Contract (Crime) Specification Parts B 3.1.11, B 4.1.7 or B 4.2.8?",
+              "label": "Have you provided advice and assistance to a client who has already received it on the same matter within the last six months. Unified Contract (Crime) Specification Parts B 3.1.11, B 4.1.7 or B 4.2.8?",
               "apiField": "AdviceAssistance.laaAdviceAssistance.providedAdvice"
             },
             {
@@ -435,7 +435,7 @@
           "title": "Solicitor's Declaration",
           "fields": [
             {
-              "subHeading": "I confirm that my client has completed and signed the CRM2 Application for Advice and Assistance. I also confirm that the CRM2 Application shall be retained on file and submitted as per usual with the final bill or upon request by the Legal Aid Agency."
+              "subHeading": "I confirm that my client has completed and signed the CRM2 Application for Advice and Assistance. I also confirm that the CRM2 application shall be retained on file and submitted as per usual with the final bill or upon request by the Legal Aid Agency."
             },
             {
               "label": "Name",

@@ -12,7 +12,7 @@
               "apiField": "greaterValue"
             },
             {
-              "label": "Is your application in relation to a Post Mortem examination?",
+              "label": "Is your application in relation to a post-mortem examination?",
               "apiField": "postMortemExamination"
             }
           ]
