@@ -2,7 +2,7 @@
 {% from "./formFieldList.njk" import formFieldList %}
 {% from "./formTable.njk" import formTable %}
 
-{% macro formSubsection(title, data, isTableData = false, tableClass = "") %}
+{% macro formSubsection(title, data, isTableData = false, tableClass = "", columnHeader = null) %}
 
     {% if isTableData %}
         {% if data.rows.length > 0 %} {# render non-empty section #}
@@ -30,6 +30,20 @@
                     <h3 class="govuk-summary-card__title">{{ title }}</h3>
                 </div>
                 <div class="govuk-summary-card__content">
+                    {% if columnHeader %}
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row govuk-grid-row ">
+                            <div class="govuk-grid-column-one-half govuk-custom-no-padding-left-desktop">
+                                <dt class="govuk-summary-list__key"> </dt>
+                            </div>
+                            <div class="govuk-grid-column-one-half">
+                                <dd class="govuk-summary-list__value">
+                                    <strong>{{ columnHeader }}</strong>
+                                </dd>
+                            </div>
+                        </div>
+                    </dl>
+                    {% endif %}
                     {{ formFieldList(data) }}
                 </div>
             </div>
