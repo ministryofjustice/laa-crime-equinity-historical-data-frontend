@@ -13,7 +13,7 @@
             },
             {
               "label": "Case Worker: RBBA Assessment Category",
-              "apiField": "solicitorDetails.categoryCaseWorker"
+              "apiField": "claimProperties.categoryCaseWorker"
             }
           ]
         }
