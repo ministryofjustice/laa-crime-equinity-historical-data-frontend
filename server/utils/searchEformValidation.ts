@@ -22,12 +22,39 @@ const schema = Joi.object({
     'date.format': 'Client date of birth must be a valid date',
     'date.max': 'Client date of birth must be a valid date',
   }),
-  startDate: Joi.date().iso().optional().allow('').messages({
-    'date.format': 'Submission date from must be a valid date',
-  }),
-  endDate: Joi.date().iso().optional().allow('').messages({
-    'date.format': 'Submission date to must be a valid date',
-  }),
+  startDate: Joi.date()
+    .iso()
+    .optional()
+    .allow('')
+    .messages({
+      'date.format': 'Submission date from must be a valid date',
+    })
+    .custom((value, helpers) => {
+      if (!helpers.state.ancestors[0].endDate) {
+        return helpers.error('endDate.missing', undefined, { path: ['endDate'] })
+      }
+
+      return value
+    }),
+  endDate: Joi.date()
+    .iso()
+    .optional()
+    .allow('')
+    .messages({
+      'date.format': 'Submission date to must be a valid date',
+    })
+    .custom((value, helpers) => {
+      const { startDate } = helpers.state.ancestors[0]
+      if (!startDate) {
+        return helpers.error('startDate.missing', undefined, { path: ['startDate'] })
+      }
+
+      if (isBefore(value, startDate)) {
+        return helpers.error('endDate.earlier', undefined, { path: ['endDate'] })
+      }
+
+      return value
+    }),
   page: Joi.number()
     .min(1)
     .optional()
@@ -35,22 +62,6 @@ const schema = Joi.object({
     .messages({ 'number.min': 'Invalid page specified', 'number.base': 'Invalid page specified' }),
 })
   .options({ allowUnknown: true, abortEarly: false })
-  .custom((value, helpers) => {
-    const { startDate, endDate } = value
-    if (!startDate && endDate) {
-      return helpers.error('startDate.missing', undefined, { path: ['startDate'] })
-    }
-
-    if (startDate && !endDate) {
-      return helpers.error('endDate.missing', undefined, { path: ['endDate'] })
-    }
-
-    if (isBefore(endDate, startDate)) {
-      return helpers.error('endDate.earlier', undefined, { path: ['endDate'] })
-    }
-
-    return value
-  })
   .messages({
     'startDate.missing': "Enter 'Submission date from'",
     'endDate.missing': "Enter 'Submission date to'",
