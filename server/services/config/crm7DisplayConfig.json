@@ -1,6 +1,25 @@
 {
   "sections": [
     {
+      "sectionId": "claim-properties",
+      "title": "Claim Properties",
+      "subsections": [
+        {
+          "title": "Claim Properties",
+          "fields": [
+            {
+              "label": "RBBA Assessment Category",
+              "apiField": "claimProperties.category"
+            },
+            {
+              "label": "Case Worker: RBBA Assessment Category",
+              "apiField": "solicitorDetails.categoryCaseWorker"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "sectionId": "summary-of-claim",
       "title": "Summary of Claim",
       "subsections": [
