@@ -4,6 +4,13 @@ export interface Crm4Response extends CrmResponse {
   formDetails: {
     greaterValue: boolean
     postMortemExamination: string
+    StandardProperties?: {
+      usn: number
+      dateReceived: string
+      timeReceived: string
+      region: string
+      office: string
+    }
     CaseDetails?: {
       isPOCA: string
       Firm: {
