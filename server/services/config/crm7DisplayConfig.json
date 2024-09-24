@@ -280,9 +280,6 @@
               "apiField": "caseDetails.indictmentAttachment"
             },
             {
-              "subHeading": "Please submit the indictment with this claim. Please indicate whether you will attach it electronically or if you are submitting it by Post / DX."
-            },
-            {
               "label": "Were any wasted costs orders made in this case?",
               "apiField": "caseDetails.isWastedCostsCase"
             },

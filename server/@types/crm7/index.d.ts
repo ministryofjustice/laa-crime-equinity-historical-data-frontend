@@ -77,6 +77,7 @@ export interface Crm7Response extends CrmResponse {
       isSeriousFraudCase: string
       isIndictableOnlyOffenceCharge: string
       dateChargeLaid: string
+      indictmentAttachment: string
       isWastedCostsCase: string
       wastedCosts: number
       orderDetails: string
