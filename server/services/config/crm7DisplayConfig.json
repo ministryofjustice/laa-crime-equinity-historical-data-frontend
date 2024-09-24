@@ -68,20 +68,20 @@
           "title": "Summary of Claim",
           "fields": [
             {
-              "label": "Client Surname",
+              "label": "Client surname",
               "apiField": "summary.clientSurname"
             },
             {
-              "label": "Client First Name",
+              "label": "Client first name",
               "apiField": "summary.clientFirstName"
             },
             {
-              "label": "Client Date of Birth",
+              "label": "Client date of birth",
               "apiField": "summary.clientDateOfBirth",
               "type": "date"
             },
             {
-              "label": "Unique File Number (UFN)",
+              "label": "Unique file number (UFN)",
               "apiField": "summary.ufn"
             },
             {
@@ -89,11 +89,11 @@
               "apiField": "summary.maatNumber"
             },
             {
-              "label": "Rep Order No.",
+              "label": "Rep order no.",
               "apiField": "summary.representationOrderNumber"
             },
             {
-              "label": "Rep Order Date",
+              "label": "Rep order date",
               "apiField": "summary.representationOrderDate",
               "type": "date"
             },
@@ -110,11 +110,11 @@
               "apiField": "summary.stateReached"
             },
             {
-              "label": "Outcome Code",
+              "label": "Outcome code",
               "apiField": "summary.outcomeCode"
             },
             {
-              "label": "Matter Type",
+              "label": "Matter type",
               "apiField": "summary.matterType"
             }
           ]
@@ -123,15 +123,15 @@
           "title": "Equal Opportunities",
           "fields": [
             {
-              "label": "Equal Opportunities Monitoring 1",
+              "label": "Equal opportunities monitoring 1",
               "apiField": "summary.equalOpportunities.monitoring1"
             },
             {
-              "label": "Equal Opportunities Monitoring 2",
+              "label": "Equal opportunities monitoring 2",
               "apiField": "summary.equalOpportunities.monitoring2"
             },
             {
-              "label": "Equal Opportunities Monitoring 3",
+              "label": "Equal opportunities monitoring 3",
               "apiField": "summary.equalOpportunities.monitoring3"
             },
             {
@@ -148,11 +148,11 @@
               "apiField": "summary.equalOpportunities.numberCourtAttendances"
             },
             {
-              "label": "Court Identifier",
+              "label": "Court identifier",
               "apiField": "summary.equalOpportunities.courtIdentifier"
             },
             {
-              "label": "Youth Court",
+              "label": "Youth court",
               "apiField": "summary.equalOpportunities.isYouthCourt"
             }
           ]
@@ -160,6 +160,9 @@
         {
           "title": "Office Use Only",
           "fields": [
+            {
+              "subHeading": "Caseworker Alert - Please correct the code if entered incorrectly"
+            },
             {
               "label": "Is your office and/or the court in which the case was heard located in a Designated Area?",
               "apiField": "summary.officeUse.isLocatedInDesignatedArea"
@@ -169,11 +172,11 @@
               "apiField": "summary.officeUse.stateReached"
             },
             {
-              "label": "Equal Opportunities Code",
+              "label": "Equal opportunities code",
               "apiField": "summary.officeUse.equalOpportunitiesCode"
             },
             {
-              "label": "Profit Costs",
+              "label": "Profit costs",
               "apiField": "summary.officeUse.profitCost",
               "type": "currency"
             },
@@ -183,12 +186,12 @@
               "type": "currency"
             },
             {
-              "label": "Travel Cost",
+              "label": "Travel cost",
               "apiField": "summary.officeUse.travelCost",
               "type": "currency"
             },
             {
-              "label": "Waiting Cost",
+              "label": "Waiting cost",
               "apiField": "summary.officeUse.waitingCost",
               "type": "currency"
             }
