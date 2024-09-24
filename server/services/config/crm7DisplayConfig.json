@@ -72,7 +72,7 @@
               "apiField": "summary.clientSurname"
             },
             {
-              "label": "Client firstname",
+              "label": "Client first name",
               "apiField": "summary.clientFirstName"
             },
             {
