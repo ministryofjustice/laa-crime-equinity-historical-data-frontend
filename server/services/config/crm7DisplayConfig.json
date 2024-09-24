@@ -9,33 +9,33 @@
           "fields": [
             {
               "label": "USN",
-              "apiField": "standardProperties.usn"
+              "apiField": "StandardProperties.usn"
             },
             {
               "label": "Date Received",
-              "apiField": "standardProperties.dateReceived",
+              "apiField": "StandardProperties.dateReceived",
               "type": "date"
             },
             {
               "label": "Time Received",
-              "apiField": "standardProperties.timeReceived",
+              "apiField": "StandardProperties.timeReceived",
               "type": "time"
             },
             {
               "label": "Submitter User ID",
-              "apiField": "standardProperties.submitterUserId"
+              "apiField": "StandardProperties.submitterUserId"
             },
             {
               "label": "Submitter Language",
-              "apiField": "standardProperties.language"
+              "apiField": "StandardProperties.language"
             },
             {
               "label": "Region",
-              "apiField": "standardProperties.region"
+              "apiField": "StandardProperties.region"
             },
             {
               "label": "Office",
-              "apiField": "standardProperties.office"
+              "apiField": "StandardProperties.office"
             }
           ]
         }
