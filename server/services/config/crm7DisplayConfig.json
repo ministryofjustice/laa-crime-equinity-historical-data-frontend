@@ -247,11 +247,14 @@
           "title": "Case Details",
           "fields": [
             {
+              "subHeading": "Please enter the USN of the rejected form"
+            },
+            {
               "label": "URN",
               "apiField": "caseDetails.urn"
             },
             {
-              "label": "Main Offence",
+              "label": "Main offence",
               "apiField": "caseDetails.mainOffence"
             },
             {
@@ -260,11 +263,11 @@
               "type": "date"
             },
             {
-              "label": "Is this a Serious Fraud Case or are there elements of Serious Fraud?",
+              "label": "Is this a serious fraud case or are there elements of serious fraud?",
               "apiField": "caseDetails.isSeriousFraudCase"
             },
             {
-              "label": "Was the defendant or any co-defendant charged with any Indictable Only offence?",
+              "label": "Was the defendant or any co-defendant charged with any indictable only offence?",
               "apiField": "caseDetails.isIndictableOnlyOffenceCharge"
             },
             {
@@ -277,6 +280,9 @@
               "apiField": "caseDetails.indictmentAttachment"
             },
             {
+              "subHeading": "Please submit the indictment with this claim. Please indicate whether you will attach it electronically or if you are submitting it by Post / DX."
+            },
+            {
               "label": "Were any wasted costs orders made in this case?",
               "apiField": "caseDetails.isWastedCostsCase"
             },
@@ -285,7 +291,7 @@
               "apiField": "caseDetails.wastedCosts"
             },
             {
-              "label": "Please provide details of the Order",
+              "label": "Please provide details of the order",
               "apiField": "caseDetails.orderDetails"
             }
           ]
