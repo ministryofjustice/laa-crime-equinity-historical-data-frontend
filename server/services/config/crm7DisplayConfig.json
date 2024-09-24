@@ -161,6 +161,9 @@
           "title": "Office Use Only",
           "fields": [
             {
+              "subHeading": "Caseworker Alert - Please correct the code if entered incorrectly"
+            },
+            {
               "label": "Is your office and/or the court in which the case was heard located in a Designated Area?",
               "apiField": "summary.officeUse.isLocatedInDesignatedArea"
             },
