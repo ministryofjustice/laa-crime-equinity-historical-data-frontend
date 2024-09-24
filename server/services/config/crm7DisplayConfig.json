@@ -1,6 +1,47 @@
 {
   "sections": [
     {
+      "sectionId": "standard-properties",
+      "title": "Standard Properties",
+      "subsections": [
+        {
+          "title": "Standard Properties",
+          "fields": [
+            {
+              "label": "USN",
+              "apiField": "StandardProperties.usn"
+            },
+            {
+              "label": "Date Received",
+              "apiField": "StandardProperties.dateReceived",
+              "type": "date"
+            },
+            {
+              "label": "Time Received",
+              "apiField": "StandardProperties.timeReceived",
+              "type": "time"
+            },
+            {
+              "label": "Submitter User ID",
+              "apiField": "StandardProperties.submitterUserId"
+            },
+            {
+              "label": "Submitter Language",
+              "apiField": "StandardProperties.language"
+            },
+            {
+              "label": "Region",
+              "apiField": "StandardProperties.region"
+            },
+            {
+              "label": "Office",
+              "apiField": "StandardProperties.office"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "sectionId": "claim-properties",
       "title": "Claim Properties",
       "subsections": [

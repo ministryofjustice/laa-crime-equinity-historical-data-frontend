@@ -16,6 +16,15 @@ type NumberRateAndCost = {
 export interface Crm7Response extends CrmResponse {
   formDetails: {
     usn: number
+    StandardProperties?: {
+      usn: number
+      dateReceived: string
+      timeReceived: string
+      submitterUserId: string
+      language: string
+      region: string
+      office: string
+    }
     claimProperties?: {
       category: string
       categoryCaseWorker: string
