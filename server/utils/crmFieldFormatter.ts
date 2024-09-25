@@ -7,21 +7,34 @@ const currencyFormat = new Intl.NumberFormat('en-GB', {
 
 export const formatCurrency = (value: string): string => {
   const number = Number(value)
-  if (Number.isNaN(number)) return value
+  if (Number.isNaN(number)) {
+    return value
+  }
   return currencyFormat.format(number)
 }
 
 export const formatDate = (value: string, dateFormat?: string): string => {
   const date = Date.parse(value)
-  if (Number.isNaN(date)) return value
-  if (dateFormat) return format(date, dateFormat)
+  if (Number.isNaN(date)) {
+    return value
+  }
+  if (dateFormat) {
+    return format(date, dateFormat)
+  }
 
   return format(date, 'd MMMM yyyy')
 }
 
-export const formatTime = (value: string): string => {
+export const formatTime = (value: string, dateFormat?: string): string => {
   const timeAsDate = Date.parse(`${new Date().toDateString()} ${value}`)
-  if (Number.isNaN(timeAsDate)) return value
+  if (Number.isNaN(timeAsDate)) {
+    return value
+  }
+
+  if (dateFormat) {
+    return format(timeAsDate, dateFormat)
+  }
+
   const formattedTime = format(timeAsDate, 'HH:mm')
   const [hours, minutes] = formattedTime.split(':')
   return `${hours} hrs ${minutes} mins`
