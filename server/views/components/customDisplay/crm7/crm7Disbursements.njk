@@ -12,7 +12,7 @@
             { text: "VAT Rate" },
             { text: "VAT" },
             { text: "Total" },
-            { text: "Official use only" }
+            { text: "Office use only" }
         ],
         rows: []
     } %}
@@ -23,10 +23,10 @@
             { text: item.details | safe, attributes: { 'data-header': 'Details' } },
             { text: item.miles | safe, attributes: { 'data-header': 'Miles' } },
             { text: item.netValue | safe | formatCurrency, attributes: { 'data-header': 'Net' } },
-            { text: item.vatRate | safe, attributes: { 'data-header': 'VAT Rate' } },
+            { text: item.vatRate | safe | formatPercentage, attributes: { 'data-header': 'VAT Rate' } },
             { text: item.vatValue | safe | formatCurrency, attributes: { 'data-header': 'VAT' } },
             { text: item.total | safe | formatCurrency, attributes: { 'data-header': 'Total' } },
-            { text: item.officialUseOnly | safe | formatCurrency, attributes: { 'data-header': 'Official use only' } }
+            { text: item.officeUseOnly | safe | formatCurrency, attributes: { 'data-header': 'Office use only' } }
         ] -%}
         {% set list = tableData.rows.push(tableRow) %}
     {% endfor %}
@@ -35,20 +35,20 @@
 
     {# Render "Disbursements Total" subsection #}
     {% set fields = [
-        { label: "Total Net", value: data.totals.net | formatCurrency},
-        { label: "Total VAT", value: data.totals.vat | formatCurrency},
-        { label: "Grand Total", value: data.totals.total | formatCurrency}
-
+        { label: "Total Net", value: data.totals.net | formatCurrency },
+        { label: "Total VAT", value: data.totals.vat | formatCurrency },
+        { label: "Grand Total", value: data.totals.total | formatCurrency },
+        { label: "A voucher / invoice is required for all disbursements of £20 and above. Please indicate whether you will attach your disbursement voucher(s) electronically or if you are submitting by Post / DX.", value: data.invoiceAttachments }
     ] %}
     {{ formSubsection('Disbursements Total', fields) }}
 
 
     {# Render "Office Use Only" subsection #}
     {% set fields = [
-        { label: "Total Net", value: data.officeUse.net | formatCurrency},
-        { label: "Total VAT", value: data.officeUse.vat | formatCurrency},
-        { label: "Grand Total", value: data.officeUse.total | formatCurrency}
+        { label: "Total Net", value: data.officeUse.net | formatCurrency },
+        { label: "Total VAT", value: data.officeUse.vat | formatCurrency },
+        { label: "Grand Total", value: data.officeUse.total | formatCurrency }
     ] %}
-    {{ formSubsection('Office Use', fields) }}
+    {{ formSubsection('Office Use Only', fields) }}
 
 {% endmacro %}
