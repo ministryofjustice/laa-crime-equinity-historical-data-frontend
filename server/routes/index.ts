@@ -17,6 +17,7 @@ export default function routes({
   downloadEvidenceController,
   generateReportController,
   homeController,
+  staticPageController,
 }: Controllers): Router {
   const router = Router()
 
@@ -81,6 +82,8 @@ export default function routes({
   post('/generate-report', generateReportController.submit(), checkReportingAllowed)
 
   get('/download-evidence', downloadEvidenceController.download())
+
+  get('/cookies', staticPageController.showCookies())
 
   return router
 }

@@ -427,4 +427,17 @@ describe('routes', () => {
         })
     })
   })
+  describe('GET /cookies', () => {
+    it('should render cookies page', () => {
+      return request(app)
+        .get('/cookies')
+        .expect('Content-Type', /html/)
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toContain('Cookies')
+          expect(res.text).toContain('Essential cookies')
+          expect(res.text).toContain('session_cookie')
+        })
+    })
+  })
 })
