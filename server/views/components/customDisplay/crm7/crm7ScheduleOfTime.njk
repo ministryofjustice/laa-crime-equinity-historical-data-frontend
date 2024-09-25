@@ -26,7 +26,7 @@
             { text: item.feeEarnerInitials },
             { text: item.date },
             { text: item.costType },
-            { text: item.time },
+            { text: item.time | formatTime('HH:mm') },
             { text: item.hearingTypeCode },
             { text: item.personAttendedCode },
             { text: item.hourlyRate | formatCurrency },
@@ -38,6 +38,35 @@
     {% endfor %}
 
     {{ formSubsection('Schedule Of Time Spent', scheduleData, true) }}
+
+    {# Render "LAA Adjustments" subsection #}
+    {% set laaAdjustmentsData = {
+        head: [
+            { text: "Line" },
+            { text: "Time" },
+            { text: "Rate" },
+            { text: "Basic Claim" },
+            { text: "Uplift %" },
+            { text: "Claim" },
+            { text: "Comments" }
+        ],
+        rows: []
+    } %}
+
+    {% for item in data.laaAdjustments %}
+        {% set row = [
+            { text: item.line },
+            { text: item.time | formatTime('HH:mm') },
+            { text: item.hourlyRate | formatCurrency },
+            { text: item.basicClaim | formatCurrency },
+            { text: item.uplift | formatPercentage },
+            { text: item.claim | formatCurrency },
+            { text: item.comments }
+        ] %}
+        {% set _ = laaAdjustmentsData.rows.push(row) %}
+    {% endfor %}
+
+    {{ formSubsection('LAA Adjustments', laaAdjustmentsData, true) }}
 
     {# Render "Time Totals" subsection #}
     {% set timeTotalsData = {
