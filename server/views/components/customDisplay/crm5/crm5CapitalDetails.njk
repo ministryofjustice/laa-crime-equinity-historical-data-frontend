@@ -11,7 +11,7 @@
             <dl class="govuk-summary-list">
                 {{ formField({ label: "Is your client under 18 years old?", value: data.isUnder18 }) }}
 
-                {% if data.isUnder18 === "No" %}
+                {% if (not data.isUnder18) or (data.isUnder18 === "No") %}
                     {{ formField({ label: "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance or Guarantee State Pension Credit?", value: data.hasIncomeSupport } ) }}
                     {{ formField({ label: "How many dependants does your client have?", value: data.numOfDependants }) }}
 
