@@ -26,7 +26,7 @@
             { text: item.vatRate | safe | formatPercentage, attributes: { 'data-header': 'VAT Rate' } },
             { text: item.vatValue | safe | formatCurrency, attributes: { 'data-header': 'VAT' } },
             { text: item.total | safe | formatCurrency, attributes: { 'data-header': 'Total' } },
-            { text: item.officeUseOnly | safe | formatCurrency, attributes: { 'data-header': 'Office use only' } }
+            { text: item.officeUse | safe, attributes: { 'data-header': 'Office use only' } }
         ] -%}
         {% set list = tableData.rows.push(tableRow) %}
     {% endfor %}

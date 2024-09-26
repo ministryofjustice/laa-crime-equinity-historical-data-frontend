@@ -229,6 +229,7 @@ export interface Crm7Response extends CrmResponse {
           vatRate: number
           vatValue: number
           total: number
+          officeUse: string
         },
       ]
       totals: NetVatAndTotal
