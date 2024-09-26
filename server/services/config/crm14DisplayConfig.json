@@ -152,7 +152,7 @@
               "apiField": "aboutYouPart1.aboutYou.applicationRegistrationCard"
             },
             {
-              "label": "Do you require all correspondence concerning your Application to be in Welsh?",
+              "label": "Do you require all correspondence concerning your application to be in Welsh?",
               "apiField": "aboutYouPart1.aboutYou.welshCorrespondence"
             }
           ]
