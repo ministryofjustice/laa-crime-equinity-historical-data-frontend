@@ -19,7 +19,7 @@ export default class SearchEformController {
     return async (req: Request, res: Response): Promise<void> => {
       const backUrl = manageBackLink(req, CURRENT_URL)
 
-      if (!req.query.page || req.query.fromBack) {
+      if (!req.query.page) {
         const searchResults = req.session.searchResults || []
         const formValues = req.session.formValues || {}
         const { paging } = req.session // Retrieve pagination data
