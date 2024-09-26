@@ -20,7 +20,7 @@ export default class Crm7Controller {
       const sections = this.crmDisplayService.getSections('crm7', sectionId, crm7Response)
 
       const currentUrl = sectionId ? `/crm7/${usn}/${sectionId}` : navigation.items[0].href
-      const backUrl = manageBackLink(req, currentUrl)
+      const backUrl = manageBackLink(currentUrl)
 
       res.render('pages/crmDetails', {
         title: 'Non-Standard Fee Contract Work Assessment Form',

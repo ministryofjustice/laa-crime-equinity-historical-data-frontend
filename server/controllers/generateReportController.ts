@@ -14,7 +14,7 @@ export default class GenerateReportController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      const backUrl = manageBackLink(req, CURRENT_URL)
+      const backUrl = manageBackLink(CURRENT_URL)
       res.render(VIEW_PATH, {
         backUrl,
       })
@@ -42,7 +42,7 @@ export default class GenerateReportController {
           results: [],
           errors: validationErrors,
           formValues: reportParams,
-          backUrl: manageBackLink(req, CURRENT_URL),
+          backUrl: manageBackLink(CURRENT_URL),
         })
       } else {
         // perform generate report
@@ -57,7 +57,7 @@ export default class GenerateReportController {
             results: [],
             errors,
             formValues: reportParams,
-            backUrl: manageBackLink(req, CURRENT_URL),
+            backUrl: manageBackLink(CURRENT_URL),
           })
         } else {
           res.setHeader('Content-Type', 'text/csv')

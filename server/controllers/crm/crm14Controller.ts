@@ -20,7 +20,7 @@ export default class Crm14Controller {
       const sections = this.crmDisplayService.getSections('crm14', sectionId, crm14Response)
 
       const currentUrl = sectionId ? `/crm14/${usn}/${sectionId}` : navigation.items[0].href
-      const backUrl = manageBackLink(req, currentUrl)
+      const backUrl = manageBackLink(currentUrl)
 
       res.render('pages/crmDetails', {
         title: 'Application for Legal Aid in Criminal Proceedings',
