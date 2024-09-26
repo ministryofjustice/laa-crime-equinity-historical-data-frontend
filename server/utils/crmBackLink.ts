@@ -1,6 +1,6 @@
 import { Request } from 'express'
 
-function manageBackLink(req: Request, currentUrl: string): string {
+function manageBackLink(currentUrl: string): string {
   if (currentUrl.includes('/crm')) {
     return '/search-eform'
   }
