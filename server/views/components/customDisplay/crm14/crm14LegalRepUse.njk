@@ -11,11 +11,16 @@
             <dl class="govuk-summary-list">
                 {{ formField({ label: "USN", value: data.legalRepUse.usn }) }}
                 {{ formField({ label: "URN", value: data.legalRepUse.urn }) }}
-
                 {{ formField({ label: "Please select", value: data.legalRepUse.applicationType, transform: "applicationType" }) }}
-                {{ formFieldHeading("Previous application details") }}
-                {{ formField({ label: "USN", value: data.legalRepUse.prevAppUsn }) }}
-                {{ formField({ label: "MAAT ID", value: data.legalRepUse.prevAppMaat }) }}
+
+                {% if data.legalRepUse.applicationType === "Change of circumstances" %}
+                    {% if (data.legalRepUse.prevAppUsn | isNotEmpty) or (data.legalRepUse.prevAppMaat | isNotEmpty) %}
+                        {{ formFieldHeading("Previous application details") }}
+                        {{ formField({ label: "USN", value: data.legalRepUse.prevAppUsn }) }}
+                        {{ formField({ label: "MAAT ID", value: data.legalRepUse.prevAppMaat }) }}
+                    {% endif %}
+                {% endif %}
+
                 {{ formField({ label: "Is this application subject to the usual means / passported test?", value: data.legalRepUse.meansTested }) }}
                 {{ formField({ label: "Case Type", value: data.legalRepUse.caseType }) }}
                 {{ formField({ label: "The court where the case commenced", value: data.legalRepUse.originatingCourt }) }}
