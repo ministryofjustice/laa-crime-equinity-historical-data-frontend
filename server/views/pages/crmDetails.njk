@@ -1,6 +1,7 @@
 {% extends "../partials/layout.njk" %}
 {% from "../components/navigationBar.njk" import navigationBar %}
 {% from "../components/formField.njk" import formField %}
+{% from "../components/formFieldHeading.njk" import formFieldHeading %}
 {% from "../components/timeAndCost.njk" import timeAndCost %}
 {% from "../components/totalAndCost.njk" import totalAndCost %}
 {% from "../components/customDisplay/customDisplay.njk" import customDisplay %}
@@ -56,9 +57,7 @@
                                             {% set hasPreviousContent = false %}
                                             {% for field in subsection.fields %}
                                                 {% if field.subHeading %}
-                                                    <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
-                                                        <p class="govuk-heading-s govuk-!-margin-top-{% if hasPreviousContent %}8{% else %}4{% endif %}">{{ field.subHeading }}</p>
-                                                    </div>
+                                                    {{ formFieldHeading(field.subHeading, hasPreviousContent) }}
                                                 {% else %}
                                                     {% if loop.first %}
                                                         {% if field.type === 'timeAndCost' %}

@@ -33,85 +33,10 @@
           ]
         },
         {
-          "title": "For the Legal Representative's use",
-          "fields": [
-            {
-              "label": "USN",
-              "apiField": "legalRepresentativeUse.legalRepUse.usn"
-            },
-            {
-              "label": "URN",
-              "apiField": "legalRepresentativeUse.legalRepUse.urn"
-            },
-            {
-              "label": "Please select",
-              "apiField": "legalRepresentativeUse.legalRepUse.applicationType"
-            },
-            {
-              "subHeading": "Previous application details"
-            },
-            {
-              "label": "USN",
-              "apiField": "legalRepresentativeUse.legalRepUse.prevAppUsn"
-            },
-            {
-              "label": "MAAT ID",
-              "apiField": "legalRepresentativeUse.legalRepUse.prevAppMaat"
-            },
-            {
-              "label": "Is this application subject to the usual means / passported test?",
-              "apiField": "legalRepresentativeUse.legalRepUse.meansTested"
-            },
-            {
-              "label": "Case Type",
-              "apiField": "legalRepresentativeUse.legalRepUse.caseType"
-            },
-            {
-              "label": "The court where the case commenced",
-              "apiField": "legalRepresentativeUse.legalRepUse.originatingCourt"
-            },
-            {
-              "label": "The court hearing the case",
-              "apiField": "legalRepresentativeUse.legalRepUse.courtName"
-            },
-            {
-              "label": "Is this a Priority Case?",
-              "apiField": "legalRepresentativeUse.legalRepUse.isPriorityCase"
-            },
-            {
-              "subHeading": "Please select at least ONE type of Priority Case:"
-            },
-            {
-              "label": "Custody",
-              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.custody"
-            },
-            {
-              "label": "Vulnerable",
-              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.vulnerable"
-            },
-            {
-              "label": "Youth",
-              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.youth"
-            },
-            {
-              "label": "Late application in the Crown Court for trial",
-              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.lateApplication"
-            },
-            {
-              "label": "Hearing date imminent",
-              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.imminentHearing"
-            },
-            {
-              "label": "Date of trial",
-              "apiField": "legalRepresentativeUse.legalRepUse.dateOfTrial",
-              "type": "date"
-            },
-            {
-              "label": "Appeal Lodged Date",
-              "apiField": "legalRepresentativeUse.legalRepUse.appealLodgedDate",
-              "type": "date"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm14LegalRepUse",
+            "apiField": "legalRepresentativeUse"
+          }
         }
       ]
     },

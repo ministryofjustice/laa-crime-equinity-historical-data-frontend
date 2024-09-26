@@ -1,6 +1,10 @@
 import { TransformType } from '@crmDisplay'
 
 const mappings: Record<TransformType, Record<string, string>> = {
+  applicationType: {
+    'New application': 'This is a new application',
+    'Change of circumstances': 'This application relates to a change of financial circumstances',
+  },
   courtType: {
     M: 'Magistrate court',
     C: 'Crown Court (excluding Central Criminal Court)',
