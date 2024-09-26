@@ -123,7 +123,7 @@ describe('CRM4 Controller', () => {
       crmType: 'CRM 4',
       navigationItems: navigation,
       sections,
-      backUrl: '/',
+      backUrl: '/search-eform',
     })
   })
 })

@@ -20,7 +20,7 @@ export default class Crm4Controller {
       const sections = this.crmDisplayService.getSections('crm4', sectionId, crm4Response)
 
       const currentUrl = sectionId ? `/crm4/${usn}/${sectionId}` : navigation.items[0].href
-      const backUrl = manageBackLink(req, currentUrl)
+      const backUrl = manageBackLink(currentUrl)
 
       res.render('pages/crmDetails', {
         title: 'Application for Prior Authority to Incur Disbursements in Criminal Cases',

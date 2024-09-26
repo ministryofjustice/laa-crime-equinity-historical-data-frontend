@@ -8,9 +8,9 @@
   {% block content %}
       <div class="govuk-width-container">
           <main class="govuk-main-wrapper">
-              <h1 class="govuk-heading-l">Equiniti historical data</h1>
+              <h1 class="govuk-heading-l">Access eForms Records</h1>
 
-              {% set introText = 'You can generate reports or search for eForm record' if isReportingAllowed else 'You can search for eForm records' %}
+              {% set introText = 'You can generate reports or search for an eForm record' if isReportingAllowed else 'You can search for eForm records' %}
 
               <p class="govuk-body govuk-!-margin-bottom-7">{{ introText }}</p>
 
