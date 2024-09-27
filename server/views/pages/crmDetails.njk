@@ -37,11 +37,11 @@
                 {% set isSummaryPage = (sections | length) > 1 %}
 
                 {% if isSummaryPage === false %}
-                <div class="govuk-grid-column-one-third">
+                <div class="govuk-grid-column-one-quarter">
                     {{ navigationBar(navigationItems) }}
                 </div>
                 {% endif %}
-                <div class="govuk-grid-column-{% if isSummaryPage %}full{% else %}two-thirds{% endif %} govuk-!-padding-top-4">
+                <div class="govuk-grid-column-{% if isSummaryPage %}full{% else %}three-quarters{% endif %} govuk-!-padding-top-4">
                     {% for section in sections %}
                         <h2 class="govuk-heading-m">{{ section.title }}</h2>
                         {% for subsection in section.subsections %}
