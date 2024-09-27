@@ -1,0 +1,59 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formFieldHeading.njk" import formFieldHeading %}
+
+{% macro crm14LegalRepUse(data) %}
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">For The Legal Representative Use</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                {{ formField({ label: "USN", value: data.legalRepUse.usn }) }}
+                {{ formField({ label: "URN", value: data.legalRepUse.urn }) }}
+                {{ formField({ label: "Please select", value: data.legalRepUse.applicationType, transform: "applicationType" }) }}
+
+                {% if data.legalRepUse.applicationType === "Change of circumstances" %}
+                    {% if (data.legalRepUse.prevAppUsn | isNotEmpty) or (data.legalRepUse.prevAppMaat | isNotEmpty) %}
+                        {{ formFieldHeading("Previous application details") }}
+                        {{ formField({ label: "USN", value: data.legalRepUse.prevAppUsn }) }}
+                        {{ formField({ label: "MAAT ID", value: data.legalRepUse.prevAppMaat }) }}
+                    {% endif %}
+                {% endif %}
+
+                {{ formField({ label: "Is this application subject to the usual means / passported test?", value: data.legalRepUse.meansTested }) }}
+                {{ formField({ label: "Case Type", value: data.legalRepUse.caseType }) }}
+                {{ formField({ label: "The court where the case commenced", value: data.legalRepUse.originatingCourt }) }}
+                {{ formField({ label: "The court hearing the case", value: data.legalRepUse.courtName }) }}
+                {{ formField({ label: "Is this a priority case?", value: data.legalRepUse.isPriorityCase }) }}
+
+                {% if data.legalRepUse.isPriorityCase === "Yes" %}
+                    {{ formFieldHeading("Please select at least ONE type of priority case:") }}
+
+                    {% if data.legalRepUse.priorityCaseType.custody === true %}
+                        {{ formField({ label: "Custody", value: data.legalRepUse.priorityCaseType.custody } ) }}
+                    {% endif %}
+
+                    {% if data.legalRepUse.priorityCaseType.vulnerable === true %}
+                        {{ formField({ label: "Vulnerable", value: data.legalRepUse.priorityCaseType.vulnerable } ) }}
+                    {% endif %}
+
+                    {% if data.legalRepUse.priorityCaseType.youth === true %}
+                        {{ formField({ label: "Youth", value: data.legalRepUse.priorityCaseType.youth } ) }}
+                    {% endif %}
+
+                    {% if data.legalRepUse.priorityCaseType.lateApplication === true %}
+                        {{ formField({ label: "Late application in the Crown Court for trial", value: data.legalRepUse.priorityCaseType.lateApplication } ) }}
+                    {% endif %}
+
+                    {% if data.legalRepUse.priorityCaseType.imminentHearing === true %}
+                        {{ formField({ label: "Hearing date imminent", value: data.legalRepUse.priorityCaseType.imminentHearing } ) }}
+                    {% endif %}
+
+                    {{ formField({ label: "Date of trial", value: data.legalRepUse.dateOfTrial } ) }}
+                    {{ formField({ label: "Appeal lodged date", value: data.legalRepUse.appealLodgedDate } ) }}
+                {% endif %}
+            </dl>
+        </div>
+    </div>
+{% endmacro %}

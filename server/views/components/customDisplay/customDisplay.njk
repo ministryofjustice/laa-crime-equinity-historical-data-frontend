@@ -11,6 +11,7 @@
 {% from "./crm7/crm7ScheduleOfTime.njk" import crm7ScheduleOfTime %}
 {% from "./crm7/crm7NonStandardFeeClaim.njk" import crm7NonStandardFeeClaim %}
 {% from "./crm7/crm7OfficeUseOnly.njk" import crm7OfficeUseOnly %}
+{% from "./crm14/crm14LegalRepUse.njk" import crm14LegalRepUse %}
 {% from "./crm14/crm14AboutTheInformation.njk" import crm14AboutTheInformation %}
 {% from "./crm14/crm14InterestsOfJustice.njk" import crm14InterestsOfJustice %}
 {% from "./crm14/crm14Declarations.njk" import crm14Declarations %}
@@ -60,6 +61,8 @@
         {{ crm7OfficeUseOnly(customDisplay.value) }}
 
 {# CRM 14 #}
+    {% elif customDisplay.name === 'crm14LegalRepUse' %}
+        {{ crm14LegalRepUse(customDisplay.value) }}
     {% elif customDisplay.name === 'crm14InterestsOfJustice' %}
         {{ crm14InterestsOfJustice(customDisplay.value) }}
     {% elif customDisplay.name === 'crm14AboutTheInformation' %}

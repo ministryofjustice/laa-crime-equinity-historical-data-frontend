@@ -16,6 +16,8 @@ export interface Crm14Response extends CrmResponse {
         usn: number
         urn: string
         applicationType: string
+        prevAppUsn: number
+        prevAppMaat: number
         meansTested: string
         caseType: string
         originatingCourt: string
@@ -29,6 +31,7 @@ export interface Crm14Response extends CrmResponse {
           imminentHearing: boolean
         }
         dateOfTrial: string
+        appealLodgedDate: string
       }
     }
     aboutYouPart1?: {
