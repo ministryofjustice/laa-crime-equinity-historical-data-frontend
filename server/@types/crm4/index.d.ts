@@ -74,7 +74,11 @@ export interface Crm4Response extends CrmResponse {
         rate: number
         total: number
       }
-      Authority: number
+      Authority: {
+        total: number
+        vatDeclaration: boolean
+        travelDeclaration: boolean
+      }
     }
     AlternativeQuotes?: {
       alternativeQuote: string
