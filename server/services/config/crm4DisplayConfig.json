@@ -380,8 +380,16 @@
           "fields": [
             {
               "label": "Total Authority",
-              "apiField": "ExpenditureDetails.Authority",
+              "apiField": "ExpenditureDetails.Authority.total",
               "type": "currency"
+            },
+            {
+              "label": "I certify that the total amount disclosed for this authority (including both preparation and travel rates) is exclusive of VAT",
+              "apiField": "ExpenditureDetails.Authority.vatDeclaration"
+            },
+            {
+              "label": "I certify that the total amount disclosed for this authority (including both preparation and travel rates) does not include any travel expenditure that is not included within the hourly rate (such as mileage, parking, travel fares etc.)",
+              "apiField": "ExpenditureDetails.Authority.travelDeclaration"
             }
           ]
         }

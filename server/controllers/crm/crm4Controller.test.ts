@@ -62,7 +62,11 @@ describe('CRM4 Controller', () => {
             rate: 0,
             total: 0,
           },
-          Authority: 200.0,
+          Authority: {
+            total: 200.0,
+            vatDeclaration: true,
+            travelDeclaration: true,
+          },
         },
       },
       evidenceFiles: {
