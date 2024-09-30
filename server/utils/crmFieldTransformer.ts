@@ -1,5 +1,13 @@
 import { TransformType } from '@crmDisplay'
 
+const transformValue = (value: string, transformType: TransformType): string => {
+  const mapping = mappings[transformType]
+  if (mapping) {
+    return mapping[value] || value
+  }
+  return value
+}
+
 const mappings: Record<TransformType, Record<string, string>> = {
   applicationType: {
     'New application': 'This is a new application',
@@ -49,14 +57,6 @@ const mappings: Record<TransformType, Record<string, string>> = {
     1: 'Yes',
     0: 'No',
   },
-}
-
-const transformValue = (value: string, transformType: TransformType): string => {
-  const mapping = mappings[transformType]
-  if (mapping) {
-    return mapping[value] || value
-  }
-  return value
 }
 
 export default transformValue
