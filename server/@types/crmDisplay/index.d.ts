@@ -6,7 +6,7 @@ type SubHeading = {
 
 type FieldType = 'currency' | 'date' | 'time' | 'percent' | 'link' | 'timeAndCost' | 'totalAndCost'
 
-type TransformType = 'applicationType' | 'courtType' | 'every' | 'levelOfWork' | 'yesNo'
+type TransformType = 'applicationType' | 'category2' | 'category3' | 'courtType' | 'every' | 'levelOfWork' | 'yesNo'
 
 type ConfigField = {
   label: string
