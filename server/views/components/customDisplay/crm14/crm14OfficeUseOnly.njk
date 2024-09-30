@@ -61,60 +61,36 @@
 
     {# Funding Decisions Section #}
     {% if data.fundingDecisions.length > 0 %}
-        {% set tableFundingDecisions = {
-            head: [],
-            rows: []
-        } %}
-
-        {% for key, label in {
-            maatNumber: "MAAT Number",
-            caseNumber: "Case Number",
-            justiceTest: "Justice Test",
-            meansTestResultType: "Means Test Result Type",
-            officialSignName: "Official Sign Name",
-            appropriateOfficerName: "Appropriate Officer Name",
-            justiceTestReasons: "Justice Test Reasons",
-            overallResultMagsorcfs: "Overall Result Mags/CCFS",
-            meansTestResultAppealtocc: "Means Test Appeal to CC",
-            overallResultNonMeans: "Overall Non-Means Result",
-            meansTestResultMagsorcfs: "Means Test Result Mags/CCFS",
-            meansTestResultCc: "Means Test Result CC",
-            overallResultAppealtocc: "Overall Appeal to CC",
-            overallResultType: "Overall Result Type",
-            overallResultCc: "Overall Result CC"
-        } %}
-            {% if data.fundingDecisions[0][key] %}
-                {% set _ = tableFundingDecisions.head.push({ text: label }) %}
-            {% endif %}
-        {% endfor %}
-
         {% for decision in data.fundingDecisions %}
-            {% set tableRow = [] %}
-            {% for key, _ in {
-                maatNumber: "MAAT Number",
-                caseNumber: "Case Number",
-                justiceTest: "Justice Test",
-                meansTestResultType: "Means Test Result Type",
-                officialSignName: "Official Sign Name",
-                appropriateOfficerName: "Appropriate Officer Name",
-                justiceTestReasons: "Justice Test Reasons",
-                overallResultMagsorcfs: "Overall Result Mags/CCFS",
-                meansTestResultAppealtocc: "Means Test Appeal to CC",
-                overallResultNonMeans: "Overall Non-Means Result",
-                meansTestResultMagsorcfs: "Means Test Result Mags/CCFS",
-                meansTestResultCc: "Means Test Result CC",
-                overallResultAppealtocc: "Overall Appeal to CC",
-                overallResultType: "Overall Result Type",
-                overallResultCc: "Overall Result CC"
-            } %}
-                {% if decision[key] %}
-                    {% set _ = tableRow.push({ text: decision[key] }) %}
-                {% endif %}
-            {% endfor %}
-            {% set _ = tableFundingDecisions.rows.push(tableRow) %}
-        {% endfor %}
 
-        {{ formSubsection('Funding Decisions', tableFundingDecisions, true) }}
+            {% if data.fundingDecisions.length > 1 %}
+                {% set sectionTitle = 'Funding Decision ' ~ loop.index %}
+            {% else %}
+                {% set sectionTitle = 'Funding Decision' %}
+            {% endif %}
+
+            {% set fieldsFundingDecision = [
+                { label: "MAAT Number", value: decision.maatNumber },
+                { label: "Case Number", value: decision.caseNumber },
+                { label: "Justice Test", value: decision.justiceTest },
+                { label: "Means Test Result Type", value: decision.meansTestResultType },
+                { label: "Official Sign Name", value: decision.officialSignName },
+                { label: "Appropriate Officer Name", value: decision.appropriateOfficerName },
+                { label: "Justice Test Reasons", value: decision.justiceTestReasons },
+                { label: "Overall Result Mags/CCFS", value: decision.overallResultMagsorcfs },
+                { label: "Appropriate Officer Sign Date", value: decision.appropriateOfficerSignDate | formatDate },
+                { label: "Means Test Appeal to CC", value: decision.meansTestResultAppealtocc },
+                { label: "Overall Non-Means Result", value: decision.overallResultNonMeans },
+                { label: "Means Test Result Mags/CCFS", value: decision.meansTestResultMagsorcfs },
+                { label: "Means Test Result CC", value: decision.meansTestResultCc },
+                { label: "Overall Appeal to CC", value: decision.overallResultAppealtocc },
+                { label: "Overall Result Type", value: decision.overallResultType },
+                { label: "Overall Result CC", value: decision.overallResultCc },
+                { label: "Official Sign Date", value: decision.officialSignDate | formatDate }
+            ] %}
+
+            {{ formSubsection(sectionTitle, fieldsFundingDecision) }}
+        {% endfor %}
     {% endif %}
 
 {% endmacro %}
