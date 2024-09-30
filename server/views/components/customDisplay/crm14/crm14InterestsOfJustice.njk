@@ -8,8 +8,8 @@
     {% set tableData = {
         head: [
             { text: "Charge"},
-            { text: "Date of Offence" },
             { text: "" },
+            { text: "Date of Offence" },
             { text: "" },
             { text: "" }
         ],
@@ -36,7 +36,7 @@
                 {{ formFieldHeading("What charges have been brought against you?", hasPreviousContent=false) }}
                 {{ formTable(tableData) }}
 
-                {{ formField({ label: "The type of offence with which you are charged", value: data.offenceType }) }}
+                {{ formField({ label: "The type of offence with which you are charged", value: data.offenceType, transform: "offenceType" }) }}
                 {{ formField({ label: "Do you have any co-defendants in this case?", value: data.anyDefendants }) }}
                 {{ formField({ label: "Please supply their name(s)", value: data.defendantDetails }) }}
                 {{ formField({ label: "Is there any reason why you and your co-defendants cannot be represented by the same solicitor?", value: data.notSameSolicitor }) }}

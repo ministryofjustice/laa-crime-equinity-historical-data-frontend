@@ -30,7 +30,16 @@ const schema = Joi.object({
                 .valid('currency', 'date', 'multiline', 'percent', 'time', 'timeAndCost', 'totalAndCost')
                 .optional(),
               transform: Joi.string()
-                .valid('applicationType', 'category2', 'category3', 'courtType', 'every', 'levelOfWork', 'yesNo')
+                .valid(
+                  'applicationType',
+                  'category2',
+                  'category3',
+                  'courtType',
+                  'every',
+                  'levelOfWork',
+                  'offenceType',
+                  'yesNo',
+                )
                 .optional(),
             },
             {
