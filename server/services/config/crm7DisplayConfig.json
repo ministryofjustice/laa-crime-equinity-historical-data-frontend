@@ -116,12 +116,12 @@
             {
               "label": "Matter type",
               "apiField": "summary.matterType"
-            }
-          ]
-        },
-        {
-          "title": "Equal Opportunities",
-          "fields": [
+            },
+            {
+              "label": "Date class of work closed",
+              "apiField": "summary.equalOpportunities.dateClassOfWorkClosed",
+              "type": "date"
+            },
             {
               "label": "Equal opportunities monitoring 1",
               "apiField": "summary.equalOpportunities.monitoring1"
@@ -133,11 +133,6 @@
             {
               "label": "Equal opportunities monitoring 3",
               "apiField": "summary.equalOpportunities.monitoring3"
-            },
-            {
-              "label": "Date class of work closed",
-              "apiField": "summary.equalOpportunities.dateClassOfWorkClosed",
-              "type": "date"
             },
             {
               "label": "Number of defendants represented",
