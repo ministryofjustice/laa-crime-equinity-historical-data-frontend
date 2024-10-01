@@ -1,4 +1,4 @@
-{% macro formField(field, isCostsSection = false) %}
+{% macro formField(field, isCostsSection = false, boldLabel = true) %}
 
     {% if (field.value | isNotEmpty) %} {# render non-empty field #}
 
@@ -14,7 +14,7 @@
                         <div class="govuk-grid-column-one-half">
                             <div class="govuk-body govuk-!-static-margin-bottom-0">
                                 <strong>
-                                {{ formFieldByType(field) }}
+                                    {{ formFieldByType(field) }}
                                 </strong>
                             </div>
                         </div>
@@ -24,7 +24,7 @@
         {% else %}
             <div class="govuk-summary-list__row govuk-grid-row {{ field.class }}">
                 <div class="govuk-grid-column-one-half govuk-custom-no-padding-left-desktop">
-                    <dt class="govuk-summary-list__key">{{ field.label }}</dt>
+                    <dt class="{% if boldLabel %}govuk-summary-list__key{% else %}govuk-summary-list__value{% endif %}">{{ field.label }}</dt>
                 </div>
                 <div class="govuk-grid-column-one-half">
                     <dd class="govuk-summary-list__value">
