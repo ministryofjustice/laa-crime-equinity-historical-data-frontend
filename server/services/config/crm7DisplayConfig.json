@@ -123,18 +123,6 @@
               "type": "date"
             },
             {
-              "label": "Equal opportunities monitoring 1",
-              "apiField": "summary.equalOpportunities.monitoring1"
-            },
-            {
-              "label": "Equal opportunities monitoring 2",
-              "apiField": "summary.equalOpportunities.monitoring2"
-            },
-            {
-              "label": "Equal opportunities monitoring 3",
-              "apiField": "summary.equalOpportunities.monitoring3"
-            },
-            {
               "label": "Number of defendants represented",
               "apiField": "summary.equalOpportunities.numberDefendantsRepresented"
             },
