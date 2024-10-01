@@ -284,52 +284,10 @@
       "title": "Interests of Justice: 2",
       "subsections": [
         {
-          "title": "Why do you want legal aid?",
-          "fields": [
-            {
-              "subHeading": "Complete one or more reasons. For each reason you choose, say why you have chosen it. Mention any evidence that supports your choice of a reason."
-            },
-            {
-              "label": "It is likely that I will lose my liberty if any matter in the proceedings is decided against me.",
-              "apiField": "interestOfJusticePart2.loseLibertyDetails"
-            },
-            {
-              "label": "I have been given a sentence that is suspended or non-custodial. If I break this, the court may be able to deal with me for the original offence.",
-              "apiField": "interestOfJusticePart2.suspendedSentenceDetails"
-            },
-            {
-              "label": "It is likely that I will lose my livelihood.",
-              "apiField": "interestOfJusticePart2.loseLivelihoodDetails"
-            },
-            {
-              "label": "It is likely that I will suffer serious damage to my reputation.",
-              "apiField": "interestOfJusticePart2.damageReputationDetails"
-            },
-            {
-              "label": "A substantial question of law may be involved (whether arising from legislation, judicial authority or other source of law).",
-              "apiField": "interestOfJusticePart2.questionLawDetails"
-            },
-            {
-              "label": "I may not be able to understand the court proceedings or present my own case.",
-              "apiField": "interestOfJusticePart2.ownCaseDetails"
-            },
-            {
-              "label": "Witnesses may need to be traced or interviewed on my behalf.",
-              "apiField": "interestOfJusticePart2.witnessTraceDetails"
-            },
-            {
-              "label": "The proceedings may involve expert cross-examination of a prosecution witness (whether an expert or not).",
-              "apiField": "interestOfJusticePart2.expertExamDetails"
-            },
-            {
-              "label": " It is in the interests of another person (such as the person making a complaint or other witness) that I am represented.",
-              "apiField": "interestOfJusticePart2.interestsAnotherDetails"
-            },
-            {
-              "label": "Any other reason",
-              "apiField": "interestOfJusticePart2.otherReasonRepresentedDetails"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm14InterestsOfJustice2",
+            "apiField": "interestOfJusticePart2"
+          }
         }
       ]
     },

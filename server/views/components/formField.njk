@@ -1,4 +1,4 @@
-{% macro formField(field, isCostsSection = false) %}
+{% macro formField(field, isCostsSection = false, boldLabel = true) %}
 
     {% if (field.value | isNotEmpty) %} {# render non-empty field #}
 
@@ -14,7 +14,7 @@
                         <div class="govuk-grid-column-one-half">
                             <div class="govuk-body govuk-!-static-margin-bottom-0">
                                 <strong>
-                                {{ formFieldByType(field) }}
+                                    {{ formFieldByType(field) }}
                                 </strong>
                             </div>
                         </div>
@@ -24,7 +24,7 @@
         {% else %}
             <div class="govuk-summary-list__row govuk-grid-row {{ field.class }}">
                 <div class="govuk-grid-column-one-half govuk-custom-no-padding-left-desktop">
-                    <dt class="govuk-summary-list__key">{{ field.label }}</dt>
+                    <dt class="{% if boldLabel %}govuk-summary-list__key{% else %}govuk-summary-list__value{% endif %}">{{ field.label }}</dt>
                 </div>
                 <div class="govuk-grid-column-one-half">
                     <dd class="govuk-summary-list__value">
@@ -41,19 +41,19 @@
 {% macro formFieldByType(field) %}
     {% if field.type === 'currency' %}
         {{ field.value | formatCurrency }}
-    {% elif field.type === 'date' %}
+        {% elif field.type === 'date' %}
         {{ field.value | formatDate }}
-    {% elif field.type === 'time' %}
+        {% elif field.type === 'time' %}
         {{ field.value | formatTime }}
-    {% elif field.type === 'percent' %}
+        {% elif field.type === 'percent' %}
         {{ field.value | formatPercentage }}
-    {% elif field.type === 'link' %}
+        {% elif field.type === 'link' %}
         <a href="{{ field.value.href }}" class="govuk-link govuk-link--no-visited-state">{{ field.value.text }}</a>
-    {% elif field.type === 'multiline' %}
+        {% elif field.type === 'multiline' %}
         {{ field.value | formatMultiline | safe }}
-    {% elif field.value === true or field.value === false %}
+        {% elif field.value === true or field.value === false %}
         {{ field.value | formatYesNo }}
-    {% elif field.transform %}
+        {% elif field.transform %}
         {{ field.value | transformValue(field.transform) }}
     {% else %}
         {{ field.value }}
