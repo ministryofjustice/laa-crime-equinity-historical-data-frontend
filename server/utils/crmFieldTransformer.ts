@@ -1,5 +1,13 @@
 import { TransformType } from '@crmDisplay'
 
+const transformValue = (value: string, transformType: TransformType): string => {
+  const mapping = mappings[transformType]
+  if (mapping) {
+    return mapping[value] || value
+  }
+  return value
+}
+
 const mappings: Record<TransformType, Record<string, string>> = {
   applicationType: {
     'New application': 'This is a new application',
@@ -31,18 +39,24 @@ const mappings: Record<TransformType, Record<string, string>> = {
     Advice: 'Advice & Assistance',
     Advocacy: 'Advocacy Assistance',
   },
+  offenceType: {
+    'Class A': 'Class A: Homicide and related grave offences',
+    'Class B': 'Class B: Offences involving serious violence or damage, and serious drugs offences',
+    'Class C': 'Class C: Lesser offences involving violence or damage, and less serious drugs offences',
+    'Class D': 'Class D: Sexual offences and offences against children',
+    'Class E': 'Class E: Burglary etc.',
+    'Class F':
+      'Class F: Other offences of dishonesty (specified offences and offences where the value is £30,000 or less)',
+    'Class G':
+      'Class G: Other offences of dishonesty (specified offences and offences where the value involved exceeds £30,000 but does not exceed £100,000)',
+    'Class H': 'Class H: Miscellaneous other offences',
+    'Class I': 'Class I: Offences against public justice and similar offences',
+    'Class J': 'Class J: Serious sexual offences',
+  },
   yesNo: {
     1: 'Yes',
     0: 'No',
   },
-}
-
-const transformValue = (value: string, transformType: TransformType): string => {
-  const mapping = mappings[transformType]
-  if (mapping) {
-    return mapping[value] || value
-  }
-  return value
 }
 
 export default transformValue
