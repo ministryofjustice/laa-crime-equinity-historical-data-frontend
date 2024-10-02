@@ -508,6 +508,18 @@
       ]
     },
     {
+      "sectionId": "further-information",
+      "title": "Further Information",
+      "subsections": [
+        {
+          "customDisplay": {
+            "name": "crmFurtherInformation",
+            "apiField": "FurtherInformation"
+          }
+        }
+      ]
+    },
+    {
       "sectionId": "summary",
       "title": "Summary",
       "subsections": []

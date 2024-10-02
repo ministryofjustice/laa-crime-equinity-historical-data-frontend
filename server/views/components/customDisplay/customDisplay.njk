@@ -1,4 +1,5 @@
 {% from "./crmEvidence.njk" import crmEvidence %}
+{% from "./crmFurtherInformation.njk" import crmFurtherInformation %}
 {% from "./crm4/crm4AdditionalExpenditure.njk" import crm4AdditionalExpenditure %}
 {% from "./crm4/crm4AlternativeQuotes.njk" import crm4AlternativeQuotes %}
 {% from "./crm4/crm4OfficeUseOnly.njk" import crm4OfficeUseOnly %}
@@ -29,6 +30,8 @@
 {% macro customDisplay(customDisplay, crmType) %}
     {% if customDisplay.name === 'crmEvidence' %}
         {{ crmEvidence(customDisplay.value, crmType) }}
+    {% elif customDisplay.name === 'crmFurtherInformation' %}
+        {{ crmFurtherInformation(customDisplay.value, crmType) }}
 
 {# CRM 4 #}
     {% elif customDisplay.name === 'crm4AdditionalExpenditure' %}
