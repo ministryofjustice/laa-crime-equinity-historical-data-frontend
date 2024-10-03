@@ -41,6 +41,13 @@ describe('CRM Display Service', () => {
       DetailsOfWorkCompleted: 'Some Details of Work Completed',
       DetailsOfApplication: 'Some Details of Application',
     },
+    FurtherInformation: [
+      {
+        name: 'Attachment1',
+        description: 'Test Description',
+        downloadFile: 'test-link',
+      },
+    ],
     evidenceFiles: {
       files: [
         {
@@ -71,6 +78,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
           { href: '/crm5/1234567/office-use-only', text: 'Office Use Only', active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/further-information', text: 'Further Information', active: false },
           { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
@@ -93,6 +101,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
           { href: '/crm5/1234567/office-use-only', text: 'Office Use Only', active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/further-information', text: 'Further Information', active: false },
           { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
@@ -115,6 +124,7 @@ describe('CRM Display Service', () => {
           { text: "Solicitor's Certification", href: '/crm5/1234567/solicitors-certification', active: false },
           { href: '/crm5/1234567/office-use-only', text: 'Office Use Only', active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/further-information', text: 'Further Information', active: false },
           { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
@@ -148,6 +158,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
           { href: '/crm5/1234567/office-use-only', text: 'Office Use Only', active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/further-information', text: 'Further Information', active: false },
           { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
@@ -199,6 +210,9 @@ describe('CRM Display Service', () => {
           urgencyReason: '',
         },
         evidenceFiles: {
+          files: [],
+        },
+        FurtherInformation: {
           files: [],
         },
       }

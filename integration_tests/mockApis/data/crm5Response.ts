@@ -202,6 +202,13 @@ const getCrm5Response = (usn: number): Crm5Response => {
       DetailsOfWorkCompleted: 'Details of work completed',
       DetailsOfApplication: 'Details of application',
     },
+    FurtherInformation: [
+      {
+        name: 'Attachment1',
+        description: 'Test Description',
+        downloadFile: 'test-link',
+      },
+    ],
     evidenceFiles: {
       files: [
         {
