@@ -40,7 +40,7 @@
                 </ul>
             </nav>
         </div>
-        {% if environmentName %}
+        {% if environmentName and environmentName !== 'prod' %}
             <div class="govuk-phase-banner govuk-custom-no-margin-right-desktop">
                 {{ govukTag({
                     text: environmentName,
