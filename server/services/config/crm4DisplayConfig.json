@@ -510,6 +510,12 @@
     {
       "sectionId": "further-information",
       "title": "Further Information",
+      "hideWhen": [
+        {
+          "apiField": "FurtherInformation",
+          "equals": ""
+        }
+      ],
       "subsections": [
         {
           "customDisplay": {

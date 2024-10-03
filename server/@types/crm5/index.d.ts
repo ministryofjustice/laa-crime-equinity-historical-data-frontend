@@ -168,5 +168,6 @@ export interface Crm5Response extends CrmResponse {
     DetailsOfWorkCompleted: string
     DetailsOfApplication: string
   }
+  FurtherInformation: FurtherInformation
   evidenceFiles: EvidenceFiles
 }

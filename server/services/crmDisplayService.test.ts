@@ -41,6 +41,13 @@ describe('CRM Display Service', () => {
       DetailsOfWorkCompleted: 'Some Details of Work Completed',
       DetailsOfApplication: 'Some Details of Application',
     },
+    FurtherInformation: [
+      {
+        name: 'Attachment1',
+        description: 'Test Description',
+        downloadFile: 'test-link',
+      },
+    ],
     evidenceFiles: {
       files: [
         {
@@ -203,6 +210,9 @@ describe('CRM Display Service', () => {
           urgencyReason: '',
         },
         evidenceFiles: {
+          files: [],
+        },
+        FurtherInformation: {
           files: [],
         },
       }
