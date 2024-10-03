@@ -36,7 +36,7 @@ const schema = Joi.object({
     'decisionToDate.range': 'Decision date range cannot be more than 1 month',
   })
 
-const checkToDate = (toDateField: string) => {
+const crm14CheckToDate = (toDateField: string) => {
   return (value: string, helpers: Joi.CustomHelpers): ErrorReport | string => {
     if (!helpers.state.ancestors[0][toDateField]) {
       return helpers.error(`${toDateField}.missing`, undefined, { path: [toDateField] })
@@ -46,7 +46,7 @@ const checkToDate = (toDateField: string) => {
   }
 }
 
-const checkDateRange = (fromDateField: string, toDateField: string) => {
+const crm14CheckDateRange = (fromDateField: string, toDateField: string) => {
   return (value: string, helpers: Joi.CustomHelpers): ErrorReport | string => {
     const fromDate = helpers.state.ancestors[0][fromDateField]
     if (!fromDate) {
@@ -57,7 +57,7 @@ const checkDateRange = (fromDateField: string, toDateField: string) => {
       return helpers.error(`${toDateField}.earlier`, undefined, { path: [toDateField] })
     }
 
-    if (differenceInDays(value, fromDate) > 14) {
+    if (differenceInDays(value, fromDate) > 7) {
       return helpers.error(`${toDateField}.range`, undefined, { path: [] })
     }
 
@@ -78,7 +78,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Decision date from must be a valid date',
     })
-    .custom(checkToDate('decisionToDate')),
+    .custom(crm14CheckToDate('decisionToDate')),
   decisionToDate: Joi.date()
     .optional()
     .iso()
@@ -86,7 +86,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Decision date to must be a valid date',
     })
-    .custom(checkDateRange('decisionFromDate', 'decisionToDate')),
+    .custom(crm14CheckDateRange('decisionFromDate', 'decisionToDate')),
   submittedFromDate: Joi.date()
     .optional()
     .iso()
@@ -94,7 +94,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Submitted date from must be a valid date',
     })
-    .custom(checkToDate('submittedToDate')),
+    .custom(crm14CheckToDate('submittedToDate')),
   submittedToDate: Joi.date()
     .optional()
     .iso()
@@ -102,7 +102,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Submitted date to must be a valid date',
     })
-    .custom(checkDateRange('submittedFromDate', 'submittedToDate')),
+    .custom(crm14CheckDateRange('submittedFromDate', 'submittedToDate')),
   createdFromDate: Joi.date()
     .optional()
     .iso()
@@ -110,7 +110,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Created date from must be a valid date',
     })
-    .custom(checkToDate('createdToDate')),
+    .custom(crm14CheckToDate('createdToDate')),
   createdToDate: Joi.date()
     .optional()
     .iso()
@@ -118,7 +118,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Created date to must be a valid date',
     })
-    .custom(checkDateRange('createdFromDate', 'createdToDate')),
+    .custom(crm14CheckDateRange('createdFromDate', 'createdToDate')),
   lastSubmittedFromDate: Joi.date()
     .optional()
     .iso()
@@ -126,7 +126,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Last submitted date from must be a valid date',
     })
-    .custom(checkToDate('lastSubmittedToDate')),
+    .custom(crm14CheckToDate('lastSubmittedToDate')),
   lastSubmittedToDate: Joi.date()
     .optional()
     .iso()
@@ -134,27 +134,27 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Last submitted date to must be a valid date',
     })
-    .custom(checkDateRange('lastSubmittedFromDate', 'lastSubmittedToDate')),
+    .custom(crm14CheckDateRange('lastSubmittedFromDate', 'lastSubmittedToDate')),
 })
   .options({ allowUnknown: true, abortEarly: false })
   .messages({
     'decisionFromDate.missing': "Enter 'Decision date from'",
     'decisionToDate.missing': "Enter 'Decision date to'",
     'decisionToDate.earlier': "Your 'Decision date to' must be the same as or after your 'Decision date from'",
-    'decisionToDate.range': 'Decision date range cannot be more than 2 weeks',
+    'decisionToDate.range': 'Decision date range cannot be more than 1 week',
     'submittedFromDate.missing': "Enter 'Submitted date from'",
     'submittedToDate.missing': "Enter 'Submitted date to'",
     'submittedToDate.earlier': "Your 'Submitted date to' must be the same as or after your 'Submitted date from'",
-    'submittedToDate.range': 'Submitted date range cannot be more than 2 weeks',
+    'submittedToDate.range': 'Submitted date range cannot be more than 1 week',
     'createdFromDate.missing': "Enter 'Created date from'",
     'createdToDate.missing': "Enter 'Created date to'",
     'createdToDate.earlier': "Your 'Created date to' must be the same as or after your 'Created date from'",
-    'createdToDate.range': 'Created date range cannot be more than 2 weeks',
+    'createdToDate.range': 'Created date range cannot be more than 1 week',
     'lastSubmittedFromDate.missing': "Enter 'Last submitted date from'",
     'lastSubmittedToDate.missing': "Enter 'Last submitted date to'",
     'lastSubmittedToDate.earlier':
       "Your 'Last submitted date to' must be the same as or after your 'Last submitted date from'",
-    'lastSubmittedToDate.range': 'Last submitted date range cannot be more than 2 weeks',
+    'lastSubmittedToDate.range': 'Last submitted date range cannot be more than 1 week',
   })
 
 export default function validateReportParams(params: Record<string, string>): Errors {
