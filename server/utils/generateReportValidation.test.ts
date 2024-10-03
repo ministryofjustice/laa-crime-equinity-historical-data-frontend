@@ -122,21 +122,21 @@ describe('Generate Report Validation', () => {
 
   describe('valid report parameters (CRM 14)', () => {
     it.each([
-      ['Decision dates only', { crmType: 'crm14', decisionFromDate: '2024-01-01', decisionToDate: '2024-01-14' }],
-      ['Submitted dates only', { crmType: 'crm14', submittedFromDate: '2024-01-01', submittedToDate: '2024-01-14' }],
-      ['Created dates only', { crmType: 'crm14', createdFromDate: '2024-01-01', createdToDate: '2024-01-14' }],
+      ['Decision dates only', { crmType: 'crm14', decisionFromDate: '2024-01-01', decisionToDate: '2024-01-05' }],
+      ['Submitted dates only', { crmType: 'crm14', submittedFromDate: '2024-01-01', submittedToDate: '2024-01-05' }],
+      ['Created dates only', { crmType: 'crm14', createdFromDate: '2024-01-01', createdToDate: '2024-01-05' }],
       [
         'Last submitted dates only',
-        { crmType: 'crm14', lastSubmittedFromDate: '2024-01-01', lastSubmittedToDate: '2024-01-14' },
+        { crmType: 'crm14', lastSubmittedFromDate: '2024-01-01', lastSubmittedToDate: '2024-01-05' },
       ],
       [
         'with some dates specified',
         {
           crmType: 'crm14',
           decisionFromDate: '2024-01-01',
-          decisionToDate: '2024-01-14',
+          decisionToDate: '2024-01-05',
           lastSubmittedFromDate: '2024-01-01',
-          lastSubmittedToDate: '2024-01-14',
+          lastSubmittedToDate: '2024-01-05',
         },
       ],
       [
@@ -144,13 +144,13 @@ describe('Generate Report Validation', () => {
         {
           crmType: 'crm14',
           decisionFromDate: '2024-01-01',
-          decisionToDate: '2024-01-14',
+          decisionToDate: '2024-01-05',
           submittedFromDate: '2024-01-01',
-          submittedToDate: '2024-01-14',
+          submittedToDate: '2024-01-05',
           createdFromDate: '2024-01-01',
-          createdToDate: '2024-01-14',
+          createdToDate: '2024-01-05',
           lastSubmittedFromDate: '2024-01-01',
-          lastSubmittedToDate: '2024-01-14',
+          lastSubmittedToDate: '2024-01-05',
         },
       ],
     ])('should validate report parameters with %s', (name, params) => {
@@ -165,7 +165,7 @@ describe('Generate Report Validation', () => {
       [
         'missing Decision date from',
         'decisionFromDate',
-        { crmType: 'crm14', decisionFromDate: '', decisionToDate: '2024-01-14' },
+        { crmType: 'crm14', decisionFromDate: '', decisionToDate: '2024-01-05' },
         "Enter 'Decision date from'",
       ],
       [
@@ -183,7 +183,7 @@ describe('Generate Report Validation', () => {
       [
         'missing Submitted date from',
         'submittedFromDate',
-        { crmType: 'crm14', submittedFromDate: '', submittedToDate: '2024-01-14' },
+        { crmType: 'crm14', submittedFromDate: '', submittedToDate: '2024-01-05' },
         "Enter 'Submitted date from'",
       ],
       [
@@ -201,7 +201,7 @@ describe('Generate Report Validation', () => {
       [
         'missing Created date from',
         'createdFromDate',
-        { crmType: 'crm14', createdFromDate: '', createdToDate: '2024-01-14' },
+        { crmType: 'crm14', createdFromDate: '', createdToDate: '2024-01-05' },
         "Enter 'Created date from'",
       ],
       [
@@ -219,7 +219,7 @@ describe('Generate Report Validation', () => {
       [
         'missing Last submitted date from',
         'lastSubmittedFromDate',
-        { crmType: 'crm14', lastSubmittedFromDate: '', lastSubmittedToDate: '2024-01-14' },
+        { crmType: 'crm14', lastSubmittedFromDate: '', lastSubmittedToDate: '2024-01-05' },
         "Enter 'Last submitted date from'",
       ],
       [
@@ -255,22 +255,22 @@ describe('Generate Report Validation', () => {
       [
         'invalid Decision date range',
         { crmType: 'crm14', decisionFromDate: '2024-01-01', decisionToDate: '2024-04-01' },
-        'Decision date range cannot be more than 2 weeks',
+        'Decision date range cannot be more than 1 week',
       ],
       [
         'invalid Submitted date range',
         { crmType: 'crm14', submittedFromDate: '2024-01-01', submittedToDate: '2024-04-01' },
-        'Submitted date range cannot be more than 2 weeks',
+        'Submitted date range cannot be more than 1 week',
       ],
       [
         'invalid Created date range',
         { crmType: 'crm14', createdFromDate: '2024-01-01', createdToDate: '2024-04-01' },
-        'Created date range cannot be more than 2 weeks',
+        'Created date range cannot be more than 1 week',
       ],
       [
         'invalid Last submitted date range',
         { crmType: 'crm14', lastSubmittedFromDate: '2024-01-01', lastSubmittedToDate: '2024-04-01' },
-        'Last submitted date range cannot be more than 2 weeks',
+        'Last submitted date range cannot be more than 1 week',
       ],
     ])('should return error for %s', (reason, params, error) => {
       const result = validateReportParams(params)
