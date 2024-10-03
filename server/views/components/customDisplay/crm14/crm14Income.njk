@@ -66,58 +66,51 @@
         [
             { text: "Employment" },
             { text: data.allIncomes.you.wageCalc | formatCurrency },
-            { text: data.allIncomes.you.wagePaidEvery },
+            { text: data.allIncomes.you.wagePaidEvery | transformValue('every') },
             { text: data.allIncomes.partner.wageCalc | formatCurrency },
-            { text: data.allIncomes.partner.wagePaidEvery }
+            { text: data.allIncomes.partner.wagePaidEvery | transformValue('every') }
         ],
         [
             { text: "Child Benefit" },
             { text: data.allIncomes.you.childBenefit | formatCurrency },
-            { text: data.allIncomes.you.childBenefitPaidEvery },
+            { text: data.allIncomes.you.childBenefitPaidEvery | transformValue('every') },
             { text: data.allIncomes.partner.childBenefit | formatCurrency },
-            { text: data.allIncomes.partner.childBenefitPaidEvery }
+            { text: data.allIncomes.partner.childBenefitPaidEvery | transformValue('every') }
         ],
         [
             { text: "Working Tax Credits" },
             { text: data.allIncomes.you.taxCreditsAmount | formatCurrency },
-            { text: data.allIncomes.you.taxCreditsPaidEvery },
+            { text: data.allIncomes.you.taxCreditsPaidEvery | transformValue('every') },
             { text: data.allIncomes.partner.taxCreditsAmount | formatCurrency },
-            { text: data.allIncomes.partner.taxCreditsPaidEvery }
+            { text: data.allIncomes.partner.taxCreditsPaidEvery | transformValue('every') }
         ],
         [
             { text: "Universal Credit" },
             { text: data.allIncomes.you.universalCredit | formatCurrency },
-            { text: data.allIncomes.you.universalCreditPaidEvery },
+            { text: data.allIncomes.you.universalCreditPaidEvery | transformValue('every') },
             { text: data.allIncomes.partner.universalCredit | formatCurrency },
-            { text: data.allIncomes.partner.universalCreditPaidEvery }
+            { text: data.allIncomes.partner.universalCreditPaidEvery | transformValue('every') }
         ],
         [
             { text: "Other Benefits" },
             { text: data.allIncomes.you.otherBenefitsCalc | formatCurrency },
-            { text: data.allIncomes.you.otherBenefitsPaidEvery },
+            { text: data.allIncomes.you.otherBenefitsPaidEvery | transformValue('every') },
             { text: data.allIncomes.partner.otherBenefitsCalc | formatCurrency },
-            { text: data.allIncomes.partner.otherBenefitsPaidEvery }
+            { text: data.allIncomes.partner.otherBenefitsPaidEvery | transformValue('every') }
         ],
         [
             { text: "Maintenance Income" },
             { text: data.allIncomes.you.maintenancePayment | formatCurrency },
-            { text: data.allIncomes.you.maintenancePaymentPaidEvery },
+            { text: data.allIncomes.you.maintenancePaymentPaidEvery | transformValue('every') },
             { text: data.allIncomes.partner.maintenancePayment | formatCurrency },
-            { text: data.allIncomes.partner.maintenancePaymentPaidEvery }
+            { text: data.allIncomes.partner.maintenancePaymentPaidEvery | transformValue('every') }
         ],
         [
             { text: "Pensions" },
             { text: data.allIncomes.you.pensionsCalc | formatCurrency },
-            { text: data.allIncomes.you.pensionsPaidEvery },
+            { text: data.allIncomes.you.pensionsPaidEvery | transformValue('every') },
             { text: data.allIncomes.partner.pensionsCalc | formatCurrency },
-            { text: data.allIncomes.partner.pensionsPaidEvery }
-        ],
-        [
-            { text: "Other Income" },
-            { text: data.allIncomes.you.otherIncomeCalc | formatCurrency },
-            { text: data.allIncomes.you.otherIncomePaidEvery },
-            { text: data.allIncomes.partner.otherIncomeCalc | formatCurrency },
-            { text: data.allIncomes.partner.otherIncomePaidEvery }
+            { text: data.allIncomes.partner.pensionsPaidEvery | transformValue('every') }
         ]
     ]
 } %}
@@ -169,11 +162,11 @@
     {% endif %}
 
     {% set _ = sourcesOfIncomeTable.rows.push([
-        { text: "Other Source" },
+        { text: "Any other source of income" },
         { text: (data.allIncomes.you.otherIncomeCalc | formatCurrency + '<br>' + otherSourcesYou) | safe },
-        { text: data.allIncomes.you.otherIncomePaidEvery },
+        { text: data.allIncomes.you.otherIncomePaidEvery | transformValue('every') },
         { text: (data.allIncomes.partner.otherIncomeCalc | formatCurrency + '<br>' + otherSourcesPartner) | safe },
-        { text: data.allIncomes.partner.otherIncomePaidEvery }
+        { text: data.allIncomes.partner.otherIncomePaidEvery | transformValue('every') }
     ]) %}
 
     {{ formSubsection('Sources of Income for you and your partner', sourcesOfIncomeTable, true) }}
