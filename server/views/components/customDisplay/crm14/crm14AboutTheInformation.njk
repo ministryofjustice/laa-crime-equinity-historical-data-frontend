@@ -13,7 +13,7 @@
     {% for category, options in data.ethnicity %}
         {% for option, value in options %}
             {% if value %}
-                {% set ethnicityValue = ((category|capitalize) + ' - ' + (option|splitCamelCase|capitalize)) | safe %}
+                {% set ethnicityValue = (option | transformValue('ethnicity')) | safe %}
                 {% set _ = ethnicityValues.push(ethnicityValue) %}
             {% endif %}
         {% endfor %}
