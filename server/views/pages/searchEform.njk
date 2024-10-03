@@ -45,8 +45,8 @@
 
                 {% for item in results %}
 
-                    {% set clientName = '<a href="' + item.crmLink + '" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-body-m govuk-!-font-weight-bold">' + item.clientName | lower | capitalize  + '</a>' %}
-                    {% set usn = '<div class="first-column-usn govuk-body-s govuk-!-margin-bottom-2 govuk-!-margin-top-1">' + item.usn + '</div>' %}
+                    {% set clientName = '<a href="' + item.crmLink + '" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-!-font-weight-bold">' + item.clientName | lower | capitalize  + '</a>' %}
+                    {% set usn = '<div class="first-column-usn govuk-!-margin-bottom-2 govuk-!-margin-top-1">' + item.usn + '</div>' %}
                     {% set type = item.type %}
                     {% set originatedDate = item.originatedDate %}
                     {% set submittedDate = item.submittedDate %}
@@ -55,13 +55,13 @@
 
                     {% set statusColour = [] %}
                     {% if (status === 'Granted') or (status === 'Completed') or (status === 'Post Refer Granted') or (status === 'Granted By SC') or (status === 'Part Granted') or (status === 'Post Refer Granted') or (status === 'Post Refer Part Granted') or (status === 'Part Granted By SC') %}
-                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--green">' + status + '</div>'), statusColour) %}
+                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-body-s govuk-tag--green">' + status + '</div>'), statusColour) %}
                     {%  elseif (status === 'Printed') %}
-                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--light-blue">' + status + '</div>'), statusColour) %}
+                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-body-s govuk-tag--light-blue">' + status + '</div>'), statusColour) %}
                     {%  elseif (status === 'Aborted') %}
-                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--blue">' + status + '</div>'), statusColour) %}
+                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-body-s govuk-tag--blue">' + status + '</div>'), statusColour) %}
                     {%  elseif (status === 'Deleted') %}
-                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--grey">' + status + '</div>'), statusColour) %}
+                        {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-body-s govuk-tag--grey">' + status + '</div>'), statusColour) %}
                     {%  elseif (status === 'Rejected No Info') or (status === 'Rejected') or (status === 'Rejected By SC') or (status === 'Post Refer Rejected') or (status === 'Returned or Reassigned') %}
                         {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--orange">' + status + '</div>'), statusColour)  %}
                     {%  else %}
