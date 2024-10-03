@@ -45,8 +45,8 @@
 
                 {% for item in results %}
 
-                    {% set clientName = '<a href="' + item.crmLink + '" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-body-s govuk-!-font-weight-bold">' + item.clientName | lower | capitalize  + '</a>' %}
-                    {% set usn = '<div class="first-column-usn govuk-body-s govuk-!-margin-bottom-2 govuk-!-margin-top-1">' + item.usn + '</div>' %}
+                    {% set clientName = '<a href="' + item.crmLink + '" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-!-font-weight-bold">' + item.clientName | lower | capitalize  + '</a>' %}
+                    {% set usn = '<div class="first-column-usn govuk-!-margin-bottom-2 govuk-!-margin-top-1">' + item.usn + '</div>' %}
                     {% set type = item.type %}
                     {% set originatedDate = item.originatedDate %}
                     {% set submittedDate = item.submittedDate %}
