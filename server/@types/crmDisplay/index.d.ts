@@ -11,6 +11,7 @@ type TransformType =
   | 'category2'
   | 'category3'
   | 'courtType'
+  | 'ethnicity'
   | 'every'
   | 'levelOfWork'
   | 'offenceType'
