@@ -2,10 +2,18 @@
 import path from 'path'
 import nunjucks from 'nunjucks'
 import express from 'express'
-import { initialiseName, isNotEmpty, formatBooleanToYesNo, formatMultiline } from './utils'
+import { initialiseName, isNotEmpty } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
-import { formatCurrency, formatDate, formatPercentage, formatTime, splitCamelCase } from './crmFieldFormatter'
+import {
+  formatBooleanToYesNo,
+  formatCurrency,
+  formatDate,
+  formatMultiline,
+  formatPercentage,
+  formatTime,
+  splitCamelCase,
+} from './crmFieldFormatter'
 
 import transformValue from './crmFieldTransformer'
 
