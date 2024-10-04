@@ -1,4 +1,6 @@
+import { runtime } from 'nunjucks'
 import { formatBooleanToYesNo, formatCurrency, formatDate, formatMultiline, formatTime } from './crmFieldFormatter'
+import SafeString = runtime.SafeString
 
 describe('CRM Field Formatter', () => {
   describe('formatBooleanToYesNo', () => {
@@ -55,7 +57,8 @@ describe('CRM Field Formatter', () => {
         'This is line1.\nThis is line2.#13;\nThis is line3.#13;',
         'This is line1.<br>This is line2.<br>This is line3.<br>',
       ],
-    ])('given %s returns "%s"', (input: string, expected: string) => {
+      [new SafeString('UBER EATS#13;\nUber driver'), 'UBER EATS<br>Uber driver'], // nunjucks safe string
+    ])('given %s returns "%s"', (input: string | object, expected: string) => {
       expect(formatMultiline(input)).toEqual(expected)
     })
   })

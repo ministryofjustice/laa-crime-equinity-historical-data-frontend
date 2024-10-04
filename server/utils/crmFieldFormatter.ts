@@ -1,4 +1,6 @@
 import { format } from 'date-fns'
+import { runtime } from 'nunjucks'
+import SafeString = runtime.SafeString
 
 const currencyFormat = new Intl.NumberFormat('en-GB', {
   style: 'currency',
@@ -29,8 +31,12 @@ export const formatDate = (value: string, dateFormat?: string): string => {
   return format(date, 'd MMMM yyyy')
 }
 
-export const formatMultiline = (value: string) => {
-  return value.replace(/(\n|#13;\n|#13;)/g, '<br>')
+export const formatMultiline = (value: string | object) => {
+  if (typeof value === 'string' || value instanceof SafeString) {
+    const valueAsString = value as string
+    return valueAsString.replace(/(\n|#13;\n|#13;)/g, '<br>')
+  }
+  return value
 }
 
 export const formatTime = (value: string, dateFormat?: string): string => {
