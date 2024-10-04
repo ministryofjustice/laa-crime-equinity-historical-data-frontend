@@ -56,6 +56,6 @@
     {% elif field.transform %}
         {{ field.value | transformValue(field.transform) }}
     {% else %}
-        {{ field.value }}
+        {{ field.value | replace ('�', '£') }}
     {% endif %}
 {% endmacro %}

@@ -44,7 +44,7 @@ export const formatBooleanToYesNo = (value: boolean): string => {
 }
 
 export const formatMultiline = (value: string) => {
-  return value.replace(/\n/g, '<br>')
+  return value.replace(/(\n|#13;\n|#13;)/g, '<br>')
 }
 
 export const isNotEmpty = (value: string): boolean => {
