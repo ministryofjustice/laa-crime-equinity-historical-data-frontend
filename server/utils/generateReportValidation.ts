@@ -57,7 +57,7 @@ const crm14CheckDateRange = (fromDateField: string, toDateField: string) => {
       return helpers.error(`${toDateField}.earlier`, undefined, { path: [toDateField] })
     }
 
-    if (differenceInDays(value, fromDate) > 7) {
+    if (differenceInDays(value, fromDate) > 31) {
       return helpers.error(`${toDateField}.range`, undefined, { path: [] })
     }
 
@@ -141,20 +141,20 @@ const schemaCrm14 = Joi.object({
     'decisionFromDate.missing': "Enter 'Decision date from'",
     'decisionToDate.missing': "Enter 'Decision date to'",
     'decisionToDate.earlier': "Your 'Decision date to' must be the same as or after your 'Decision date from'",
-    'decisionToDate.range': 'Decision date range cannot be more than 1 week',
+    'decisionToDate.range': 'Decision date range cannot be more than 1 month',
     'submittedFromDate.missing': "Enter 'Submitted date from'",
     'submittedToDate.missing': "Enter 'Submitted date to'",
     'submittedToDate.earlier': "Your 'Submitted date to' must be the same as or after your 'Submitted date from'",
-    'submittedToDate.range': 'Submitted date range cannot be more than 1 week',
+    'submittedToDate.range': 'Submitted date range cannot be more than 1 month',
     'createdFromDate.missing': "Enter 'Created date from'",
     'createdToDate.missing': "Enter 'Created date to'",
     'createdToDate.earlier': "Your 'Created date to' must be the same as or after your 'Created date from'",
-    'createdToDate.range': 'Created date range cannot be more than 1 week',
+    'createdToDate.range': 'Created date range cannot be more than 1 month',
     'lastSubmittedFromDate.missing': "Enter 'Last submitted date from'",
     'lastSubmittedToDate.missing': "Enter 'Last submitted date to'",
     'lastSubmittedToDate.earlier':
       "Your 'Last submitted date to' must be the same as or after your 'Last submitted date from'",
-    'lastSubmittedToDate.range': 'Last submitted date range cannot be more than 1 week',
+    'lastSubmittedToDate.range': 'Last submitted date range cannot be more than 1 month',
   })
 
 export default function validateReportParams(params: Record<string, string>): Errors {
