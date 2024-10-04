@@ -43,6 +43,7 @@ export default class SearchEformController {
           clientDOB: req.query.clientDOB as string,
           startDate: req.query.startDate as string,
           endDate: req.query.endDate as string,
+          laaCaseRef: req.query.laaCaseRef as string,
           page: req.query.page as string,
         }
 
@@ -126,6 +127,7 @@ export default class SearchEformController {
       clientDOB: this.undefinedIfEmpty(queryParams.clientDOB),
       startDate: this.undefinedIfEmpty(queryParams.startDate),
       endDate: this.undefinedIfEmpty(queryParams.endDate),
+      laaCaseRef: this.undefinedIfEmpty(queryParams.laaCaseRef), // Add this line
       page: Number(queryParams.page) - 1, // search api page number starts from 0
       pageSize: SEARCH_PAGE_SIZE,
       profileAcceptedTypes,

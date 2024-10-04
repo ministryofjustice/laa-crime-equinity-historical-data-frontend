@@ -49,6 +49,7 @@ describe('Search Eform Controller', () => {
           submittedDate: '2023-15-13',
           providerAccount: '1234AB',
           providerName: 'Some Provider',
+          laaCaseRef: '222222/333',
           status: 'Completed',
         },
       ],
@@ -81,6 +82,7 @@ describe('Search Eform Controller', () => {
           submittedDate: '2023-15-13',
           providerAccount: '1234AB',
           providerName: 'Some Provider',
+          laaCaseRef: '222222/333',
           status: 'Completed',
         },
       ],
@@ -104,6 +106,7 @@ describe('Search Eform Controller', () => {
         supplierAccountNumber: undefined,
         type: undefined,
         usn: '123456789',
+        laaCaseRef: undefined,
       },
     })
 
@@ -118,6 +121,7 @@ describe('Search Eform Controller', () => {
       page: 0,
       pageSize: 10,
       profileAcceptedTypes: '1,4,5,6',
+      laaCaseRef: undefined,
     })
   })
 
@@ -154,6 +158,7 @@ describe('Search Eform Controller', () => {
         startDate: undefined,
         supplierAccountNumber: undefined,
         usn: '1',
+        laaCaseRef: undefined,
         page: '1',
       },
     })
@@ -189,6 +194,7 @@ describe('Search Eform Controller', () => {
         startDate: undefined,
         supplierAccountNumber: undefined,
         usn: undefined,
+        laaCaseRef: undefined,
         page: '1',
       },
     })
@@ -239,6 +245,7 @@ describe('Search Eform Controller', () => {
         startDate: undefined,
         supplierAccountNumber: undefined,
         usn: '8888888',
+        laaCaseRef: undefined,
         page: '1',
       },
     })
@@ -249,6 +256,7 @@ describe('Search Eform Controller', () => {
       endDate: undefined,
       startDate: undefined,
       supplierAccountNumber: undefined,
+      laaCaseRef: undefined,
       usn: '8888888',
       page: 0,
       pageSize: 10,

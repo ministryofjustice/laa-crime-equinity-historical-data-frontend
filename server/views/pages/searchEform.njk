@@ -10,6 +10,11 @@
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
 
+{% set laaOrMaatTitle = "LAA Case Ref" %}
+{% if results and results.length > 0 and results[0].type == 'CRM14' %}
+    {% set laaOrMaatTitle = "MAAT ID" %}
+{% endif %}
+
 {% set tableData = {
     head: [
         { text: "Client name / USN" },
@@ -17,6 +22,7 @@
         { text: "Start date" },
         { text: "Submission date" },
         { text: "Provider account number" },
+        { text: laaOrMaatTitle },
         { text: "Status" }
     ],
     rows: []
@@ -51,6 +57,7 @@
                     {% set originatedDate = item.originatedDate %}
                     {% set submittedDate = item.submittedDate %}
                     {% set providerAccount = item.providerAccount %}
+                    {% set laaCaseRef = item.laaCaseRef %}
                     {% set status = item.status %}
 
                     {% set statusColour = [] %}
@@ -74,6 +81,7 @@
                         { text: originatedDate | formatDate('dd/MM/yyyy') | safe },
                         { text: submittedDate | formatDate('dd/MM/yyyy') | safe },
                         { text: providerAccount | safe },
+                        { text: laaCaseRef | safe },
                         { text: statusColour | safe }
                     ] -%}
 
