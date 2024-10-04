@@ -127,7 +127,7 @@ export default class SearchEformController {
       clientDOB: this.undefinedIfEmpty(queryParams.clientDOB),
       startDate: this.undefinedIfEmpty(queryParams.startDate),
       endDate: this.undefinedIfEmpty(queryParams.endDate),
-      laaCaseRef: this.undefinedIfEmpty(queryParams.laaCaseRef), // Add this line
+      laaCaseRef: this.undefinedIfEmpty(queryParams.laaCaseRef),
       page: Number(queryParams.page) - 1, // search api page number starts from 0
       pageSize: SEARCH_PAGE_SIZE,
       profileAcceptedTypes,
