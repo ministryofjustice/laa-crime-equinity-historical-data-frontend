@@ -49,13 +49,11 @@
         {{ field.value | formatPercentage }}
     {% elif field.type === 'link' %}
         <a href="{{ field.value.href }}" class="govuk-link govuk-link--no-visited-state">{{ field.value.text }}</a>
-    {% elif field.type === 'multiline' %}
-        {{ field.value | formatMultiline | safe }}
     {% elif field.value === true or field.value === false %}
         {{ field.value | formatYesNo }}
     {% elif field.transform %}
         {{ field.value | transformValue(field.transform) }}
     {% else %}
-        {{ field.value }}
+        {{ (field.value | formatMultiline) | safe }}
     {% endif %}
 {% endmacro %}

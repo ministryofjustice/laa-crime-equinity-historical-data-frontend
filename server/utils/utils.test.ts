@@ -1,11 +1,4 @@
-import {
-  buildQueryString,
-  convertToTitleCase,
-  formatBooleanToYesNo,
-  formatMultiline,
-  initialiseName,
-  isNotEmpty,
-} from './utils'
+import { buildQueryString, convertToTitleCase, initialiseName, isNotEmpty } from './utils'
 
 describe('buildQueryString', () => {
   it.each([
@@ -35,24 +28,6 @@ describe('convert to title case', () => {
   ])('%s convertToTitleCase(%s, %s)', (_: string, a: string, expected: string) => {
     expect(convertToTitleCase(a)).toEqual(expected)
   })
-})
-
-describe('formatBooleanToYesNo', () => {
-  it.each([
-    [true, 'Yes'],
-    [false, 'No'],
-  ])('given %s returns "%s"', (input: boolean, expected: string) => {
-    expect(formatBooleanToYesNo(input)).toEqual(expected)
-  })
-})
-
-describe('formatMultiline', () => {
-  it.each([['This is line1.\nThis is line2.\nThis is line3.', 'This is line1.<br>This is line2.<br>This is line3.']])(
-    'given %s returns "%s"',
-    (input: string, expected: string) => {
-      expect(formatMultiline(input)).toEqual(expected)
-    },
-  )
 })
 
 describe('initialise name', () => {
