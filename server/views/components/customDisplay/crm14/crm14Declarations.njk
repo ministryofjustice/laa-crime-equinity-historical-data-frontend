@@ -10,9 +10,11 @@
         </div>
         <div class="govuk-summary-card__content">
             <p class="govuk-body govuk-!-font-weight-bold">If false information is provided and fraud is identified,
-                details will be passed to fraud prevention agencies to prevent fraud and money laundering.</p>
+                details will be passed to fraud prevention agencies to prevent fraud and money laundering.
+            </p>
             <p class="govuk-body"><span class="govuk-!-font-weight-bold">Further details explaining how the information held by fraud prevention agencies may be used can be found in the 'Fair Processing Notice', available on the Legal Aid Agency website at:</span>
-                <a class="govuk-link" href="http://www.justice.gov.uk/legal-aid">www.justice.gov.uk/legal-aid</a></p>
+                <a class="govuk-link" href="http://www.justice.gov.uk/legal-aid">www.justice.gov.uk/legal-aid</a>
+            </p>
         </div>
     </div>
 
@@ -103,30 +105,29 @@
 
     {# Declaration by the Partner #}
     {% if data.partnerFullName | isNotEmpty %}
-    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
-        <div class="govuk-summary-card__title-wrapper">
-            <h3 class="govuk-summary-card__title">Declaration by your (the applicant's) Partner</h3>
-        </div>
-        <div class="govuk-summary-card__content">
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I declare that</span> the information included
-                in this application is a true statement of all my financial circumstances to the best of my knowledge
-                and belief. I agree to the Legal Aid Agency and HM Courts & Tribunals Service, or my partner's
-                solicitor, checking the information I have given, with the Department for Work and Pensions, HM Revenue
-                and Customs or other people and organisations. I authorise those people and organisations to provide the
-                information for which the Legal Aid Agency, HM Courts and Tribunals Service or my partner's solicitor
-                may ask.</p>
-            <dl class="govuk-summary-list">
-                {{ formField({ label: "I have read the Declaration and Fraud Notice above", value: data.isPartnerConfirmed }) }}
-                {{ formField({ label: "Full name", value: data.partnerFullName }) }}
+        <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+            <div class="govuk-summary-card__title-wrapper">
+                <h3 class="govuk-summary-card__title">Declaration by your (the applicant's) Partner</h3>
+            </div>
+            <div class="govuk-summary-card__content">
+                <p class="govuk-body"><span class="govuk-!-font-weight-bold">I declare that</span> the information
+                    included in this application is a true statement of all my financial circumstances to the best of my
+                    knowledge and belief. I agree to the Legal Aid Agency and HM Courts & Tribunals Service, or my partner's
+                    solicitor, checking the information I have given, with the Department for Work and Pensions, HM
+                    Revenue and Customs or other people and organisations. I authorise those people and organisations to provide
+                    the information for which the Legal Aid Agency, HM Courts and Tribunals Service or my partner's solicitor may ask.</p>
+                <dl class="govuk-summary-list">
+                    {{ formField({ label: "I have read the Declaration and Fraud Notice above", value: data.isPartnerConfirmed }) }}
+                    {{ formField({ label: "Full name", value: data.partnerFullName }) }}
 
-                {% if data.isPartnerConfirmed %}
-                    {{ formField({ label: "Signed date", value: data.partnerSignedDate | formatDate }) }}
-                {% else %}
-                    {{ formField({ label: "If your partner has not signed the declaration, please explain", value: data.partnerReasonNotSigned }) }}
-                {% endif %}
-            </dl>
+                    {% if data.isPartnerConfirmed %}
+                        {{ formField({ label: "Signed date", value: data.partnerSignedDate | formatDate }) }}
+                    {% else %}
+                        {{ formField({ label: "If your partner has not signed the declaration, please explain", value: data.partnerReasonNotSigned }) }}
+                    {% endif %}
+                </dl>
+            </div>
         </div>
-    </div>
     {% endif %}
 
     {# Declaration by the Legal Representative #}
