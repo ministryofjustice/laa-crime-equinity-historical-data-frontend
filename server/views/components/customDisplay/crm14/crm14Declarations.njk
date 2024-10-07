@@ -1,41 +1,79 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formFieldList.njk" import formFieldList %}
+
 {% macro crm14Declarations(data) %}
+
+    {# Fraud Notice section #}
     <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
         <div class="govuk-summary-card__title-wrapper">
             <h3 class="govuk-summary-card__title">Fraud Notice</h3>
         </div>
         <div class="govuk-summary-card__content">
-            <p class="govuk-body govuk-!-font-weight-bold">If false information is provided and fraud is identified, details will be passed to fraud prevention agencies to prevent fraud and money laundering.</p>
+            <p class="govuk-body govuk-!-font-weight-bold">If false information is provided and fraud is identified,
+                details will be passed to fraud prevention agencies to prevent fraud and money laundering.</p>
             <p class="govuk-body"><span class="govuk-!-font-weight-bold">Further details explaining how the information held by fraud prevention agencies may be used can be found in the 'Fair Processing Notice', available on the Legal Aid Agency website at:</span>
                 <a class="govuk-link" href="http://www.justice.gov.uk/legal-aid">www.justice.gov.uk/legal-aid</a></p>
         </div>
     </div>
 
+    {# Declaration by the Applicant #}
     <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
         <div class="govuk-summary-card__title-wrapper">
             <h3 class="govuk-summary-card__title">Declaration by the Applicant</h3>
         </div>
         <div class="govuk-summary-card__content">
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I apply for</span> the higher level of representation for the purposes of criminal proceedings under the Legal Aid, Sentencing and Punishment of Offenders Act 2012.</p>
-            <p class="govuk-body govuk-!-font-weight-bold">I understand that if I have declared anything that is not true on this form, or the documents sent with it, or left anything out:</p>
+            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I apply for</span> the right to representation
+                for the purposes of criminal proceedings under the Legal Aid, Sentencing and Punishment of Offenders Act
+                2012.</p>
+            <p class="govuk-body govuk-!-font-weight-bold">I understand that if I have declared anything that is not
+                true on this form, or the documents sent with it, or left anything out:</p>
             <ul class="govuk-list govuk-list--bullet">
-                <li>I may be prosecuted for fraud. I understand that if I am convicted, I may be sent to prison or pay a fine.</li>
-                <li>My legal aid may be stopped and I may be asked to pay back my costs in full to the Legal Aid Agency.</li>
-                <li>In my case in the Crown Court, the Legal Aid Agency may change the amount of the contribution I must pay.</li>
+                <li>I may be prosecuted for fraud. I understand that if I am convicted, I may be sent to prison or pay a
+                    fine.
+                </li>
+                <li>My legal aid may be stopped and I may be asked to pay back my costs in full to the Legal Aid
+                    Agency.
+                </li>
+                <li>In my case in the Crown Court, the Legal Aid Agency may change the amount of the contribution I must
+                    pay.
+                </li>
             </ul>
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I agree</span> to tell the Legal Aid Agency or HM Courts & Tribunal Service <span class="govuk-!-font-weight-bold">immediately</span> if my income or capital or those of my partner change. These changes include the sale of property, change of address, change in employment, and change in capital.</p>
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">Evidence</span> I agree to provide, when asked, further details and evidence of my finances and those of my partner, to the Legal Aid Agency, its agents, or HM Courts & Tribunals Service to help them decide whether an Order should be made and its terms.</p>
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">Ending legal aid</span> I understand that I must tell my solicitor and write to the court if I no longer want public representation. I understand that if I decline representation I may be liable for costs incurred to the date when my solicitor and the court receive my letter.</p>
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I authorise</span> such enquiries as are considered necessary to enable the Legal Aid Agency, its agents, HM Courts & Tribunals Service, or my solicitor to find out my income and capital, and those of my partner.</p>
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I consent</span> to the following being contacted and providing information about me to verify the information that I have given in this application:</p>
+            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I agree</span> to tell the Legal Aid Agency or
+                HM Courts & Tribunal Service <span class="govuk-!-font-weight-bold">immediately</span> if my income or
+                capital or those of my partner change. These changes include the sale of property, change of address,
+                change in employment, and change in capital.</p>
+            <p class="govuk-body"><span class="govuk-!-font-weight-bold">Evidence</span> I agree to provide, when asked,
+                further details and evidence of my finances and those of my partner, to the Legal Aid Agency, its
+                agents, or HM Courts & Tribunals Service to help them decide whether an Order should be made and its
+                terms.</p>
+            <p class="govuk-body"><span class="govuk-!-font-weight-bold">Ending legal aid</span> I understand that I
+                must tell my solicitor and write to the court if I no longer want public representation. I understand
+                that if I decline representation I may be liable for costs incurred to the date when my solicitor and
+                the court receive my letter.</p>
+            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I authorise</span> such enquiries as are
+                considered necessary to enable the Legal Aid Agency, its agents, HM Courts & Tribunals Service, or my
+                solicitor to find out my income and capital, and those of my partner.</p>
+            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I consent</span> to the following being
+                contacted and providing information about me to verify the information that I have given in this
+                application:</p>
             <ul class="govuk-list govuk-list--bullet govuk-!-font-weight-bold">
                 <li>The Department for Work and Pensions</li>
                 <li>Her Majesty's Revenue and Customs</li>
                 <li>My bank or building society</li>
                 <li>Any local government body or other public body with which I interact.</li>
             </ul>
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I consent</span> to the Legal Aid Agency or my solicitor <span class="govuk-!-font-weight-bold">contacting my partner</span> for information and evidence about my partner’s means. This includes circumstances where my partner is unable to sign or complete the form.</p>
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I understand</span> that if the information which my partner provides is incorrect, or if my partner refuses to provide information, then if my case is in the magistrates’ court, my legal aid may be refused or, if my case is in the Crown Court, I may be liable to sanctions. I understand that the sanctions may result in me paying my legal aid costs in full.</p>
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I understand</span> that in Crown Court proceedings the information I have given in this form will be used to determine whether I am eligible for legal aid and, if so, whether I am liable to contribute to the costs of my defence:</p>
+            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I consent</span> to the Legal Aid Agency or my
+                solicitor <span class="govuk-!-font-weight-bold">contacting my partner</span> for information and
+                evidence about my partner’s means. This includes circumstances where my partner is unable to sign or
+                complete the form.</p>
+            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I understand</span> that if the information
+                which my partner provides is incorrect, or if my partner refuses to provide information, then if my case
+                is in the magistrates’ court, my legal aid may be refused or, if my case is in the Crown Court, I may be
+                liable to sanctions. I understand that the sanctions may result in me paying my legal aid costs in full.
+            </p>
+            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I understand</span> that in Crown Court
+                proceedings the information I have given in this form will be used to determine whether I am eligible
+                for legal aid and, if so, whether I am liable to contribute to the costs of my defence:</p>
             <ul class="govuk-list govuk-list--bullet">
                 <li>Under an Income Contribution Order during my case.</li>
                 <li>Or if I am convicted, under a Final Contribution Order at the end of my case,</li>
@@ -44,53 +82,73 @@
             <p class="govuk-body"><span class="govuk-!-font-weight-bold">I understand</span> that:</p>
             <ul class="govuk-list govuk-list--bullet">
                 <li>If I am ordered to pay towards my legal aid under an Income Contribution Order.</li>
-                <li>Or if I am convicted and ordered to pay under a Final Contribution Order, </li>
+                <li>Or if I am convicted and ordered to pay under a Final Contribution Order,</li>
             </ul>
-            <p class="govuk-body">but fail to pay as an Order instructs me, interest may be charged or enforcement proceedings may be brought against me, or both.</p>
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I understand</span> that I may have to pay the costs of the enforcement proceedings in addition to the payments required under the Contribution Order, and that the enforcement proceedings could result in a charge being placed on my home.</p>
-            <p class="govuk-body">I have read the Declaration and Fraud Notice above.</p>
+            <p class="govuk-body">but fail to pay as an Order instructs me, interest may be charged or enforcement
+                proceedings may be brought against me, or both.</p>
+            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I understand</span> that I may have to pay the
+                costs of the enforcement proceedings in addition to the payments required under the Contribution Order,
+                and that the enforcement proceedings could result in a charge being placed on my home.</p>
+
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">Full name</dt>
-                    <dd class="govuk-summary-list__value">{{ data.applicantFullName }}</dd>
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">Signed date</dt>
-                    <dd class="govuk-summary-list__value">{{ data.applicantSignedDate | formatDate }}</dd>
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">Partner's full name</dt>
-                    <dd class="govuk-summary-list__value">{{ data.partnerFullName }}</dd>
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">Partner's signed date</dt>
-                    <dd class="govuk-summary-list__value">{{ data.partnerSignedDate | formatDate }}</dd>
-                </div>
+                {{ formField({ label: "I have read the Declaration and Fraud Notice above", value: data.isApplicantConfirmed }) }}
+                {{ formField({ label: "Full name", value: data.applicantFullName }) }}
+
+                {% if data.isApplicantConfirmed %}
+                    {{ formField({ label: "Signed date", value: data.applicantSignedDate | formatDate }) }}
+                {% endif %}
             </dl>
         </div>
     </div>
 
+    {# Declaration by the Partner #}
+    {% if data.partnerFullName | isNotEmpty %}
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Declaration by your (the applicant's) Partner</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I declare that</span> the information included
+                in this application is a true statement of all my financial circumstances to the best of my knowledge
+                and belief. I agree to the Legal Aid Agency and HM Courts & Tribunals Service, or my partner's
+                solicitor, checking the information I have given, with the Department for Work and Pensions, HM Revenue
+                and Customs or other people and organisations. I authorise those people and organisations to provide the
+                information for which the Legal Aid Agency, HM Courts and Tribunals Service or my partner's solicitor
+                may ask.</p>
+            <dl class="govuk-summary-list">
+                {{ formField({ label: "I have read the Declaration and Fraud Notice above", value: data.isPartnerConfirmed }) }}
+                {{ formField({ label: "Full name", value: data.partnerFullName }) }}
+
+                {% if data.isPartnerConfirmed %}
+                    {{ formField({ label: "Signed date", value: data.partnerSignedDate | formatDate }) }}
+                {% else %}
+                    {{ formField({ label: "If your partner has not signed the declaration, please explain", value: data.partnerReasonNotSigned }) }}
+                {% endif %}
+            </dl>
+        </div>
+    </div>
+    {% endif %}
+
+    {# Declaration by the Legal Representative #}
     <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
         <div class="govuk-summary-card__title-wrapper">
             <h3 class="govuk-summary-card__title">Declaration by the Legal Representative</h3>
         </div>
         <div class="govuk-summary-card__content">
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I confirm</span> that I have gone through the questions on the interests of justice and financial assessment aspects of the application with the applicant.</p>
-            <p class="govuk-body">I confirm that the applicant has not provided me with any information which contradicts the information provided in this declaration of financial circumstances and has given me no indication that information declared is incomplete or untrue.</p>
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">Full name</dt>
-                    <dd class="govuk-summary-list__value">{{ data.legalRepFullName }}</dd>
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">Dated</dt>
-                    <dd class="govuk-summary-list__value">{{ data.legalRepSignedDate | formatDate }}</dd>
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">Legal Service Provider's LAA Account Number</dt>
-                    <dd class="govuk-summary-list__value">{{ data.legalRepAccountNum }}</dd>
-                </div>
-            </dl>
+            <p class="govuk-body"><span class="govuk-!-font-weight-bold">I confirm</span> that I have gone through the
+                questions on the interests of justice and financial assessment aspects of the application with the
+                applicant.</p>
+            <p class="govuk-body">I confirm that the applicant has not provided me with any information which
+                contradicts the information provided in this declaration of financial circumstances and has given me no
+                indication that information declared is incomplete or untrue.</p>
+
+            {% set fields = [
+                { label: "Full name", value: data.legalRepFullName },
+                { label: "Signed date", value: data.legalRepSignedDate | formatDate  },
+                { label: "Legal Service Provider's LAA Account Number", value: data.legalRepAccountNum }
+            ] %}
+
+            {{ formFieldList(fields) }}
         </div>
     </div>
 {% endmacro %}
