@@ -118,13 +118,16 @@
                     the information for which the Legal Aid Agency, HM Courts and Tribunals Service or my partner's solicitor may ask.</p>
                 <dl class="govuk-summary-list">
                     {{ formField({ label: "I have read the Declaration and Fraud Notice above", value: data.isPartnerConfirmed }) }}
-                    {{ formField({ label: "Full name", value: data.partnerFullName }) }}
 
                     {% if data.isPartnerConfirmed %}
+                        {{ formField({ label: "Full name", value: data.partnerFullName }) }}
                         {{ formField({ label: "Signed date", value: data.partnerSignedDate | formatDate }) }}
                     {% else %}
                         {{ formField({ label: "If your partner has not signed the declaration, please explain", value: data.partnerReasonNotSigned }) }}
+                        {{ formField({ label: "Full name", value: data.partnerFullName }) }}
                     {% endif %}
+
+
                 </dl>
             </div>
         </div>
