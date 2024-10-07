@@ -49,7 +49,7 @@
 
 <!-- Total Income -->
 {% set fieldsTotalIncome = [
-    { label: "Do you or your partner, together, in a year have a total income from all sources before tax or any other deduction, of more than £12,475 (£239.90 a week)?", value: data.totalIncome }
+    { label: "Do you or your partner, together, in a year have a total income from all sources before tax or any other deduction, of more than £12,475 (£239.90 a week)?", value: data.haveIncomeOverThreshold }
 ] %}
     {{ formSubsection('Total Income', fieldsTotalIncome) }}
 
