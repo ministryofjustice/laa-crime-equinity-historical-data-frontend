@@ -63,7 +63,7 @@
     ],
     rows: [
         [
-            { text: "Employment" },
+            { text: "Employment (Wage or Salary)" },
             { text: data.allIncomes.you.wageCalc | formatCurrency },
             { text: data.allIncomes.you.wagePaidEvery },
             { text: data.allIncomes.partner.wageCalc | formatCurrency },
@@ -77,7 +77,7 @@
             { text: data.allIncomes.partner.childBenefitPaidEvery }
         ],
         [
-            { text: "Working Tax Credits" },
+            { text: "Working Tax Credits and Child Tax Credits" },
             { text: data.allIncomes.you.taxCreditsAmount | formatCurrency },
             { text: data.allIncomes.you.taxCreditsPaidEvery },
             { text: data.allIncomes.partner.taxCreditsAmount | formatCurrency },
@@ -91,7 +91,7 @@
             { text: data.allIncomes.partner.universalCreditPaidEvery }
         ],
         [
-            { text: "Other Benefits" },
+            { text: "Total of Other Benefits" },
             { text: data.allIncomes.you.otherBenefitsCalc | formatCurrency },
             { text: data.allIncomes.you.otherBenefitsPaidEvery },
             { text: data.allIncomes.partner.otherBenefitsCalc | formatCurrency },
@@ -112,7 +112,7 @@
             { text: data.allIncomes.partner.pensionsPaidEvery }
         ],
         [
-            { text: "Other Income" },
+            { text: "Any Other Source of Income" },
             { text: data.allIncomes.you.otherIncomeCalc | formatCurrency },
             { text: data.allIncomes.you.otherIncomePaidEvery },
             { text: data.allIncomes.partner.otherIncomeCalc | formatCurrency },
