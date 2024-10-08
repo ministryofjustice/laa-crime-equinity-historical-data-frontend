@@ -10,9 +10,15 @@
         "Refer": "Refer For ICA"
     } %}
 
+    {% if data.QualityControl.decision === 'G' %}
+        {% set reasonLabel = "Notes" %}
+    {% else %}
+        {% set reasonLabel = "Reason for decision" %}
+    {% endif %}
+
     {% set fieldsQualityControl = [
         { label: "Decision", value: decisionOptions[data.QualityControl.decision] },
-        { label: "Reason for decision", value: data.QualityControl.decisionReason },
+        { label: reasonLabel, value: data.QualityControl.decisionReason },
         { label: "Destruction date", value: data.QualityControl.destructionDate | formatDate }
     ] %}
     {{ formSubsection('Quality control', fieldsQualityControl) }}
