@@ -48,11 +48,47 @@
 
     <!-- Total Income -->
     {% set fieldsTotalIncome = [
-        { label: "Do you or your partner, together, in a year have a total income from all sources before tax or any other deduction, of more than £12,475 (£239.90 a week)?", value: data.totalIncome }
+        { label: "Do you or your partner, together, in a year have a total income from all sources before tax or any other deduction, of more than £12,475 (£239.90 a week)?", value: data.haveIncomeOverThreshold }
     ] %}
     {{ formSubsection('Total Income', fieldsTotalIncome) }}
 
-    <!-- Sources of Income -->
+    {% if data.haveIncomeOverThreshold === 'No' %}
+        <!-- Sources of Income -->
+       {{ sourcesOfIncome(data) }}
+
+    {% endif %}
+
+    <!-- Restraint Order -->
+    {% set fieldsRestraintOrder = [
+        { label: "Do you or your partner have any income, savings or assets which are under a restraint order or a freezing order?", value: data.freezingOrder }
+    ] %}
+    {{ formSubsection('Restraint Order', fieldsRestraintOrder) }}
+
+    <!-- Ownership of Property -->
+    {% set fieldsOwnershipProperty = [
+        { label: "Do you or your partner own or part-own any land or property of any kind, including your own home, in the United Kingdom or overseas?", value: data.ownLandOrProperty }
+    ] %}
+    {{ formSubsection('Ownership of Property', fieldsOwnershipProperty) }}
+
+    <!-- Savings or Investments -->
+    {% set fieldsSavingsInvestments = [
+        { label: "Do you or your partner have any savings or investments, in the United Kingdom or overseas?", value: data.savingsOrInvestments }
+    ] %}
+    {{ formSubsection('Savings or Investments', fieldsSavingsInvestments) }}
+
+    <!-- Other Financial Information -->
+    {% set fieldsOtherFinancialInfo = [
+        { label: "Sleeping at friend's sofa - no money received", value: data.noMoneySleepingAtFriend },
+        { label: "Staying with family - no money received", value: data.noMoneyStayingWithFamily },
+        { label: "Living on the streets/homeless", value: data.homeless },
+        { label: "Remanded in custody for more than 3 months", value: data.remandedInCustody },
+        { label: "How you pay bills", value: data.howPayBillsText }
+    ] %}
+    {{ formSubsection('Other Financial Information', fieldsOtherFinancialInfo) }}
+{% endmacro %}
+
+{% macro sourcesOfIncome(data) %}
+
     {% set sourcesOfIncomeTable = {
         head: [
             { text: "" },
@@ -170,32 +206,4 @@
 
     {{ formSubsection('Sources of Income for you and your partner', sourcesOfIncomeTable, true) }}
 
-    <!-- Restraint Order -->
-    {% set fieldsRestraintOrder = [
-        { label: "Do you or your partner have any income, savings or assets which are under a restraint order or a freezing order?", value: data.freezingOrder }
-    ] %}
-    {{ formSubsection('Restraint Order', fieldsRestraintOrder) }}
-
-    <!-- Ownership of Property -->
-    {% set fieldsOwnershipProperty = [
-        { label: "Do you or your partner own or part-own any land or property of any kind, including your own home, in the United Kingdom or overseas?", value: data.ownLandOrProperty }
-    ] %}
-    {{ formSubsection('Ownership of Property', fieldsOwnershipProperty) }}
-
-    <!-- Savings or Investments -->
-    {% set fieldsSavingsInvestments = [
-        { label: "Do you or your partner have any savings or investments, in the United Kingdom or overseas?", value: data.savingsOrInvestments }
-    ] %}
-    {{ formSubsection('Savings or Investments', fieldsSavingsInvestments) }}
-
-    <!-- Other Financial Information -->
-    {% set fieldsOtherFinancialInfo = [
-        { label: "Sleeping at friend's sofa - no money received", value: data.noMoneySleepingAtFriend },
-        { label: "Staying with family - no money received", value: data.noMoneyStayingWithFamily },
-        { label: "Living on the streets/homeless", value: data.homeless },
-        { label: "Remanded in custody for more than 3 months", value: data.remandedInCustody },
-        { label: "How you pay bills", value: data.howPayBillsText }
-    ] %}
-    {{ formSubsection('Other Financial Information', fieldsOtherFinancialInfo) }}
 {% endmacro %}
-
