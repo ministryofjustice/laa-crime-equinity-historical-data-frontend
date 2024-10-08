@@ -64,16 +64,16 @@
         rows: [
             [
                 { text: "Employment (wage or salary)" },
-                { text: data.allIncomes.you.wageCalc | formatCurrency },
+                { text: data.allIncomes.you.wageAmount | formatCurrency },
                 { text: data.allIncomes.you.wagePaidEvery | transformValue('every') },
-                { text: data.allIncomes.partner.wageCalc | formatCurrency },
+                { text: data.allIncomes.partner.wageAmount | formatCurrency },
                 { text: data.allIncomes.partner.wagePaidEvery | transformValue('every') }
             ],
             [
                 { text: "Child Benefit" },
-                { text: data.allIncomes.you.childBenefit | formatCurrency },
+                { text: data.allIncomes.you.childBenefitAmount | formatCurrency },
                 { text: data.allIncomes.you.childBenefitPaidEvery | transformValue('every') },
-                { text: data.allIncomes.partner.childBenefit | formatCurrency },
+                { text: data.allIncomes.partner.childBenefitAmount | formatCurrency },
                 { text: data.allIncomes.partner.childBenefitPaidEvery | transformValue('every') }
             ],
             [
@@ -85,16 +85,16 @@
             ],
             [
                 { text: "Universal Credit" },
-                { text: data.allIncomes.you.universalCredit | formatCurrency },
+                { text: data.allIncomes.you.universalCreditAmount | formatCurrency },
                 { text: data.allIncomes.you.universalCreditPaidEvery | transformValue('every') },
-                { text: data.allIncomes.partner.universalCredit | formatCurrency },
+                { text: data.allIncomes.partner.universalCreditAmount | formatCurrency },
                 { text: data.allIncomes.partner.universalCreditPaidEvery | transformValue('every') }
             ],
             [
                 { text: "Total of other benefits" },
-                { text: data.allIncomes.you.otherBenefitsCalc | formatCurrency },
+                { text: data.allIncomes.you.otherBenefitsAmount | formatCurrency },
                 { text: data.allIncomes.you.otherBenefitsPaidEvery | transformValue('every') },
-                { text: data.allIncomes.partner.otherBenefitsCalc | formatCurrency },
+                { text: data.allIncomes.partner.otherBenefitsAmount | formatCurrency },
                 { text: data.allIncomes.partner.otherBenefitsPaidEvery | transformValue('every') }
             ],
             [
@@ -106,19 +106,65 @@
             ],
             [
                 { text: "Pensions" },
-                { text: data.allIncomes.you.pensionsCalc | formatCurrency },
+                { text: data.allIncomes.you.pensionsAmount | formatCurrency },
                 { text: data.allIncomes.you.pensionsPaidEvery | transformValue('every') },
-                { text: data.allIncomes.partner.pensionsCalc | formatCurrency },
+                { text: data.allIncomes.partner.pensionsAmount | formatCurrency },
                 { text: data.allIncomes.partner.pensionsPaidEvery | transformValue('every') }
             ]
         ]
     } %}
 
+    {% set otherSourcesYou = "" %}
+    {% if data.allIncomes.you.studentLoan %}
+        {% set otherSourcesYou = otherSourcesYou + 'Student grant<br>' %}
+    {% endif %}
+    {% if data.allIncomes.you.otherIncomeFriendsFamily %}
+        {% set otherSourcesYou = otherSourcesYou + 'Money from friends and/or family<br>' %}
+    {% endif %}
+    {% if data.allIncomes.you.otherIncomeMaintenance %}
+        {% set otherSourcesYou = otherSourcesYou + 'Maintenance<br>' %}
+    {% endif %}
+    {% if data.allIncomes.you.otherIncomeRentFromFamily %}
+        {% set otherSourcesYou = otherSourcesYou + 'Board or rent from family lodger or tenant<br>' %}
+    {% endif %}
+    {% if data.allIncomes.you.otherIncomeRental %}
+        {% set otherSourcesYou = otherSourcesYou + 'Rental income<br>' %}
+    {% endif %}
+    {% if data.allIncomes.you.otherFinancialSupport %}
+        {% set otherSourcesYou = otherSourcesYou + 'Financial support from someone who allows you access to their assets or money<br>' %}
+    {% endif %}
+    {% if data.allIncomes.you.otherIncomeSourceFreetext %}
+        {% set otherSourcesYou = otherSourcesYou + data.allIncomes.you.otherIncomeSourceFreetext %}
+    {% endif %}
+
+    {% set otherSourcesPartner = "" %}
+    {% if data.allIncomes.partner.studentLoan %}
+        {% set otherSourcesPartner = otherSourcesPartner + 'Student grant<br>' %}
+    {% endif %}
+    {% if data.allIncomes.partner.otherIncomeFriendsFamily %}
+        {% set otherSourcesPartner = otherSourcesPartner + 'Money from friends and/or family<br>' %}
+    {% endif %}
+    {% if data.allIncomes.partner.otherIncomeMaintenance %}
+        {% set otherSourcesPartner = otherSourcesPartner + 'Maintenance<br>' %}
+    {% endif %}
+    {% if data.allIncomes.partner.otherIncomeRentFromFamily %}
+        {% set otherSourcesPartner = otherSourcesPartner + 'Board or rent from family lodger or tenant<br>' %}
+    {% endif %}
+    {% if data.allIncomes.partner.otherIncomeRental %}
+        {% set otherSourcesPartner = otherSourcesPartner + 'Rental income<br>' %}
+    {% endif %}
+    {% if data.allIncomes.partner.otherFinancialSupport %}
+        {% set otherSourcesPartner = otherSourcesPartner + 'Financial support from someone who allows you access to their assets or money<br>' %}
+    {% endif %}
+    {% if data.allIncomes.partner.otherIncomeSourceFreetext %}
+        {% set otherSourcesPartner = otherSourcesPartner + data.allIncomes.partner.otherIncomeSourceFreetext %}
+    {% endif %}
+
     {% set _ = sourcesOfIncomeTable.rows.push([
         { text: "Any other source of income" },
-        { text: (data.allIncomes.you.otherIncomeCalc | formatCurrency + '<br>' + otherSources(data.allIncomes.you)) | safe },
+        { text: (data.allIncomes.you.otherIncomeAmount | formatCurrency + '<br>' + otherSourcesYou) | safe },
         { text: data.allIncomes.you.otherIncomePaidEvery | transformValue('every') },
-        { text: (data.allIncomes.partner.otherIncomeCalc | formatCurrency + '<br>' + otherSources(data.allIncomes.partner)) | safe },
+        { text: (data.allIncomes.partner.otherIncomeAmount | formatCurrency + '<br>' + otherSourcesPartner) | safe },
         { text: data.allIncomes.partner.otherIncomePaidEvery | transformValue('every') }
     ]) %}
 
@@ -153,28 +199,3 @@
     {{ formSubsection('Other Financial Information', fieldsOtherFinancialInfo) }}
 {% endmacro %}
 
-{% macro otherSources(data) %}
-    {% set otherSourcesYou = "" %}
-    {% if data.studentLoan %}
-        {% set otherSourcesYou = otherSourcesYou + 'Student grant<br>' %}
-    {% endif %}
-    {% if data.otherIncomeFriendsFamily %}
-        {% set otherSourcesYou = otherSourcesYou + 'Money from friends and/or family<br>' %}
-    {% endif %}
-    {% if data.otherIncomeMaintenance %}
-        {% set otherSourcesYou = otherSourcesYou + 'Maintenance<br>' %}
-    {% endif %}
-    {% if data.otherIncomeRentFromFamily %}
-        {% set otherSourcesYou = otherSourcesYou + 'Board or rent from family lodger or tenant<br>' %}
-    {% endif %}
-    {% if data.otherIncomeRental %}
-        {% set otherSourcesYou = otherSourcesYou + 'Rental income<br>' %}
-    {% endif %}
-    {% if data.otherFinancialSupport %}
-        {% set otherSourcesYou = otherSourcesYou + 'Financial support from someone who allows you access to their assets or money<br>' %}
-    {% endif %}
-    {% if data.otherIncomeSourceFreetext %}
-        {% set otherSourcesYou = otherSourcesYou + data.otherIncomeSourceFreetext %}
-    {% endif %}
-    {{ otherSourcesYou }}
-{% endmacro %}
