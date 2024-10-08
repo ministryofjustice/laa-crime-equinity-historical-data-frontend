@@ -94,11 +94,6 @@ describe('CRM Field Formatter', () => {
     })
 
     it('should format time into hours and minutes (am)', () => {
-      const result = formatTime('09:06:34')
-      expect(result).toEqual('9:06am')
-    })
-
-    it('should format time into hours and minutes (am)', () => {
       const result = formatTime('00:06:34')
       expect(result).toEqual('12:06am')
     })

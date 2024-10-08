@@ -55,7 +55,7 @@ export const formatTime = (value: string): string => {
     return value
   }
 
-  return format(timeAsDate, 'h:mmaaa').replace(/\s/g, '')
+  return format(timeAsDate, 'h:mmaaa')
 }
 
 export const formatPercentage = (value: string): string => {
