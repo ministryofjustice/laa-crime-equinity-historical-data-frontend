@@ -6,6 +6,7 @@ type SearchResult = {
   submittedDate: string
   providerAccount: string
   providerName: string
+  laaCaseRef?: string
   status: string
   crmLink?: string
 }
@@ -23,6 +24,7 @@ type SearchRequest = {
   startDate?: string
   endDate?: string
   supplierAccountNumber?: string
+  laaCaseRef?: string
   pageSize: number
   page: number
   profileAcceptedTypes: string

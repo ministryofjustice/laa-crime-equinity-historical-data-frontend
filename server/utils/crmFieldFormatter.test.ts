@@ -1,6 +1,17 @@
-import { formatCurrency, formatDate, formatTime } from './crmFieldFormatter'
+import { runtime } from 'nunjucks'
+import { formatBooleanToYesNo, formatCurrency, formatDate, formatMultiline, formatTime } from './crmFieldFormatter'
+import SafeString = runtime.SafeString
 
 describe('CRM Field Formatter', () => {
+  describe('formatBooleanToYesNo', () => {
+    it.each([
+      [true, 'Yes'],
+      [false, 'No'],
+    ])('given %s returns "%s"', (input: boolean, expected: string) => {
+      expect(formatBooleanToYesNo(input)).toEqual(expected)
+    })
+  })
+
   describe('formatCurrency', () => {
     it('should format currency when given whole number', () => {
       const result = formatCurrency('10000')
@@ -37,6 +48,18 @@ describe('CRM Field Formatter', () => {
     it('should not format date if not a valid date', () => {
       const result = formatDate('blah')
       expect(result).toEqual('blah')
+    })
+  })
+
+  describe('formatMultiline', () => {
+    it.each([
+      [
+        'This is line1.\nThis is line2.#13;\nThis is line3.#13;',
+        'This is line1.<br>This is line2.<br>This is line3.<br>',
+      ],
+      [new SafeString('UBER EATS#13;\nUber driver'), 'UBER EATS<br>Uber driver'], // nunjucks safe string
+    ])('given %s returns "%s"', (input: string | object, expected: string) => {
+      expect(formatMultiline(input)).toEqual(expected)
     })
   })
 

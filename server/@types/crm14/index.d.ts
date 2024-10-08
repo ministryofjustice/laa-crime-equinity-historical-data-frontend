@@ -178,6 +178,7 @@ export interface Crm14Response extends CrmResponse {
     }
     income?: {
       receiveBenefits: string
+      haveIncomeOverThreshold: string
       benefits: {
         you: {
           incomeSupport: boolean

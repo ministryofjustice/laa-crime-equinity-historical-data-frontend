@@ -1,4 +1,3 @@
-{% from "../../formFieldList.njk" import formFieldList %}
 {% from "../../formSubsection.njk" import formSubsection %}
 {% from "../../formTable.njk" import formTable %}
 
@@ -12,10 +11,16 @@
         "Refer": "Refer For ICA"
     } %}
 
+    {% if data.QualityControl.decision === 'G' %}
+        {% set reasonLabel = "Notes" %}
+    {% else %}
+        {% set reasonLabel = "Reason for decision" %}
+    {% endif %}
+
     {# Quality Control Section #}
     {% set fieldsQualityControl = [
         { label: "Decision", value: decisionOptions[data.QualityControl.decision] },
-        { label: "Reason details", value: data.QualityControl.decisionReason }
+        { label: reasonLabel, value: data.QualityControl.decisionReason }
     ] %}
     {{ formSubsection('Quality Control', fieldsQualityControl) }}
 
