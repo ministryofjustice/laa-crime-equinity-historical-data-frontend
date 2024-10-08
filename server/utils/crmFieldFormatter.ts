@@ -39,24 +39,20 @@ export const formatMultiline = (value: string | object) => {
   return value
 }
 
-export const formatHours = (value: string = ''): string => {
+export const formatHours = (value: string = '', shortFormat: boolean = false): string => {
   const parts = value.split(':')
   if (parts.length > 1) {
     const [hours, minutes] = parts
-    return `${hours} hrs ${minutes} mins`
+    return shortFormat ? `${hours}:${minutes}` : `${hours} hrs ${minutes} mins`
   }
 
   return value
 }
 
-export const formatTime = (value: string, dateFormat?: string): string => {
+export const formatTime = (value: string): string => {
   const timeAsDate = Date.parse(`${new Date().toDateString()} ${value}`)
   if (Number.isNaN(timeAsDate)) {
     return value
-  }
-
-  if (dateFormat) {
-    return format(timeAsDate, dateFormat)
   }
 
   return format(timeAsDate, 'h:mmaaa').replace(/\s/g, '')
