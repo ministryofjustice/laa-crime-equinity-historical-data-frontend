@@ -9,6 +9,7 @@ import {
   formatBooleanToYesNo,
   formatCurrency,
   formatDate,
+  formatHours,
   formatMultiline,
   formatPercentage,
   formatTime,
@@ -53,6 +54,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
 
   njkEnv.addFilter('formatCurrency', formatCurrency)
   njkEnv.addFilter('formatDate', formatDate)
+  njkEnv.addFilter('formatHours', formatHours)
   njkEnv.addFilter('formatMultiline', formatMultiline)
   njkEnv.addFilter('formatPercentage', formatPercentage)
   njkEnv.addFilter('formatTime', formatTime)
