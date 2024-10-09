@@ -1,6 +1,7 @@
 {% from "../../formField.njk" import formField %}
 {% from "../../formSubsection.njk" import formSubsection %}
 {% from "../../formTable.njk" import formTable %}
+{% from "../../formFieldHeading.njk" import formFieldHeading %}
 
 {% macro crm14OfficeUseOnly(data) %}
 
@@ -61,7 +62,7 @@
 
     {# Funding Decisions Section #}
     {% if data.fundingDecisions.length > 0 %}
-        {% for decision in data.fundingDecisions %}
+       {% for decision in data.fundingDecisions %}
 
             {% if data.fundingDecisions.length > 1 %}
                 {% set sectionTitle = 'Funding Decision ' ~ loop.index %}
@@ -69,28 +70,61 @@
                 {% set sectionTitle = 'Funding Decision' %}
             {% endif %}
 
-            {% set fieldsFundingDecision = [
-                { label: "MAAT Number", value: decision.maatNumber },
-                { label: "Case Number", value: decision.caseNumber },
-                { label: "Justice Test", value: decision.justiceTest },
-                { label: "Means Test Result Type", value: decision.meansTestResultType },
-                { label: "Official Sign Name", value: decision.officialSignName },
-                { label: "Appropriate Officer Name", value: decision.appropriateOfficerName },
-                { label: "Justice Test Reasons", value: decision.justiceTestReasons },
-                { label: "Overall Result Mags/CCFS", value: decision.overallResultMagsorcfs },
-                { label: "Appropriate Officer Sign Date", value: decision.appropriateOfficerSignDate | formatDate },
-                { label: "Means Test Appeal to CC", value: decision.meansTestResultAppealtocc },
-                { label: "Overall Non-Means Result", value: decision.overallResultNonMeans },
-                { label: "Means Test Result Mags/CCFS", value: decision.meansTestResultMagsorcfs },
-                { label: "Means Test Result CC", value: decision.meansTestResultCc },
-                { label: "Overall Appeal to CC", value: decision.overallResultAppealtocc },
-                { label: "Overall Result Type", value: decision.overallResultType },
-                { label: "Overall Result CC", value: decision.overallResultCc },
-                { label: "Official Sign Date", value: decision.officialSignDate | formatDate }
-            ] %}
+{#            {% set fieldsFundingDecision = [#}
+{#                { label: "MAAT ID", value: decision.maatNumber },#}
+{#                { label: "Case Number", value: decision.caseNumber },#}
+{#                { label: "Justice Test", value: decision.justiceTest },#}
+{#                { label: "Means Test Result Type", value: decision.meansTestResultType },#}
+{#                { label: "Official Sign Name", value: decision.officialSignName },#}
+{#                { label: "Appropriate Officer Name", value: decision.appropriateOfficerName },#}
+{#                { label: "Justice Test Reasons", value: decision.justiceTestReasons },#}
+{#                { label: "Overall Result Mags/CCFS", value: decision.overallResultMagsorcfs },#}
+{#                { label: "Appropriate Officer Sign Date", value: decision.appropriateOfficerSignDate | formatDate },#}
+{#                { label: "Means Test Appeal to CC", value: decision.meansTestResultAppealtocc },#}
+{#                { label: "Overall Non-Means Result", value: decision.overallResultNonMeans },#}
+{#                { label: "Means Test Result Mags/CCFS", value: decision.meansTestResultMagsorcfs },#}
+{#                { label: "Means Test Result CC", value: decision.meansTestResultCc },#}
+{#                { label: "Overall Appeal to CC", value: decision.overallResultAppealtocc },#}
+{#                { label: "Overall Result Type", value: decision.overallResultType },#}
+{#                { label: "Overall Result CC", value: decision.overallResultCc },#}
+{#                { label: "Official Sign Date", value: decision.officialSignDate | formatDate }#}
+{#            ] %}#}
 
-            {{ formSubsection(sectionTitle, fieldsFundingDecision) }}
-        {% endfor %}
+{#            {{ formSubsection(sectionTitle, fieldsFundingDecision) }}#}
+
+           {# Result Mapping #}
+
+           {% if decision.meansTestResultType === 'MAGS_OR_CFS' %}
+               {% set resultType = "Magistrates Court or CFS" %}
+           {% endif %}
+
+        <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+            <div class="govuk-summary-card__title-wrapper">
+                <h3 class="govuk-summary-card__title">{{ sectionTitle }}</h3>
+            </div>
+            <div class="govuk-summary-card__content">
+                <dl class="govuk-summary-list">
+                    {{ formField({ label: "MAAT ID", value: decision.maatNumber }, boldLabel=false) }}
+                    {{ formField({ label: "I have performed the Interests of Justice test for case number:", value: decision.caseNumber }, boldLabel=true) }}
+
+                    {{ formFieldHeading("Consider all the available details of all the charges against the interests of justice criteria. Mention issues here which you considered when you decided the application. Include information given orally", hasPreviousContent=true) }}
+                    {{ formField({ label: "Interest of Justice Test result", value: decision.justiceTest  }, boldLabel=true) }}
+                    {{ formField({ label: "My reason", value: decision.justiceTestReasons   }, boldLabel=true) }}
+                    {{ formField({ label: "Full name", value: decision.officialSignName  }, boldLabel=true) }}
+                    {{ formField({ label: "Date", value: decision.officialSignDate | formatDate  }, boldLabel=true) }}
+
+                    {{ formField({ label: "Means Test Result Type:", value: resultType  }, boldLabel=true) }}
+                    {{ formField({ label: "Means Test Result", value: decision.meansTestResultMagsorcfs  }, boldLabel=true) }}
+                    {{ formField({ label: "Name of the appropriate officer", value: decision.appropriateOfficerName  }, boldLabel=true) }}
+                    {{ formField({ label: "Date", value: decision.appropriateOfficerSignDate | formatDate }, boldLabel=true) }}
+
+                    {{ formField({ label: "Overall Result Type:", value: resultType }, boldLabel=true) }}
+                    {{ formField({ label: "Overall Result", value: decision.meansTestResultMagsorcfs  }, boldLabel=true) }}
+                    {{ formField({ label: "Number of times this Funding Decision has been updated with assessment / reassessment results", value: decision.fundingDecisionUpdatesCount  }, boldLabel=true) }}
+                </dl>
+            </div>
+        </div>
+       {% endfor %}
     {% endif %}
 
 {% endmacro %}
