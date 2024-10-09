@@ -60,11 +60,8 @@ describe('CRM Field Formatter', () => {
 
   describe('formatMultiline', () => {
     it.each([
-      [
-        'This is line1.\nThis is line2.#13;\nThis is line3.#13;',
-        'This is line1.<br>This is line2.<br>This is line3.<br>',
-      ],
-      [new SafeString('UBER EATS#13;\nUber driver'), 'UBER EATS<br>Uber driver'], // nunjucks safe string
+      ['This is line1.\nThis is line2.\r\nThis is line3.\r', 'This is line1.<br>This is line2.<br>This is line3.<br>'],
+      [new SafeString('UBER EATS\r\nUber driver'), 'UBER EATS<br>Uber driver'], // nunjucks safe string
     ])('given %s returns "%s"', (input: string | object, expected: string) => {
       expect(formatMultiline(input)).toEqual(expected)
     })

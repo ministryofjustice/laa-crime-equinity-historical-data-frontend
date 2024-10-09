@@ -34,7 +34,7 @@ export const formatDate = (value: string, dateFormat?: string): string => {
 export const formatMultiline = (value: string | object) => {
   if (typeof value === 'string' || value instanceof SafeString) {
     const valueAsString = value as string
-    return valueAsString.replace(/(\n|#13;\n|#13;)/g, '<br>')
+    return valueAsString.replace(/(\n|\r\n|\r)/g, '<br>')
   }
   return value
 }
