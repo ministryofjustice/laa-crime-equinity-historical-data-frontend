@@ -268,6 +268,7 @@ export interface Crm14Response extends CrmResponse {
       emailId: string
       adminEmailId: string
       declarationStatement: string
+      declarationStatement2: string
       declarationConfirm: boolean
       signDate: string
     }
