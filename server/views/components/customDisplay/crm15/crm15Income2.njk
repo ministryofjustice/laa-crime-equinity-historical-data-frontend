@@ -185,17 +185,20 @@
 
         {% for item in data %}
 
-            {% set details = "amount " + (item.amount | formatCurrency) %}
-            {% if item.details %}
-                {% set details = details + "<p>The benefit: " + item.details + "</p>" %}
+            {% if item.amount | isNotEmpty %}
+                {% set details = "amount " + (item.amount | formatCurrency) %}
+                {% if item.details %}
+                    {% set details = details + "<br><span>The benefit: " + item.details + "</span>" %}
+                {% endif %}
+
+                {%- set tableRow = [
+                    { text: item.label },
+                    { text: details | safe },
+                    { text: "every " + (item.every | default("1 week", true) | safe) }
+                ] -%}
+                {% set list = tableData.rows.push(tableRow) %}
             {% endif %}
 
-            {%- set tableRow = [
-                { text: item.label },
-                { text: details | safe },
-                { text: "every " + (item.every | default("1 week", true) | safe) }
-            ] -%}
-            {% set list = tableData.rows.push(tableRow) %}
         {% endfor %}
 
         {{ formTable(tableData) }}
