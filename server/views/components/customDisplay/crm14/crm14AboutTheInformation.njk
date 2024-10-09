@@ -8,6 +8,12 @@
         { label: "Do you consider that you have a disability?", value: data.disabled }
     ] %}
 
+    {# If yes add the Definition field #}
+    {% if data.disabled == 'Yes' %}
+        {% set disabledDefinitionField = { label: "The best definition is:", value: data.disabledDefinition } %}
+        {% set _ = fields.push(disabledDefinitionField) %}
+    {% endif %}
+
     {# Determine the ethnicity #}
     {% set ethnicityValues = [] %}
     {% for category, options in data.ethnicity %}
