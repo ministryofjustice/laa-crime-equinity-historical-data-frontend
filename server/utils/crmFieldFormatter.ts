@@ -11,7 +11,7 @@ export const formatBooleanToYesNo = (value: boolean): string => {
   return value ? 'Yes' : 'No'
 }
 
-export const formatCurrency = (value: string): string => {
+export const formatCurrency = (value: string = ''): string => {
   const number = Number(value)
   if (Number.isNaN(number)) {
     return value
