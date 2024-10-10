@@ -50,8 +50,8 @@
                         {{ formField({ label: "Hearing date imminent", value: data.legalRepUse.priorityCaseType.imminentHearing } ) }}
                     {% endif %}
 
-                    {{ formField({ label: "Date of trial", value: data.legalRepUse.dateOfTrial } ) }}
-                    {{ formField({ label: "Appeal lodged date", value: data.legalRepUse.appealLodgedDate } ) }}
+                    {{ formField({ label: "Date of trial", value: data.legalRepUse.dateOfTrial, type: "date" } ) }}
+                    {{ formField({ label: "Appeal lodged date", value: data.legalRepUse.appealLodgedDate, type: "date" } ) }}
                 {% endif %}
             </dl>
         </div>
