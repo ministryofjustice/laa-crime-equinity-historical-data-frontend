@@ -98,7 +98,7 @@
                 {% if data.partnerReceiveMaintenancePayments === "Yes" %}
                     {{ formFieldHeading("Your Partner:") }}
                     {{ formField({ label: "amount", value: data.partnerMaintenance, type: "currency" }) }}
-                    {{ formField({ label: "every", value: data.partnerMaintenancePaymentPaidEver, transform: "every" }) }}
+                    {{ formField({ label: "every", value: data.partnerMaintenancePaymentPaidEvery, transform: "every" }) }}
                 {% endif %}
 
                 {{ formFieldHeading("Do you or your partner receive interest or income from any savings or other investment?") }}
