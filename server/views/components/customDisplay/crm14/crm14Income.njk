@@ -1,10 +1,10 @@
 {% from "../../formSubsection.njk" import formSubsection %}
 
 {% macro crm14Income(data) %}
-<!-- Question 1 -->
-{% set fieldsQ1 = [
-    { label: "Do you or your partner receive any of the benefits listed here?", value: data.receiveBenefits }
-] %}
+    <!-- Question 1 -->
+    {% set fieldsQ1 = [
+        { label: "Do you or your partner receive any of the benefits listed here?", value: data.receiveBenefits }
+    ] %}
     {{ formSubsection('Your Income and Your Partner\'s Income', fieldsQ1) }}
 
     {% if data.receiveBenefits === 'Yes' %}
@@ -56,80 +56,109 @@
 
     {{ formSubsection('Self-Employment or Business Partnership', tableSelfEmployment, true, 'equal-width-table') }}
 
-<!-- Total Income -->
-{% set fieldsTotalIncome = [
-    { label: "Do you or your partner, together, in a year have a total income from all sources before tax or any other deduction, of more than £12,475 (£239.90 a week)?", value: data.haveIncomeOverThreshold }
-] %}
+    <!-- Total Income -->
+    {% set fieldsTotalIncome = [
+        { label: "Do you or your partner, together, in a year have a total income from all sources before tax or any other deduction, of more than £12,475 (£239.90 a week)?", value: data.haveIncomeOverThreshold }
+    ] %}
     {{ formSubsection('Total Income', fieldsTotalIncome) }}
 
-<!-- Sources of Income -->
-{% set sourcesOfIncomeTable = {
-    head: [
-        { text: "" },
-        { text: "You - Amount" },
-        { text: "You - Frequency" },
-        { text: "Your Partner - Amount" },
-        { text: "Your Partner - Frequency" }
-    ],
-    rows: [
-        [
-            { text: "Employment (Wage or Salary)" },
-            { text: data.allIncomes.you.wageCalc | formatCurrency },
-            { text: data.allIncomes.you.wagePaidEvery },
-            { text: data.allIncomes.partner.wageCalc | formatCurrency },
-            { text: data.allIncomes.partner.wagePaidEvery }
+    {% if data.haveIncomeOverThreshold === 'No' %}
+        <!-- Sources of Income -->
+       {{ sourcesOfIncome(data) }}
+
+    {% endif %}
+
+    <!-- Restraint Order -->
+    {% set fieldsRestraintOrder = [
+        { label: "Do you or your partner have any income, savings or assets which are under a restraint order or a freezing order?", value: data.freezingOrder }
+    ] %}
+    {{ formSubsection('Restraint Order', fieldsRestraintOrder) }}
+
+    <!-- Ownership of Property -->
+    {% set fieldsOwnershipProperty = [
+        { label: "Do you or your partner own or part-own any land or property of any kind, including your own home, in the United Kingdom or overseas?", value: data.ownLandOrProperty }
+    ] %}
+    {{ formSubsection('Ownership of Property', fieldsOwnershipProperty) }}
+
+    <!-- Savings or Investments -->
+    {% set fieldsSavingsInvestments = [
+        { label: "Do you or your partner have any savings or investments, in the United Kingdom or overseas?", value: data.savingsOrInvestments }
+    ] %}
+    {{ formSubsection('Savings or Investments', fieldsSavingsInvestments) }}
+
+    <!-- Other Financial Information -->
+    {% set fieldsOtherFinancialInfo = [
+        { label: "Sleeping at friend's sofa - no money received", value: data.noMoneySleepingAtFriend },
+        { label: "Staying with family - no money received", value: data.noMoneyStayingWithFamily },
+        { label: "Living on the streets/homeless", value: data.homeless },
+        { label: "Remanded in custody for more than 3 months", value: data.remandedInCustody },
+        { label: "How you pay bills", value: data.howPayBillsText }
+    ] %}
+    {{ formSubsection('Other Financial Information', fieldsOtherFinancialInfo) }}
+{% endmacro %}
+
+{% macro sourcesOfIncome(data) %}
+
+    {% set sourcesOfIncomeTable = {
+        head: [
+            { text: "" },
+            { text: "You - Amount" },
+            { text: "You - Frequency" },
+            { text: "Your Partner - Amount" },
+            { text: "Your Partner - Frequency" }
         ],
-        [
-            { text: "Child Benefit" },
-            { text: data.allIncomes.you.childBenefit | formatCurrency },
-            { text: data.allIncomes.you.childBenefitPaidEvery },
-            { text: data.allIncomes.partner.childBenefit | formatCurrency },
-            { text: data.allIncomes.partner.childBenefitPaidEvery }
-        ],
-        [
-            { text: "Working Tax Credits and Child Tax Credits" },
-            { text: data.allIncomes.you.taxCreditsAmount | formatCurrency },
-            { text: data.allIncomes.you.taxCreditsPaidEvery },
-            { text: data.allIncomes.partner.taxCreditsAmount | formatCurrency },
-            { text: data.allIncomes.partner.taxCreditsPaidEvery }
-        ],
-        [
-            { text: "Universal Credit" },
-            { text: data.allIncomes.you.universalCredit | formatCurrency },
-            { text: data.allIncomes.you.universalCreditPaidEvery },
-            { text: data.allIncomes.partner.universalCredit | formatCurrency },
-            { text: data.allIncomes.partner.universalCreditPaidEvery }
-        ],
-        [
-            { text: "Total of Other Benefits" },
-            { text: data.allIncomes.you.otherBenefitsCalc | formatCurrency },
-            { text: data.allIncomes.you.otherBenefitsPaidEvery },
-            { text: data.allIncomes.partner.otherBenefitsCalc | formatCurrency },
-            { text: data.allIncomes.partner.otherBenefitsPaidEvery }
-        ],
-        [
-            { text: "Maintenance Income" },
-            { text: data.allIncomes.you.maintenancePayment | formatCurrency },
-            { text: data.allIncomes.you.maintenancePaymentPaidEvery },
-            { text: data.allIncomes.partner.maintenancePayment | formatCurrency },
-            { text: data.allIncomes.partner.maintenancePaymentPaidEvery }
-        ],
-        [
-            { text: "Pensions" },
-            { text: data.allIncomes.you.pensionsCalc | formatCurrency },
-            { text: data.allIncomes.you.pensionsPaidEvery },
-            { text: data.allIncomes.partner.pensionsCalc | formatCurrency },
-            { text: data.allIncomes.partner.pensionsPaidEvery }
-        ],
-        [
-            { text: "Any Other Source of Income" },
-            { text: data.allIncomes.you.otherIncomeCalc | formatCurrency },
-            { text: data.allIncomes.you.otherIncomePaidEvery },
-            { text: data.allIncomes.partner.otherIncomeCalc | formatCurrency },
-            { text: data.allIncomes.partner.otherIncomePaidEvery }
+        rows: [
+            [
+                { text: "Employment (wage or salary)" },
+                { text: data.allIncomes.you.wageAmount | formatCurrency },
+                { text: data.allIncomes.you.wagePaidEvery | transformValue('every') },
+                { text: data.allIncomes.partner.wageAmount | formatCurrency },
+                { text: data.allIncomes.partner.wagePaidEvery | transformValue('every') }
+            ],
+            [
+                { text: "Child Benefit" },
+                { text: data.allIncomes.you.childBenefitAmount | formatCurrency },
+                { text: data.allIncomes.you.childBenefitPaidEvery | transformValue('every') },
+                { text: data.allIncomes.partner.childBenefitAmount | formatCurrency },
+                { text: data.allIncomes.partner.childBenefitPaidEvery | transformValue('every') }
+            ],
+            [
+                { text: "Working Tax Credits and Child Tax Credits" },
+                { text: data.allIncomes.you.taxCreditsAmount | formatCurrency },
+                { text: data.allIncomes.you.taxCreditsPaidEvery | transformValue('every') },
+                { text: data.allIncomes.partner.taxCreditsAmount | formatCurrency },
+                { text: data.allIncomes.partner.taxCreditsPaidEvery | transformValue('every') }
+            ],
+            [
+                { text: "Universal Credit" },
+                { text: data.allIncomes.you.universalCreditAmount | formatCurrency },
+                { text: data.allIncomes.you.universalCreditPaidEvery | transformValue('every') },
+                { text: data.allIncomes.partner.universalCreditAmount | formatCurrency },
+                { text: data.allIncomes.partner.universalCreditPaidEvery | transformValue('every') }
+            ],
+            [
+                { text: "Total of other benefits" },
+                { text: data.allIncomes.you.otherBenefitsAmount | formatCurrency },
+                { text: data.allIncomes.you.otherBenefitsPaidEvery | transformValue('every') },
+                { text: data.allIncomes.partner.otherBenefitsAmount | formatCurrency },
+                { text: data.allIncomes.partner.otherBenefitsPaidEvery | transformValue('every') }
+            ],
+            [
+                { text: "Maintenance income" },
+                { text: data.allIncomes.you.maintenancePayment | formatCurrency },
+                { text: data.allIncomes.you.maintenancePaymentPaidEvery | transformValue('every') },
+                { text: data.allIncomes.partner.maintenancePayment | formatCurrency },
+                { text: data.allIncomes.partner.maintenancePaymentPaidEvery | transformValue('every') }
+            ],
+            [
+                { text: "Pensions" },
+                { text: data.allIncomes.you.pensionsAmount | formatCurrency },
+                { text: data.allIncomes.you.pensionsPaidEvery | transformValue('every') },
+                { text: data.allIncomes.partner.pensionsAmount | formatCurrency },
+                { text: data.allIncomes.partner.pensionsPaidEvery | transformValue('every') }
+            ]
         ]
-    ]
-} %}
+    } %}
 
     {% set otherSourcesYou = "" %}
     {% if data.allIncomes.you.studentLoan %}
@@ -178,40 +207,13 @@
     {% endif %}
 
     {% set _ = sourcesOfIncomeTable.rows.push([
-        { text: "Other Source" },
-        { text: (data.allIncomes.you.otherIncomeCalc | formatCurrency + '<br>' + otherSourcesYou) | safe },
-        { text: data.allIncomes.you.otherIncomePaidEvery },
-        { text: (data.allIncomes.partner.otherIncomeCalc | formatCurrency + '<br>' + otherSourcesPartner) | safe },
-        { text: data.allIncomes.partner.otherIncomePaidEvery }
+        { text: "Any other source of income" },
+        { text: (data.allIncomes.you.otherIncomeAmount | formatCurrency + '<br>' + otherSourcesYou) | safe },
+        { text: data.allIncomes.you.otherIncomePaidEvery | transformValue('every') },
+        { text: (data.allIncomes.partner.otherIncomeAmount | formatCurrency + '<br>' + otherSourcesPartner) | safe },
+        { text: data.allIncomes.partner.otherIncomePaidEvery | transformValue('every') }
     ]) %}
 
     {{ formSubsection('Sources of Income for you and your partner', sourcesOfIncomeTable, true) }}
 
-<!-- Restraint Order -->
-{% set fieldsRestraintOrder = [
-    { label: "Do you or your partner have any income, savings or assets which are under a restraint order or a freezing order?", value: data.freezingOrder }
-] %}
-    {{ formSubsection('Restraint Order', fieldsRestraintOrder) }}
-
-<!-- Ownership of Property -->
-{% set fieldsOwnershipProperty = [
-    { label: "Do you or your partner own or part-own any land or property of any kind, including your own home, in the United Kingdom or overseas?", value: data.ownLandOrProperty }
-] %}
-    {{ formSubsection('Ownership of Property', fieldsOwnershipProperty) }}
-
-    <!-- Savings or Investments -->
-    {% set fieldsSavingsInvestments = [
-        { label: "Do you or your partner have any savings or investments, in the United Kingdom or overseas?", value: data.savingsOrInvestments }
-    ] %}
-    {{ formSubsection('Savings or Investments', fieldsSavingsInvestments) }}
-
-    <!-- Other Financial Information -->
-    {% set fieldsOtherFinancialInfo = [
-        { label: "Sleeping at friend's sofa - no money received", value: data.noMoneySleepingAtFriend },
-        { label: "Staying with family - no money received", value: data.noMoneyStayingWithFamily },
-        { label: "Living on the streets/homeless", value: data.homeless },
-        { label: "Remanded in custody for more than 3 months", value: data.remandedInCustody },
-        { label: "How you pay bills", value: data.howPayBillsText }
-    ] %}
-    {{ formSubsection('Other Financial Information', fieldsOtherFinancialInfo) }}
 {% endmacro %}

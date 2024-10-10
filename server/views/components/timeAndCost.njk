@@ -23,7 +23,7 @@
                 <div class="govuk-grid-column-one-half">
                     <div class="govuk-body govuk-min-height  govuk-!-margin-bottom-0">
                         {% if not isTotalRow %}
-                            {{ timeAndCost.time | formatTime }}
+                            {{ timeAndCost.time | formatHours }}
                         {% endif %}
                     </div>
                 </div>

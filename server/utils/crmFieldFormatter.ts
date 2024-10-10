@@ -34,24 +34,28 @@ export const formatDate = (value: string, dateFormat?: string): string => {
 export const formatMultiline = (value: string | object) => {
   if (typeof value === 'string' || value instanceof SafeString) {
     const valueAsString = value as string
-    return valueAsString.replace(/(\n|#13;\n|#13;)/g, '<br>')
+    return valueAsString.replace(/(\n|\r\n|\r)/g, '<br>')
   }
   return value
 }
 
-export const formatTime = (value: string, dateFormat?: string): string => {
+export const formatHours = (value: string = '', shortFormat: boolean = false): string => {
+  const parts = value.split(':')
+  if (parts.length > 1) {
+    const [hours, minutes] = parts
+    return shortFormat ? `${hours}:${minutes}` : `${hours} hrs ${minutes} mins`
+  }
+
+  return value
+}
+
+export const formatTime = (value: string): string => {
   const timeAsDate = Date.parse(`${new Date().toDateString()} ${value}`)
   if (Number.isNaN(timeAsDate)) {
     return value
   }
 
-  if (dateFormat) {
-    return format(timeAsDate, dateFormat)
-  }
-
-  const formattedTime = format(timeAsDate, 'HH:mm')
-  const [hours, minutes] = formattedTime.split(':')
-  return `${hours} hrs ${minutes} mins`
+  return format(timeAsDate, 'h:mmaaa')
 }
 
 export const formatPercentage = (value: string): string => {

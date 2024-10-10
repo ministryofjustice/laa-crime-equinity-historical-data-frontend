@@ -54,6 +54,7 @@ const mappings: Record<TransformType, Record<string, string>> = {
     '13': '4 weeks',
     '12': 'Month',
     '1': 'Year',
+    '0': ' ',
   },
   levelOfWork: {
     Advice: 'Advice & Assistance',

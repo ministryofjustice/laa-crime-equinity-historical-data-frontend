@@ -1,5 +1,12 @@
 import { runtime } from 'nunjucks'
-import { formatBooleanToYesNo, formatCurrency, formatDate, formatMultiline, formatTime } from './crmFieldFormatter'
+import {
+  formatBooleanToYesNo,
+  formatCurrency,
+  formatDate,
+  formatHours,
+  formatMultiline,
+  formatTime,
+} from './crmFieldFormatter'
 import SafeString = runtime.SafeString
 
 describe('CRM Field Formatter', () => {
@@ -53,30 +60,39 @@ describe('CRM Field Formatter', () => {
 
   describe('formatMultiline', () => {
     it.each([
-      [
-        'This is line1.\nThis is line2.#13;\nThis is line3.#13;',
-        'This is line1.<br>This is line2.<br>This is line3.<br>',
-      ],
-      [new SafeString('UBER EATS#13;\nUber driver'), 'UBER EATS<br>Uber driver'], // nunjucks safe string
+      ['This is line1.\nThis is line2.\r\nThis is line3.\r', 'This is line1.<br>This is line2.<br>This is line3.<br>'],
+      [new SafeString('UBER EATS\r\nUber driver'), 'UBER EATS<br>Uber driver'], // nunjucks safe string
     ])('given %s returns "%s"', (input: string | object, expected: string) => {
       expect(formatMultiline(input)).toEqual(expected)
     })
   })
 
-  describe('formatTime', () => {
+  describe('formatHours', () => {
     it('should format time into hours and minutes', () => {
+      const result = formatHours('36:32:11')
+      expect(result).toEqual('36 hrs 32 mins')
+    })
+
+    it('should format time with short format', () => {
+      const result = formatHours('36:32:00', true)
+      expect(result).toEqual('36:32')
+    })
+
+    it('should not format time if not a valid time', () => {
+      const result = formatHours('blah')
+      expect(result).toEqual('blah')
+    })
+  })
+
+  describe('formatTime', () => {
+    it('should format time into hours and minutes (pm)', () => {
       const result = formatTime('15:32:11')
-      expect(result).toEqual('15 hrs 32 mins')
+      expect(result).toEqual('3:32pm')
     })
 
-    it('should format time with single-digit hours and minutes', () => {
-      const result = formatTime('5:07:00')
-      expect(result).toEqual('05 hrs 07 mins')
-    })
-
-    it('should format time with custom format', () => {
-      const result = formatTime('15:32:11', 'HH:mm')
-      expect(result).toEqual('15:32')
+    it('should format time into hours and minutes (am)', () => {
+      const result = formatTime('00:06:34')
+      expect(result).toEqual('12:06am')
     })
 
     it('should not format time if not a valid time', () => {
