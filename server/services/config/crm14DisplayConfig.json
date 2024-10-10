@@ -294,6 +294,12 @@
     {
       "sectionId": "evidence-1",
       "title": "Evidence: 1",
+      "hideWhen": [
+        {
+          "apiField": "legalRepresentativeUse.legalRepUse.meansTested",
+          "equals": "No"
+        }
+      ],
       "subsections": [
         {
           "title": "Questions to Inform Evidential Requirements",
@@ -343,6 +349,12 @@
     {
       "sectionId": "income",
       "title": "Income",
+      "hideWhen": [
+        {
+          "apiField": "legalRepresentativeUse.legalRepUse.meansTested",
+          "equals": "No"
+        }
+      ],
       "subsections": [
         {
           "customDisplay": {
