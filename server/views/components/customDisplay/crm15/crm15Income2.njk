@@ -191,11 +191,17 @@
                     {% set details = details + "<br><span>The benefit: " + item.details + "</span>" %}
                 {% endif %}
 
+                {% set every = "" %}
+                {% if item.every | isNotEmpty %}
+                    {% set every = "every " + item.every %}
+                {% endif %}
+
                 {%- set tableRow = [
                     { text: item.label },
                     { text: details | safe },
-                    { text: "every " + (item.every | default("1 week", true) | safe) }
+                    { text: every | safe }
                 ] -%}
+
                 {% set list = tableData.rows.push(tableRow) %}
             {% endif %}
 
