@@ -40,11 +40,21 @@
         {{ formSubsection('Benefits (Your Partner)', partnerFields) }}
     {% endif %}
 
-<!-- Self-Employment or Business Partnership -->
-{% set fieldsSelfEmployment = [
-    { label: "Are you or your partner self-employed, employed in a business partnership, or employed as either a company director or a shareholder in a private company?", value: data.privateCompany }
-] %}
-    {{ formSubsection('Self-Employment or Business Partnership', fieldsSelfEmployment) }}
+{#<!-- Self-Employment or Business Partnership -->#}
+    {% set tableSelfEmployment = {
+        head: [
+            { text: "" },  { text: "You" }, { text: "Your Partner" }
+        ],
+        rows: [
+            [
+                { text: "Are you or your partner self-employed, employed in a business partnership, or employed as either a company director or a shareholder in a private company?", isHeader: true },
+                { text: data.privateCompany or 'No' },
+                { text: data.partnerPrivateCompany or 'No' }
+            ]
+        ]
+    } %}
+
+    {{ formSubsection('Self-Employment or Business Partnership', tableSelfEmployment, true, 'equal-width-table') }}
 
 <!-- Total Income -->
 {% set fieldsTotalIncome = [
