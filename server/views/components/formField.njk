@@ -45,6 +45,8 @@
         {{ field.value | formatDate }}
     {% elif field.type === 'time' %}
         {{ field.value | formatTime }}
+    {% elif field.type === 'hours' %}
+        {{ field.value | formatHours }}
     {% elif field.type === 'percent' %}
         {{ field.value | formatPercentage }}
     {% elif field.type === 'link' %}

@@ -98,7 +98,7 @@
                 {% if data.partnerReceiveMaintenancePayments === "Yes" %}
                     {{ formFieldHeading("Your Partner:") }}
                     {{ formField({ label: "amount", value: data.partnerMaintenance, type: "currency" }) }}
-                    {{ formField({ label: "every", value: data.partnerMaintenancePaymentPaidEver, transform: "every" }) }}
+                    {{ formField({ label: "every", value: data.partnerMaintenancePaymentPaidEvery, transform: "every" }) }}
                 {% endif %}
 
                 {{ formFieldHeading("Do you or your partner receive interest or income from any savings or other investment?") }}
@@ -185,17 +185,26 @@
 
         {% for item in data %}
 
-            {% set details = "amount " + (item.amount | formatCurrency) %}
-            {% if item.details %}
-                {% set details = details + "<p>The benefit: " + item.details + "</p>" %}
+            {% if item.amount | isNotEmpty %}
+                {% set details = "amount " + (item.amount | formatCurrency) %}
+                {% if item.details %}
+                    {% set details = details + "<br><span>The benefit: " + item.details + "</span>" %}
+                {% endif %}
+
+                {% set every = "" %}
+                {% if item.every | isNotEmpty %}
+                    {% set every = "every " + item.every %}
+                {% endif %}
+
+                {%- set tableRow = [
+                    { text: item.label },
+                    { text: details | safe },
+                    { text: every | safe }
+                ] -%}
+
+                {% set list = tableData.rows.push(tableRow) %}
             {% endif %}
 
-            {%- set tableRow = [
-                { text: item.label },
-                { text: details | safe },
-                { text: "every " + (item.every | default("1 week", true) | safe) }
-            ] -%}
-            {% set list = tableData.rows.push(tableRow) %}
         {% endfor %}
 
         {{ formTable(tableData) }}

@@ -192,6 +192,12 @@
     {
       "sectionId": "about-your-partner",
       "title": "About Your Partner",
+      "hideWhen": [
+        {
+          "apiField": "aboutYouPart2.havePartner",
+          "equals": "0"
+        }
+      ],
       "subsections": [
         {
           "title": "Your Partner's Details",
@@ -294,6 +300,12 @@
     {
       "sectionId": "evidence-1",
       "title": "Evidence: 1",
+      "hideWhen": [
+        {
+          "apiField": "legalRepresentativeUse.legalRepUse.meansTested",
+          "equals": "No"
+        }
+      ],
       "subsections": [
         {
           "title": "Questions to Inform Evidential Requirements",
@@ -343,6 +355,12 @@
     {
       "sectionId": "income",
       "title": "Income",
+      "hideWhen": [
+        {
+          "apiField": "legalRepresentativeUse.legalRepUse.meansTested",
+          "equals": "No"
+        }
+      ],
       "subsections": [
         {
           "customDisplay": {
@@ -530,21 +548,14 @@
             {
               "label": "Firm Administrator's email address",
               "apiField": "legalRepresentationDetails.adminEmailId"
-            },
-            {
-              "label": "Declaration by the Legal Representative",
-              "apiField": "legalRepresentationDetails.declarationStatement"
-            },
-            {
-              "label": "I understand that, as Legal Representative, I must obtain, and retain on file, a Declaration from the Applicant (and partner if applicable). I understand that this means completing a hardcopy mandate form.",
-              "apiField": "legalRepresentationDetails.declarationConfirm"
-            },
-            {
-              "label": "Date",
-              "apiField": "legalRepresentationDetails.signDate",
-              "type": "date"
             }
           ]
+        },
+        {
+          "customDisplay": {
+            "name": "crm14LegalRepresentation",
+            "apiField": "legalRepresentationDetails"
+          }
         }
       ]
     },

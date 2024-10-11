@@ -42,7 +42,34 @@ describe('downloadEvidenceController', () => {
 
     await requestHandler(request, response, next)
 
-    expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=some-file.txt')
+    expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename="some-file.txt"')
+    expect(response.send).toHaveBeenCalledWith(downloadData)
+
+    expect(mockDownloadEvidenceService.getEvidenceFileUrl).toHaveBeenCalledWith('0000.att')
+  })
+
+  it('should download the requested evidence filename with special characters', async () => {
+    mockDownloadEvidenceService.getEvidenceFileUrl.mockResolvedValue('https://test.com/some-file.txt')
+
+    const downloadData = { fakeData: '????' }
+    fakeRestClient
+      .get('/some-file.txt')
+      .matchHeader('content-type', 'application/octet-stream')
+      .reply(200, downloadData)
+
+    const downloadEvidenceController = new DownloadEvidenceController(mockDownloadEvidenceService)
+    const requestHandler = downloadEvidenceController.download()
+    request.query = {
+      fileKey: '0000.att',
+      fileName: "Someone's Bank Statements.pdf",
+    }
+
+    await requestHandler(request, response, next)
+
+    expect(response.setHeader).toHaveBeenCalledWith(
+      'Content-Disposition',
+      'attachment; filename="Someone\'s Bank Statements.pdf"',
+    )
     expect(response.send).toHaveBeenCalledWith(downloadData)
 
     expect(mockDownloadEvidenceService.getEvidenceFileUrl).toHaveBeenCalledWith('0000.att')
