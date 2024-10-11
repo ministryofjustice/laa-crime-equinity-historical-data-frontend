@@ -70,7 +70,7 @@
                 {{ formField({ label: "Your Partner", value: data.partnerPaid40PercentTax }) }}
                 {{ formField({ label: "Are you charged with an indictable offence or an either way offence?", value: data.indictable }) }}
 
-                {{ formFieldHeading("You may have to pay a contribution towards your legal aid") }}
+                {{ formFieldHeading("You may have to pay a contribution towards your legal aid.") }}
                 {{ formField({ label: "Does your client's household outgoings exceed their income?", value: data.householdOutgoingsExceedIncome }) }}
                 {% if data.householdOutgoingsExceedIncome === 'Yes' %}
                     {{ formField({ label: "Please provide details below of how your client is managing this.", value: data.householdOutgoingsExceedIncomeHow }) }}
