@@ -192,6 +192,12 @@
     {
       "sectionId": "about-your-partner",
       "title": "About Your Partner",
+      "hideWhen": [
+        {
+          "apiField": "aboutYouPart2.havePartner",
+          "equals": "0"
+        }
+      ],
       "subsections": [
         {
           "title": "Your Partner's Details",
