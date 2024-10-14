@@ -70,32 +70,24 @@
                 {% set sectionTitle = 'Funding Decision' %}
             {% endif %}
 
-{#            {% set fieldsFundingDecision = [#}
-{#                { label: "MAAT ID", value: decision.maatNumber },#}
-{#                { label: "Case Number", value: decision.caseNumber },#}
-{#                { label: "Justice Test", value: decision.justiceTest },#}
-{#                { label: "Means Test Result Type", value: decision.meansTestResultType },#}
-{#                { label: "Official Sign Name", value: decision.officialSignName },#}
-{#                { label: "Appropriate Officer Name", value: decision.appropriateOfficerName },#}
-{#                { label: "Justice Test Reasons", value: decision.justiceTestReasons },#}
-{#                { label: "Overall Result Mags/CCFS", value: decision.overallResultMagsorcfs },#}
-{#                { label: "Appropriate Officer Sign Date", value: decision.appropriateOfficerSignDate | formatDate },#}
-{#                { label: "Means Test Appeal to CC", value: decision.meansTestResultAppealtocc },#}
-{#                { label: "Overall Non-Means Result", value: decision.overallResultNonMeans },#}
-{#                { label: "Means Test Result Mags/CCFS", value: decision.meansTestResultMagsorcfs },#}
-{#                { label: "Means Test Result CC", value: decision.meansTestResultCc },#}
-{#                { label: "Overall Appeal to CC", value: decision.overallResultAppealtocc },#}
-{#                { label: "Overall Result Type", value: decision.overallResultType },#}
-{#                { label: "Overall Result CC", value: decision.overallResultCc },#}
-{#                { label: "Official Sign Date", value: decision.officialSignDate | formatDate }#}
-{#            ] %}#}
 
-{#            {{ formSubsection(sectionTitle, fieldsFundingDecision) }}#}
 
            {# Result Mapping #}
 
            {% if decision.meansTestResultType === 'MAGS_OR_CFS' %}
-               {% set resultType = "Magistrates Court or CFS" %}
+               {% set resultTypeMeans = "Magistrates Court or CFS" %}
+           {% elseif decision.meansTestResultType === 'CROWN_COURT_TRIAL' %}
+               {% set resultTypeMeans = "Crown Court trial" %}
+           {% elseif decision.meansTestResultType === 'APPEAL_TO_CROWN_COURT' %}
+               {% set resultTypeMeans = "Appeal to Crown Court" %}
+           {% endif %}
+
+           {% if decision.overallResultType === 'MAGS_OR_CFS' %}
+               {% set resultTypeOverall = "Magistrates Court or CFS" %}
+           {% elseif decision.overallResultType === 'CROWN_COURT_TRIAL' %}
+               {% set resultTypeOverall = "Crown Court trial" %}
+           {% elseif decision.overallResultType === 'APPEAL_TO_CROWN_COURT' %}
+               {% set resultTypeOverall = "Appeal to Crown Court" %}
            {% endif %}
 
         <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
@@ -113,14 +105,32 @@
                     {{ formField({ label: "Full name", value: decision.officialSignName  }, boldLabel=true) }}
                     {{ formField({ label: "Date", value: decision.officialSignDate | formatDate  }, boldLabel=true) }}
 
-                    {{ formField({ label: "Means Test Result Type:", value: resultType  }, boldLabel=true) }}
-                    {{ formField({ label: "Means Test Result", value: decision.meansTestResultMagsorcfs  }, boldLabel=true) }}
+                    {{ formField({ label: "Means Test Result Type:", value: resultTypeMeans  }, boldLabel=true) }}
+
+                    {% if decision.meansTestResultType === 'MAGS_OR_CFS' %}
+                        {{ formField({ label: "Means Test Result", value: decision.meansTestResultMagsorcfs  }, boldLabel=true) }}
+                    {% elseif decision.meansTestResultType === 'CROWN_COURT_TRIAL' %}
+                        {{ formField({ label: "Means Test Result", value: decision.meansTestResultCc  }, boldLabel=true) }}
+                    {% elseif decision.meansTestResultType === 'APPEAL_TO_CROWN_COURT' %}
+                        {{ formField({ label: "Means Test Result", value: decision.meansTestResultAppealtocc  }, boldLabel=true) }}
+                    {% endif %}
                     {{ formField({ label: "Name of the appropriate officer", value: decision.appropriateOfficerName  }, boldLabel=true) }}
                     {{ formField({ label: "Date", value: decision.appropriateOfficerSignDate | formatDate }, boldLabel=true) }}
 
-                    {{ formField({ label: "Overall Result Type:", value: resultType }, boldLabel=true) }}
-                    {{ formField({ label: "Overall Result", value: decision.meansTestResultMagsorcfs  }, boldLabel=true) }}
-                    {{ formField({ label: "Number of times this Funding Decision has been updated with assessment / reassessment results", value: decision.fundingDecisionUpdatesCount  }, boldLabel=true) }}
+                    {{ formField({ label: "Overall Result Type:", value: resultTypeOverall }, boldLabel=true) }}
+
+                    {% if decision.overallResultType === 'MAGS_OR_CFS' %}
+                        {{ formField({ label: "Overall Test Result", value: decision.overallResultMagsorcfs  }, boldLabel=true) }}
+                    {% elseif decision.meansTestResultType === 'CROWN_COURT_TRIAL' %}
+                        {{ formField({ label: "Overall Test Result", value: decision.overallResultCc  }, boldLabel=true) }}
+                    {% elseif decision.meansTestResultType === 'APPEAL_TO_CROWN_COURT' %}
+                        {{ formField({ label: "Overall Test Result", value: decision.overallResultAppealtocc  }, boldLabel=true) }}
+                    {% else %}
+                        {{ formField({ label: "Overall Test Result", value: decision.overallResultNonMeans  }, boldLabel=true) }}
+                    {% endif %}
+
+                    {{ formField({ label: "Overall Result", value: decision.overallResultNonMeans  }, boldLabel=true) }}
+                    {{ formField({ label: "Number of times this Funding Decision has been updated with assessment / reassessment results", value: data.fundingDecisionUpdatesCount  }, boldLabel=true) }}
                 </dl>
             </div>
         </div>
