@@ -130,10 +130,10 @@
                         <li>Income from any other source which you have not stated in any of the previous questions</li>
                     </ul>
                 </div>
-                {{ formField({ label: "You", value: data.incomeFromOtherSources}) }}
-                {{ formField({ label: "Your Partner", value: data.partnerIncomeFromOtherSources}) }}
+                {{ formField({ label: "You", value: data.receiveOtherIncome}) }}
+                {{ formField({ label: "Your Partner", value: data.partnerReceiveOtherIncome}) }}
 
-                {% if data.incomeFromOtherSources === "Yes" %}
+                {% if data.receiveOtherIncome === "Yes" %}
                     {{ formFieldHeading("You:") }}
                     {{ formField({ label: "Student grant or loan", value: data.studentLoan }) }}
                     {{ formField({ label: "Board or rent from a family lodger or tenant", value: data.familyRent }) }}
@@ -141,14 +141,14 @@
                     {{ formField({ label: "Financial support from anyone else or from someone who allows you to use assets or money",
                         value: data.otherFinancialSupport }) }}
                     {{ formField({ label: "Income from any other source which you have not stated in any of the previous questions. Please explain",
-                        value: data.otherIncomeSourceFreetext }) }}
+                        value: data.incomeFromOtherSources }) }}
 
                     {{ formFieldHeading("The total amount received from all sources in this question") }}
                     {{ formField({ label: "amount", value: data.totalAmountReceived, type: "currency" }) }}
                     {{ formField({ label: "every", value: data.totalAmountReceivedEvery }) }}
                 {% endif %}
 
-                {% if data.partnerIncomeFromOtherSources === "Yes" %}
+                {% if data.partnerReceiveOtherIncome === "Yes" %}
                     {{ formFieldHeading("Your Partner:") }}
                     {{ formField({ label: "Student grant or loan", value: data.partnerStudentLoan }) }}
                     {{ formField({ label: "Board or rent from a family lodger or tenant", value: data.partnerFamilyRent }) }}
@@ -156,7 +156,7 @@
                     {{ formField({ label: "Financial support from anyone else or from someone who allows you to use assets or money",
                         value: data.partnerOtherFinancialSupport }) }}
                     {{ formField({ label: "Income from any other source which you have not stated in any of the previous questions. Please explain",
-                        value: data.partnerOtherIncomeSourceFreetext }) }}
+                        value: data.partnerIncomeFromOtherSources }) }}
                     }) }}
 
                     {{ formFieldHeading("The total amount received from all sources in this question") }}
