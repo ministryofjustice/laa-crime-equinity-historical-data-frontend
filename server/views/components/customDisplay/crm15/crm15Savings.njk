@@ -51,7 +51,7 @@
                                 { text: item.accountNumber | safe, attributes: { "data-header": "Account Number" } },
                                 { text: item.accountType | safe, attributes: { "data-header": "Account Type" } },
                                 { text: item.balance | safe | formatCurrency, attributes: { "data-header": "Balance" } },
-                                { text: item.overdrawn | safe, attributes: { "data-header": "Overdrawn" } },
+                                { text: item.overdrawn | formatYesNo, attributes: { "data-header": "Overdrawn" } },
                                 { text: item.accountHolder | safe, attributes: { "data-header": "Account Holder" } }
                             ] -%}
                             {% set list = tableData.rows.push(tableRow) %}
