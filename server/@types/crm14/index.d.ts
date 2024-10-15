@@ -249,6 +249,8 @@ export interface Crm14Response extends CrmResponse {
       }
       proofBenefits: string
     }
+    hasCrm15: boolean
+    crm15Details?: Crm15Details
     legalRepresentationDetails?: {
       solicitorApplyOffice: string
       solicitorAccountNum: string

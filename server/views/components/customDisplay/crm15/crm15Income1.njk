@@ -29,7 +29,7 @@
 
                 {% if hasEmployers %}
                     {{ formFieldHeading("Your Employer(s)") }}
-                    {{ employersTable(data.allEmployers.you ) }}
+                    {{ employersTable(data.allEmployers.you) }}
                 {% endif %}
 
                 {% if hasPartnerEmployers %}
@@ -95,55 +95,35 @@
 {% endmacro %}
 
 {% macro employersTable(data) %}
-    <div class="govuk-summary-list__row govuk-grid-row">
-        {% set tableData = {
-            head: [
-                { text: "Employer's Name / Job Title"},
-                { text: "Address" },
-                { text: "Salary" },
-                { text: "Deductions" }
-            ],
-            rows: []
-        } %}
 
-        {% for item in data %}
-            {%- set tableRow = [
-                { text: item.nameAndJobTitleDisplay | safe, attributes: { "data-header": "Employer's Name Job Title" } },
-                { text: item.addressDisplay | safe, attributes: { "data-header": "Address" } },
-                { text: item.salaryDisplay | safe, attributes: { "data-header": "Salary" } },
-                { text: item.otherDeduction | safe, attributes: { "data-header": "Deductions" } }
-            ] -%}
-            {% set list = tableData.rows.push(tableRow) %}
-        {% endfor %}
-        {{ formTable(tableData) }}
-    </div>
+    {% for item in data %}
+
+        {% set sectionTitle = 'Employer ' ~ loop.index ~ ':' %}
+
+        {{ formFieldHeading(sectionTitle, false) }}
+        {{ formField({ label: "Employer's Name / Job Title", value: item.nameAndJobTitleDisplay}) }}
+        {{ formField({ label: "Address", value: item.addressDisplay}) }}
+        {{ formField({ label: "Salary", value: item.salaryDisplay}) }}
+        {{ formField({ label: "Deductions", value: item.otherDeduction}) }}
+
+    {% endfor %}
+
 {% endmacro %}
 
 {% macro businessTable(data) %}
-    <div class="govuk-summary-list__row govuk-grid-row">
-        {% set tableData = {
-            head: [
-                { text: "Business Type"},
-                { text: "Previous 12 Months' Financials" },
-                { text: "Director's Salary Total Income from Share Sales" },
-                { text: "Trading Name & Address" },
-                { text: "Business Details" },
-                { text: "In business with anyone else" }
-            ],
-            rows: []
-        } %}
 
-        {% for item in data %}
-            {%- set tableRow = [
-                { text: item.businessType | safe, attributes: { "data-header": "Business Type" } },
-                { text: item.previousFinancialsDisplay | safe, attributes: { "data-header": "Previous 12 Months' Financials" } },
-                { text: item.directorShareIncomeDisplay | safe, attributes: { "data-header": "Director's Salary Total Income from Share Sales" } },
-                { text: item.tradingDetailsDisplay | safe, attributes: { "data-header": "Trading Name & Address" } },
-                { text: item.businessDetailsDisplay | safe, attributes: { "data-header": "Business Details" } },
-                { text: item.businessWithName | safe, attributes: { "data-header": "In business with anyone else" } }
-            ] -%}
-            {% set list = tableData.rows.push(tableRow) %}
-        {% endfor %}
-        {{ formTable(tableData) }}
-    </div>
+    {% for item in data %}
+
+        {% set sectionTitle = 'Business ' ~ loop.index ~ ':' %}
+
+        {{ formFieldHeading(sectionTitle, false) }}
+        {{ formField({ label: "Business Type", value: item.businessType}) }}
+        {{ formField({ label: "Previous 12 Months' Financials", value: item.previousFinancialsDisplay}) }}
+        {{ formField({ label: "Director's Salary Total Income from Share Sales", value: item.directorShareIncomeDisplay}) }}
+        {{ formField({ label: "Trading Name & Address", value: item.tradingDetailsDisplay}) }}
+        {{ formField({ label: "Business Details", value: item.businessDetailsDisplay}) }}
+        {{ formField({ label: "In business with anyone else", value: item.businessWithName}) }}
+
+    {% endfor %}
+
 {% endmacro %}

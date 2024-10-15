@@ -64,6 +64,7 @@ describe('CRM14 Controller', () => {
             appealLodgedDate: '',
           },
         },
+        hasCrm15: false,
         privacyAgree: true,
         submit: 'Complete',
       },
