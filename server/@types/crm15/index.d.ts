@@ -163,7 +163,7 @@ type Crm15Details = {
     partnerPaid40PercentTax: string
     householdOutgoingsExceedIncome: string
     householdOutgoingsExceedIncomeHow: string
-    indictable: true
+    indictable: boolean
   }
   landProperty: {
     ownProperty: string
@@ -187,9 +187,9 @@ type Crm15Details = {
         propertyNotHomeAddress3: string
         propertyNotHomeAddress2: string
         propertyNotHomeAddress1: string
-        usualHomeAddress: false
-        partnerUsualHomeAddress: false
-        addressListedBelow: true
+        usualHomeAddress: boolean
+        partnerUsualHomeAddress: boolean
+        addressListedBelow: boolean
         lAndpAddressDisplay: string
         mortgageDisplay: string
         type: string
