@@ -346,6 +346,7 @@ describe('routes', () => {
               appealLodgedDate: '',
             },
           },
+          hasCrm15: false,
           privacyAgree: true,
           submit: 'Complete',
         },
