@@ -8,4 +8,10 @@ export default class StaticPageController {
       res.render('pages/cookies')
     }
   }
+
+  showContact(): RequestHandler {
+    return async (req: Request, res: Response): Promise<void> => {
+      res.render('pages/contactUs')
+    }
+  }
 }

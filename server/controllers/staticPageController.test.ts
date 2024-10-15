@@ -20,4 +20,13 @@ describe('StaticPageController', () => {
 
     expect(response.render).toHaveBeenCalledWith('pages/cookies')
   })
+
+  it('should render the contact us page', async () => {
+    const staticPageController = new StaticPageController()
+    const requestHandler = staticPageController.showContact()
+
+    await requestHandler(request, response, next)
+
+    expect(response.render).toHaveBeenCalledWith('pages/contactUs')
+  })
 })
