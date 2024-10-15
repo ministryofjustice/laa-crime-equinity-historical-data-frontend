@@ -5,7 +5,6 @@
     <!-- Question 1 -->
     {% set fieldsQ1 = [
         { label: "Do you or your partner receive any of the benefits listed here?", value: data.receiveBenefits }
-
     ] %}
 
     {% if data.proofBenefits === 'Yes' %}
@@ -14,9 +13,7 @@
         {% set _ = fieldsQ1.push({ label: "Do you have any proof of receipt of benefits", value: data.proofBenefits + "No (enter details of your benefits income in the next section to enable your application to be processed as a non-passported assessment)"+ '<br> <br>' + "N.B. It is in your interests to provide evidence demonstrating that you receive one of the (passported) benefits listed above, if your application is processed as a non-passported assessment and your case progresses to the Crown Court you may be liable to pay a contribution towards the cost of your case from any Capital or Equity you may have"}) %}
     {% endif %}
 
-
     {{ formSubsection('Your Income and Your Partner\'s Income', fieldsQ1) }}
-
 
     {% if data.receiveBenefits === 'Yes' %}
         <!-- Benefits for You -->
