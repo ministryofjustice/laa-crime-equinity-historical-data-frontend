@@ -85,5 +85,7 @@ export default function routes({
 
   get('/cookies', staticPageController.showCookies())
 
+  get('/contact-us', staticPageController.showContact())
+
   return router
 }

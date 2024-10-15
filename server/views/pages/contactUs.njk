@@ -1,0 +1,26 @@
+{% extends "../partials/layout.njk" %}
+{% set pageTitle = applicationName + " - Contact us" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+    <div class="govuk-width-container">
+        <main class="govuk-main-wrapper govuk-main-wrapper--l">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+
+                    <h1 class="govuk-heading-l">Contact us</h1>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-6">Case enquiries</h2>
+
+                    <p class="govuk-body">Telephone: 0300 200 2020</p>
+                    <p class="govuk-body">9am to 5pm, Monday to Friday (excluding bank holidays)</p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-6">Technical support</h2>
+
+                    <p class="govuk-body">Email: <a href="mailto:apply-for-criminal-legal-aid@justice.gov.uk" class="govuk-link">apply-for-criminal-legal-aid@justice.gov.uk</a></p>
+
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
