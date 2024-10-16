@@ -14,49 +14,70 @@
 
     {# Render "Processed Attachments" subsection #}
 
-    <div class="govuk-!-margin-top-8 govuk-!-margin-bottom-0">
-        <h4>Previously Submitted and Processed Evidence Files</h4>
-    </div>
+    {% if (data.processedAttachments.length > 0) %}
+        <div class="govuk-!-margin-top-8 govuk-!-margin-bottom-0">
+            <h4>Previously Submitted and Processed Evidence Files</h4>
+        </div>
 
-    {% for item in data.processedAttachments %}
+        {% for item in data.processedAttachments %}
 
-        {% set sectionTitle = 'Evidence File ' ~ loop.index %}
+            {% set sectionTitle = 'Evidence File ' ~ loop.index %}
 
-        {% set fields = [
-            { label: "File name", value: item.fileName },
-            { label: "Evidence type", value: item.evidenceType },
-            { label: "Date submitted", value: item.dtSubmitted, type: "date" },
-            { label: "Status", value: item.status },
-            { label: "Provider notes", value: item.providerNotes },
-            { label: "Caseworker notes", value: item.caseworkerNotes },
-            { label: "Date processed", value: item.dtProcessed, type: "date" }
-        ] %}
+            {% set fields = [
+                { label: "File name", value: item.fileName },
+                { label: "Evidence type", value: item.evidenceType },
+                { label: "Date submitted", value: item.dtSubmitted, type: "date" },
+                { label: "Status", value: item.status },
+                { label: "Provider notes", value: item.providerNotes },
+                { label: "Caseworker notes", value: item.caseworkerNotes },
+                { label: "Date processed", value: item.dtProcessed, type: "date" },
+                { label: "Size (MB)", value: item.fileSizeMb }
+            ] %}
 
-        {{ formSubsection(sectionTitle, fields) }}
-    {% endfor %}
+            {{ formSubsection(sectionTitle, fields) }}
+        {% endfor %}
+    {% endif %}
 
     {# Render "New Attachments" subsection #}
 
-    {% set newAttachmentsData = {
-        head: [
-            { text: "File Name" },
-            { text: "Size (MB)" },
-            { text: "Evidence Type" },
-            { text: "Provider Notes" }
-        ],
-        rows: []
-    } %}
+    {% if (data.newAttachments.length > 0) %}
+        <div class="govuk-!-margin-top-8 govuk-!-margin-bottom-0">
+            <h4>Newly Submitted Evidence Files - Require Processing</h4>
+        </div>
 
-    {% for item in data.newAttachments %}
-        {% set row = [
-            { text: item.fileName },
-            { text: item.fileSizeMb },
-            { text: item.evidenceType },
-            { text: item.providerNotes }
-        ] %}
-        {% set _ = newAttachmentsData.rows.push(row) %}
-    {% endfor %}
+        {% for item in data.newAttachments %}
 
-    {{ formSubsection('Newly Submitted Evidence Files - Require Processing', newAttachmentsData, true) }}
+            {% set sectionTitle = 'Evidence File ' ~ loop.index %}
 
+            {% set fields = [
+                { label: "File name", value: item.fileName },
+                { label: "Date submitted", value: item.dtSubmitted, type: "date" },
+                { label: "Size (MB)", value: item.fileSizeMb },
+                { label: "Evidence type", value: item.evidenceType },
+                { label: "Provider notes", value: item.providerNotes }
+            ] %}
+
+            {{ formSubsection(sectionTitle, fields) }}
+        {% endfor %}
+    {% endif %}
+
+    {# Render "Processed Messages" subsection #}
+    {% if (data.pseMessages.length > 0) %}
+        <div class="govuk-!-margin-top-8 govuk-!-margin-bottom-0">
+            <h4>Processed Messages</h4>
+        </div>
+
+        {% for item in data.pseMessages %}
+
+            {% set sectionTitle = 'Message ' ~ loop.index %}
+
+            {% set fields = [
+                { label: "PSE USN", value: item.pseUsn },
+                { label: "Date submitted", value: item.dtSubmitted, type: "date" },
+                { label: "Message", value: item.message }
+            ] %}
+
+            {{ formSubsection(sectionTitle, fields) }}
+        {% endfor %}
+    {% endif %}
 {% endmacro %}
