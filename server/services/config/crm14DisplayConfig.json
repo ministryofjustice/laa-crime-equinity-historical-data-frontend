@@ -179,7 +179,8 @@
             },
             {
               "label": "Date of separation",
-              "apiField": "aboutYouPart2.dateOfSeparation"
+              "apiField": "aboutYouPart2.dateOfSeparation",
+              "type": "date"
             },
             {
               "label": "You are and your partner are",
