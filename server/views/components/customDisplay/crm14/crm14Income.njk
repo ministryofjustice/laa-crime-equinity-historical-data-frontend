@@ -26,7 +26,11 @@
         {% set benefitsYou = [] %}
         {% for benefit, value in data.benefits.you %}
             {% if value %}
-                {% set benefitValue = (benefit | splitCamelCase | capitalize) | safe %}
+                {% if benefit == 'statePension' %}
+                    {% set benefitValue = "Guarantee State Pension Credit" %}
+                {% else %}
+                    {% set benefitValue = (benefit | splitCamelCase | capitalize) | safe %}
+                {% endif %}
                 {% set _ = benefitsYou.push(benefitValue) %}
             {% endif %}
         {% endfor %}
@@ -35,7 +39,11 @@
         {% set benefitsPartner = [] %}
         {% for benefit, value in data.benefits.partner %}
             {% if value %}
-                {% set benefitValue = (benefit | splitCamelCase | capitalize) | safe %}
+                {% if benefit == 'statePension' %}
+                    {% set benefitValue = "Guarantee State Pension Credit" %}
+                {% else %}
+                    {% set benefitValue = (benefit | splitCamelCase | capitalize) | safe %}
+                {% endif %}
                 {% set _ = benefitsPartner.push(benefitValue) %}
             {% endif %}
         {% endfor %}
