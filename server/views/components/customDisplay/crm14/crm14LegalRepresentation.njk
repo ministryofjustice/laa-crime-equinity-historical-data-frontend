@@ -9,24 +9,25 @@
         </div>
         <div class="govuk-summary-card__content">
             <dl class="govuk-summary-list">
-                {% if data.declarationStatement2 == '' %}
-                    {% set declarationStatement2Value = 'No' %}
+                {% if data.declarationConfirm %}
+                    {% set declarationStatementConfirmValue = 'Yes' %}
                 {% else %}
-                    {% set declarationStatement2Value = data.declarationConfirm %}
+                    {% set declarationStatementConfirmValue = 'No' %}
                 {% endif %}
 
 
                 {% if 'Legal Aid Agency' in data.declarationStatement %}
-                    {{ formField({ label: "I represent the applicant. I confirm that I am authorised to provide representation under a contract issued by the Legal Aid Agency (LAA).", value: declarationStatement2Value }) }}
-                    {% elif 'representation by' in data.declarationStatement %}
-                    {{ formField({ label: "I represent the applicant. I confirm that I have been instructed to provide representation by.", value: declarationStatement2Value }) }}
+                    {{ formField({ label: "I represent the applicant. I confirm that I am authorised to provide representation under a contract issued by the Legal Aid Agency (LAA).", value: declarationStatementConfirmValue }) }}
+                {% elif 'representation by' in data.declarationStatement %}
+                    {{ formField({ label: "I represent the applicant. I confirm that I have been instructed to provide representation by.", value: declarationStatementConfirmValue }) }}
                     {% if 'a solicitor' in data.declarationStatement2 %}
-                        {{ formField({ label: "a firm which holds a contract issue by the Legal Aid Agency (LAA).", value: declarationStatement2Value }) }}
-                    {% else %}
-                        {{ formField({ label: "a solicitor employed by the Legal Aid Agency (LAA) in the Public Defender Service who is authorised to provide representation", value: declarationStatement2Value }) }}
+                        {{ formField({ label: "a solicitor employed by the Legal Aid Agency (LAA) in the Public Defender Service who is authorised to provide representation", value: declarationStatementConfirmValue }) }}
+                    {% elif 'a firm' in data.declarationStatement2 %}
+                        {{ formField({ label: "a firm which holds a contract issue by the Legal Aid Agency (LAA).", value: declarationStatementConfirmValue }) }}
                     {% endif %}
                 {% endif %}
-                {{ formField({ label: "I understand that, as Legal Representative, I must obtain, and retain on file, a Declaration from the Applicant (and partner if applicable). I understand that this means completing a hardcopy mandate form.", value: declarationStatement2Value }) }}
+
+                {{ formField({ label: "I understand that, as Legal Representative, I must obtain, and retain on file, a Declaration from the Applicant (and partner if applicable). I understand that this means completing a hardcopy mandate form.", value: declarationStatementConfirmValue }) }}
                 {{ formField({ label: "Date", value: data.signDate, type: "date" }) }}
 
 
