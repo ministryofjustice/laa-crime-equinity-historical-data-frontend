@@ -178,7 +178,9 @@
 {% macro benefitsTable(data) %}
     <div class="govuk-summary-list__row govuk-grid-row">
         {% set tableData = {
-            head: [],
+            head: [
+                { text: "", classes: "govuk-table__header" },  { text: "Amount", classes: "govuk-table__header" },  { text: "Every", classes: "govuk-table__header" }
+            ],
             rows: []
         } %}
 
