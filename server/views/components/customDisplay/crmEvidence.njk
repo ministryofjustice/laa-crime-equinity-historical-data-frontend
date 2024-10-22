@@ -1,26 +1,64 @@
 {% from "../formTable.njk" import formTable %}
+{% from "../formFieldHeading.njk" import formFieldHeading %}
 {% from "../formSubsection.njk" import formSubsection %}
 
 {% macro crmEvidence(data, crmType) %}
 
-    {% set tableEvidence = {
-        head: [],
-        rows: []
-    } %}
+    {% set processedEvidence = [] %}
+    {% set unprocessedEvidence = [] %}
 
+    {#     Separate processed and unprocessed files #}
     {% for item in data %}
-        {#  prefix fileKey with CRM14/ path if fileKey starts with "att_" #}
-        {% set fileKey = "CRM14/" + item.key if crmType === "CRM 14" and (item.key | truncate(4, true, '')) === "att_" else item.key %}
-        {% set fileName = item.name | replace("'", "") | urlencode %}
-        {% set linkUrl = "/download-evidence?fileKey=" + (fileKey | urlencode) + "&fileName=" + fileName %}
-        {% set tableRow = [
-            { text: "Attachment " ~ loop.index, isHeader: true },
-            { text: item.name },
-            { text: "<a href='" + linkUrl + "' class='govuk-link govuk-link--no-visited-state'>" + "Download" + "</a>", html: true }
-        ] %}
-        {% set _ = tableEvidence.rows.push(tableRow) %}
+        {% if item.isProcessed %}
+            {% set _ = processedEvidence.push(item) %}
+        {% else %}
+            {% set _ = unprocessedEvidence.push(item) %}
+        {% endif %}
     {% endfor %}
 
-    {{ formSubsection('Evidence', tableEvidence, true) }}
+    {% macro renderEvidenceTable(evidenceData, crmType) %}
+
+        {% set tableEvidence = {
+            head: [],
+            rows: []
+        } %}
+
+        {% for item in evidenceData %}
+            {#             Prefix fileKey with CRM14/ path if fileKey starts with "att_" #}
+            {% set fileKey = "CRM14/" + item.key if crmType === "CRM 14" and (item.key | truncate(4, true, '')) === "att_" else item.key %}
+            {% set fileName = item.name | replace("'", "") | urlencode %}
+            {% set linkUrl = "/download-evidence?fileKey=" + (fileKey | urlencode) + "&fileName=" + fileName %}
+            {% set tableRow = [
+                { text: "Attachment " ~ loop.index, isHeader: true },
+                { text: item.name },
+                { text: "<a href='" + linkUrl + "' class='govuk-link govuk-link--no-visited-state'>" + "Download" + "</a>", html: true }
+            ] %}
+            {% set _ = tableEvidence.rows.push(tableRow) %}
+        {% endfor %}
+
+        {{ formTable(tableEvidence) }}
+    {% endmacro %}
+
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Evidence</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+
+
+            {% if processedEvidence.length > 0 %}
+                {{ formFieldHeading("Processed", hasPreviousContent=false) }}
+                {{ renderEvidenceTable(processedEvidence, crmType) }}
+            {% endif %}
+
+
+            {% if unprocessedEvidence.length > 0 %}
+                {{ formFieldHeading("Not Processed", hasPreviousContent=false) }}
+                {{ renderEvidenceTable(unprocessedEvidence, crmType) }}
+            {% endif %}
+
+        </div>
+    </div>
 
 {% endmacro %}
