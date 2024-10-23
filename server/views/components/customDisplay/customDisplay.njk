@@ -9,6 +9,7 @@
 {% from "./crm7/crm7CaseDisposal.njk" import crm7CaseDisposal %}
 {% from "./crm7/crm7Disbursements.njk" import crm7Disbursements %}
 {% from "./crm7/crm7ClaimForCosts.njk" import crm7ClaimForCosts %}
+{% from "./crm7/crm7PreOrderWork.njk" import crm7PreOrderWork %}
 {% from "./crm7/crm7ScheduleOfTime.njk" import crm7ScheduleOfTime %}
 {% from "./crm7/crm7NonStandardFeeClaim.njk" import crm7NonStandardFeeClaim %}
 {% from "./crm7/crm7OfficeUseOnly.njk" import crm7OfficeUseOnly %}
@@ -59,6 +60,8 @@
         {{ crm7Disbursements(customDisplay.value) }}
     {% elif customDisplay.name === 'crm7ClaimForCosts' %}
         {{ crm7ClaimForCosts(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm7PreOrderWork' %}
+        {{ crm7PreOrderWork(customDisplay.value) }}
     {% elif customDisplay.name === 'crm7ScheduleOfTime' %}
         {{ crm7ScheduleOfTime(customDisplay.value) }}
     {% elif customDisplay.name === 'crm7NonStandardFeeClaim' %}
