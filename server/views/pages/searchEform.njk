@@ -11,7 +11,7 @@
 {% set mainClasses = "app-container govuk-body" %}
 
 {% set laaOrMaatTitle = "LAA Case Ref" %}
-{% if results and results.length > 0 and results[0].type == 'CRM14' %}
+{% if results and results.length > 0 and results[0].type === 'CRM14' %}
     {% set laaOrMaatTitle = "MAAT ID" %}
 {% endif %}
 

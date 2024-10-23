@@ -1,0 +1,41 @@
+{% from "../../formField.njk" import formField %}
+
+{% macro crm14Evidence1(data) %}
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Questions to Inform Evidential Requirements</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                {{ formField({ label: "Has a court remanded you in custody?", value: data.remandedInCustody }) }}
+
+                {% if data.remandedInCustody === true %}
+                    {{ formField({ label: "What date were you remanded?", value: data.remandedDate | formatDate }) }}
+                    {{ formField({ label: "Will your case be heard in a magistrates' court?", value: data.heardInMagistrateCourt | transformValue('yesNo')}) }}
+                {% endif %}
+
+                {% set isEmployed = data.employed | transformValue('yesNo') %}
+                {{ formField({ label: "Are you employed (excluding being self employed)?", value: isEmployed }) }}
+
+                {% if isEmployed === 'No' %}
+                    {% set hasEmployedCeased = data.employmentCeased | transformValue('yesNo') %}
+                    {{ formField({ label: "Have you ceased employment within the last 3 months?", value: hasEmployedCeased }) }}
+
+                    {% if hasEmployedCeased === 'Yes' %}
+                        {% set hasLostJobDuetoCustody = data.lostJobDuetoCustody | transformValue('yesNo') %}
+                        {{ formField({ label: "Have you lost your job as a result of being in custody?", value: hasLostJobDuetoCustody }) }}
+
+                        {% if hasLostJobDuetoCustody === 'Yes' %}
+                            {{ formField({ label: "When did this occur?", value: data.lostJobDuetoCustodyDate | formatDate }) }}
+                        {% endif %}
+                    {% endif %}
+
+                {% endif %}
+
+                {{ formField({ label: "Is your partner employed (excluding being self employed)?", value: data.partnerEmployed }) }}
+            </dl>
+        </div>
+    </div>
+
+{% endmacro %}

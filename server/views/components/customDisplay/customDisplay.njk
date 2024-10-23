@@ -14,12 +14,13 @@
 {% from "./crm7/crm7OfficeUseOnly.njk" import crm7OfficeUseOnly %}
 {% from "./crm14/crm14LegalRepUse.njk" import crm14LegalRepUse %}
 {% from "./crm14/crm14AboutTheInformation.njk" import crm14AboutTheInformation %}
-{% from "./crm14/crm14InterestsOfJustice.njk" import crm14InterestsOfJustice %}
+{% from "./crm14/crm14InterestsOfJustice1.njk" import crm14InterestsOfJustice1 %}
 {% from "./crm14/crm14InterestsOfJustice2.njk" import crm14InterestsOfJustice2 %}
 {% from "./crm14/crm14Declarations.njk" import crm14Declarations %}
 {% from "./crm14/crm14PrivacyNotice.njk" import crm14PrivacyNotice %}
 {% from "./crm14/crm14Income.njk" import crm14Income %}
-{% from "./crm14/crm14EvidencePart2.njk" import crm14EvidencePart2 %}
+{% from "./crm14/crm14Evidence1.njk" import crm14Evidence1 %}
+{% from "./crm14/crm14Evidence2.njk" import crm14Evidence2 %}
 {% from "./crm14/crm14OfficeUseOnly.njk" import crm14OfficeUseOnly %}
 {% from "./crm14/crm14LegalRepresentation.njk" import crm14LegalRepresentation %}
 {% from "./crm15/crm15Income1.njk" import crm15Income1 %}
@@ -52,7 +53,7 @@
         {{ crm5OfficeUseOnly(customDisplay.value) }}
 
 {# CRM 7 #}
-        {% elif customDisplay.name == 'crm7CaseDisposal' %}
+    {% elif customDisplay.name === 'crm7CaseDisposal' %}
         {{ crm7CaseDisposal(customDisplay.value) }}
     {% elif customDisplay.name === 'crm7Disbursements' %}
         {{ crm7Disbursements(customDisplay.value) }}
@@ -68,12 +69,10 @@
 {# CRM 14 #}
     {% elif customDisplay.name === 'crm14LegalRepUse' %}
         {{ crm14LegalRepUse(customDisplay.value) }}
-    {% elif customDisplay.name === 'crm14InterestsOfJustice' %}
-        {{ crm14InterestsOfJustice(customDisplay.value) }}
     {% elif customDisplay.name === 'crm14AboutTheInformation' %}
         {{ crm14AboutTheInformation(customDisplay.value) }}
-    {% elif customDisplay.name === 'crm14InterestsOfJustice' %}
-        {{ crm14InterestsOfJustice(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm14InterestsOfJustice1' %}
+        {{ crm14InterestsOfJustice1(customDisplay.value) }}
     {% elif customDisplay.name === 'crm14InterestsOfJustice2' %}
         {{ crm14InterestsOfJustice2(customDisplay.value) }}
     {% elif customDisplay.name === 'crm14Declarations' %}
@@ -82,8 +81,10 @@
         {{ crm14PrivacyNotice(customDisplay.value) }}
     {% elif customDisplay.name === 'crm14Income' %}
         {{ crm14Income(customDisplay.value) }}
-    {% elif customDisplay.name === 'crm14EvidencePart2' %}
-        {{ crm14EvidencePart2(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm14Evidence1' %}
+        {{ crm14Evidence1(customDisplay.value) }}
+    {% elif customDisplay.name === 'crm14Evidence2' %}
+        {{ crm14Evidence2(customDisplay.value) }}
     {% elif customDisplay.name === 'crm14OfficeUseOnly' %}
         {{ crm14OfficeUseOnly(customDisplay.value) }}
     {% elif customDisplay.name === 'crm14LegalRepresentation' %}
