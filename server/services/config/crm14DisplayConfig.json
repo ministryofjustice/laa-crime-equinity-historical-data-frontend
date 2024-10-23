@@ -280,7 +280,7 @@
       "subsections": [
         {
           "customDisplay": {
-            "name": "crm14InterestsOfJustice",
+            "name": "crm14InterestsOfJustice1",
             "apiField": "interestOfJusticePart1"
           }
         }
@@ -309,47 +309,10 @@
       ],
       "subsections": [
         {
-          "title": "Questions to Inform Evidential Requirements",
-          "fields": [
-            {
-              "label": "Has a court remanded you in custody?",
-              "apiField": "evidencePart1.remandedInCustody"
-            },
-            {
-              "label": "What date were you remanded?",
-              "apiField": "evidencePart1.remandedDate",
-              "type": "date"
-            },
-            {
-              "label": "Will your case be heard in a magistrates' court?",
-              "apiField": "evidencePart1.heardInMagistrateCourt",
-              "transform": "yesNo"
-            },
-            {
-              "label": "Are you employed (excluding being self employed)?",
-              "apiField": "evidencePart1.employed",
-              "transform": "yesNo"
-            },
-            {
-              "label": "Have you ceased employment within the last 3 months?",
-              "apiField": "evidencePart1.employmentCeased",
-              "transform": "yesNo"
-            },
-            {
-              "label": "Have you lost your job as a result of being in custody?",
-              "apiField": "evidencePart1.lostJobDuetoCustody",
-              "transform": "yesNo"
-            },
-            {
-              "label": "When did this occur?",
-              "apiField": "evidencePart1.lostJobDuetoCustodyDate",
-              "type": "date"
-            },
-            {
-              "label": "Is your partner employed (excluding being self employed)?",
-              "apiField": "evidencePart1.partnerEmployed"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm14Evidence1",
+            "apiField": "evidencePart1"
+          }
         }
       ]
     },
@@ -477,7 +440,7 @@
       "subsections": [
         {
           "customDisplay": {
-            "name": "crm14EvidencePart2",
+            "name": "crm14Evidence2",
             "apiField": "evidencePart2"
           }
         }

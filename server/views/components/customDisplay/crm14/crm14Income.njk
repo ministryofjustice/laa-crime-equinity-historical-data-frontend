@@ -7,7 +7,7 @@
         { label: "Do you or your partner receive any of the benefits listed here?", value: data.receiveBenefits }
     ] %}
 
-    {% if data.proofBenefits == '' %}
+    {% if data.proofBenefits === '' %}
         {% set proofBenefitsValue = 'No' %}
     {% else %}
         {% set proofBenefitsValue = data.proofBenefits %}
@@ -26,7 +26,7 @@
         {% set benefitsYou = [] %}
         {% for benefit, value in data.benefits.you %}
             {% if value %}
-                {% if benefit == 'statePension' %}
+                {% if benefit === 'statePension' %}
                     {% set benefitValue = "Guarantee State Pension Credit" %}
                 {% else %}
                     {% set benefitValue = (benefit | splitCamelCase | capitalize) | safe %}
@@ -39,7 +39,7 @@
         {% set benefitsPartner = [] %}
         {% for benefit, value in data.benefits.partner %}
             {% if value %}
-                {% if benefit == 'statePension' %}
+                {% if benefit === 'statePension' %}
                     {% set benefitValue = "Guarantee State Pension Credit" %}
                 {% else %}
                     {% set benefitValue = (benefit | splitCamelCase | capitalize) | safe %}

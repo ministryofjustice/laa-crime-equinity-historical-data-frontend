@@ -9,7 +9,7 @@
     ] %}
 
     {# If yes add the Definition field #}
-    {% if data.disabled == 'Yes' %}
+    {% if data.disabled === 'Yes' %}
         {% set disabledDefinitionField = { label: "The best definition is:", value: data.disabledDefinition } %}
         {% set _ = fields.push(disabledDefinitionField) %}
     {% endif %}
