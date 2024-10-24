@@ -2,6 +2,7 @@
 
 {% macro paginationBox(params) %}
 
-{{ govukPagination(params) }}
-
+    {% if (params.items | length) > 1 %}
+        {{ govukPagination(params) }}
+    {% endif %}
 {% endmacro %}
