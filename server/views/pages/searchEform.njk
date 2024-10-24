@@ -92,11 +92,7 @@
 
                 <h2 class="govuk-!-margin-top-9">{{ itemsTotal }} {{ recordLabelPlural }} found meeting your search criteria </h2>
                 <div> {{ govukTable(tableData) }} </div>
-
-                {% if (pagination.items | length) > 1 %}
-                    {{ paginationBox(pagination) }}
-                {% endif %}
-
+                {{ paginationBox(pagination) }}
             {% endif %}
         </main>
     </div>
