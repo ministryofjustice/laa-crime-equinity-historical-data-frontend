@@ -2,6 +2,16 @@
 
 {% macro navigationBar(params) %}
 
-    {{ mojSideNavigation(params) }}
+    <nav class="moj-side-navigation" aria-label="{{ params.label }}">
+        <ul class="moj-side-navigation__list">
+            {%- for item in params.items %}
+                <li class="moj-side-navigation__item {% if item.active %}moj-side-navigation__item--active{% endif %}">
+                    <a href="{{ item.href }}" class="govuk-link" {% if item.active %}aria-current="location"{% endif %}>
+                        {{ item.text }}
+                    </a>
+                </li>
+            {%- endfor %}
+        </ul>
+    </nav>
 
 {% endmacro %}
