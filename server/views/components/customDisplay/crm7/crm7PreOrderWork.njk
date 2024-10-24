@@ -1,0 +1,22 @@
+{% from "../../formField.njk" import formField %}
+
+{% macro crm7PreOrderWork(data) %}
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Pre Order Work</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                {{ formField({ label: "Are you claiming for any work which precedes the date of grant shown on the order?", value: data.isClaimBeforeGrantDate }) }}
+                {{ formField({ label: "Please give the date when the application was submitted", value: data.dateSubmitted | formatDate }) }}
+                {{ formField({ label: "What was the date of the 1st court hearing?", value: data.firstCourtHearingDate | formatDate }) }}
+
+                {% if data.isClaimBeforeGrantDate === 'Yes' %}
+                    {{ formField({ label: "Please give the date on which the application was received by the court.", value: data.dateReceivedByCourt | formatDate }) }}
+                {% endif %}
+            </dl>
+        </div>
+    </div>
+
+{% endmacro %}

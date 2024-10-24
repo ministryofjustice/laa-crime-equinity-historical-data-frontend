@@ -370,28 +370,10 @@
       "title": "Pre Order Work",
       "subsections": [
         {
-          "title": "Pre Order Work",
-          "fields": [
-            {
-              "label": "Are you claiming for any work which precedes the date of grant shown on the order?",
-              "apiField": "preOrderWork.isClaimBeforeGrantDate"
-            },
-            {
-              "label": "Please give the date when the application was submitted",
-              "apiField": "preOrderWork.dateSubmitted",
-              "type": "date"
-            },
-            {
-              "label": "What was the date of the 1st court hearing?",
-              "apiField": "preOrderWork.firstCourtHearingDate",
-              "type": "date"
-            },
-            {
-              "label": "Please give the date on which the application was received by the court.",
-              "apiField": "preOrderWork.dateReceivedByCourt",
-              "type": "date"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm7PreOrderWork",
+            "apiField": "preOrderWork"
+          }
         }
       ]
     },
