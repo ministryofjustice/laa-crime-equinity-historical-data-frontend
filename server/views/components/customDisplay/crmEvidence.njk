@@ -28,11 +28,16 @@
             {% set fileKey = "CRM14/" + item.key if crmType === "CRM 14" and (item.key | truncate(4, true, '')) === "att_" else item.key %}
             {% set fileName = item.name | replace("'", "") | urlencode %}
             {% set linkUrl = "/download-evidence?fileKey=" + (fileKey | urlencode) + "&fileName=" + fileName %}
+
+            {# Add aria-label to describe the type of file being downloaded #}
+            {% set ariaLabel = "Download " + (item.type | removeUnderscore ) + " evidence file" %}
+
             {% set tableRow = [
                 { text: "Attachment " ~ loop.index, isHeader: true },
                 { text: item.name },
-                { text: "<a href='" + linkUrl + "' class='govuk-link govuk-link--no-visited-state'>" + "Download" + "</a>", html: true }
+                { text: "<a href='" + linkUrl + "' class='govuk-link govuk-link--no-visited-state' aria-label='" + ariaLabel + "'>" + "Download" + "</a>", html: true }
             ] %}
+
             {% set _ = tableEvidence.rows.push(tableRow) %}
         {% endfor %}
 

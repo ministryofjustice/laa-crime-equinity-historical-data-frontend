@@ -14,6 +14,7 @@ import {
   formatPercentage,
   formatTime,
   splitCamelCase,
+  removeUnderscore,
 } from './crmFieldFormatter'
 
 import transformValue from './crmFieldTransformer'
@@ -63,4 +64,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('isNotEmpty', isNotEmpty)
   njkEnv.addFilter('splitCamelCase', splitCamelCase)
   njkEnv.addFilter('transformValue', transformValue)
+  njkEnv.addFilter('removeUnderscore', removeUnderscore)
 }
