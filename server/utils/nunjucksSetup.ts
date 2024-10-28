@@ -2,7 +2,7 @@
 import path from 'path'
 import nunjucks from 'nunjucks'
 import express from 'express'
-import { initialiseName, isNotEmpty } from './utils'
+import { initialiseName, isNotEmpty, splitCamelCase, removeUnderscore } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
 import {
@@ -13,8 +13,6 @@ import {
   formatMultiline,
   formatPercentage,
   formatTime,
-  splitCamelCase,
-  removeUnderscore,
 } from './crmFieldFormatter'
 
 import transformValue from './crmFieldTransformer'
