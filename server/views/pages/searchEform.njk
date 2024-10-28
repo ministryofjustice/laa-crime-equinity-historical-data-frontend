@@ -7,7 +7,13 @@
 {% from "../components/pagination.njk" import paginationBox %}
 {% from "../components/backLink.njk" import backLink %}
 
+{% set hasErrors = errors.list | length %}
+
 {% set pageTitle = applicationName + " - Home" %}
+{% if hasErrors %}
+    {% set pageTitle = "Error: " + pageTitle %}
+{% endif %}
+
 {% set mainClasses = "app-container govuk-body" %}
 
 {% set laaOrMaatTitle = "LAA Case Ref" %}
@@ -34,7 +40,7 @@
         {{ backLink(backUrl) }}
         <main class="govuk-main-wrapper">
 
-            {% if errors.list | length %}
+            {% if hasErrors %}
                 {{ govukErrorSummary({
                     titleText: "There is a problem",
                     errorList: errors.list
