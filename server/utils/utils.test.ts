@@ -1,4 +1,11 @@
-import { buildQueryString, convertToTitleCase, initialiseName, isNotEmpty } from './utils'
+import {
+  buildQueryString,
+  convertToTitleCase,
+  initialiseName,
+  isNotEmpty,
+  splitCamelCase,
+  removeUnderscore,
+} from './utils'
 
 describe('buildQueryString', () => {
   it.each([
@@ -53,5 +60,32 @@ describe('isNotEmpty', () => {
     ['', false],
   ])('given "%s" returns %s', (input: string, expected: boolean) => {
     expect(isNotEmpty(input)).toEqual(expected)
+  })
+})
+
+describe('splitCamelCase', () => {
+  it.each([
+    ['camelCase', 'camel case'],
+    ['CamelCaseTest', 'camel case test'],
+    ['already separated', 'already separated'],
+    ['lowerCase', 'lower case'],
+    ['SingleWord', 'single word'],
+    ['', ''],
+  ])('given "%s" returns "%s"', (input: string, expected: string) => {
+    expect(splitCamelCase(input)).toEqual(expected)
+  })
+})
+
+describe('removeUnderscore', () => {
+  it.each([
+    ['WAGE_SLIPS', 'Wage Slips'],
+    ['INCOME_SUPPORT', 'Income Support'],
+    ['rent_mortgage', 'Rent Mortgage'],
+    ['alreadyWithoutUnderscore', 'Alreadywithoutunderscore'],
+    ['', ''],
+    ['single_word', 'Single Word'],
+    ['multiple__underscores', 'Multiple  Underscores'],
+  ])('given "%s" returns "%s"', (input: string, expected: string) => {
+    expect(removeUnderscore(input)).toEqual(expected)
   })
 })
