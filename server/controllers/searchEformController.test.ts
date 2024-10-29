@@ -184,6 +184,14 @@ describe('Search Eform Controller', () => {
             text: 'Enter at least one search field',
           },
         ],
+        messages: {
+          usn: { text: 'Enter at least one search field' },
+          supplierAccountNumber: { text: 'Enter at least one search field' },
+          clientName: { text: 'Enter at least one search field' },
+          endDate: { text: 'Enter at least one search field' },
+          startDate: { text: 'Enter at least one search field' },
+          type: { text: 'Enter at least one search field' },
+        },
       },
       backUrl: '/',
       formValues: {
