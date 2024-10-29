@@ -69,16 +69,17 @@ const schema = Joi.object({
   })
 
 export default function validateSearchParams(params: Record<string, string>): Errors {
+  const errorMessage = 'Enter at least one search field'
   if (searchParamsIsEmpty(params)) {
     return {
-      list: [{ href: '#', text: 'Enter at least one search field' }],
+      list: [{ href: '#', text: errorMessage }],
       messages: {
-        usn: { text: 'Enter at least one search field' },
-        supplierAccountNumber: { text: 'Enter at least one search field' },
-        type: { text: 'Enter at least one search field' },
-        clientName: { text: 'Enter at least one search field' },
-        startDate: { text: 'Enter at least one search field' },
-        endDate: { text: 'Enter at least one search field' },
+        usn: { text: errorMessage },
+        supplierAccountNumber: { text: errorMessage },
+        type: { text: errorMessage },
+        clientName: { text: errorMessage },
+        startDate: { text: errorMessage },
+        endDate: { text: errorMessage },
       },
     }
   }
