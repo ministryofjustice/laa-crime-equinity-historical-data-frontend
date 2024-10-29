@@ -1,7 +1,7 @@
-<div class="form-background govuk-!-padding-top-4 govuk-!-padding-left-4">
+<div class="form-background govuk-!-padding-4 ">
     <form action="/search-eform" method="POST">
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-third">
+            <div class="govuk-grid-column-one-third govuk-custom-stack-tablet">
                 {{ govukInput({
                     label: {
                         text: 'USN'
@@ -14,7 +14,7 @@
                     errorMessage: errors.messages.usn
                 }) }}
             </div>
-            <div class="govuk-grid-column-one-third">
+            <div class="govuk-grid-column-one-third govuk-custom-stack-tablet">
                 {{ govukInput({
                     label: {
                         text: "Provider account number"
@@ -25,7 +25,7 @@
                     errorMessage: errors.messages.supplierAccountNumber
                 }) }}
             </div>
-            <div class="govuk-grid-column-one-third">
+            <div class="govuk-grid-column-one-third govuk-custom-stack-tablet">
                 {{ govukSelect({
                     label: {
                         text: "CRM type"
@@ -55,7 +55,8 @@
                     ],
                     id: "type",
                     name: "type",
-                    value: formValues.type
+                    value: formValues.type,
+                    errorMessage: errors.messages.type
                 }) }}
             </div>
         </div>
@@ -106,7 +107,8 @@
             <div class="govuk-grid-column-full">
                 <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
                 {{ govukButton({
-                    text: 'Search'
+                    text: 'Search',
+                    classes: 'govuk-!-margin-bottom-1'
                 }) }}
             </div>
         </div>

@@ -24,6 +24,13 @@
   display: none;
 }
 
+@media (min-width: 641px) and (max-width: 840px) {
+  .govuk-custom-stack-tablet {
+    width: 50%;
+    display: block;
+  }
+}
+
 
 @media (min-width: 48em) {
   .govuk-custom-no-padding-left-desktop {
