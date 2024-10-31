@@ -22,6 +22,8 @@
 {% endif %}
 
 {% set tableData = {
+    caption: "Search results",
+    captionClasses: "govuk-visually-hidden",
     head: [
         { text: "Client name / USN" },
         { text: "CRM Type" },
@@ -82,13 +84,13 @@
                     {% endif %}
 
                     {%- set tableRow = [
-                        { text: [clientName, usn] | join | safe },
-                        { text: type | safe },
-                        { text: originatedDate | formatDate('dd/MM/yyyy') | safe },
-                        { text: submittedDate | formatDate('dd/MM/yyyy') | safe },
-                        { text: providerAccount | safe },
-                        { text: laaCaseRef | safe },
-                        { text: statusColour | safe }
+                        { text: [clientName, usn] | join | safe, attributes: { "data-header": "Client name / USN" } },
+                        { text: type | safe, attributes: { "data-header": "CRM Type" } },
+                        { text: originatedDate | formatDate('dd/MM/yyyy') | safe, attributes: { "data-header": "Start date" } },
+                        { text: submittedDate | formatDate('dd/MM/yyyy') | safe, attributes: { "data-header": "Submission date" } },
+                        { text: providerAccount | safe, attributes: { "data-header": "Provider account number" } },
+                        { text: laaCaseRef | safe, attributes: { "data-header": laaOrMaatTitle } },
+                        { text: statusColour | safe, attributes: { "data-header": "Status" } }
                     ] -%}
 
                     {% set list = tableData.rows.push(tableRow) %}
@@ -97,7 +99,9 @@
                 {% set recordLabelPlural = 'record' if itemsTotal <= 1 else 'records' %}
 
                 <h2 class="govuk-!-margin-top-9">{{ itemsTotal }} {{ recordLabelPlural }} found meeting your search criteria </h2>
-                <div> {{ govukTable(tableData) }} </div>
+                <div class="govuk-custom-stack-table">
+                    {{ govukTable(tableData) }}
+                </div>
                 {{ paginationBox(pagination) }}
             {% endif %}
         </main>

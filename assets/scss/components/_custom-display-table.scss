@@ -2,7 +2,8 @@
   overflow-x: auto;
 }
 
-@media (max-width: 40.0625em) {
+// Mixin for mobile table styles
+@mixin mobile-table-styles {
   .govuk-table thead {
     display: none;
   }
@@ -37,6 +38,18 @@
   }
 }
 
+// Default mobile view at 640px for general tables
+@media (max-width: 40.0625em) {
+  @include mobile-table-styles;
+}
+
+// Custom mobile view at 768px for the search page table
+.govuk-custom-stack-table {
+  @media (max-width: 48em) {
+    @include mobile-table-styles;
+  }
+}
+
 @media (min-width: 40.0625em) {
   .equal-width-table {
     display: flex;
@@ -48,7 +61,6 @@
     }
     .govuk-table__cell, .govuk-table__header {
       flex: 1;
-
     }
   }
 }
