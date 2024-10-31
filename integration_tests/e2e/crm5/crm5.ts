@@ -27,8 +27,8 @@ Then('it should return a page related to the corresponding CRM5 case', () => {
   cy.url().should('include', '/crm5/')
 })
 
-Then('we should see a left bar navigation with 12 items', () => {
-  cy.get('.moj-side-navigation__list').children().should('have.length', 15) // Adjust selector if needed
+Then('we should see a left bar navigation with {string} items', numItems => {
+  cy.get('.moj-side-navigation__list').children().should('have.length', numItems) // Adjust selector if needed
 })
 
 Then('we should see a right container with static infos displayed', () => {
@@ -38,5 +38,5 @@ Then('we should see a right container with static infos displayed', () => {
 
 Then('the Costs page should be displayed with the correct layout', () => {
   cy.contains('Costs').click()
-  cy.contains('Costs Accrued To Date').should('be.visible')
+  cy.contains('Costs Accrued to Date').should('be.visible')
 })
