@@ -51,10 +51,14 @@
                         } %}
 
                         {% for item in data.propertyList %}
+                            {%- set formattedOwnershipDetails = item.ownershipDetailsDisplay
+                                | replace("You:", "<strong>You:</strong>\r\n")
+                                | replace("Your Partner:", "<strong>Your Partner:</strong>\r\n") -%}
+
                             {%- set tableRow = [
                                 { text: item.type | safe, attributes: { "data-header": "Type" } },
                                 { text: item.lAndpAddressDisplay | safe, attributes: { "data-header": "Address" } },
-                                { text: item.ownershipDetailsDisplay | safe, attributes: { "data-header": "Ownership" } },
+                                { text: formattedOwnershipDetails | safe, attributes: { "data-header": "Ownership" } },
                                 { text: item.mortgageDisplay | safe, attributes: { "data-header": "Values" } },
                                 { text: item.residentialCommercialLandDetailsDisplay | safe, attributes: { "data-header": "Details" } }
                             ] -%}
