@@ -37,7 +37,7 @@ const getSearchByTypeResponse = (typeName: string): SearchResponse => {
     paging: {
       size: 10,
       number: 0,
-      total: 3,
+      total: 1,
       itemsPage: 10,
       itemsTotal: 3,
     },
