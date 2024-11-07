@@ -29,7 +29,7 @@ declare module 'express-session' {
     accessToken: string
     idToken: string
     isAuthenticated: boolean
-    // lastVisitedSection?: string
+    lastVisitedSection?: string
     paging: {
       itemsTotal: number
       number: number

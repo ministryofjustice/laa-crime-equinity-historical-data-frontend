@@ -17,7 +17,7 @@ export default class SearchEformController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      const backUrl = manageBackLink(CURRENT_URL)
+      const backUrl = manageBackLink(CURRENT_URL, '')
 
       if (!req.query.page) {
         const searchResults = req.session.searchResults || []
@@ -72,7 +72,7 @@ export default class SearchEformController {
             req.session.paging = paging
 
             // Record the search page in the history
-            manageBackLink(CURRENT_URL)
+            manageBackLink(CURRENT_URL, '')
 
             res.render(VIEW_PATH, {
               results,

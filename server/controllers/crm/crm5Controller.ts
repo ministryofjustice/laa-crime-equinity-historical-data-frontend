@@ -20,7 +20,14 @@ export default class Crm5Controller {
       const sections = this.crmDisplayService.getSections('crm5', sectionId, crm5Response)
 
       const currentUrl = sectionId ? `/crm5/${usn}/${sectionId}` : navigation.items[0].href
-      const backUrl = manageBackLink(currentUrl)
+
+      if (!currentUrl.includes('/summary')) {
+        req.session.lastVisitedSection = currentUrl
+      }
+
+      const lastVisitedSection = req.session.lastVisitedSection || '/search-eform'
+
+      const backUrl = manageBackLink(currentUrl, lastVisitedSection)
 
       res.render('pages/crmDetails', {
         title: 'Application For Extension Of Upper Limit',
