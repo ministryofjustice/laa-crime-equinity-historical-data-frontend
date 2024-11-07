@@ -1,5 +1,3 @@
-import { Request } from 'express'
-
 function manageBackLink(currentUrl: string, lastVisitedSection: string): string {
   if (currentUrl.includes('/summary')) {
     return lastVisitedSection

@@ -1,17 +1,6 @@
-import { Request } from 'express'
-import { createMock } from '@golevelup/ts-jest'
 import manageBackLink from './crmBackLink'
 
 describe('manageBackLink', () => {
-  let request: Request
-
-  beforeEach(() => {
-    request = createMock<Request>({
-      session: {},
-      query: {},
-    })
-  })
-
   it('should return search-eform link when current URL is a CRM page', () => {
     const currentUrl = '/crm5/1234567/general-information'
     const lastVisitedSection = ''
