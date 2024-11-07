@@ -1,4 +1,4 @@
-function manageBackLink(currentUrl: string, lastVisitedSection: string): string {
+function manageBackLink(currentUrl: string, lastVisitedSection: string = ''): string {
   if (currentUrl.includes('/summary')) {
     return lastVisitedSection
   }
