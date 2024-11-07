@@ -1,5 +1,3 @@
-import { Request } from 'express'
-
 function manageBackLink(currentUrl: string): string {
   if (currentUrl.includes('/crm')) {
     return '/search-eform'
