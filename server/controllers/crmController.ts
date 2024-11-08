@@ -34,7 +34,14 @@ export default class CrmController<T extends CrmResponse> {
       const sections = this.crmDisplayService.getSections(this.crmType, sectionId, crm4Response)
 
       const currentUrl = sectionId ? `/${this.crmType}/${usn}/${sectionId}` : navigation.items[0].href
-      const backUrl = manageBackLink(currentUrl)
+
+      if (!currentUrl.includes('/summary')) {
+        req.session.lastVisitedSection = currentUrl
+      }
+
+      const lastVisitedSection = req.session.lastVisitedSection || '/search-eform'
+
+      const backUrl = manageBackLink(currentUrl, lastVisitedSection)
 
       res.render('pages/crmDetails', {
         title: crmTypeViewData[this.crmType].title,

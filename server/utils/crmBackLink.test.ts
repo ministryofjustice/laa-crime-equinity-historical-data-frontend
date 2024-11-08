@@ -21,4 +21,12 @@ describe('manageBackLink', () => {
 
     expect(backUrl).toBe('/')
   })
+
+  it('should return last visited section when current URL is the summary page', () => {
+    const currentUrl = '/crm5/1234567/summary'
+    const lastVisitedSection = '/crm5/1234567/general-information'
+    const backUrl = manageBackLink(currentUrl, lastVisitedSection)
+
+    expect(backUrl).toBe('/crm5/1234567/general-information')
+  })
 })
