@@ -6,14 +6,14 @@
     {% set scheduleData = {
         head: [
             { text: "Line" },
-            { text: "Fee Earner Initials" },
+            { text: "Fee earner initials" },
             { text: "Date" },
-            { text: "Cost Type" },
+            { text: "Cost type" },
             { text: "Time" },
-            { text: "Hearing Type Code(s)" },
-            { text: "Person(s) Attended Code(s)" },
-            { text: "Hourly Rate" },
-            { text: "Basic Claim" },
+            { text: "Hearing type code(s)" },
+            { text: "Person(s) attended code(s)" },
+            { text: "Hourly rate" },
+            { text: "Basic claim" },
             { text: "% Uplift" },
             { text: "Claim" }
         ],
@@ -26,7 +26,7 @@
             { text: item.feeEarnerInitials },
             { text: item.date },
             { text: item.costType },
-            { text: item.time },
+            { text: item.time | formatTime('HH:mm') },
             { text: item.hearingTypeCode },
             { text: item.personAttendedCode },
             { text: item.hourlyRate | formatCurrency },
@@ -39,16 +39,49 @@
 
     {{ formSubsection('Schedule Of Time Spent', scheduleData, true) }}
 
+    {# Render "LAA Adjustments" subsection #}
+    {% set laaAdjustmentsData = {
+        head: [
+            { text: "Line" },
+            { text: "Time" },
+            { text: "Rate" },
+            { text: "Basic Claim" },
+            { text: "Uplift %" },
+            { text: "Claim" },
+            { text: "Comments" }
+        ],
+        rows: []
+    } %}
+
+    {% for item in data.laaAdjustments %}
+        {% set row = [
+            { text: item.line },
+            { text: item.time | formatTime('HH:mm') },
+            { text: item.hourlyRate | formatCurrency },
+            { text: item.basicClaim | formatCurrency },
+            { text: item.uplift | formatPercentage },
+            { text: item.claim | formatCurrency },
+            { text: item.comments }
+        ] %}
+        {% set _ = laaAdjustmentsData.rows.push(row) %}
+    {% endfor %}
+
+    {{ formSubsection('LAA Adjustments', laaAdjustmentsData, true) }}
+
     {# Render "Time Totals" subsection #}
     {% set timeTotalsData = {
         head: [
-            { text: "Attendance Counsel" },
-            { text: "Attendance no Counsel" },
+            { text: "Travel" },
+            { text: "Waiting" },
+            { text: "Attendance counsel" },
+            { text: "Attendance no counsel" },
             { text: "Preparation" },
             { text: "Advocacy" }
         ],
         rows: [
             [
+                { text: data.timeTotals.travel },
+                { text: data.timeTotals.waiting },
                 { text: data.timeTotals.attendanceCounsel },
                 { text: data.timeTotals.attendanceNoCounsel },
                 { text: data.timeTotals.preparation },
@@ -62,25 +95,29 @@
     {# Render "Cost Totals" subsection #}
     {% set costTotalsData = {
         head: [
-            { text: "Attendance Counsel" },
-            { text: "Attendance no Counsel" },
+            { text: "Travel" },
+            { text: "Waiting" },
+            { text: "Attendance counsel" },
+            { text: "Attendance no counsel" },
             { text: "Preparation" },
             { text: "Advocacy" }
         ],
         rows: [
             [
+                { text: data.costTotals.travel | formatCurrency },
+                { text: data.costTotals.waiting | formatCurrency },
                 { text: data.costTotals.attendanceCounsel | formatCurrency },
                 { text: data.costTotals.attendanceNoCounsel | formatCurrency },
                 { text: data.costTotals.preparation | formatCurrency },
                 { text: data.costTotals.advocacy | formatCurrency }
             ],
             [
-                { text: "Total Basic Claim", isHeader: true, colspan: "3", class: "govuk-brand-colour", noDataHeader: true },
-                { text: data.totals.basic | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
+                { text: "Total basic claim", isHeader: true, colspan: "3", noDataHeader: true },
+                { text: data.totals.basic | formatCurrency, colspan: "1", class: "govuk-!-font-weight-bold", noDataHeader: true }
             ],
             [
-                { text: "Total Claim", isHeader: true, colspan: "3", class: "govuk-brand-colour", noDataHeader: true },
-                { text: data.totals.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
+                { text: "Total claim", isHeader: true, colspan: "3", noDataHeader: true },
+                { text: data.totals.total | formatCurrency, colspan: "1", class: "govuk-!-font-weight-bold", noDataHeader: true }
             ]
         ]
     } %}
@@ -92,12 +129,12 @@
         head: [],
         rows: [
             [
-                { text: "Total Basic Claim Allowed", isHeader: true, colspan: "3", class: "govuk-brand-colour", noDataHeader: true },
-                { text: data.officeUse.basic | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
+                { text: "Total basic claim allowed", isHeader: true, colspan: "3", noDataHeader: true },
+                { text: data.officeUse.basic | formatCurrency, colspan: "1", class: "govuk-!-font-weight-bold", noDataHeader: true }
             ],
             [
-                { text: "Total Claim Allowed", isHeader: true, colspan: "3", class: "govuk-brand-colour", noDataHeader: true },
-                { text: data.officeUse.total | formatCurrency, colspan: "1", class: "govuk-brand-colour govuk-!-font-weight-bold", noDataHeader: true }
+                { text: "Total claim allowed", isHeader: true, colspan: "3", noDataHeader: true },
+                { text: data.officeUse.total | formatCurrency, colspan: "1", class: "govuk-!-font-weight-bold", noDataHeader: true }
             ]
         ]
     } %}

@@ -1,6 +1,47 @@
 {
   "sections": [
     {
+      "sectionId": "standard-properties",
+      "title": "Standard Properties",
+      "subsections": [
+        {
+          "title": "Standard Properties",
+          "fields": [
+            {
+              "label": "USN",
+              "apiField": "StandardProperties.usn"
+            },
+            {
+              "label": "Date received",
+              "apiField": "StandardProperties.dateReceived",
+              "type": "date"
+            },
+            {
+              "label": "Time received",
+              "apiField": "StandardProperties.timeReceived",
+              "type": "time"
+            },
+            {
+              "label": "Submitter user ID",
+              "apiField": "StandardProperties.submitterUserId"
+            },
+            {
+              "label": "Submitter language",
+              "apiField": "StandardProperties.language"
+            },
+            {
+              "label": "Region",
+              "apiField": "StandardProperties.region"
+            },
+            {
+              "label": "Office",
+              "apiField": "StandardProperties.office"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "sectionId": "general-information",
       "title": "General Information",
       "subsections": [
@@ -57,18 +98,19 @@
           "fields": [
             {
               "label": "Address/DX",
-              "apiField": "Firm.firmAddress"
+              "apiField": "Firm.firmAddress",
+              "type": "multiline"
             },
             {
-              "label": "Telephone Number",
+              "label": "Telephone number",
               "apiField": "Firm.firmPhone"
             },
             {
-              "label": "Contact Name",
+              "label": "Contact name",
               "apiField": "Firm.firmContactName"
             },
             {
-              "label": "Name of Solicitor or Fellow of the Institute of Legal Executives instructed",
+              "label": "Name of solicitor or fellow of the Institute of Legal Executives instructed",
               "apiField": "Firm.firmSolicitorName"
             },
             {
@@ -78,36 +120,10 @@
           ]
         },
         {
-          "title": "Case Details",
-          "fields": [
-            {
-              "label": "Level of work:",
-              "apiField": "CaseDetails.levelOfWork"
-            },
-            {
-              "subHeading": "Class of work"
-            },
-            {
-              "label": "",
-              "apiField": "CaseDetails.cwCriminalProceeding"
-            },
-            {
-              "label": "",
-              "apiField": "CaseDetails.cwCriminalInvestigation"
-            },
-            {
-              "label": "",
-              "apiField": "CaseDetails.cwAppealsReview"
-            },
-            {
-              "label": "",
-              "apiField": "CaseDetails.cwCcrc"
-            },
-            {
-              "label": "",
-              "apiField": "CaseDetails.cwPrisonLaw"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm5CaseDetails",
+            "apiField": "CaseDetails"
+          }
         }
       ]
     },
@@ -138,24 +154,30 @@
             {
               "label": "Marital status",
               "apiField": "ClientDetails.maritalStatus"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Address",
+          "fields": [
             {
-              "subHeading": "Address"
+              "label": "Client has no fixed abode",
+              "apiField": "ClientDetails.clientNfa"
             },
             {
               "label": "Client has no fixed abode",
               "apiField": "ClientDetails.noFixedAbode"
             },
             {
-              "label": "Address Line 1",
+              "label": "Address line 1",
               "apiField": "ClientDetails.address.addressLine1"
             },
             {
-              "label": "Address Line 2",
+              "label": "Address line 2",
               "apiField": "ClientDetails.address.addressLine2"
             },
             {
-              "label": "Address Line 3",
+              "label": "Address line 3",
               "apiField": "ClientDetails.address.addressLine3"
             },
             {
@@ -177,82 +199,48 @@
     {
       "sectionId": "capital-details",
       "title": "Capital Details",
-      "showWhen": {
-        "conditions": [
-          {
-            "apiField": "hasPreviousApplication",
-            "equals": "No"
-          }
-        ]
-      },
-      "hideWhen": {
-        "conditions": [
-          {
-            "apiField": "CaseDetails.cwCriminalProceeding",
-            "equals": "true"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasPreviousApplication",
+          "equals": "No"
+        }
+      ],
+      "hideWhen": [
+        {
+          "apiField": "CaseDetails.cwCriminalProceeding",
+          "equals": "true"
+        }
+      ],
       "subsections": [
         {
-          "title": "Capital Details",
-          "fields": [
-            {
-              "label": "Is your client under 18 years old?",
-              "apiField": "CapitalDetails.isUnder18"
-            },
-            {
-              "label": "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance or Guarantee State Pension Credit?",
-              "apiField": "CapitalDetails.hasIncomeSupport"
-            },
-            {
-              "label": "How many dependants does your client have?",
-              "apiField": "CapitalDetails.numOfDependants"
-            },
-            {
-              "label": "Client",
-              "apiField": "CapitalDetails.clientSavings",
-              "type": "currency"
-            },
-            {
-              "label": "Partner",
-              "apiField": "CapitalDetails.partnerSavings",
-              "type": "currency"
-            },
-            {
-              "label": "Total",
-              "apiField": "CapitalDetails.totalSavings",
-              "type": "currency"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm5CapitalDetails",
+            "apiField": "CapitalDetails"
+          }
         }
       ]
     },
     {
       "sectionId": "income-details",
       "title": "Income Details",
-      "showWhen": {
-        "conditions": [
-          {
-            "apiField": "hasPreviousApplication",
-            "equals": "No"
-          }
-        ]
-      },
-      "hideWhen": {
-        "conditions": [
-          {
-            "apiField": "CaseDetails.cwCriminalProceeding",
-            "equals": "true"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasPreviousApplication",
+          "equals": "No"
+        }
+      ],
+      "hideWhen": [
+        {
+          "apiField": "CaseDetails.cwCriminalProceeding",
+          "equals": "true"
+        }
+      ],
       "subsections": [
         {
           "title": "Income Details",
           "fields": [
             {
-              "label": "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance, Guarantee State Pension Credit, Working Tax credit plus Child Tax Credit* or Working Tax Credit with disabilities element?",
+              "label": "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance, Guarantee State Pension Credit, Working Tax credit plus Child Tax Credit* or Working Tax Credit with disabilities element? (*where gross income does not exceed £14,213)",
               "apiField": "IncomeDetails.hasIncomeSupport"
             },
             {
@@ -318,7 +306,7 @@
               "type": "currency"
             },
             {
-              "label": "Less Total deductions",
+              "label": "Less total deductions",
               "apiField": "IncomeDetails.totalDeductions",
               "type": "currency"
             },
@@ -334,14 +322,12 @@
     {
       "sectionId": "proceedings",
       "title": "Proceedings",
-      "showWhen": {
-        "conditions": [
-          {
-            "apiField": "CaseDetails.levelOfWork",
-            "equals": "Advocacy"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "CaseDetails.levelOfWork",
+          "equals": "Advocacy"
+        }
+      ],
       "subsections": [
         {
           "title": "Type of proceedings",
@@ -355,7 +341,7 @@
               "apiField": "Proceedings.TypeOfProceedings.appealProceedings"
             },
             {
-              "label": "Prison Law:",
+              "label": "Prison law:",
               "apiField": "Proceedings.TypeOfProceedings.prisonLaw"
             }
           ]
@@ -379,14 +365,12 @@
     {
       "sectionId": "statement-of-case",
       "title": "Statement of Case",
-      "showWhen": {
-        "conditions": [
-          {
-            "apiField": "CaseDetails.levelOfWork",
-            "equals": "Advocacy"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "CaseDetails.levelOfWork",
+          "equals": "Advocacy"
+        }
+      ],
       "subsections": [
         {
           "title": "Statement of Case",
@@ -402,24 +386,22 @@
     {
       "sectionId": "advice-and-assistance",
       "title": "Advice and Assistance",
-      "showWhen": {
-        "conditions": [
-          {
-            "apiField": "CaseDetails.levelOfWork",
-            "equals": "Advice"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "CaseDetails.levelOfWork",
+          "equals": "Advice"
+        }
+      ],
       "subsections": [
         {
           "title": "Advice and Assistance",
           "fields": [
             {
-              "label": "Has your client received Advice & Assistance for this same matter from another solicitor within the six months preceding this application?",
+              "label": "Has your client received advice & assistance for this same matter from another solicitor within the six months preceding this application?",
               "apiField": "AdviceAssistance.transferFromSolicitor"
             },
             {
-              "label": "As you have indicated \"Yes\", please specify which of the following criteria enables your firm to offer further Advice & Assistance on this matter within the 6 month period:",
+              "label": "As you have indicated \"Yes\", please specify which of the following criteria enables your firm to offer further advice & assistance on this matter within the 6 month period:",
               "apiField": "AdviceAssistance.adviceCriteria"
             }
           ]
@@ -428,7 +410,7 @@
           "title": "LAA Advice and Assistance",
           "fields": [
             {
-              "label": "Have you provided Advice and Assistance to a client who has already received it on the same matter within the last six months. Unified Contract (Crime) Specification Parts B 3.1.11, B 4.1.7 or B 4.2.8?",
+              "label": "Have you provided advice and assistance to a client who has already received it on the same matter within the last six months. Unified Contract (Crime) Specification Parts B 3.1.11, B 4.1.7 or B 4.2.8?",
               "apiField": "AdviceAssistance.laaAdviceAssistance.providedAdvice"
             },
             {
@@ -442,20 +424,18 @@
     {
       "sectionId": "solicitors-declaration",
       "title": "Solicitor's Declaration",
-      "showWhen": {
-        "conditions": [
-          {
-            "apiField": "hasPreviousApplication",
-            "equals": "No"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasPreviousApplication",
+          "equals": "No"
+        }
+      ],
       "subsections": [
         {
           "title": "Solicitor's Declaration",
           "fields": [
             {
-              "subHeading": "I confirm that my client has completed and signed the CRM2 Application for Advice and Assistance. I also confirm that the CRM2 Application shall be retained on file and submitted as per usual with the final bill or upon request by the Legal Aid Agency."
+              "subHeading": "I confirm that my client has completed and signed the CRM2 Application for Advice and Assistance. I also confirm that the CRM2 application shall be retained on file and submitted as per usual with the final bill or upon request by the Legal Aid Agency."
             },
             {
               "label": "Name",
@@ -507,7 +487,12 @@
             {
               "label": "Please give details of work that has been completed to date",
               "apiField": "DetailsOfWorkCompleted"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Details of Application",
+          "fields": [
             {
               "label": "Please explain what additional work is to be carried out and explain how this is necessary to the progress of the case and/or the benefit of the client.",
               "apiField": "DetailsOfApplication"
@@ -521,30 +506,30 @@
       "title": "Costs",
       "subsections": [
         {
-          "title": "Costs Accrued To Date",
+          "title": "Costs Accrued to Date",
           "fields": [
             {
-              "label": "Attendance Time",
+              "label": "Attendance time",
               "apiField": "AllCosts.AccruedCosts.Attendance",
               "type": "timeAndCost"
             },
             {
-              "label": "Preparation Time",
+              "label": "Preparation time",
               "apiField": "AllCosts.AccruedCosts.Preparation",
               "type": "timeAndCost"
             },
             {
-              "label": "Advocacy Time",
+              "label": "Advocacy time",
               "apiField": "AllCosts.AccruedCosts.Advocacy",
               "type": "timeAndCost"
             },
             {
-              "label": "Travel Time",
+              "label": "Travel time",
               "apiField": "AllCosts.AccruedCosts.Travel",
               "type": "timeAndCost"
             },
             {
-              "label": "Waiting Time",
+              "label": "Waiting time",
               "apiField": "AllCosts.AccruedCosts.Waiting",
               "type": "timeAndCost"
             },
@@ -554,7 +539,7 @@
               "type": "totalAndCost"
             },
             {
-              "label": "Telephone Calls",
+              "label": "Telephone calls",
               "apiField": "AllCosts.AccruedCosts.TelephoneCalls",
               "type": "totalAndCost"
             },
@@ -569,7 +554,7 @@
               "type": "currency"
             },
             {
-              "label": "Total Costs To Date",
+              "label": "Total costs to date",
               "apiField": "AllCosts.AccruedCosts.TotalCost.cost",
               "type": "currency"
             }
@@ -579,27 +564,27 @@
           "title": "Anticipated Costs",
           "fields": [
             {
-              "label": "Attendance Time",
+              "label": "Attendance time",
               "apiField": "AllCosts.AnticipatedCosts.Attendance",
               "type": "timeAndCost"
             },
             {
-              "label": "Preparation Time",
+              "label": "Preparation time",
               "apiField": "AllCosts.AnticipatedCosts.Preparation",
               "type": "timeAndCost"
             },
             {
-              "label": "Advocacy Time",
+              "label": "Advocacy time",
               "apiField": "AllCosts.AnticipatedCosts.Advocacy",
               "type": "timeAndCost"
             },
             {
-              "label": "Travel Time",
+              "label": "Travel time",
               "apiField": "AllCosts.AnticipatedCosts.Travel",
               "type": "timeAndCost"
             },
             {
-              "label": "Waiting Time",
+              "label": "Waiting time",
               "apiField": "AllCosts.AnticipatedCosts.Waiting",
               "type": "timeAndCost"
             },
@@ -609,7 +594,7 @@
               "type": "totalAndCost"
             },
             {
-              "label": "Telephone Calls",
+              "label": "Telephone calls",
               "apiField": "AllCosts.AnticipatedCosts.TelephoneCalls",
               "type": "totalAndCost"
             },
@@ -624,12 +609,12 @@
               "type": "currency"
             },
             {
-              "label": "Total Anticipated Costs",
+              "label": "Total anticipated costs",
               "apiField": "AllCosts.AnticipatedCosts.TotalCost.cost",
               "type": "currency"
             },
             {
-              "label": "NEW LIMIT REQUEST",
+              "label": "New limit request",
               "apiField": "AllCosts.NewLimitRequest.cost",
               "type": "currency"
             }
@@ -645,7 +630,7 @@
           "title": "Case History",
           "fields": [
             {
-              "label": "Summary of Case History",
+              "label": "Summary of case history",
               "apiField": "CaseHistory.summary"
             }
           ]
@@ -685,14 +670,49 @@
       ]
     },
     {
-      "sectionId": "evidence",
-      "title": "Evidence",
+      "sectionId": "office-use-only",
+      "title": "Office Use Only",
       "subsections": [
         {
-          "title": "Evidence",
+          "customDisplay": {
+            "name": "crm5OfficeUseOnly",
+            "apiField": "OfficeUseOnly"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "evidence",
+      "title": "Evidence",
+      "hideWhen": [
+        {
+          "apiField": "evidenceFiles.files",
+          "equals": ""
+        }
+      ],
+      "subsections": [
+        {
           "customDisplay": {
             "name": "crmEvidence",
             "apiField": "evidenceFiles.files"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "further-information",
+      "title": "Further Information",
+      "hideWhen": [
+        {
+          "apiField": "FurtherInformation",
+          "equals": ""
+        }
+      ],
+      "subsections": [
+        {
+          "customDisplay": {
+            "name": "crmFurtherInformation",
+            "apiField": "FurtherInformation"
           }
         }
       ]

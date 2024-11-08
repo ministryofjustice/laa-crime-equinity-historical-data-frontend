@@ -1,35 +1,41 @@
-{% macro formField(field, isCostsSection = false) %}
-    {% if isCostsSection %}
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key govuk-brand-colour govuk-vertical-align-middle">{{ field.label }}</dt>
-            <dd class="govuk-summary-list__value">
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-one-half">
-                        <div class="govuk-body govuk-min-height govuk-!-static-margin-bottom-0">
-                        </div>
-                    </div>
-                    <div class="govuk-grid-column-one-half">
-                        <div class="govuk-body govuk-!-static-margin-bottom-0 govuk-brand-colour ">
-                            <strong>
-                            {{ formFieldByType(field) }}
-                            </strong>
-                        </div>
-                    </div>
-                </div>
-            </dd>
-        </div>
-    {% else %}
-        <div class="govuk-summary-list__row govuk-grid-row {{ field.class }}">
-            <div class="govuk-grid-column-one-half govuk-custom-no-padding-left-desktop">
-                <dt class="govuk-summary-list__key">{{ field.label }}</dt>
-            </div>
-            <div class="govuk-grid-column-one-half">
+{% macro formField(field, isCostsSection = false, boldLabel = true) %}
+
+    {% if (field.value | isNotEmpty) %} {# render non-empty field #}
+
+        {% if isCostsSection %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-vertical-align-middle">{{ field.label }}</dt>
                 <dd class="govuk-summary-list__value">
-                    {{ formFieldByType(field) }}
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-half">
+                            <div class="govuk-body govuk-min-height govuk-!-static-margin-bottom-0">
+                            </div>
+                        </div>
+                        <div class="govuk-grid-column-one-half">
+                            <div class="govuk-body govuk-!-static-margin-bottom-0">
+                                <strong>
+                                    {{ formFieldByType(field) }}
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
                 </dd>
             </div>
-        </div>
+        {% else %}
+            <div class="govuk-summary-list__row govuk-grid-row {{ field.class }}">
+                <div class="govuk-grid-column-one-half govuk-custom-no-padding-left-desktop">
+                    <dt class="{% if boldLabel %}govuk-summary-list__key{% else %}govuk-summary-list__value{% endif %}">{{ field.label }}</dt>
+                </div>
+                <div class="govuk-grid-column-one-half">
+                    <dd class="govuk-summary-list__value">
+                        {{ formFieldByType(field) }}
+                    </dd>
+                </div>
+            </div>
+        {% endif %}
+
     {% endif %}
+
 {% endmacro %}
 
 {% macro formFieldByType(field) %}
@@ -39,13 +45,17 @@
         {{ field.value | formatDate }}
     {% elif field.type === 'time' %}
         {{ field.value | formatTime }}
+    {% elif field.type === 'hours' %}
+        {{ field.value | formatHours }}
     {% elif field.type === 'percent' %}
-        {{ field.value | formatPercentage }}%
+        {{ field.value | formatPercentage }}
     {% elif field.type === 'link' %}
         <a href="{{ field.value.href }}" class="govuk-link govuk-link--no-visited-state">{{ field.value.text }}</a>
-    {% elif field.type === 'every' %}
-        {{ field.value | transformValue('every') }}
+    {% elif field.value === true or field.value === false %}
+        {{ field.value | formatYesNo }}
+    {% elif field.transform %}
+        {{ field.value | transformValue(field.transform) }}
     {% else %}
-        {{ field.value }}
+        {{ (field.value | formatMultiline) | safe }}
     {% endif %}
 {% endmacro %}

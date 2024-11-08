@@ -20,24 +20,15 @@ services:
 #      # These will need to match new creds in the seed auth service auth
 #      - SESSION_SECRET=somesecretvalue
 #      - INGRESS_URL=http://localhost:3000
-
-  gotenberg:
-    image: gotenberg/gotenberg:8
-    networks:
-      - laa
-    container_name: gotenberg
-    ports:
-      - "3100:3100"
-    command:
-      - "gotenberg"
-      - "--api-port=3100"
-      - "--chromium-ignore-certificate-errors"
-      - "--api-timeout=30s"
-      - "--pdfengines-engines=pdftk"
-      - "--uno-listener-restart-threshold=0" #disables uno listener
-    restart: always
-    healthcheck:
-      test: [ 'CMD', 'curl', '-f', '/health' ]
-
- 
-    
+#  redis:
+#    container_name: redis
+#    environment:
+#      - ALLOW_EMPTY_PASSWORD=yes
+#    image: redis:7.0
+#    networks:
+#      - laa
+#    ports:
+#      - '6379:6379'
+#
+#networks:
+#  laa:

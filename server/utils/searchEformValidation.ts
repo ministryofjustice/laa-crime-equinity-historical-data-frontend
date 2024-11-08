@@ -1,16 +1,6 @@
 import Joi from 'joi'
-
-type ErrorMessage = Record<string, { text: string }>
-
-type ErrorSummary = {
-  href: string
-  text: string
-}
-
-export type SearchValidationErrors = {
-  list: Array<ErrorSummary>
-  messages?: ErrorMessage
-}
+import { isBefore } from 'date-fns'
+import { buildValidationErrors, Errors } from './errorDisplayHelper'
 
 const schema = Joi.object({
   usn: Joi.string().pattern(/^\d+$/).min(4).max(10).optional().allow('').messages({
@@ -18,11 +8,7 @@ const schema = Joi.object({
     'string.max': 'USN must be 10 digits or less',
     'string.pattern.base': 'USN must be numeric',
   }),
-  type: Joi.string()
-    .valid('1', '4', '5', '6', '7')
-    .optional()
-    .allow('')
-    .messages({ 'any.only': 'Invalid type specified' }),
+  type: Joi.string().valid('1', '4', '5', '6').optional().allow('').messages({ 'any.only': 'Invalid type specified' }),
   supplierAccountNumber: Joi.string().min(4).max(6).optional().allow('').messages({
     'string.min': 'Supplier account number must be at least 4 characters',
     'string.max': 'Supplier account number must be 6 characters or less',
@@ -36,50 +22,77 @@ const schema = Joi.object({
     'date.format': 'Client date of birth must be a valid date',
     'date.max': 'Client date of birth must be a valid date',
   }),
-  startDate: Joi.date().iso().optional().allow('').messages({
-    'date.format': 'Start date must be a valid date',
-  }),
-  endDate: Joi.date().iso().min(Joi.ref('startDate')).optional().allow('').messages({
-    'date.format': 'End date must be a valid date',
-    'date.min': 'Your End date cannot be earlier than your Start date',
-  }),
+  startDate: Joi.date()
+    .iso()
+    .optional()
+    .allow('')
+    .messages({
+      'date.format': 'Submission date from must be a valid date',
+    })
+    .custom((value, helpers) => {
+      if (!helpers.state.ancestors[0].endDate) {
+        return helpers.error('endDate.missing', undefined, { path: ['endDate'] })
+      }
+
+      return value
+    }),
+  endDate: Joi.date()
+    .iso()
+    .optional()
+    .allow('')
+    .messages({
+      'date.format': 'Submission date to must be a valid date',
+    })
+    .custom((value, helpers) => {
+      const { startDate } = helpers.state.ancestors[0]
+      if (!startDate) {
+        return helpers.error('startDate.missing', undefined, { path: ['startDate'] })
+      }
+
+      if (isBefore(value, startDate)) {
+        return helpers.error('endDate.earlier', undefined, { path: ['endDate'] })
+      }
+
+      return value
+    }),
   page: Joi.number()
     .min(1)
     .optional()
     .allow('')
     .messages({ 'number.min': 'Invalid page specified', 'number.base': 'Invalid page specified' }),
-}).options({ allowUnknown: true, abortEarly: false })
+})
+  .options({ allowUnknown: true, abortEarly: false })
+  .messages({
+    'startDate.missing': "Enter 'Submission date from'",
+    'endDate.missing': "Enter 'Submission date to'",
+    'endDate.earlier': "Your 'Submission date to' must be the same as or after your 'Submission date from'",
+  })
 
-export default function validateSearchQuery(data: Record<string, string>): SearchValidationErrors | null {
-  if (isSearchQueryEmpty(data)) {
-    return { list: [{ href: '#', text: 'Enter at least one search field' }] }
+export default function validateSearchParams(params: Record<string, string>): Errors {
+  const errorMessage = 'Enter at least one search field'
+  if (searchParamsIsEmpty(params)) {
+    return {
+      list: [{ href: '#', text: errorMessage }],
+      messages: {
+        usn: { text: errorMessage },
+        supplierAccountNumber: { text: errorMessage },
+        type: { text: errorMessage },
+        clientName: { text: errorMessage },
+        startDate: { text: errorMessage },
+        endDate: { text: errorMessage },
+      },
+    }
   }
 
-  const { error } = schema.validate(data)
+  const { error } = schema.validate(params)
   if (error?.details) {
-    return buildErrors(error)
+    return buildValidationErrors(error)
   }
 
   return null
 }
 
-const isSearchQueryEmpty = (searchQuery: Record<string, string>): boolean => {
+const searchParamsIsEmpty = (params: Record<string, string>): boolean => {
   // ignore page query parameter
-  return !Object.keys(searchQuery).some(
-    (key: string) => key !== 'page' && searchQuery[key] && searchQuery[key].length > 0,
-  )
-}
-
-const buildErrors = (error: Joi.ValidationError): SearchValidationErrors => {
-  const list: Array<{
-    href: string
-    text: string
-  }> = []
-  const messages: Record<string, { text: string }> = {}
-  error.details.forEach(errorDetail => {
-    const fieldName = errorDetail.path[0]
-    list.push({ href: `#${fieldName}`, text: errorDetail.message })
-    messages[fieldName] = { text: errorDetail.message }
-  })
-  return { list, messages }
+  return !Object.keys(params).some((key: string) => key !== 'page' && params[key] && params[key].length > 0)
 }

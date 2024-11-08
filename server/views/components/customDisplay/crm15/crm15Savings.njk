@@ -31,7 +31,6 @@
                     data.numOtherCashInvestments, data.numPartnerOtherCashInvestments, data.numJointOtherCashInvestments) }}
 
                 {% if (data.bankAccounts | length) > 0 %}
-                    <div class="govuk-summary-list__row govuk-grid-row">
                         {% set tableData = {
                             head: [
                                 { text: "Bank, building society or other"},
@@ -51,14 +50,13 @@
                                 { text: item.sortCode | safe, attributes: { "data-header": "Sort code / Branch" } },
                                 { text: item.accountNumber | safe, attributes: { "data-header": "Account Number" } },
                                 { text: item.accountType | safe, attributes: { "data-header": "Account Type" } },
-                                { text: item.balance | safe | formatCurrency, attributes: { "data-header": "Balance" } },
-                                { text: item.overdrawn | safe, attributes: { "data-header": "Overdrawn" } },
+                                { text: item.balance | safe | formatCurrency, "class": "govuk-custom-no-break" , attributes: { "data-header": "Balance" } },
+                                { text: item.overdrawn | formatYesNo, attributes: { "data-header": "Overdrawn" } },
                                 { text: item.accountHolder | safe, attributes: { "data-header": "Account Holder" } }
                             ] -%}
                             {% set list = tableData.rows.push(tableRow) %}
                         {% endfor %}
                         {{ formTable(tableData) }}
-                    </div>
                 {% endif %}
 
                 {{ youYourPartner("Is the salary, wages or benefits of you or your partner paid to one of the accounts?",
@@ -119,7 +117,7 @@
 
                 {{ formFieldHeading("Do you or your partner own or jointly own any of these investments, in the United Kingdom or overseas?") }}
 
-                {{ youYourPartnerJoint("Stocks, including gilts and government bonds?", data.stocks, data.partnerStocks, data.jointStocks) }}
+                {{ youYourPartnerJoint("Stocks, including gilts and government bonds?", data.stocks, data.partnerStocks, data.jointStocks, false) }}
 
                 {{ youYourPartnerJoint("Shares?", data.shares, data.partnerShares, data.jointShares) }}
 
@@ -133,6 +131,7 @@
 
                 {{ youYourPartnerJoint("Other lump sum investments?", data.otherLumpSum, data.partnerOtherLumpSum, data.jointOtherLumpSum) }}
 
+                {% if (data.investments.length > 0) %}
                 <div class="govuk-summary-list__row govuk-grid-row">
                     {% set tableData = {
                         head: [
@@ -155,6 +154,7 @@
                     {% endfor %}
                     {{ formTable(tableData) }}
                 </div>
+                {%  endif  %}
 
                 {{ youYourPartner("Do you or your partner stand to benefit from a trust fund in the United Kingdom or overseas?",
                     data.trustFund, data.partnerTrustFund) }}
@@ -177,22 +177,11 @@
                 {{ formField({ label: "Do you, by yourself or with anyone else, own a motor vehicle?", value: data.ownCar }) }}
 
                 {% if data.ownCar === 'Yes' %}
-                    <div class="govuk-summary-list__row govuk-grid-row">
-                        {% set tableData = {
-                            head: [
-                                { text: "Registration Number(s)"}
-                            ],
-                            rows: []
-                        } %}
-
-                        {% for item in data.carRegs %}
-                            {%- set tableRow = [
-                                { text: item.carRegNumber | safe, attributes: { "data-header": "Registration Number(s)" } }
-                            ] -%}
-                            {% set list = tableData.rows.push(tableRow) %}
-                        {% endfor %}
-                        {{ formTable(tableData) }}
-                    </div>
+                    {% set registrationNumbers = "" %}
+                    {% for item in data.carRegs %}
+                        {% set registrationNumbers = registrationNumbers + item.carRegNumber + '<br>' %}
+                    {% endfor %}
+                    {{ formField({ label: "Registration Number(s):", value: registrationNumbers | safe }) }}
                 {% endif %}
             </dl>
         </div>
@@ -201,13 +190,13 @@
 {% endmacro %}
 
 
-{% macro youYourPartner(title, you, yourPartner) %}
-    {{ formFieldHeading(title) }}
+{% macro youYourPartner(title, you, yourPartner, hasPreviousContent=true) %}
+    {{ formFieldHeading(title, hasPreviousContent) }}
     {{ formField({ label: "You", value: you }) }}
     {{ formField({ label: "Your Partner", value: yourPartner }) }}
 {% endmacro %}
 
-{% macro youYourPartnerJoint(title, you, yourPartner, joint) %}
-    {{ youYourPartner(title, you, yourPartner) }}
+{% macro youYourPartnerJoint(title, you, yourPartner, joint, hasPreviousContent=true) %}
+    {{ youYourPartner(title, you, yourPartner, hasPreviousContent) }}
     {{ formField({ label: "Joint", value: joint }) }}
 {% endmacro %}

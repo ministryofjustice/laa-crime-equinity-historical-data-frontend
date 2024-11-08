@@ -5,24 +5,42 @@
 
     {# Render "Case Disposal" subsection #}
     {% set fields = [
-        { label: "Please select the category your claim falls within", value: data.category}
+        { label: "Please select the category your claim falls within", value: data.category }
     ] %}
     {{ formSubsection('Case Disposal', fields) }}
 
-    {% if data.category == 'Category 1' %}
-        {% set fieldValue = data.option.type1 %}
-    {% elif  data.category == 'Category 2' %}
-        {% set fieldValue = data.option.type2 %}
-    {% elif data.category == 'Category 3' %}
-        {% set fieldValue = data.option.type3 %}
-    {% else %}
-        {% set fieldValue = '' %}
+    {% if data.category === 'Category 1' %}
+        {# Render "Category 1" subsection #}
+        {% set fields = [
+            { label: "Please select relevant option", value: data.option.type1 }
+        ] %}
+        {% if data.option.type1 === 'Warrant of Arrest' %}
+            {% set _ = fields.push({ label:"Date of issue of Warrant of Arrest", value: data.warrantOfArrestDate, type: "date" })  %}
+        {% endif %}
+        {{ formSubsection('Category 1', fields) }}
     {% endif %}
 
-    {# Render "Category" subsection #}
-    {% set fields = [
-        { label: "Please select relevant option", value: fieldValue}
-    ] %}
-    {{ formSubsection(data.category, fields) }}
+    {% if data.category === 'Category 2' %}
+        {# Render "Category 2" subsection #}
+        {% set fields = [
+            { label: "Please select relevant option", value: data.option.type2, transform: "category2" }
+        ] %}
+        {% if data.option.type2  === 'Cracked trial' %}
+            {% set _ = fields.push({ label:"Date guilty plea indicated to solicitor", value: data.guiltyPleaDate, type: "date" })  %}
+        {% endif %}
+        {{ formSubsection('Category 2', fields) }}
+    {% endif %}
+
+    {% if data.category === 'Category 3' %}
+        {# Render "Category 3" subsection #}
+        {% set fields = [
+            { label: "Please select relevant option", value: data.option.type3, transform: "category3"  }
+        ] %}
+        {% if data.option.type3 === 'Other' %}
+            {% set _ = fields.push({ label:"Please give details", value: data.otherDetails })  %}
+        {% endif %}
+        {{ formSubsection('Category 3', fields) }}
+    {% endif %}
+
 
 {% endmacro %}

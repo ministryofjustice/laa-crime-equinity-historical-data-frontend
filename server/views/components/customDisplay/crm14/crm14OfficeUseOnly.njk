@@ -1,0 +1,140 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formSubsection.njk" import formSubsection %}
+{% from "../../formTable.njk" import formTable %}
+{% from "../../formFieldHeading.njk" import formFieldHeading %}
+
+{% macro crm14OfficeUseOnly(data) %}
+
+    {# Benefit Check Section #}
+    {% set fieldsBenefitCheck = [
+        { label: "Overall Check", value: data.benefitCheck.dwpOverallCheck },
+        { label: "Result Refer To", value: data.benefitCheck.dwpResultReferTo },
+        { label: "Check Surname", value: data.benefitCheck.dwpCheckSurname },
+        { label: "Check NINO", value: data.benefitCheck.dwpCheckNino },
+        { label: "Check Benefit To Repeat", value: data.benefitCheck.dwpCheckBenefitCheckToRepeat },
+        { label: "Partner Surname", value: data.benefitCheck.dwpCheckPartnerSurname },
+        { label: "Partner NINO", value: data.benefitCheck.dwpCheckPartnerNino }
+    ] %}
+    {{ formSubsection('Benefit Check', fieldsBenefitCheck) }}
+
+    {# Message History Section #}
+    {% if data.messageHistory.length > 0 %}
+        {% set tableMessageHistory = {
+            head: [],
+            rows: []
+        } %}
+
+        {% for key, label in {
+            senderDisplay: "Sender",
+            message: "Message",
+            senderUniqueName: "Sender Unique Name",
+            date: "Date"
+        } %}
+            {% if data.messageHistory[0][key] %}
+                {% set _ = tableMessageHistory.head.push({ text: label }) %}
+            {% endif %}
+        {% endfor %}
+
+        {% for message in data.messageHistory %}
+            {% set tableRow = [] %}
+            {% for key, _ in {
+                senderDisplay: "Sender",
+                message: "Message",
+                senderUniqueName: "Sender Unique Name",
+                date: "Date"
+            } %}
+                {% if message[key] %}
+                    {% set _ = tableRow.push({ text: message[key] }) %}
+                {% endif %}
+            {% endfor %}
+            {% set _ = tableMessageHistory.rows.push(tableRow) %}
+        {% endfor %}
+
+        {{ formSubsection('Message History', tableMessageHistory, true) }}
+    {% endif %}
+
+    {# Return Provider Section #}
+    {% set fieldsReturnProvider = [
+        { label: "Return Reason", value: data.returnProvider.returnReason },
+        { label: "Return Reason Details", value: data.returnProvider.returnReasonDetails }
+    ] %}
+    {{ formSubsection('Return Provider', fieldsReturnProvider) }}
+
+    {# Funding Decisions Section #}
+    {% if data.fundingDecisions.length > 0 %}
+       {% for decision in data.fundingDecisions %}
+
+            {% if data.fundingDecisions.length > 1 %}
+                {% set sectionTitle = 'Funding Decision ' ~ loop.index %}
+            {% else %}
+                {% set sectionTitle = 'Funding Decision' %}
+            {% endif %}
+
+
+
+           {# Result Mapping #}
+
+           {% if decision.meansTestResultType === 'MAGS_OR_CFS' %}
+               {% set resultTypeMeans = "Magistrates Court or CFS" %}
+           {% elseif decision.meansTestResultType === 'CROWN_COURT_TRIAL' %}
+               {% set resultTypeMeans = "Crown Court trial" %}
+           {% elseif decision.meansTestResultType === 'APPEAL_TO_CROWN_COURT' %}
+               {% set resultTypeMeans = "Appeal to Crown Court" %}
+           {% endif %}
+
+           {% if decision.overallResultType === 'MAGS_OR_CFS' %}
+               {% set resultTypeOverall = "Magistrates Court or CFS" %}
+           {% elseif decision.overallResultType === 'CROWN_COURT_TRIAL' %}
+               {% set resultTypeOverall = "Crown Court trial" %}
+           {% elseif decision.overallResultType === 'APPEAL_TO_CROWN_COURT' %}
+               {% set resultTypeOverall = "Appeal to Crown Court" %}
+           {% endif %}
+
+        <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+            <div class="govuk-summary-card__title-wrapper">
+                <h3 class="govuk-summary-card__title">{{ sectionTitle }}</h3>
+            </div>
+            <div class="govuk-summary-card__content">
+                <dl class="govuk-summary-list">
+                    {{ formField({ label: "MAAT ID", value: decision.maatNumber }, boldLabel=false) }}
+                    {{ formField({ label: "I have performed the Interests of Justice test for case number:", value: decision.caseNumber }, boldLabel=true) }}
+
+                    {{ formFieldHeading("Consider all the available details of all the charges against the interests of justice criteria. Mention issues here which you considered when you decided the application. Include information given orally", hasPreviousContent=true) }}
+                    {{ formField({ label: "Interest of Justice Test result", value: decision.justiceTest  }, boldLabel=true) }}
+                    {{ formField({ label: "My reason", value: decision.justiceTestReasons   }, boldLabel=true) }}
+                    {{ formField({ label: "Full name", value: decision.officialSignName  }, boldLabel=true) }}
+                    {{ formField({ label: "Date", value: decision.officialSignDate | formatDate  }, boldLabel=true) }}
+
+                    {{ formField({ label: "Means Test Result Type:", value: resultTypeMeans  }, boldLabel=true) }}
+
+                    {% if decision.meansTestResultType === 'MAGS_OR_CFS' %}
+                        {{ formField({ label: "Means Test Result", value: decision.meansTestResultMagsorcfs  }, boldLabel=true) }}
+                    {% elseif decision.meansTestResultType === 'CROWN_COURT_TRIAL' %}
+                        {{ formField({ label: "Means Test Result", value: decision.meansTestResultCc  }, boldLabel=true) }}
+                    {% elseif decision.meansTestResultType === 'APPEAL_TO_CROWN_COURT' %}
+                        {{ formField({ label: "Means Test Result", value: decision.meansTestResultAppealtocc  }, boldLabel=true) }}
+                    {% endif %}
+                    {{ formField({ label: "Name of the appropriate officer", value: decision.appropriateOfficerName  }, boldLabel=true) }}
+                    {{ formField({ label: "Date", value: decision.appropriateOfficerSignDate | formatDate }, boldLabel=true) }}
+
+                    {{ formField({ label: "Overall Result Type:", value: resultTypeOverall }, boldLabel=true) }}
+
+                    {% if decision.overallResultType === 'MAGS_OR_CFS' %}
+                        {{ formField({ label: "Overall Test Result", value: decision.overallResultMagsorcfs  }, boldLabel=true) }}
+                    {% elseif decision.meansTestResultType === 'CROWN_COURT_TRIAL' %}
+                        {{ formField({ label: "Overall Test Result", value: decision.overallResultCc  }, boldLabel=true) }}
+                    {% elseif decision.meansTestResultType === 'APPEAL_TO_CROWN_COURT' %}
+                        {{ formField({ label: "Overall Test Result", value: decision.overallResultAppealtocc  }, boldLabel=true) }}
+                    {% else %}
+                        {{ formField({ label: "Overall Test Result", value: decision.overallResultNonMeans  }, boldLabel=true) }}
+                    {% endif %}
+
+                    {{ formField({ label: "Overall Result", value: decision.overallResultNonMeans  }, boldLabel=true) }}
+                    {{ formField({ label: "Number of times this Funding Decision has been updated with assessment / reassessment results", value: data.fundingDecisionUpdatesCount  }, boldLabel=true) }}
+                </dl>
+            </div>
+        </div>
+       {% endfor %}
+    {% endif %}
+
+{% endmacro %}

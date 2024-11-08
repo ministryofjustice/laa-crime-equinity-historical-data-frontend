@@ -1,6 +1,6 @@
 import { SuperAgentRequest } from 'superagent'
 import { stubFor } from './wiremock'
-import getCrm5Reponse from './data/crm5Response'
+import getCrm5Response from './data/crm5Response'
 import getSearchByTypeResponse from './data/searchByTypeResponse'
 
 export default {
@@ -43,7 +43,7 @@ export default {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
         },
-        jsonBody: getCrm5Reponse(usn),
+        jsonBody: getCrm5Response(usn),
       },
     }),
 }

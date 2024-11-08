@@ -4,13 +4,25 @@ type SubHeading = {
   subHeading: string
 }
 
-type FieldType = 'currency' | 'date' | 'time' | 'percent' | 'timeAndCost' | 'totalAndCost'
+type FieldType = 'currency' | 'date' | 'time' | 'percent' | 'link' | 'timeAndCost' | 'totalAndCost'
+
+type TransformType =
+  | 'applicationType'
+  | 'category2'
+  | 'category3'
+  | 'courtType'
+  | 'ethnicity'
+  | 'every'
+  | 'levelOfWork'
+  | 'offenceType'
+  | 'yesNo'
 
 type ConfigField = {
   label: string
   apiField: string
   type?: FieldType
-  value?: string | TimeAndCost | TotalAndCost
+  value?: boolean | number | string | TimeAndCost | TotalAndCost
+  transform?: TransformType
 }
 
 type CustomDisplayType = 'crm4AdditionalExpenditure'
@@ -29,21 +41,16 @@ type Subsection = {
   customDisplay?: CustomDisplay
 }
 
-type Condition = {
+type ShowOrHideWhen = {
   apiField: string
   equals: string
-}
-
-type ShowOrHideWhen = {
-  conditionsMet?: string
-  conditions: Array<Condition>
 }
 
 type Section = {
   sectionId: string
   title: string
-  showWhen?: ShowOrHideWhen
-  hideWhen?: ShowOrHideWhen
+  showWhen?: Array<ShowOrHideWhen>
+  hideWhen?: Array<ShowOrHideWhen>
   subsections: Array<Subsection>
 }
 
@@ -78,4 +85,5 @@ export type {
   ShowOrHideWhen,
   SubHeading,
   Subsection,
+  TransformType,
 }

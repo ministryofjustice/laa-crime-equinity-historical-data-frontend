@@ -1,0 +1,67 @@
+{% from "../formTable.njk" import formTable %}
+{% from "../formSubsection.njk" import formSubsection %}
+
+{% macro crmFurtherInformation(data, crmType) %}
+
+    {# Define the Further Information table #}
+    {% set furtherInfoTable = {
+        head: [],
+        rows: []
+    } %}
+
+    {% for item in data %}
+
+        {% set tableRowName = [
+            { text: "Name", isHeader: true },
+            { text: item.name, isHeader: true },
+            { text: "" }
+        ] %}
+        {% set _ = furtherInfoTable.rows.push(tableRowName) %}
+
+        {% set fileKey = "CRM14/" + item.key if crmType === "CRM 14" and (item.key | truncate(4, true, '')) === "att_" else item.key %}
+
+        {% set downloadLink = "" %}
+        {% if item.downloadFile and item.key %}
+            {% set linkUrl = "/download-evidence?fileKey=" + (fileKey | urlencode) + "&fileName=" + (item.originalFileName | urlencode) %}
+            {% set downloadLink = "<a href='" + linkUrl + "' class='govuk-link govuk-link--no-visited-state'>Download</a>" %}
+        {% endif %}
+
+        {% set tableRow1 = [
+            { text: "Description", isHeader: true },
+            { text: item.description | formatMultiline },
+            { text: downloadLink, html: true }
+        ] %}
+        {% set _ = furtherInfoTable.rows.push(tableRow1) %}
+
+        {% set tableRow2 = [
+            { text: "Original File Name", isHeader: true },
+            { text: item.originalFileName },
+            { text: "" }
+        ] %}
+        {% set _ = furtherInfoTable.rows.push(tableRow2) %}
+
+        {% set tableRow3 = [
+            { text: "Date Received", isHeader: true },
+            { text: item.dateReceived | formatDate },
+            { text: "" }
+        ] %}
+        {% set _ = furtherInfoTable.rows.push(tableRow3) %}
+
+        {% set tableRow4 = [
+            { text: "Person attaching", isHeader: true },
+            { text: item.attachedPerson },
+            { text: "" }
+        ] %}
+        {% set _ = furtherInfoTable.rows.push(tableRow4) %}
+
+        {% set blankRow = [
+            { text: "", isHeader: true },
+            { text: "" },
+            { text: "" }
+        ] %}
+        {% set _ = furtherInfoTable.rows.push(blankRow) %}
+    {% endfor %}
+
+    {{ formSubsection('Further Information', furtherInfoTable, true, 'equal-width-table') }}
+
+{% endmacro %}

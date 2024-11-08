@@ -1,15 +1,14 @@
-{% from "../../formSubsection.njk" import formSubsection %}
 {% from "../../formField.njk" import formField %}
 {% from "../../formFieldHeading.njk" import formFieldHeading %}
 {% from "../../formTable.njk" import formTable %}
 
-{% macro crm14InterestsOfJustice(data) %}
+{% macro crm14InterestsOfJustice1(data) %}
 
     {% set tableData = {
         head: [
             { text: "Charge"},
-            { text: "Date of Offence" },
             { text: "" },
+            { text: "Date of Offence" },
             { text: "" },
             { text: "" }
         ],
@@ -36,14 +35,14 @@
                 {{ formFieldHeading("What charges have been brought against you?", hasPreviousContent=false) }}
                 {{ formTable(tableData) }}
 
-                {{ formField({ label: "The type of offence with which you are charged", value: data.offenceType }) }}
+                {{ formField({ label: "The type of offence with which you are charged", value: data.offenceType, transform: "offenceType" }) }}
                 {{ formField({ label: "Do you have any co-defendants in this case?", value: data.anyDefendants }) }}
                 {{ formField({ label: "Please supply their name(s)", value: data.defendantDetails }) }}
                 {{ formField({ label: "Is there any reason why you and your co-defendants cannot be represented by the same solicitor?", value: data.notSameSolicitor }) }}
                 {{ formField({ label: "Please supply the reason(s)", value: data.notSameSolicitorReason }) }}
                 {{ formField({ label: "Are there any other criminal cases or charges against you or your partner which are still in progress?", value: data.otherCases }) }}
 
-                {% if data.otherCases == 'Yes' %}
+                {% if data.otherCases === 'Yes' %}
                     {{ formFieldHeading("You") }}
                     {{ formField({ label: "The charges", value: data.otherCaseCharges.you.charges }) }}
                     {{ formField({ label: "The Court hearing the case", value: data.otherCaseCharges.you.court }) }}

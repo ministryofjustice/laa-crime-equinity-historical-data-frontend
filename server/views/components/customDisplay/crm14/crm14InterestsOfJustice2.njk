@@ -1,0 +1,28 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formFieldHeading.njk" import formFieldHeading %}
+{% from "../../formTable.njk" import formTable %}
+
+{% macro crm14InterestsOfJustice2(data) %}
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Why do you want legal aid?</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            {{ formFieldHeading("Complete one or more reasons. For each reason you choose, say why you have chosen it. Mention any evidence that supports your choice of a reason.", hasPreviousContent=false) }}
+            <dl class="govuk-summary-list">
+                {{ formField({ label: "It is likely that I will lose my liberty if any matter in the proceedings is decided against me.", value: data.loseLibertyDetails }, boldLabel=false) }}
+                {{ formField({ label: "I have been given a sentence that is suspended or non-custodial. If I break this, the court may be able to deal with me for the original offence.", value: data.suspendedSentenceDetails }, boldLabel=false) }}
+                {{ formField({ label: "It is likely that I will lose my livelihood.", value: data.loseLivelihoodDetails }, boldLabel=false) }}
+                {{ formField({ label: "It is likely that I will suffer serious damage to my reputation.", value: data.damageReputationDetails }, boldLabel=false) }}
+                {{ formField({ label: "A substantial question of law may be involved (whether arising from legislation, judicial authority or other source of law).", value: data.questionLawDetails }, boldLabel=false) }}
+                {{ formField({ label: "I may not be able to understand the court proceedings or present my own case.", value: data.ownCaseDetails }, boldLabel=false) }}
+                {{ formField({ label: "Witnesses may need to be traced or interviewed on my behalf.", value: data.witnessTraceDetails }, boldLabel=false) }}
+                {{ formField({ label: "The proceedings may involve expert cross-examination of a prosecution witness (whether an expert or not).", value: data.expertExamDetails }, boldLabel=false) }}
+                {{ formField({ label: "It is in the interests of another person (such as the person making a complaint or other witness) that I am represented.", value: data.interestsAnotherDetails }, boldLabel=false) }}
+                {{ formField({ label: "Any other reason", value: data.otherReasonRepresentedDetails }, boldLabel=false) }}
+            </dl>
+        </div>
+    </div>
+
+{% endmacro %}

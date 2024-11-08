@@ -71,8 +71,7 @@ export default class CrmDisplayService {
     }
 
     // otherwise return only the required section
-    const requiredSection =
-      availableSections.find(section => section.sectionId === sectionId) || crmDisplayConfig.sections[0]
+    const requiredSection = availableSections.find(section => section.sectionId === sectionId) || availableSections[0]
     return [this.getSectionWithData(requiredSection, crmResponse)]
   }
 
@@ -112,7 +111,7 @@ export default class CrmDisplayService {
           // otherwise return field as is
           return field
         })
-        .filter(field => isSubHeading(field) || field.value)
+        .filter(field => isSubHeading(field) || field.value !== '')
     }
     return undefined
   }

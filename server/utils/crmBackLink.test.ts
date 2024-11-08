@@ -1,43 +1,32 @@
-import { Request } from 'express'
-import { createMock } from '@golevelup/ts-jest'
 import manageBackLink from './crmBackLink'
 
 describe('manageBackLink', () => {
-  let request: Request
+  it('should return search-eform link when current URL is a CRM page', () => {
+    const currentUrl = '/crm5/1234567/general-information'
+    const backUrl = manageBackLink(currentUrl)
 
-  beforeEach(() => {
-    request = createMock<Request>({
-      session: { history: [] },
-      query: {},
-    })
+    expect(backUrl).toBe('/search-eform')
   })
 
-  it('should initialize history and add the current URL when landing on a CRM page', () => {
-    const currentUrl = '/crm5/1234567/general-information'
-    const backUrl = manageBackLink(request, currentUrl)
+  it('should return main landing page when current URL is the generate report page', () => {
+    const currentUrl = '/generate-report'
+    const backUrl = manageBackLink(currentUrl)
 
-    expect(request.session.history).toEqual(['/crm5/1234567/general-information'])
     expect(backUrl).toBe('/')
   })
 
-  it('should add the new URL to history when navigating to another page', () => {
-    let currentUrl = '/crm5/1234567/general-information'
-    manageBackLink(request, currentUrl)
+  it('should return main landing page by default for any other page', () => {
+    const currentUrl = '/some-other-page'
+    const backUrl = manageBackLink(currentUrl)
 
-    currentUrl = '/crm5/1234567/firm-details'
-    const backUrl = manageBackLink(request, currentUrl)
-
-    expect(request.session.history).toEqual(['/crm5/1234567/general-information', '/crm5/1234567/firm-details'])
-    expect(backUrl).toBe('/crm5/1234567/general-information?fromBack=true')
+    expect(backUrl).toBe('/')
   })
 
-  it('should generate correct back link for crm5 pages', () => {
-    let currentUrl = '/crm5/1234567/general-information'
-    manageBackLink(request, currentUrl)
+  it('should return last visited section when current URL is the summary page', () => {
+    const currentUrl = '/crm5/1234567/summary'
+    const lastVisitedSection = '/crm5/1234567/general-information'
+    const backUrl = manageBackLink(currentUrl, lastVisitedSection)
 
-    currentUrl = '/crm5/1234567/firm-details'
-    const backUrl = manageBackLink(request, currentUrl)
-
-    expect(backUrl).toMatch(/^\/crm5\/1234567\/general-information\?fromBack=true$/)
+    expect(backUrl).toBe('/crm5/1234567/general-information')
   })
 })

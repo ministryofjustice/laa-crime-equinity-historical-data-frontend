@@ -16,6 +16,19 @@ type NumberRateAndCost = {
 export interface Crm7Response extends CrmResponse {
   formDetails: {
     usn: number
+    StandardProperties?: {
+      usn: number
+      dateReceived: string
+      timeReceived: string
+      submitterUserId: string
+      language: string
+      region: string
+      office: string
+    }
+    claimProperties?: {
+      category: string
+      categoryCaseWorker: string
+    }
     summary?: {
       clientSurname: string
       clientFirstName: string
@@ -64,6 +77,7 @@ export interface Crm7Response extends CrmResponse {
       isSeriousFraudCase: string
       isIndictableOnlyOffenceCharge: string
       dateChargeLaid: string
+      indictmentAttachment: string
       isWastedCostsCase: string
       wastedCosts: number
       orderDetails: string
@@ -92,6 +106,9 @@ export interface Crm7Response extends CrmResponse {
         radio2: boolean
         radio3: boolean
       }
+      warrantOfArrestDate: string
+      guiltyPleaDate: string
+      otherDetails: string
     }
     claimDetails?: {
       wasCounselAssigned: string
@@ -212,6 +229,7 @@ export interface Crm7Response extends CrmResponse {
           vatRate: number
           vatValue: number
           total: number
+          officeUse: string
         },
       ]
       totals: NetVatAndTotal

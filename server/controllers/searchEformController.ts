@@ -1,14 +1,15 @@
 import type { Request, RequestHandler, Response } from 'express'
-import type { SearchRequest, SearchError } from '@searchEform'
+import type { SearchRequest } from '@searchEform'
 import SearchEformService from '../services/searchEformService'
-import validateSearchQuery, { SearchValidationErrors } from '../utils/searchEformValidation'
+import validateSearchParams from '../utils/searchEformValidation'
 import getPagination from '../utils/pagination'
 import { buildQueryString } from '../utils/utils'
-import getProfileAcceptedTypes from '../utils/userProfileGroups'
+import { getProfileAcceptedTypes } from '../utils/userProfileGroups'
 import manageBackLink from '../utils/crmBackLink'
+import { buildErrors } from '../utils/errorDisplayHelper'
 
+const CURRENT_URL = '/search-eform'
 const SEARCH_PAGE_SIZE = 10
-
 const VIEW_PATH = 'pages/searchEform'
 
 export default class SearchEformController {
@@ -16,10 +17,9 @@ export default class SearchEformController {
 
   show(): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      const currentUrl = '/search-eform'
-      const backUrl = manageBackLink(req, currentUrl)
+      const backUrl = manageBackLink(CURRENT_URL)
 
-      if (!req.query.page || req.query.fromBack) {
+      if (!req.query.page) {
         const searchResults = req.session.searchResults || []
         const formValues = req.session.formValues || {}
         const { paging } = req.session // Retrieve pagination data
@@ -35,7 +35,7 @@ export default class SearchEformController {
         })
       } else {
         // render page with search results
-        const queryParams: Record<string, string> = {
+        const searchParams: Record<string, string> = {
           usn: req.query.usn as string,
           type: req.query.type as string,
           supplierAccountNumber: req.query.supplierAccountNumber as string,
@@ -43,41 +43,42 @@ export default class SearchEformController {
           clientDOB: req.query.clientDOB as string,
           startDate: req.query.startDate as string,
           endDate: req.query.endDate as string,
+          laaCaseRef: req.query.laaCaseRef as string,
           page: req.query.page as string,
         }
 
-        const validationErrors = validateSearchQuery(queryParams)
+        const validationErrors = validateSearchParams(searchParams)
         if (validationErrors) {
-          // render with search query validation errors
-          res.render(VIEW_PATH, { results: [], errors: validationErrors, formValues: queryParams, backUrl })
+          // render with validation errors
+          res.render(VIEW_PATH, { results: [], errors: validationErrors, formValues: searchParams, backUrl })
         } else {
           // perform search
-          const searchRequest = buildSearchRequest(queryParams, getProfileAcceptedTypes(res))
+          const searchRequest = this.buildSearchRequest(searchParams, getProfileAcceptedTypes(res))
           const searchResponse = await this.searchEformService.search(searchRequest)
 
           if (searchResponse.error) {
             // render with errors for search API error
-            const searchErrors = getSearchErrors(searchResponse.error)
-            res.render(VIEW_PATH, { results: [], errors: searchErrors, formValues: queryParams, backUrl })
+            const searchErrors = buildErrors(searchResponse.error, this.getErrorMessage)
+            res.render(VIEW_PATH, { results: [], errors: searchErrors, formValues: searchParams, backUrl })
           } else {
             // render with search results
             const { results, paging } = searchResponse
-            const baseUrl = `/search-eform?${buildQueryString(queryParams)}&`
+            const baseUrl = `/search-eform?${buildQueryString(searchParams)}&`
             // Reset session history when a new search is performed
             req.session.history = []
             // Store search results and form values in session
             req.session.searchResults = results
-            req.session.formValues = queryParams
+            req.session.formValues = searchParams
             req.session.paging = paging
 
             // Record the search page in the history
-            manageBackLink(req, currentUrl)
+            manageBackLink(CURRENT_URL)
 
             res.render(VIEW_PATH, {
               results,
               itemsTotal: paging.itemsTotal,
               pagination: getPagination(paging.number + 1, paging.total, baseUrl),
-              formValues: queryParams,
+              formValues: searchParams,
               backUrl,
             })
           }
@@ -104,50 +105,36 @@ export default class SearchEformController {
       res.redirect(302, `/search-eform?page=1${queryString ? `&${queryString}` : ''}`)
     }
   }
-}
 
-const getSearchErrors = (error: SearchError): SearchValidationErrors => {
-  return buildSearchValidationErrors(getErrorMessage(error.status))
-}
-
-const buildSearchValidationErrors = (errorMessage: string): SearchValidationErrors => {
-  return {
-    list: [
-      {
-        href: '#',
-        text: errorMessage,
-      },
-    ],
+  private getErrorMessage(errorStatus: number): string {
+    switch (errorStatus) {
+      case 401:
+      case 403:
+        return 'Not authorised to search'
+      case 404:
+        return 'No search result found'
+      default:
+        return 'Something went wrong with the search'
+    }
   }
-}
 
-const getErrorMessage = (errorStatus: number): string => {
-  switch (errorStatus) {
-    case 401:
-    case 403:
-      return 'Not authorised to search'
-    case 404:
-      return 'No search result found'
-    default:
-      return 'Something went wrong with the search'
+  private buildSearchRequest(queryParams: Record<string, string>, profileAcceptedTypes: string): SearchRequest {
+    return {
+      usn: this.undefinedIfEmpty(queryParams.usn),
+      type: this.undefinedIfEmpty(queryParams.type) && Number(queryParams.type),
+      supplierAccountNumber: this.undefinedIfEmpty(queryParams.supplierAccountNumber),
+      clientName: this.undefinedIfEmpty(queryParams.clientName),
+      clientDOB: this.undefinedIfEmpty(queryParams.clientDOB),
+      startDate: this.undefinedIfEmpty(queryParams.startDate),
+      endDate: this.undefinedIfEmpty(queryParams.endDate),
+      laaCaseRef: this.undefinedIfEmpty(queryParams.laaCaseRef),
+      page: Number(queryParams.page) - 1, // search api page number starts from 0
+      pageSize: SEARCH_PAGE_SIZE,
+      profileAcceptedTypes,
+    }
   }
-}
 
-const buildSearchRequest = (queryParams: Record<string, string>, profileAcceptedTypes: string): SearchRequest => {
-  return {
-    usn: undefinedIfEmpty(queryParams.usn),
-    type: undefinedIfEmpty(queryParams.type) && Number(queryParams.type),
-    supplierAccountNumber: undefinedIfEmpty(queryParams.supplierAccountNumber),
-    clientName: undefinedIfEmpty(queryParams.clientName),
-    clientDOB: undefinedIfEmpty(queryParams.clientDOB),
-    startDate: undefinedIfEmpty(queryParams.startDate),
-    endDate: undefinedIfEmpty(queryParams.endDate),
-    page: Number(queryParams.page) - 1, // search api page number starts from 0
-    pageSize: SEARCH_PAGE_SIZE,
-    profileAcceptedTypes,
+  private undefinedIfEmpty(field: string): string {
+    return field || undefined
   }
-}
-
-const undefinedIfEmpty = (field: string): string => {
-  return field || undefined
 }

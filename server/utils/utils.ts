@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
 
@@ -31,4 +33,23 @@ export const buildQueryString = (params: Record<string, string | number>): strin
     )
     .filter(Boolean)
     .join('&')
+}
+
+export const currentIsoDate = (): string => {
+  return format(new Date(), 'yyyy-MM-dd')
+}
+
+export const isNotEmpty = (value: string): boolean => {
+  return value !== undefined && value !== null && value !== ''
+}
+
+export const splitCamelCase = (value: string): string => {
+  return value.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
+}
+
+export const removeUnderscore = (value: string): string => {
+  return value
+    .replace(/_/g, ' ')
+    .toLowerCase()
+    .replace(/\b\w/g, char => char.toUpperCase())
 }

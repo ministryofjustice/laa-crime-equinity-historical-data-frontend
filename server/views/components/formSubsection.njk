@@ -1,20 +1,52 @@
-{%- from "govuk/components/table/macro.njk" import govukTable -%}
 {% from "./formFieldList.njk" import formFieldList %}
 {% from "./formTable.njk" import formTable %}
 
+{% macro formSubsection(title, data, isTableData = false, tableClass = "", columnHeader = null) %}
 
-{% macro formSubsection(title, data, isTableData = false, tableClass = "") %}
-    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
-        <div class="govuk-summary-card__title-wrapper">
-            <h3 class="govuk-summary-card__title">{{ title }}</h3>
-        </div>
-        <div class="govuk-summary-card__content">
-            {% if isTableData %}
-                {{ formTable(data, tableClass) }}
-            {% else %}
-                {{ formFieldList(data) }}
+    {% if isTableData %}
+        {% if data.rows.length > 0 %} {# render non-empty section #}
+            <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h3 class="govuk-summary-card__title">{{ title }}</h3>
+                </div>
+                <div class="govuk-summary-card__content">
+                    {{ formTable(data, tableClass) }}
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        {# check if section is empty #}
+        {% set sectionIsNotEmpty = false %}
+        {% for field in data %}
+            {% if (field.value | isNotEmpty) %}
+                {% set sectionIsNotEmpty = true %}
             {% endif %}
-        </div>
-    </div>
+        {% endfor %}
+
+        {% if sectionIsNotEmpty %} {# render non-empty section #}
+            <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h3 class="govuk-summary-card__title">{{ title }}</h3>
+                </div>
+                <div class="govuk-summary-card__content">
+                    {% if columnHeader %}
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row govuk-grid-row ">
+                            <div class="govuk-grid-column-one-half govuk-custom-no-padding-left-desktop">
+                                <dt class="govuk-summary-list__key"> </dt>
+                            </div>
+                            <div class="govuk-grid-column-one-half">
+                                <dd class="govuk-summary-list__value">
+                                    <strong>{{ columnHeader }}</strong>
+                                </dd>
+                            </div>
+                        </div>
+                    </dl>
+                    {% endif %}
+                    {{ formFieldList(data) }}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
 
 {% endmacro %}

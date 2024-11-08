@@ -7,37 +7,53 @@ const schema = Joi.object({
     .items({
       sectionId: Joi.string().required(),
       title: Joi.string().required(),
-      showWhen: Joi.object({
-        conditionsMet: Joi.string().optional().allow('any', 'all'),
-        conditions: Joi.array().items({
+      showWhen: Joi.array()
+        .items({
           apiField: Joi.string().required(),
-          equals: Joi.string().required(),
-        }),
-      }).optional(),
-      hideWhen: Joi.object({
-        conditionsMet: Joi.string().optional().allow('any', 'all'),
-        conditions: Joi.array().items({
+          equals: Joi.string().required().allow(''),
+        })
+        .optional(),
+      hideWhen: Joi.array()
+        .items({
           apiField: Joi.string().required(),
-          equals: Joi.string().required(),
-        }),
-      }).optional(),
-      subsections: Joi.array().items({
-        title: Joi.string().required(),
-        fields: Joi.array().items(
-          {
-            label: Joi.string().optional().allow(''),
-            apiField: Joi.string().required(),
-            type: Joi.string().valid('currency', 'date', 'time', 'percent', 'timeAndCost', 'totalAndCost').optional(),
-          },
-          {
-            subHeading: Joi.string().required(),
-          },
-        ),
-        customDisplay: {
-          name: Joi.string().required(),
-          apiField: Joi.string().required(),
+          equals: Joi.string().required().allow(''),
+        })
+        .optional(),
+      subsections: Joi.array().items(
+        {
+          title: Joi.string().required(),
+          fields: Joi.array().items(
+            {
+              label: Joi.string().optional().allow(''),
+              apiField: Joi.string().required(),
+              type: Joi.string()
+                .valid('currency', 'date', 'hours', 'multiline', 'percent', 'time', 'timeAndCost', 'totalAndCost')
+                .optional(),
+              transform: Joi.string()
+                .valid(
+                  'applicationType',
+                  'category2',
+                  'category3',
+                  'courtType',
+                  'every',
+                  'levelOfWork',
+                  'offenceType',
+                  'yesNo',
+                )
+                .optional(),
+            },
+            {
+              subHeading: Joi.string().required(),
+            },
+          ),
         },
-      }),
+        {
+          customDisplay: {
+            name: Joi.string().required(),
+            apiField: Joi.string().required(),
+          },
+        },
+      ),
     }),
 })
 

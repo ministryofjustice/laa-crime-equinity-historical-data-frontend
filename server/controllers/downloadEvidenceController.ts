@@ -17,7 +17,7 @@ export default class DownloadEvidenceController {
       const fileResponse = await superagent.get(fileUrl).set('Content-Type', 'application/octet-stream')
 
       // return evidence with required file name
-      res.setHeader('Content-Disposition', `attachment; filename=${fileName}`)
+      res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`)
       res.send(fileResponse.body)
     }
   }

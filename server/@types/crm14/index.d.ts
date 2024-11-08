@@ -16,6 +16,8 @@ export interface Crm14Response extends CrmResponse {
         usn: number
         urn: string
         applicationType: string
+        prevAppUsn: number
+        prevAppMaat: number
         meansTested: string
         caseType: string
         originatingCourt: string
@@ -29,6 +31,7 @@ export interface Crm14Response extends CrmResponse {
           imminentHearing: boolean
         }
         dateOfTrial: string
+        appealLodgedDate: string
       }
     }
     aboutYouPart1?: {
@@ -175,6 +178,7 @@ export interface Crm14Response extends CrmResponse {
     }
     income?: {
       receiveBenefits: string
+      haveIncomeOverThreshold: string
       benefits: {
         you: {
           incomeSupport: boolean
@@ -189,8 +193,64 @@ export interface Crm14Response extends CrmResponse {
           jsa: boolean
         }
       }
+      allIncomes: {
+        you: {
+          wageAmount: number
+          wagePaidEvery: string
+          wageTax: string
+          childBenefitAmount: number
+          childBenefitPaidEvery: string
+          taxCreditsAmount: number
+          taxCreditsPaidEvery: string
+          universalCreditAmount: number
+          universalCreditPaidEvery: string
+          otherBenefitsAmount: number
+          otherBenefitsPaidEvery: string
+          maintenancePayment: number
+          maintenancePaymentPaidEvery: string
+          pensionsAmount: number
+          pensionsPaidEvery: string
+          otherIncomeAmount: number
+          otherIncomePaidEvery: string
+          studentLoan: boolean
+          otherIncomeFriendsFamily: boolean
+          otherIncomeMaintenance: boolean
+          otherIncomeRentFromFamily: boolean
+          otherIncomeRental: boolean
+          otherFinancialSupport: boolean
+          otherIncomeSourceFreetext: string
+        }
+        partner: {
+          wageAmount: number
+          wagePaidEvery: string
+          wageTax: string
+          childBenefitAmount: number
+          childBenefitPaidEvery: string
+          taxCreditsAmount: number
+          taxCreditsPaidEvery: string
+          universalCreditAmount: number
+          universalCreditPaidEvery: string
+          otherBenefitsAmount: number
+          otherBenefitsPaidEvery: string
+          maintenancePayment: number
+          maintenancePaymentPaidEvery: string
+          pensionsAmount: number
+          pensionsPaidEvery: string
+          otherIncomeAmount: number
+          otherIncomePaidEvery: string
+          studentLoan: boolean
+          otherIncomeFriendsFamily: boolean
+          otherIncomeMaintenance: boolean
+          otherIncomeRentFromFamily: boolean
+          otherIncomeRental: boolean
+          otherFinancialSupport: boolean
+          otherIncomeSourceFreetext: string
+        }
+      }
       proofBenefits: string
     }
+    hasCrm15: boolean
+    crm15Details?: Crm15Details
     legalRepresentationDetails?: {
       solicitorApplyOffice: string
       solicitorAccountNum: string
@@ -210,6 +270,7 @@ export interface Crm14Response extends CrmResponse {
       emailId: string
       adminEmailId: string
       declarationStatement: string
+      declarationStatement2: string
       declarationConfirm: boolean
       signDate: string
     }

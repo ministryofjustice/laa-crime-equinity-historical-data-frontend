@@ -1,0 +1,83 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formSubsection.njk" import formSubsection %}
+
+{% macro crm14Evidence2(data) %}
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Evidence to support the information you have given</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <p class="govuk-body">Your answers indicate that no evidence is required to support your application, but if you wish to attach any files please do so below.</p>
+            <p class="govuk-body">Where further evidence is required you will receive a separate notification detailing what this is and when it should be provided.</p>
+        </div>
+    </div>
+
+    {# Render "Processed Attachments" subsection #}
+
+    {% if (data.processedAttachments.length > 0) %}
+        <div class="govuk-!-margin-top-8 govuk-!-margin-bottom-0">
+            <h4>Previously Submitted and Processed Evidence Files</h4>
+        </div>
+
+        {% for item in data.processedAttachments %}
+
+            {% set sectionTitle = 'Evidence File ' ~ loop.index %}
+
+            {% set fields = [
+                { label: "File name", value: item.fileName },
+                { label: "Evidence type", value: item.evidenceType },
+                { label: "Date submitted", value: item.dtSubmitted, type: "date" },
+                { label: "Status", value: item.status },
+                { label: "Provider notes", value: item.providerNotes },
+                { label: "Caseworker notes", value: item.caseworkerNotes },
+                { label: "Date processed", value: item.dtProcessed, type: "date" },
+                { label: "Size (MB)", value: item.fileSizeMb }
+            ] %}
+
+            {{ formSubsection(sectionTitle, fields) }}
+        {% endfor %}
+    {% endif %}
+
+    {# Render "New Attachments" subsection #}
+
+    {% if (data.newAttachments.length > 0) %}
+        <div class="govuk-!-margin-top-8 govuk-!-margin-bottom-0">
+            <h4>Newly Submitted Evidence Files - Require Processing</h4>
+        </div>
+
+        {% for item in data.newAttachments %}
+
+            {% set sectionTitle = 'Evidence File ' ~ loop.index %}
+
+            {% set fields = [
+                { label: "File name", value: item.fileName },
+                { label: "Date submitted", value: item.dtSubmitted, type: "date" },
+                { label: "Size (MB)", value: item.fileSizeMb },
+                { label: "Evidence type", value: item.evidenceType },
+                { label: "Provider notes", value: item.providerNotes }
+            ] %}
+
+            {{ formSubsection(sectionTitle, fields) }}
+        {% endfor %}
+    {% endif %}
+
+    {# Render "Processed Messages" subsection #}
+    {% if (data.pseMessages.length > 0) %}
+        <div class="govuk-!-margin-top-8 govuk-!-margin-bottom-0">
+            <h4>Processed Messages</h4>
+        </div>
+
+        {% for item in data.pseMessages %}
+
+            {% set sectionTitle = 'Message ' ~ loop.index %}
+
+            {% set fields = [
+                { label: "PSE USN", value: item.pseUsn },
+                { label: "Date submitted", value: item.dtSubmitted, type: "date" },
+                { label: "Message", value: item.message }
+            ] %}
+
+            {{ formSubsection(sectionTitle, fields) }}
+        {% endfor %}
+    {% endif %}
+{% endmacro %}

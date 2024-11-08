@@ -32,6 +32,7 @@ const getCrm5Response = (usn: number): Crm5Response => {
         surname: 'Doe',
         middleName: '',
         maritalStatus: 'Married',
+        clientNfa: false,
         dateOfBirth: '1970-01-01T00:00:00.000+00:00',
         nationalInsuranceNumber: '',
         address: {
@@ -201,6 +202,13 @@ const getCrm5Response = (usn: number): Crm5Response => {
       DetailsOfWorkCompleted: 'Details of work completed',
       DetailsOfApplication: 'Details of application',
     },
+    FurtherInformation: [
+      {
+        name: 'Attachment1',
+        description: 'Test Description',
+        downloadFile: 'test-link',
+      },
+    ],
     evidenceFiles: {
       files: [
         {

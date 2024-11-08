@@ -76,13 +76,13 @@
                 {% if data.receivePension === "Yes" %}
                     {{ formFieldHeading("You:") }}
                     {{ formField({ label: "amount", value: data.totalPension, type: "currency" }) }}
-                    {{ formField({ label: "every", value: data.totalPensionPaidEvery, type: "every" }) }}
+                    {{ formField({ label: "every", value: data.totalPensionPaidEvery, transform: "every" }) }}
                 {% endif %}
 
                 {% if data.partnerReceivePension === "Yes" %}
                     {{ formFieldHeading("Your Partner:") }}
                     {{ formField({ label: "amount", value: data.partnerTotalPension, type: "currency" }) }}
-                    {{ formField({ label: "every", value: data.partnerTotalPensionPaidEvery, type: "every" }) }}
+                    {{ formField({ label: "every", value: data.partnerTotalPensionPaidEvery, transform: "every" }) }}
                 {% endif %}
 
                 {{ formFieldHeading("Do you or your partner receive maintenance payments for anyone in your household?") }}
@@ -92,13 +92,13 @@
                 {% if data.receiveMaintenancePayments === "Yes" %}
                     {{ formFieldHeading("You:") }}
                     {{ formField({ label: "amount", value: data.maintenancePayment, type: "currency" }) }}
-                    {{ formField({ label: "every", value: data.maintenancePaymentPaidEvery, type: "every" }) }}
+                    {{ formField({ label: "every", value: data.maintenancePaymentPaidEvery, transform: "every" }) }}
                 {% endif %}
 
                 {% if data.partnerReceiveMaintenancePayments === "Yes" %}
                     {{ formFieldHeading("Your Partner:") }}
                     {{ formField({ label: "amount", value: data.partnerMaintenance, type: "currency" }) }}
-                    {{ formField({ label: "every", value: data.partnerMaintenancePaymentPaidEver, type: "every" }) }}
+                    {{ formField({ label: "every", value: data.partnerMaintenancePaymentPaidEvery, transform: "every" }) }}
                 {% endif %}
 
                 {{ formFieldHeading("Do you or your partner receive interest or income from any savings or other investment?") }}
@@ -130,10 +130,10 @@
                         <li>Income from any other source which you have not stated in any of the previous questions</li>
                     </ul>
                 </div>
-                {{ formField({ label: "You", value: data.incomeFromOtherSources}) }}
-                {{ formField({ label: "Your Partner", value: data.partnerIncomeFromOtherSources}) }}
+                {{ formField({ label: "You", value: data.receiveOtherIncome}) }}
+                {{ formField({ label: "Your Partner", value: data.partnerReceiveOtherIncome}) }}
 
-                {% if data.incomeFromOtherSources === "Yes" %}
+                {% if data.receiveOtherIncome === "Yes" %}
                     {{ formFieldHeading("You:") }}
                     {{ formField({ label: "Student grant or loan", value: data.studentLoan }) }}
                     {{ formField({ label: "Board or rent from a family lodger or tenant", value: data.familyRent }) }}
@@ -141,14 +141,14 @@
                     {{ formField({ label: "Financial support from anyone else or from someone who allows you to use assets or money",
                         value: data.otherFinancialSupport }) }}
                     {{ formField({ label: "Income from any other source which you have not stated in any of the previous questions. Please explain",
-                        value: data.otherIncomeSourceFreetext }) }}
+                        value: data.incomeFromOtherSources }) }}
 
                     {{ formFieldHeading("The total amount received from all sources in this question") }}
                     {{ formField({ label: "amount", value: data.totalAmountReceived, type: "currency" }) }}
                     {{ formField({ label: "every", value: data.totalAmountReceivedEvery }) }}
                 {% endif %}
 
-                {% if data.partnerIncomeFromOtherSources === "Yes" %}
+                {% if data.partnerReceiveOtherIncome === "Yes" %}
                     {{ formFieldHeading("Your Partner:") }}
                     {{ formField({ label: "Student grant or loan", value: data.partnerStudentLoan }) }}
                     {{ formField({ label: "Board or rent from a family lodger or tenant", value: data.partnerFamilyRent }) }}
@@ -156,8 +156,7 @@
                     {{ formField({ label: "Financial support from anyone else or from someone who allows you to use assets or money",
                         value: data.partnerOtherFinancialSupport }) }}
                     {{ formField({ label: "Income from any other source which you have not stated in any of the previous questions. Please explain",
-                        value: data.partnerOtherIncomeSourceFreetext }) }}
-                    }) }}
+                        value: data.partnerIncomeFromOtherSources }) }}
 
                     {{ formFieldHeading("The total amount received from all sources in this question") }}
                     {{ formField({ label: "amount", value: data.partnerTotalAmountReceived, type: "currency" }) }}
@@ -179,23 +178,34 @@
 {% macro benefitsTable(data) %}
     <div class="govuk-summary-list__row govuk-grid-row">
         {% set tableData = {
-            head: [],
+            head: [
+                { text: "", classes: "govuk-table__header" },  { text: "Amount", classes: "govuk-table__header" },  { text: "Every", classes: "govuk-table__header" }
+            ],
             rows: []
         } %}
 
         {% for item in data %}
 
-            {% set details = "amount " + (item.amount | formatCurrency) %}
-            {% if item.details %}
-                {% set details = details + "<p>The benefit: " + item.details + "</p>" %}
+            {% if item.amount | isNotEmpty %}
+                {% set details = "amount " + (item.amount | formatCurrency) %}
+                {% if item.details %}
+                    {% set details = details + "<br><span>The benefit: " + item.details + "</span>" %}
+                {% endif %}
+
+                {% set every = "" %}
+                {% if item.every | isNotEmpty %}
+                    {% set every = "every " + item.every %}
+                {% endif %}
+
+                {%- set tableRow = [
+                    { text: item.label },
+                    { text: details | safe },
+                    { text: every | safe }
+                ] -%}
+
+                {% set list = tableData.rows.push(tableRow) %}
             {% endif %}
 
-            {%- set tableRow = [
-                { text: item.label },
-                { text: details | safe },
-                { text: "every " + (item.every | default("1 week", true) | safe) }
-            ] -%}
-            {% set list = tableData.rows.push(tableRow) %}
         {% endfor %}
 
         {{ formTable(tableData) }}

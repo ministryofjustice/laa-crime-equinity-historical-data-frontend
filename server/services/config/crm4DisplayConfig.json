@@ -1,6 +1,39 @@
 {
   "sections": [
     {
+      "sectionId": "standard-properties",
+      "title": "Standard Properties",
+      "subsections": [
+        {
+          "title": "Standard Properties",
+          "fields": [
+            {
+              "label": "USN",
+              "apiField": "StandardProperties.usn"
+            },
+            {
+              "label": "Date received",
+              "apiField": "StandardProperties.dateReceived",
+              "type": "date"
+            },
+            {
+              "label": "Time received",
+              "apiField": "StandardProperties.timeReceived",
+              "type": "time"
+            },
+            {
+              "label": "Region",
+              "apiField": "StandardProperties.region"
+            },
+            {
+              "label": "Office",
+              "apiField": "StandardProperties.office"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "sectionId": "general-information",
       "title": "General Information",
       "subsections": [
@@ -12,7 +45,7 @@
               "apiField": "greaterValue"
             },
             {
-              "label": "Is your application in relation to a Post Mortem examination?",
+              "label": "Is your application in relation to a post-mortem examination?",
               "apiField": "postMortemExamination"
             }
           ]
@@ -36,7 +69,8 @@
             },
             {
               "label": "Address",
-              "apiField": "CaseDetails.Firm.firmAddress"
+              "apiField": "CaseDetails.Firm.firmAddress",
+              "type": "multiline"
             },
             {
               "label": "DX",
@@ -81,7 +115,7 @@
               "apiField": "CaseDetails.ClientDetails.prisonLaw"
             },
             {
-              "label": "Rep order no. / case no.",
+              "label": "Rep order no. / Case no.",
               "apiField": "CaseDetails.ClientDetails.repOrderNumber"
             },
             {
@@ -106,7 +140,7 @@
               "apiField": "CaseDetails.ClientDetails.firstName"
             },
             {
-              "label": "Date Of Birth",
+              "label": "Date of Birth",
               "apiField": "CaseDetails.ClientDetails.dateOfBirth",
               "type": "date"
             }
@@ -116,7 +150,7 @@
           "title": "Details of Proceedings",
           "fields": [
             {
-              "label": "Is Your Client Detained?",
+              "label": "Is your client detained?",
               "apiField": "CaseDetails.ProceedingDetails.isClientDetained"
             },
             {
@@ -124,8 +158,9 @@
               "apiField": "CaseDetails.ProceedingDetails.detainedDetails"
             },
             {
-              "label": "Court Type",
-              "apiField": "CaseDetails.ProceedingDetails.courtType"
+              "label": "Court type",
+              "apiField": "CaseDetails.ProceedingDetails.courtType",
+              "transform": "courtType"
             },
             {
               "label": "Have you accessed the Psychiatric Liaison Service provided within the Central Criminal Court?",
@@ -136,7 +171,7 @@
               "apiField": "CaseDetails.ProceedingDetails.psychiatricDetails"
             },
             {
-              "label": "Main Offence",
+              "label": "Main offence",
               "apiField": "CaseDetails.ProceedingDetails.mainOffence"
             },
             {
@@ -144,12 +179,12 @@
               "apiField": "CaseDetails.ProceedingDetails.actualPlea"
             },
             {
-              "label": "Date of Next Hearing",
+              "label": "Date of next hearing",
               "apiField": "CaseDetails.ProceedingDetails.dateOfHearing",
               "type": "date"
             },
             {
-              "label": "Purpose of Next Hearing",
+              "label": "Purpose of next hearing",
               "apiField": "CaseDetails.ProceedingDetails.purposeOfHearing"
             }
           ]
@@ -181,19 +216,19 @@
               "apiField": "ExpenditureDetails.Details.priorAuthority"
             },
             {
-              "label": "Name of Expert",
+              "label": "Name of expert",
               "apiField": "ExpenditureDetails.Details.expertName"
             },
             {
-              "label": "Company Name",
+              "label": "Company name",
               "apiField": "ExpenditureDetails.Details.companyName"
             },
             {
-              "label": "Type / Status of Expert",
+              "label": "Type / Status of expert",
               "apiField": "ExpenditureDetails.Details.statusExpert"
             },
             {
-              "label": "Postcode of Expert",
+              "label": "Postcode of expert",
               "apiField": "ExpenditureDetails.Details.postCodeExpert"
             }
           ]
@@ -204,7 +239,7 @@
             {
               "label": "Preparation Hours",
               "apiField": "ExpenditureDetails.Preparation.hours",
-              "type": "time"
+              "type": "hours"
             },
             {
               "label": "Hourly Rate",
@@ -219,7 +254,102 @@
           ]
         },
         {
-          "title": "Additional Expenditure",
+          "title": "DNA report",
+          "fields": [
+            {
+              "label": "Total cost of DNA test",
+              "apiField": "ExpenditureDetails.DnaReport.dnaCost",
+              "type": "currency"
+            }
+          ]
+        },
+        {
+          "title": "Transcription / Translation and Transcription",
+          "fields": [
+            {
+              "label": "No. of minutes",
+              "apiField": "ExpenditureDetails.Transcription.numMin"
+            },
+            {
+              "label": "Cost per minute",
+              "apiField": "ExpenditureDetails.Transcription.costPerMin",
+              "type": "currency"
+            },
+            {
+              "label": "Total cost of Transcription",
+              "apiField": "ExpenditureDetails.Transcription.total",
+              "type": "currency"
+            }
+          ]
+        },
+        {
+          "title": "Translator",
+          "fields": [
+            {
+              "label": "No. of hours",
+              "apiField": "ExpenditureDetails.Translator.numWords"
+            },
+            {
+              "label": "Cost of 1000 words",
+              "apiField": "ExpenditureDetails.Translator.costPerWord",
+              "type": "currency"
+            },
+            {
+              "label": "Total cost of translations",
+              "apiField": "ExpenditureDetails.Translator.total",
+              "type": "currency"
+            }
+          ]
+        },
+        {
+          "title": "Other",
+          "fields": [
+            {
+              "label": "Quantity",
+              "apiField": "ExpenditureDetails.Other.quantity"
+            },
+            {
+              "label": "Cost/ Rate",
+              "apiField": "ExpenditureDetails.Other.rate",
+              "type": "currency"
+            },
+            {
+              "label": "Total Cost",
+              "apiField": "ExpenditureDetails.Other.total",
+              "type": "currency"
+            }
+          ]
+        },
+        {
+          "title": "Photocopying",
+          "fields": [
+            {
+              "label": "No. of pages",
+              "apiField": "ExpenditureDetails.Photocopying.numPages"
+            },
+            {
+              "label": "Cost per page",
+              "apiField": "ExpenditureDetails.Photocopying.costPerPage",
+              "type": "currency"
+            },
+            {
+              "label": "Total cost of Photocopying",
+              "apiField": "ExpenditureDetails.Photocopying.total",
+              "type": "currency"
+            }
+          ]
+        },
+        {
+          "title": "Travel Accommodation",
+          "fields": [
+            {
+              "label": "Cost Basis",
+              "apiField": "ExpenditureDetails.Accommodation.costBasis",
+              "type": "currency"
+            }
+          ]
+        },
+        {
           "customDisplay": {
             "name": "crm4AdditionalExpenditure",
             "apiField": "ExpenditureDetails.AdditionalExpenditure"
@@ -231,7 +361,7 @@
             {
               "label": "No. of Hours",
               "apiField": "ExpenditureDetails.Travel.hours",
-              "type": "time"
+              "type": "hours"
             },
             {
               "label": "Hourly Rate",
@@ -250,8 +380,16 @@
           "fields": [
             {
               "label": "Total Authority",
-              "apiField": "ExpenditureDetails.Authority",
+              "apiField": "ExpenditureDetails.Authority.total",
               "type": "currency"
+            },
+            {
+              "label": "I certify that the total amount disclosed for this authority (including both preparation and travel rates) is exclusive of VAT",
+              "apiField": "ExpenditureDetails.Authority.vatDeclaration"
+            },
+            {
+              "label": "I certify that the total amount disclosed for this authority (including both preparation and travel rates) does not include any travel expenditure that is not included within the hourly rate (such as mileage, parking, travel fares etc.)",
+              "apiField": "ExpenditureDetails.Authority.travelDeclaration"
             }
           ]
         }
@@ -262,7 +400,6 @@
       "title": "Alternative Quotes",
       "subsections": [
         {
-          "title": "Alternative Quotes",
           "customDisplay": {
             "name": "crm4AlternativeQuotes",
             "apiField": "AlternativeQuotes"
@@ -341,14 +478,49 @@
       ]
     },
     {
-      "sectionId": "evidence",
-      "title": "Evidence",
+      "sectionId": "office-use-only",
+      "title": "Office Use Only",
       "subsections": [
         {
-          "title": "Evidence",
+          "customDisplay": {
+            "name": "crm4OfficeUseOnly",
+            "apiField": "OfficeUseOnly"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "evidence",
+      "title": "Evidence",
+      "hideWhen": [
+        {
+          "apiField": "evidenceFiles.files",
+          "equals": ""
+        }
+      ],
+      "subsections": [
+        {
           "customDisplay": {
             "name": "crmEvidence",
             "apiField": "evidenceFiles.files"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "further-information",
+      "title": "Further Information",
+      "hideWhen": [
+        {
+          "apiField": "FurtherInformation",
+          "equals": ""
+        }
+      ],
+      "subsections": [
+        {
+          "customDisplay": {
+            "name": "crmFurtherInformation",
+            "apiField": "FurtherInformation"
           }
         }
       ]

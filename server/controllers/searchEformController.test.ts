@@ -7,7 +7,9 @@ import SearchEformService from '../services/searchEformService'
 
 jest.mock('../services/searchEformService')
 jest.mock('../utils/userProfileGroups', () => {
-  return jest.fn().mockReturnValue('1,4,5,6')
+  return {
+    getProfileAcceptedTypes: jest.fn().mockReturnValue('1,4,5,6'),
+  }
 })
 
 describe('Search Eform Controller', () => {
@@ -22,7 +24,7 @@ describe('Search Eform Controller', () => {
     mockSearchEformService = new SearchEformService(null) as jest.Mocked<SearchEformService>
   })
 
-  it('should render initial eform', async () => {
+  it('should render initial search eform', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.show()
     await requestHandler(request, response, next)
@@ -36,7 +38,7 @@ describe('Search Eform Controller', () => {
     })
   })
 
-  it('should render eform with search results', async () => {
+  it('should render search eform with search results', async () => {
     const searchResponse = {
       results: [
         {
@@ -47,6 +49,7 @@ describe('Search Eform Controller', () => {
           submittedDate: '2023-15-13',
           providerAccount: '1234AB',
           providerName: 'Some Provider',
+          laaCaseRef: '222222/333',
           status: 'Completed',
         },
       ],
@@ -79,6 +82,7 @@ describe('Search Eform Controller', () => {
           submittedDate: '2023-15-13',
           providerAccount: '1234AB',
           providerName: 'Some Provider',
+          laaCaseRef: '222222/333',
           status: 'Completed',
         },
       ],
@@ -102,6 +106,7 @@ describe('Search Eform Controller', () => {
         supplierAccountNumber: undefined,
         type: undefined,
         usn: '123456789',
+        laaCaseRef: undefined,
       },
     })
 
@@ -116,10 +121,11 @@ describe('Search Eform Controller', () => {
       page: 0,
       pageSize: 10,
       profileAcceptedTypes: '1,4,5,6',
+      laaCaseRef: undefined,
     })
   })
 
-  it('should render eform with field errors', async () => {
+  it('should render search eform with field errors', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.show()
     request.query = {
@@ -152,6 +158,7 @@ describe('Search Eform Controller', () => {
         startDate: undefined,
         supplierAccountNumber: undefined,
         usn: '1',
+        laaCaseRef: undefined,
         page: '1',
       },
     })
@@ -159,7 +166,7 @@ describe('Search Eform Controller', () => {
     expect(mockSearchEformService.search).not.toHaveBeenCalled()
   })
 
-  it('should render eform with error when empty form submitted', async () => {
+  it('should render search eform with error when empty form submitted', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.show()
     request.query = {
@@ -177,6 +184,14 @@ describe('Search Eform Controller', () => {
             text: 'Enter at least one search field',
           },
         ],
+        messages: {
+          usn: { text: 'Enter at least one search field' },
+          supplierAccountNumber: { text: 'Enter at least one search field' },
+          clientName: { text: 'Enter at least one search field' },
+          endDate: { text: 'Enter at least one search field' },
+          startDate: { text: 'Enter at least one search field' },
+          type: { text: 'Enter at least one search field' },
+        },
       },
       backUrl: '/',
       formValues: {
@@ -187,6 +202,7 @@ describe('Search Eform Controller', () => {
         startDate: undefined,
         supplierAccountNumber: undefined,
         usn: undefined,
+        laaCaseRef: undefined,
         page: '1',
       },
     })
@@ -199,7 +215,7 @@ describe('Search Eform Controller', () => {
     ['Not authorised to search', 403],
     ['No search result found', 404],
     ['Something went wrong with the search', 500],
-  ])('should render eform with errors for "%s" api error and status %s', async (errorMessage, errorStatus) => {
+  ])('should render search eform with "%s" error for status %s', async (errorMessage, errorStatus) => {
     const searchResponse: SearchResponse = {
       results: [],
       error: {
@@ -237,6 +253,7 @@ describe('Search Eform Controller', () => {
         startDate: undefined,
         supplierAccountNumber: undefined,
         usn: '8888888',
+        laaCaseRef: undefined,
         page: '1',
       },
     })
@@ -247,6 +264,7 @@ describe('Search Eform Controller', () => {
       endDate: undefined,
       startDate: undefined,
       supplierAccountNumber: undefined,
+      laaCaseRef: undefined,
       usn: '8888888',
       page: 0,
       pageSize: 10,
@@ -254,7 +272,7 @@ describe('Search Eform Controller', () => {
     })
   })
 
-  it('should submit eform', async () => {
+  it('should submit search eform', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.submit()
     request.body = {

@@ -27,6 +27,7 @@ describe('CacheProvider', () => {
           DetailsOfWorkCompleted: 'Some Details of Work Completed',
           DetailsOfApplication: 'Some Details of Application',
         },
+        FurtherInformation: [],
         evidenceFiles: {
           files: [],
         },

@@ -1,6 +1,66 @@
 {
   "sections": [
     {
+      "sectionId": "standard-properties",
+      "title": "Standard Properties",
+      "subsections": [
+        {
+          "title": "Standard Properties",
+          "fields": [
+            {
+              "label": "USN",
+              "apiField": "StandardProperties.usn"
+            },
+            {
+              "label": "Date Received",
+              "apiField": "StandardProperties.dateReceived",
+              "type": "date"
+            },
+            {
+              "label": "Time Received",
+              "apiField": "StandardProperties.timeReceived",
+              "type": "time"
+            },
+            {
+              "label": "Submitter User ID",
+              "apiField": "StandardProperties.submitterUserId"
+            },
+            {
+              "label": "Submitter Language",
+              "apiField": "StandardProperties.language"
+            },
+            {
+              "label": "Region",
+              "apiField": "StandardProperties.region"
+            },
+            {
+              "label": "Office",
+              "apiField": "StandardProperties.office"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "claim-properties",
+      "title": "Claim Properties",
+      "subsections": [
+        {
+          "title": "Claim Properties",
+          "fields": [
+            {
+              "label": "RBBA Assessment Category",
+              "apiField": "claimProperties.category"
+            },
+            {
+              "label": "Case Worker: RBBA Assessment Category",
+              "apiField": "claimProperties.categoryCaseWorker"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "sectionId": "summary-of-claim",
       "title": "Summary of Claim",
       "subsections": [
@@ -8,20 +68,20 @@
           "title": "Summary of Claim",
           "fields": [
             {
-              "label": "Client Surname",
+              "label": "Client surname",
               "apiField": "summary.clientSurname"
             },
             {
-              "label": "Client First Name",
+              "label": "Client first name",
               "apiField": "summary.clientFirstName"
             },
             {
-              "label": "Client Date of Birth",
+              "label": "Client date of birth",
               "apiField": "summary.clientDateOfBirth",
               "type": "date"
             },
             {
-              "label": "Unique File Number (UFN)",
+              "label": "Unique file number (UFN)",
               "apiField": "summary.ufn"
             },
             {
@@ -29,11 +89,11 @@
               "apiField": "summary.maatNumber"
             },
             {
-              "label": "Rep Order No.",
+              "label": "Rep order no.",
               "apiField": "summary.representationOrderNumber"
             },
             {
-              "label": "Rep Order Date",
+              "label": "Rep order date",
               "apiField": "summary.representationOrderDate",
               "type": "date"
             },
@@ -50,29 +110,12 @@
               "apiField": "summary.stateReached"
             },
             {
-              "label": "Outcome Code",
+              "label": "Outcome code",
               "apiField": "summary.outcomeCode"
             },
             {
-              "label": "Matter Type",
+              "label": "Matter type",
               "apiField": "summary.matterType"
-            }
-          ]
-        },
-        {
-          "title": "Equal Opportunities",
-          "fields": [
-            {
-              "label": "Equal Opportunities Monitoring 1",
-              "apiField": "summary.equalOpportunities.monitoring1"
-            },
-            {
-              "label": "Equal Opportunities Monitoring 2",
-              "apiField": "summary.equalOpportunities.monitoring2"
-            },
-            {
-              "label": "Equal Opportunities Monitoring 3",
-              "apiField": "summary.equalOpportunities.monitoring3"
             },
             {
               "label": "Date class of work closed",
@@ -88,11 +131,11 @@
               "apiField": "summary.equalOpportunities.numberCourtAttendances"
             },
             {
-              "label": "Court Identifier",
+              "label": "Court identifier",
               "apiField": "summary.equalOpportunities.courtIdentifier"
             },
             {
-              "label": "Youth Court",
+              "label": "Youth court",
               "apiField": "summary.equalOpportunities.isYouthCourt"
             }
           ]
@@ -100,6 +143,9 @@
         {
           "title": "Office Use Only",
           "fields": [
+            {
+              "subHeading": "Caseworker Alert - Please correct the code if entered incorrectly"
+            },
             {
               "label": "Is your office and/or the court in which the case was heard located in a Designated Area?",
               "apiField": "summary.officeUse.isLocatedInDesignatedArea"
@@ -109,25 +155,28 @@
               "apiField": "summary.officeUse.stateReached"
             },
             {
-              "label": "Equal Opportunities Code",
+              "label": "Equal opportunities code",
               "apiField": "summary.officeUse.equalOpportunitiesCode"
             },
             {
-              "label": "Profit Costs",
+              "label": "Profit costs",
               "apiField": "summary.officeUse.profitCost",
               "type": "currency"
             },
             {
               "label": "Disbursements",
-              "apiField": "summary.officeUse.disbursements"
+              "apiField": "summary.officeUse.disbursements",
+              "type": "currency"
             },
             {
-              "label": "Travel Cost",
-              "apiField": "summary.officeUse.travelCost"
+              "label": "Travel cost",
+              "apiField": "summary.officeUse.travelCost",
+              "type": "currency"
             },
             {
-              "label": "Waiting Cost",
-              "apiField": "summary.officeUse.waitingCost"
+              "label": "Waiting cost",
+              "apiField": "summary.officeUse.waitingCost",
+              "type": "currency"
             }
           ]
         }
@@ -141,27 +190,28 @@
           "title": "Solicitor Details",
           "fields": [
             {
-              "label": "Name of Firm",
+              "label": "Name of firm",
               "apiField": "solicitorDetails.firmName"
             },
             {
               "label": "Address / DX",
-              "apiField": "solicitorDetails.address"
+              "apiField": "solicitorDetails.address",
+              "type": "multiline"
             },
             {
               "label": "Account No.",
               "apiField": "solicitorDetails.providerAccount"
             },
             {
-              "label": "Telephone Number",
+              "label": "Telephone number",
               "apiField": "solicitorDetails.telephone"
             },
             {
-              "label": "Contact Name",
+              "label": "Contact name",
               "apiField": "solicitorDetails.contactName"
             },
             {
-              "label": "Name of Solicitor or Fellow of the Institute of Legal Executives instructed",
+              "label": "Name of solicitor or fellow of the Institute of Legal Executives instructed",
               "apiField": "solicitorDetails.solicitorName"
             },
             {
@@ -180,11 +230,14 @@
           "title": "Case Details",
           "fields": [
             {
+              "subHeading": "Please enter the USN of the rejected form"
+            },
+            {
               "label": "URN",
               "apiField": "caseDetails.urn"
             },
             {
-              "label": "Main Offence",
+              "label": "Main offence",
               "apiField": "caseDetails.mainOffence"
             },
             {
@@ -193,11 +246,11 @@
               "type": "date"
             },
             {
-              "label": "Is this a Serious Fraud Case or are there elements of Serious Fraud?",
+              "label": "Is this a serious fraud case or are there elements of serious fraud?",
               "apiField": "caseDetails.isSeriousFraudCase"
             },
             {
-              "label": "Was the defendant or any co-defendant charged with any Indictable Only offence?",
+              "label": "Was the defendant or any co-defendant charged with any indictable only offence?",
               "apiField": "caseDetails.isIndictableOnlyOffenceCharge"
             },
             {
@@ -218,7 +271,7 @@
               "apiField": "caseDetails.wastedCosts"
             },
             {
-              "label": "Please provide details of the Order",
+              "label": "Please provide details of the order",
               "apiField": "caseDetails.orderDetails"
             }
           ]
@@ -230,45 +283,10 @@
       "title": "Non-Standard Fee Claim",
       "subsections": [
         {
-          "title": "Reason(s) for Non-Standard Fee Claim",
-          "fields": [
-            {
-              "subHeading": "Tell us why you are claiming a non-standard fee by ticking the box(es) that apply in this case"
-            },
-            {
-              "label": "Core costs exceed higher limit",
-              "apiField": "nonStandardFeeClaim.reason.isCoreCostExceededLimit"
-            },
-            {
-              "label": "Enhanced rates claimed",
-              "apiField": "nonStandardFeeClaim.reason.isEnhancedRatesClaim"
-            },
-            {
-              "label": "Counsel assigned",
-              "apiField": "nonStandardFeeClaim.reason.isCounselAssigned"
-            },
-            {
-              "label": "Extradition",
-              "apiField": "nonStandardFeeClaim.reason.isExtradition"
-            },
-            {
-              "label": "Representation Order withdrawn",
-              "apiField": "nonStandardFeeClaim.reason.isRepresentationOrderWithdrawn"
-            },
-            {
-              "label": "Other",
-              "apiField": "nonStandardFeeClaim.reason.isOther"
-            },
-            {
-              "label": "Date Order withdrawn",
-              "apiField": "nonStandardFeeClaim.dateWithdrawn",
-              "type": "date"
-            },
-            {
-              "label": "Please give details",
-              "apiField": "nonStandardFeeClaim.additionalDetails"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm7NonStandardFeeClaim",
+            "apiField": "nonStandardFeeClaim"
+          }
         }
       ]
     },
@@ -277,7 +295,6 @@
       "title": "Case Disposal",
       "subsections": [
         {
-          "title": "Case Disposal",
           "customDisplay": {
             "name": "crm7CaseDisposal",
             "apiField": "caseDisposal"
@@ -293,11 +310,11 @@
           "title": "Claim Details",
           "fields": [
             {
-              "label": "Was counsel instructed (Assigned)?",
+              "label": "Was counsel instructed (assigned)?",
               "apiField": "claimDetails.wasCounselAssigned"
             },
             {
-              "label": "Was counsel instructed (Unassigned - maximum fee principle applied)?",
+              "label": "Was counsel instructed (unassigned - maximum fee principle applied)?",
               "apiField": "claimDetails.wasCounselUnassigned"
             },
             {
@@ -353,28 +370,10 @@
       "title": "Pre Order Work",
       "subsections": [
         {
-          "title": "Pre Order Work",
-          "fields": [
-            {
-              "label": "Are you claiming for any work which precedes the date of grant shown on the order?",
-              "apiField": "preOrderWork.isClaimBeforeGrantDate"
-            },
-            {
-              "label": "Please give the date when the application was submitted",
-              "apiField": "preOrderWork.dateSubmitted",
-              "type": "date"
-            },
-            {
-              "label": "What was the date of the 1st court hearing?",
-              "apiField": "preOrderWork.firstCourtHearingDate",
-              "type": "date"
-            },
-            {
-              "label": "Please give the date on which the application was received by the court.",
-              "apiField": "preOrderWork.dateReceivedByCourt",
-              "type": "date"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm7PreOrderWork",
+            "apiField": "preOrderWork"
+          }
         }
       ]
     },
@@ -383,7 +382,6 @@
       "title": "Schedule Of Time Spent",
       "subsections": [
         {
-          "title": "Schedule Of Time Spent",
           "customDisplay": {
             "name": "crm7ScheduleOfTime",
             "apiField": "scheduleOfTimeSpent"
@@ -396,7 +394,6 @@
       "title": "Claim for Costs",
       "subsections": [
         {
-          "title": "Letters and Telephone Calls",
           "customDisplay": {
             "name": "crm7ClaimForCosts",
             "apiField": "claimOfCosts.lettersAndPhoneCalls"
@@ -409,7 +406,6 @@
       "title": "Disbursements",
       "subsections": [
         {
-          "title": "Disbursements",
           "customDisplay": {
             "name": "crm7Disbursements",
             "apiField": "disbursement"
@@ -426,51 +422,56 @@
           "fields": [
             {
               "label": "Deductions",
-              "apiField": "claimTotals.deductions"
+              "apiField": "claimTotals.deductions",
+              "type": "currency"
             },
             {
-              "label": "Profit Costs Net",
-              "apiField": "claimTotals.total.profit.net"
+              "label": "Profit costs net",
+              "apiField": "claimTotals.total.profit.net",
+              "type": "currency"
             },
             {
-              "label": "Profit Costs VAT rate",
+              "label": "Profit costs VAT rate",
               "apiField": "claimTotals.total.profit.vat",
               "type": "percent"
             },
             {
-              "label": "Profit Costs Total",
+              "label": "Profit costs total",
               "apiField": "claimTotals.total.profit.total",
               "type": "currency"
             },
             {
               "label": "Disbursements",
-              "apiField": "claimTotals.disbursements"
+              "apiField": "claimTotals.total.disbursements",
+              "type": "currency"
             },
             {
-              "label": "Travel Costs Net",
-              "apiField": "claimTotals.total.travel.net"
+              "label": "Travel costs net",
+              "apiField": "claimTotals.total.travel.net",
+              "type": "currency"
             },
             {
-              "label": "Travel Costs VAT rate",
+              "label": "Travel costs VAT rate",
               "apiField": "claimTotals.total.travel.vat",
               "type": "percent"
             },
             {
-              "label": "Travel Costs Total",
+              "label": "Travel costs total",
               "apiField": "claimTotals.total.travel.total",
               "type": "currency"
             },
             {
-              "label": "Waiting Costs Net",
-              "apiField": "claimTotals.total.waiting.net"
+              "label": "Waiting costs net",
+              "apiField": "claimTotals.total.waiting.net",
+              "type": "currency"
             },
             {
-              "label": "Waiting Costs VAT rate",
+              "label": "Waiting costs VAT rate",
               "apiField": "claimTotals.total.waiting.vat",
               "type": "percent"
             },
             {
-              "label": "Waiting Costs Total",
+              "label": "Waiting costs total",
               "apiField": "claimTotals.total.waiting.total",
               "type": "currency"
             }
@@ -480,49 +481,51 @@
           "title": "Claim Totals - Office Use Only",
           "fields": [
             {
-              "label": "Profit Costs Net Allowed",
-              "apiField": "claimTotals.officeUse.profit.net"
+              "label": "Profit costs net allowed",
+              "apiField": "claimTotals.officeUse.profit.net",
+              "type": "currency"
             },
             {
-              "label": "Profit Costs Allowed VAT rate",
+              "label": "Profit costs allowed VAT rate",
               "apiField": "claimTotals.officeUse.profit.vat",
               "type": "percent"
             },
             {
-              "label": "Profit Costs Total Allowed",
+              "label": "Profit costs total allowed",
               "apiField": "claimTotals.officeUse.profit.total",
               "type": "currency"
             },
             {
-              "label": "Disbursements Allowed",
-              "apiField": "claimTotals.officeUse.disbursements"
-            },
-            {
-              "label": "Travel Net Allowed",
-              "apiField": "claimTotals.officeUse.profit.net"
-            },
-            {
-              "label": "Travel Allowed VAT rate",
-              "apiField": "claimTotals.officeUse.profit.vat",
-              "type": "percent"
-            },
-            {
-              "label": "Travel Total Allowed",
-              "apiField": "claimTotals.officeUse.profit.total",
+              "label": "Disbursements allowed",
+              "apiField": "claimTotals.officeUse.disbursements",
               "type": "currency"
             },
             {
-              "label": "Waiting Net Allowed",
-              "apiField": "claimTotals.officeUse.profit.net"
+              "label": "Travel net allowed",
+              "apiField": "claimTotals.officeUse.travel.net"
             },
             {
-              "label": "Waiting Allowed VAT rate",
-              "apiField": "claimTotals.officeUse.profit.vat",
+              "label": "Travel allowed VAT rate",
+              "apiField": "claimTotals.officeUse.travel.vat",
               "type": "percent"
             },
             {
-              "label": "Waiting Total Allowed",
-              "apiField": "claimTotals.officeUse.profit.total",
+              "label": "Travel total allowed",
+              "apiField": "claimTotals.officeUse.travel.total",
+              "type": "currency"
+            },
+            {
+              "label": "Waiting net allowed",
+              "apiField": "claimTotals.officeUse.waiting.net"
+            },
+            {
+              "label": "Waiting allowed VAT rate",
+              "apiField": "claimTotals.officeUse.waiting.vat",
+              "type": "percent"
+            },
+            {
+              "label": "Waiting total allowed",
+              "apiField": "claimTotals.officeUse.waiting.total",
               "type": "currency"
             }
           ]
@@ -590,25 +593,45 @@
       "title": "Office Use Only",
       "subsections": [
         {
-          "title": "Quality Control",
-          "fields": [
-            {
-              "label": "Decision",
-              "apiField": "decisionOfficeUseOnly"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm7OfficeUseOnly",
+            "apiField": "OfficeUseOnly"
+          }
         }
       ]
     },
     {
       "sectionId": "evidence",
       "title": "Evidence",
+      "hideWhen": [
+        {
+          "apiField": "evidenceFiles.files",
+          "equals": ""
+        }
+      ],
       "subsections": [
         {
-          "title": "Evidence",
           "customDisplay": {
             "name": "crmEvidence",
             "apiField": "evidenceFiles.files"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "further-information",
+      "title": "Further Information",
+      "hideWhen": [
+        {
+          "apiField": "FurtherInformation",
+          "equals": ""
+        }
+      ],
+      "subsections": [
+        {
+          "customDisplay": {
+            "name": "crmFurtherInformation",
+            "apiField": "FurtherInformation"
           }
         }
       ]

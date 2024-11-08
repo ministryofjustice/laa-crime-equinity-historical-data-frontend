@@ -8,12 +8,18 @@
   {% block content %}
       <div class="govuk-width-container">
           <main class="govuk-main-wrapper">
-              <h1 class="govuk-heading-l">Equiniti historical data</h1>
-              <span>You can generate reports or search for eForm records</span>
+              <h1 class="govuk-heading-l">Access eForms Records</h1>
 
-              <p class="govuk-body govuk-!-margin-top-7">
-                  <a href="/generate-report" class="govuk-link govuk-link--no-visited-state">Generate eForm reports</a>
-              </p>
+              {% set introText = 'You can generate reports or search for an eForm record' if isReportingAllowed else 'You can search for eForm records' %}
+
+              <p class="govuk-body govuk-!-margin-bottom-7">{{ introText }}</p>
+
+              {% if isReportingAllowed %}
+                  <p class="govuk-body">
+                      <a href="/generate-report" class="govuk-link govuk-link--no-visited-state">Generate eForm reports</a>
+                  </p>
+              {% endif %}
+
               <p class="govuk-body">
                   <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
               </p>

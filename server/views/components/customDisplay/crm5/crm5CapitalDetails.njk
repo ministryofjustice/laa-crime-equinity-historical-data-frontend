@@ -1,0 +1,26 @@
+{% from "../../formField.njk" import formField %}
+{% from "../../formFieldHeading.njk" import formFieldHeading %}
+
+{% macro crm5CapitalDetails(data) %}
+
+    <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+        <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title">Capital Details</h3>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                {{ formField({ label: "Is your client under 18 years old?", value: data.isUnder18 }) }}
+
+                {% if (not data.isUnder18) or (data.isUnder18 === "No") %}
+                    {{ formField({ label: "Does your client or partner (if living with client as couple) get Income Support, Income Based Job Seeker's Allowance, Income Related Employment and Support Allowance or Guarantee State Pension Credit?", value: data.hasIncomeSupport } ) }}
+                    {{ formField({ label: "How many dependants does your client have?", value: data.numOfDependants }) }}
+
+                    {{ formFieldHeading("Give the total savings and other capital which your client has (and their partner, if relevant) (include equity in home above £100,000 after allowing for mortgage(s) up to the value of £100,000)") }}
+                    {{ formField({ label: "Client", value: data.clientSavings, type: "currency" }) }}
+                    {{ formField({ label: "Partner", value: data.partnerSavings, type: "currency" }) }}
+                    {{ formField({ label: "Total", value: data.totalSavings, type: "currency" }) }}
+                {% endif %}
+            </dl>
+        </div>
+    </div>
+{% endmacro %}

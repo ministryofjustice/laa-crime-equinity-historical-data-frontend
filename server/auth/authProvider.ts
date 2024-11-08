@@ -1,5 +1,5 @@
 import axios from 'axios'
-import msal from '@azure/msal-node'
+import msal, { ServerError } from '@azure/msal-node'
 import { Configuration } from '@azure/msal-node/src/config/Configuration'
 import type { Request, Response, NextFunction } from 'express'
 import { AuthorizationCodeRequest } from '@azure/msal-node/src/request/AuthorizationCodeRequest'
@@ -7,6 +7,7 @@ import { AuthorizationUrlRequest } from '@azure/msal-node/src/request/Authorizat
 import { CloudDiscoveryMetadata } from '@azure/msal-common/src/authority/CloudDiscoveryMetadata'
 import { ClientCredentialRequest } from '@azure/msal-node/src/request/ClientCredentialRequest'
 import { msalConfig } from './authConfig'
+import logger from '../../logger'
 
 type Options = {
   code?: string
@@ -89,6 +90,12 @@ class AuthProvider {
         return next(new Error('Error: response not found'))
       }
 
+      if (!req.session.pkceCodes) {
+        // if pkceCodes are missing in the session, redirect to signin to re-trigger the auth flow
+        logger.warn('Session pkceCodes not found, re-triggering auth flow')
+        return res.redirect('/auth/signin')
+      }
+
       const authCodeRequest = {
         ...req.session.authCodeRequest,
         code: req.body.code,
@@ -112,6 +119,10 @@ class AuthProvider {
         const state = JSON.parse(this.cryptoProvider.base64Decode(req.body.state))
         return res.redirect(state.successRedirect)
       } catch (error) {
+        if (error instanceof ServerError && error.errorCode === 'invalid_grant') {
+          logger.warn('Failed to authenticate due to invalid grant, re-triggering auth flow', error)
+          return res.redirect('/auth/signin')
+        }
         return next(error)
       }
     }

@@ -33,85 +33,10 @@
           ]
         },
         {
-          "title": "For the Legal Representative's use",
-          "fields": [
-            {
-              "label": "USN",
-              "apiField": "legalRepresentativeUse.legalRepUse.usn"
-            },
-            {
-              "label": "URN",
-              "apiField": "legalRepresentativeUse.legalRepUse.urn"
-            },
-            {
-              "label": "Please select",
-              "apiField": "legalRepresentativeUse.legalRepUse.applicationType"
-            },
-            {
-              "subHeading": "Previous application details"
-            },
-            {
-              "label": "USN",
-              "apiField": "legalRepresentativeUse.legalRepUse.???"
-            },
-            {
-              "label": "MAAT ID",
-              "apiField": "legalRepresentativeUse.legalRepUse.???"
-            },
-            {
-              "label": "Is this application subject to the usual means / passported test?",
-              "apiField": "legalRepresentativeUse.legalRepUse.meansTested"
-            },
-            {
-              "label": "Case Type",
-              "apiField": "legalRepresentativeUse.legalRepUse.caseType"
-            },
-            {
-              "label": "The court where the case commenced",
-              "apiField": "legalRepresentativeUse.legalRepUse.originatingCourt"
-            },
-            {
-              "label": "The court hearing the case",
-              "apiField": "legalRepresentativeUse.legalRepUse.courtName"
-            },
-            {
-              "label": "Is this a Priority Case?",
-              "apiField": "legalRepresentativeUse.legalRepUse.isPriorityCase"
-            },
-            {
-              "subHeading": "Please select at least ONE type of Priority Case:"
-            },
-            {
-              "label": "Custody",
-              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.custody"
-            },
-            {
-              "label": "Vulnerable",
-              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.vulnerable"
-            },
-            {
-              "label": "Youth",
-              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.youth"
-            },
-            {
-              "label": "Late application in the Crown Court for trial",
-              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.lateApplication"
-            },
-            {
-              "label": "Hearing date imminent",
-              "apiField": "legalRepresentativeUse.legalRepUse.priorityCaseType.imminentHearing"
-            },
-            {
-              "label": "Date of trial",
-              "apiField": "legalRepresentativeUse.legalRepUse.dateOfTrial",
-              "type": "date"
-            },
-            {
-              "label": "Appeal Lodged Date",
-              "apiField": "legalRepresentativeUse.legalRepUse.???",
-              "type": "date"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm14LegalRepUse",
+            "apiField": "legalRepresentativeUse"
+          }
         }
       ]
     },
@@ -152,7 +77,7 @@
               "apiField": "aboutYouPart1.aboutYou.applicationRegistrationCard"
             },
             {
-              "label": "Do you require all correspondence concerning your Application to be in Welsh?",
+              "label": "Do you require all correspondence concerning your application to be in Welsh?",
               "apiField": "aboutYouPart1.aboutYou.welshCorrespondence"
             }
           ]
@@ -241,11 +166,12 @@
             },
             {
               "label": "Are you charged with an adult?",
-              "apiField": "aboutYouPart2.???"
+              "apiField": "aboutYouPart2.chargedWithAdult"
             },
             {
               "label": "Do you have a partner?",
-              "apiField": "aboutYouPart2.havePartner"
+              "apiField": "aboutYouPart2.havePartner",
+              "transform": "yesNo"
             },
             {
               "label": "You are",
@@ -253,11 +179,12 @@
             },
             {
               "label": "Date of separation",
-              "apiField": "aboutYouPart2.???"
+              "apiField": "aboutYouPart2.dateOfSeparation",
+              "type": "date"
             },
             {
               "label": "You are and your partner are",
-              "apiField": "aboutYouPart2.???"
+              "apiField": "aboutYouPart2.relationship"
             }
           ]
         }
@@ -266,6 +193,12 @@
     {
       "sectionId": "about-your-partner",
       "title": "About Your Partner",
+      "hideWhen": [
+        {
+          "apiField": "aboutYouPart2.havePartner",
+          "equals": "0"
+        }
+      ],
       "subsections": [
         {
           "title": "Your Partner's Details",
@@ -305,15 +238,17 @@
             },
             {
               "label": "Is your partner a victim, prosecution witness or a co-defendant in the case for which you require legal aid?",
-              "apiField": "aboutYouPartner.coDefendant"
+              "apiField": "aboutYouPartner.coDefendant",
+              "transform": "yesNo"
             },
             {
               "label": "Please specify",
-              "apiField": "aboutYouPartner.???"
+              "apiField": "aboutYouPartner.partnerInvolvement"
             },
             {
               "label": "Does your partner have a conflict of interest?",
-              "apiField": "aboutYouPartner.conflictOfInterest"
+              "apiField": "aboutYouPartner.conflictOfInterest",
+              "transform": "yesNo"
             },
             {
               "label": "Is your partner's usual home address different from yours?",
@@ -344,9 +279,8 @@
       "title": "Interests of Justice: 1",
       "subsections": [
         {
-          "title": "Interests of Justice: 1",
           "customDisplay": {
-            "name": "crm14InterestsOfJustice",
+            "name": "crm14InterestsOfJustice1",
             "apiField": "interestOfJusticePart1"
           }
         }
@@ -357,106 +291,42 @@
       "title": "Interests of Justice: 2",
       "subsections": [
         {
-          "title": "Why do you want legal aid?",
-          "fields": [
-            {
-              "subHeading": "Complete one or more reasons. For each reason you choose, say why you have chosen it. Mention any evidence that supports your choice of a reason."
-            },
-            {
-              "label": "It is likely that I will lose my liberty if any matter in the proceedings is decided against me.",
-              "apiField": "interestOfJusticePart2.loseLibertyDetails"
-            },
-            {
-              "label": "I have been given a sentence that is suspended or non-custodial. If I break this, the court may be able to deal with me for the original offence.",
-              "apiField": "interestOfJusticePart2.suspendedSentenceDetails"
-            },
-            {
-              "label": "It is likely that I will lose my livelihood.",
-              "apiField": "interestOfJusticePart2.loseLivelihoodDetails"
-            },
-            {
-              "label": "It is likely that I will suffer serious damage to my reputation.",
-              "apiField": "interestOfJusticePart2.damageReputationDetails"
-            },
-            {
-              "label": "A substantial question of law may be involved (whether arising from legislation, judicial authority or other source of law).",
-              "apiField": "interestOfJusticePart2.questionLawDetails"
-            },
-            {
-              "label": "I may not be able to understand the court proceedings or present my own case.",
-              "apiField": "interestOfJusticePart2.ownCaseDetails"
-            },
-            {
-              "label": "Witnesses may need to be traced or interviewed on my behalf.",
-              "apiField": "interestOfJusticePart2.witnessTraceDetails"
-            },
-            {
-              "label": "The proceedings may involve expert cross-examination of a prosecution witness (whether an expert or not).",
-              "apiField": "interestOfJusticePart2.expertExamDetails"
-            },
-            {
-              "label": " It is in the interests of another person (such as the person making a complaint or other witness) that I am represented.",
-              "apiField": "interestOfJusticePart2.interestsAnotherDetails"
-            },
-            {
-              "label": "Any other reason",
-              "apiField": "interestOfJusticePart2.otherReasonRepresentedDetails"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm14InterestsOfJustice2",
+            "apiField": "interestOfJusticePart2"
+          }
         }
       ]
     },
     {
       "sectionId": "evidence-1",
       "title": "Evidence: 1",
+      "hideWhen": [
+        {
+          "apiField": "legalRepresentativeUse.legalRepUse.meansTested",
+          "equals": "No"
+        }
+      ],
       "subsections": [
         {
-          "title": "Questions to inform evidential requirements",
-          "fields": [
-            {
-              "label": "Has a court remanded you in custody?",
-              "apiField": "evidencePart1.remandedInCustody"
-            },
-            {
-              "label": "What date were you remanded?",
-              "apiField": "evidencePart1.remandedDate",
-              "type": "date"
-            },
-            {
-              "label": "Will your case be heard in a magistrates' court?",
-              "apiField": "evidencePart1.heardInMagistrateCourt"
-            },
-            {
-              "label": "Are you employed (excluding being self employed)?",
-              "apiField": "evidencePart1.employed"
-            },
-            {
-              "label": "Have you ceased employment within the last 3 months?",
-              "apiField": "evidencePart1.employmentCeased"
-            },
-            {
-              "label": "Have you lost your job as a result of being in custody?",
-              "apiField": "evidencePart1.lostJobDuetoCustody"
-            },
-            {
-              "label": "When did this occur?",
-              "apiField": "evidencePart1.lostJobDuetoCustodyDate",
-              "type": "date"
-            },
-            {
-              "label": "Is your partner employed (excluding being self employed)?",
-              "apiField": "evidencePart1.partnerEmployed"
-            }
-          ]
+          "customDisplay": {
+            "name": "crm14Evidence1",
+            "apiField": "evidencePart1"
+          }
         }
       ]
     },
     {
       "sectionId": "income",
       "title": "Income",
+      "hideWhen": [
+        {
+          "apiField": "legalRepresentativeUse.legalRepUse.meansTested",
+          "equals": "No"
+        }
+      ],
       "subsections": [
         {
-          "title": "Your Income and Your Partner's Income",
           "customDisplay": {
             "name": "crm14Income",
             "apiField": "income"
@@ -467,22 +337,14 @@
     {
       "sectionId": "crm15-income-1",
       "title": "CRM 15 - Income: 1",
-      "showWhen": {
-        "conditionsMet": "any",
-        "conditions": [
-          {
-            "apiField": "privateCompany",
-            "equals": "Yes"
-          },
-          {
-            "apiField": "partnerPrivateCompany",
-            "equals": "Yes"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasCrm15",
+          "equals": "true"
+        }
+      ],
       "subsections": [
         {
-          "title": "Your Income and Your Partner's Income",
           "customDisplay": {
             "name": "crm15Income1",
             "apiField": "crm15Details.income1"
@@ -493,22 +355,14 @@
     {
       "sectionId": "crm15-income-2",
       "title": "CRM 15 - Income: 2",
-      "showWhen": {
-        "conditionsMet": "any",
-        "conditions": [
-          {
-            "apiField": "privateCompany",
-            "equals": "Yes"
-          },
-          {
-            "apiField": "partnerPrivateCompany",
-            "equals": "Yes"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasCrm15",
+          "equals": "true"
+        }
+      ],
       "subsections": [
         {
-          "title": "Your Income and Your Partner's Income",
           "customDisplay": {
             "name": "crm15Income2",
             "apiField": "crm15Details.income2"
@@ -519,22 +373,14 @@
     {
       "sectionId": "crm15-outgoings",
       "title": "CRM 15 - Outgoings",
-      "showWhen": {
-        "conditionsMet": "any",
-        "conditions": [
-          {
-            "apiField": "privateCompany",
-            "equals": "Yes"
-          },
-          {
-            "apiField": "partnerPrivateCompany",
-            "equals": "Yes"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasCrm15",
+          "equals": "true"
+        }
+      ],
       "subsections": [
         {
-          "title": "Your outgoings and your partner's outgoings",
           "customDisplay": {
             "name": "crm15Outgoings",
             "apiField": "crm15Details.outgoings"
@@ -545,22 +391,24 @@
     {
       "sectionId": "crm15-land-and-property",
       "title": "CRM 15 - Land & Property",
-      "showWhen": {
-        "conditionsMet": "any",
-        "conditions": [
-          {
-            "apiField": "privateCompany",
-            "equals": "Yes"
-          },
-          {
-            "apiField": "partnerPrivateCompany",
-            "equals": "Yes"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasCrm15",
+          "equals": "true"
+        }
+      ],
+      "hideWhen": [
+        {
+          "apiField": "crm15Details.landProperty.ownProperty",
+          "equals": ""
+        },
+        {
+          "apiField": "crm15Details.landProperty.partnerOwnProperty",
+          "equals": ""
+        }
+      ],
       "subsections": [
         {
-          "title": "Your outgoings and your partner's outgoings",
           "customDisplay": {
             "name": "crm15LandProperty",
             "apiField": "crm15Details.landProperty"
@@ -571,22 +419,14 @@
     {
       "sectionId": "crm15-savings",
       "title": "CRM 15 - Savings",
-      "showWhen": {
-        "conditionsMet": "any",
-        "conditions": [
-          {
-            "apiField": "privateCompany",
-            "equals": "Yes"
-          },
-          {
-            "apiField": "partnerPrivateCompany",
-            "equals": "Yes"
-          }
-        ]
-      },
+      "showWhen": [
+        {
+          "apiField": "hasCrm15",
+          "equals": "true"
+        }
+      ],
       "subsections": [
         {
-          "title": "Your Savings and Investments and those of Your Partner",
           "customDisplay": {
             "name": "crm15Savings",
             "apiField": "crm15Details.savings"
@@ -599,9 +439,8 @@
       "title": "Evidence: 2",
       "subsections": [
         {
-          "title": "Your Evidence",
           "customDisplay": {
-            "name": "crm14EvidencePart2",
+            "name": "crm14Evidence2",
             "apiField": "evidencePart2"
           }
         }
@@ -673,21 +512,14 @@
             {
               "label": "Firm Administrator's email address",
               "apiField": "legalRepresentationDetails.adminEmailId"
-            },
-            {
-              "label": "Declaration by the Legal Representative",
-              "apiField": "legalRepresentationDetails.declarationStatement"
-            },
-            {
-              "label": "I understand that, as Legal Representative, I must obtain, and retain on file, a Declaration from the Applicant (and partner if applicable). I understand that this means completing a hardcopy mandate form.",
-              "apiField": "legalRepresentationDetails.declarationConfirm"
-            },
-            {
-              "label": "Date",
-              "apiField": "legalRepresentationDetails.signDate",
-              "type": "date"
             }
           ]
+        },
+        {
+          "customDisplay": {
+            "name": "crm14LegalRepresentation",
+            "apiField": "legalRepresentationDetails"
+          }
         }
       ]
     },
@@ -696,7 +528,6 @@
       "title": "About The Information",
       "subsections": [
         {
-          "title": "About the information which you have provided and its protection",
           "customDisplay": {
             "name": "crm14AboutTheInformation",
             "apiField": "aboutInformation"
@@ -709,7 +540,6 @@
       "title": "Declarations",
       "subsections": [
         {
-          "title": "Fraud Notice",
           "customDisplay": {
             "name": "crm14Declarations",
             "apiField": "declarations"
@@ -722,7 +552,6 @@
       "title": "Privacy Notice",
       "subsections": [
         {
-          "title": "Privacy Notice",
           "customDisplay": {
             "name": "crm14PrivacyNotice",
             "apiField": "privacyAgree"
@@ -731,11 +560,28 @@
       ]
     },
     {
-      "sectionId": "evidence",
-      "title": "Evidence",
+      "sectionId": "office-use-only",
+      "title": "Office Use Only",
       "subsections": [
         {
-          "title": "Evidence",
+          "customDisplay": {
+            "name": "crm14OfficeUseOnly",
+            "apiField": "officeUseOnly"
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "evidence",
+      "title": "Evidence",
+      "hideWhen": [
+        {
+          "apiField": "evidenceFiles.files",
+          "equals": ""
+        }
+      ],
+      "subsections": [
+        {
           "customDisplay": {
             "name": "crmEvidence",
             "apiField": "evidenceFiles.files"

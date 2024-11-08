@@ -1,0 +1,225 @@
+{% from "../../formSubsection.njk" import formSubsection %}
+{% from "../../formTable.njk" import formTable %}
+
+{% macro crm4OfficeUseOnly(data) %}
+
+    {# Decision Mapping #}
+    {% set decisionOptions = {
+        "G": "Grant",
+        "PG": "Part Grant",
+        "R": "Reject",
+        "Refer": "Refer For ICA"
+    } %}
+
+    {% if data.QualityControl.decision === 'G' %}
+        {% set reasonLabel = "Notes" %}
+    {% else %}
+        {% set reasonLabel = "Reason for decision" %}
+    {% endif %}
+
+    {# Quality Control Section #}
+    {% set fieldsQualityControl = [
+        { label: "Decision", value: decisionOptions[data.QualityControl.decision] },
+        { label: reasonLabel, value: data.QualityControl.decisionReason }
+    ] %}
+    {{ formSubsection('Quality Control', fieldsQualityControl) }}
+
+    {# Preparation Section #}
+    {% set tablePreparation = {
+        head: [
+            { text: "" },
+            { text: "Preparation hours" },
+            { text: "Hourly rate" },
+            { text: "Total" }
+        ],
+        rows: [
+            [
+                { text: "Requested", isHeader: true },
+                { text: data.Preparation.requested.hours },
+                { text: data.Preparation.requested.hourlyRate | formatCurrency },
+                { text: data.Preparation.requested.total | formatCurrency }
+            ],
+            [
+                { text: "Allowed", isHeader: true },
+                { text: data.Preparation.authorised.hours },
+                { text: data.Preparation.authorised.hourlyRate | formatCurrency },
+                { text: data.Preparation.authorised.total | formatCurrency }
+            ]
+        ]
+    } %}
+    {{ formSubsection('Preparation', tablePreparation, true) }}
+
+    {# Translator Section #}
+    {% set tableTranslator = {
+        head: [
+            { text: "" },
+            { text: "No. of Words" },
+            { text: "Cost per 1000 words" },
+            { text: "Total cost of translation" }
+        ],
+        rows: [
+            [
+                { text: "Requested", isHeader: true },
+                { text: data.Translator.requested.numWords },
+                { text: data.Translator.requested.costPerWord | formatCurrency },
+                { text: data.Translator.requested.total | formatCurrency }
+            ],
+            [
+                { text: "Allowed", isHeader: true },
+                { text: data.Translator.authorised.numWords },
+                { text: data.Translator.authorised.costPerWord | formatCurrency },
+                { text: data.Translator.authorised.total | formatCurrency }
+            ]
+        ]
+    } %}
+    {{ formSubsection('Translator', tableTranslator, true) }}
+
+    {# Additional Expenditure Section #}
+
+    {% for item in data.AdditionalExpenditure %}
+        {% set fields = [
+            { label: "Description", value: item.description },
+            { label: "Justification", value: item.justification },
+            { label: "Quantity", value: item.quantity },
+            { label: "Rate", value: item.rate | formatCurrency },
+            { label: "Total", value: item.total | formatCurrency },
+            { label: "Allowed quantity", value: item.authorisedQuantity },
+            { label: "Allowed rate", value: item.authorisedRate | formatCurrency },
+            { label: "Allowed total", value: item.authorisedTotal | formatCurrency }
+        ] %}
+        {{ formSubsection('Additional Expenditure', fields) }}
+    {% endfor %}
+
+
+    {# Travel Section #}
+    {% set tableTravel = {
+        head: [
+            { text: "" },
+            { text: "No. of hours" },
+            { text: "Hourly rate" },
+            { text: "Total cost of travel" }
+        ],
+        rows: [
+            [
+                { text: "Requested", isHeader: true },
+                { text: data.Travel.requested.hours },
+                { text: data.Travel.requested.rate | formatCurrency },
+                { text: data.Travel.requested.total | formatCurrency }
+            ],
+            [
+                { text: "Allowed", isHeader: true },
+                { text: data.Travel.authorised.hours },
+                { text: data.Travel.authorised.rate | formatCurrency },
+                { text: data.Travel.authorised.total | formatCurrency }
+            ]
+        ]
+    } %}
+    {{ formSubsection('Travel', tableTravel, true) }}
+
+    {# DNA Report Section #}
+    {% if data.DnaReport %}
+        {% set fieldsDnaReport = [
+            { label: "Requested", value: data.DnaReport.requested.dnaCost | formatCurrency },
+            { label: "Allowed", value: data.DnaReport.authorised.dnaCost | formatCurrency }
+        ] %}
+
+        {% set columnHeader = "Total cost of DNA Test" %}
+
+        {{ formSubsection('DNA Report', fieldsDnaReport, false, "", columnHeader) }}
+    {% endif %}
+
+{#     Accommodation Section #}
+    {% set fieldsAccommodation = [
+        { label: "Accommodation cost basis", value: data.Accommodation.costBasis }
+    ] %}
+    {{ formSubsection('Accommodation', fieldsAccommodation) }}
+
+    {# Transcription Section #}
+    {% set tableTranscription = {
+        head: [
+            { text: "" },
+            { text: "Number of minutes" },
+            { text: "Cost per minute" },
+            { text: "Total cost" }
+        ],
+        rows: [
+            [
+                { text: "Requested", isHeader: true },
+                { text: data.Transcription.requested.numMin },
+                { text: data.Transcription.requested.costPerMin | formatCurrency },
+                { text: data.Transcription.requested.total | formatCurrency }
+            ],
+            [
+                { text: "Allowed", isHeader: true },
+                { text: data.Transcription.authorised.numMin },
+                { text: data.Transcription.authorised.costPerMin | formatCurrency },
+                { text: data.Transcription.authorised.total | formatCurrency }
+            ]
+        ]
+    } %}
+    {{ formSubsection('Transcription', tableTranscription, true) }}
+
+    {# Photocopying Section #}
+    {% set tablePhotocopying = {
+        head: [
+            { text: "" },
+            { text: "Number of pages" },
+            { text: "Cost per page" },
+            { text: "Total cost" }
+        ],
+        rows: [
+            [
+                { text: "Requested", isHeader: true },
+                { text: data.Photocopying.requested.numPages },
+                { text: data.Photocopying.requested.costPerPage | formatCurrency },
+                { text: data.Photocopying.requested.total | formatCurrency }
+            ],
+            [
+                { text: "Allowed", isHeader: true },
+                { text: data.Photocopying.authorised.numPages },
+                { text: data.Photocopying.authorised.costPerPage | formatCurrency },
+                { text: data.Photocopying.authorised.total | formatCurrency }
+            ]
+        ]
+    } %}
+    {{ formSubsection('Photocopying', tablePhotocopying, true) }}
+
+    {# Authority Section #}
+    {% set fieldsAuthority = [
+        { label: "Amount allowed", value: data.Authority.allowedAmount | formatCurrency },
+        { label: "Destruction date", value: data.Authority.destructionDate | formatDate },
+        { label: "Signed authority", value: data.Authority.signedAuth }
+    ] %}
+    {{ formSubsection('Authority', fieldsAuthority) }}
+
+    {# Related Submissions Section #}
+    {% if data.RelatedSubmissions.length > 0 %}
+        {% set tableRelatedSubmissions = {
+            head: [
+                { text: "USN" },
+                { text: "Form type" },
+                { text: "Date submitted" },
+                { text: "State" },
+                { text: "Decision" },
+                { text: "Client name" }
+            ],
+            rows: []
+        } %}
+
+        {% for submission in data.RelatedSubmissions %}
+            {% set decisionText = decisionOptions[submission.decision] %}
+            {% set tableRow = [
+                { text: submission.usn },
+                { text: submission.formType },
+                { text: submission.dtSubmitted | formatDate },
+                { text: submission.state },
+                { text: decisionText },
+                { text: submission.clientName }
+            ] %}
+            {% set _ = tableRelatedSubmissions.rows.push(tableRow) %}
+        {% endfor %}
+
+        {{ formSubsection('Related Submissions', tableRelatedSubmissions, true) }}
+    {% endif %}
+
+{% endmacro %}

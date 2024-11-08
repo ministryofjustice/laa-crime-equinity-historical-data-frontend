@@ -1,5 +1,4 @@
 import { Crm5Response } from '@crm5'
-import { Section } from '@crmDisplay'
 import CrmDisplayService from './crmDisplayService'
 
 describe('CRM Display Service', () => {
@@ -12,6 +11,15 @@ describe('CRM Display Service', () => {
       appealedPrevDecisionDetails: '',
       urgent: 'Yes',
       urgencyReason: 'Urgent',
+      StandardProperties: {
+        usn: 1234567,
+        dateReceived: '2023-04-05T00:00:00.00000:00',
+        timeReceived: '13:22:00',
+        submitterUserId: 'SomeUser',
+        language: 'English',
+        region: 'Some Region',
+        office: 'Some Office',
+      },
       Firm: {
         firmAddress: '1 Some Lane',
         firmName: 'ABC Firm',
@@ -33,8 +41,21 @@ describe('CRM Display Service', () => {
       DetailsOfWorkCompleted: 'Some Details of Work Completed',
       DetailsOfApplication: 'Some Details of Application',
     },
+    FurtherInformation: [
+      {
+        name: 'Attachment1',
+        description: 'Test Description',
+        downloadFile: 'test-link',
+      },
+    ],
     evidenceFiles: {
-      files: [],
+      files: [
+        {
+          key: 'somefile.att',
+          type: 'somefile',
+          name: 'somefile.pdf',
+        },
+      ],
     },
   }
 
@@ -46,6 +67,7 @@ describe('CRM Display Service', () => {
 
       expect(result).toEqual({
         items: [
+          { href: '/crm5/1234567/standard-properties', text: 'Standard Properties', active: false },
           { href: '/crm5/1234567/general-information', text: 'General Information', active: false },
           { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
           { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
@@ -54,7 +76,9 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+          { href: '/crm5/1234567/office-use-only', text: 'Office Use Only', active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/further-information', text: 'Further Information', active: false },
           { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
@@ -66,7 +90,8 @@ describe('CRM Display Service', () => {
 
       expect(result).toEqual({
         items: [
-          { href: '/crm5/1234567/general-information', text: 'General Information', active: true },
+          { href: '/crm5/1234567/standard-properties', text: 'Standard Properties', active: true },
+          { href: '/crm5/1234567/general-information', text: 'General Information', active: false },
           { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
           { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
           { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
@@ -74,7 +99,9 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+          { href: '/crm5/1234567/office-use-only', text: 'Office Use Only', active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/further-information', text: 'Further Information', active: false },
           { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
@@ -86,7 +113,8 @@ describe('CRM Display Service', () => {
 
       expect(result).toEqual({
         items: [
-          { href: '/crm5/1234567/general-information', text: 'General Information', active: true },
+          { href: '/crm5/1234567/standard-properties', text: 'Standard Properties', active: true },
+          { href: '/crm5/1234567/general-information', text: 'General Information', active: false },
           { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
           { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
           { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
@@ -94,7 +122,9 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
           { text: 'Case History', href: '/crm5/1234567/case-history', active: false },
           { text: "Solicitor's Certification", href: '/crm5/1234567/solicitors-certification', active: false },
+          { href: '/crm5/1234567/office-use-only', text: 'Office Use Only', active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/further-information', text: 'Further Information', active: false },
           { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
@@ -114,7 +144,8 @@ describe('CRM Display Service', () => {
 
       expect(result).toEqual({
         items: [
-          { href: '/crm5/1234567/general-information', text: 'General Information', active: true },
+          { href: '/crm5/1234567/standard-properties', text: 'Standard Properties', active: true },
+          { href: '/crm5/1234567/general-information', text: 'General Information', active: false },
           { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
           { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
           { href: '/crm5/1234567/capital-details', text: 'Capital Details', active: false }, // showWhen(hasPreviousApplication: 'No')
@@ -125,7 +156,9 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/costs', text: 'Costs', active: false },
           { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+          { href: '/crm5/1234567/office-use-only', text: 'Office Use Only', active: false },
           { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
+          { href: '/crm5/1234567/further-information', text: 'Further Information', active: false },
           { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
@@ -134,37 +167,35 @@ describe('CRM Display Service', () => {
   })
 
   describe('getSections()', () => {
-    const generalInformation: Array<Section> = [
-      {
-        sectionId: 'general-information',
-        subsections: [
-          {
-            fields: [
-              {
-                label: 'Has a previous application for an extension been made?',
-                value: 'Yes',
-                apiField: 'hasPreviousApplication',
-              },
-              {
-                label:
-                  'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
-                value: 'No',
-                apiField: 'appealedPrevDecision',
-              },
-              { label: 'Urgent?', value: 'Yes', apiField: 'urgent' },
-              { label: 'Reason for urgency', value: 'Urgent', apiField: 'urgencyReason' },
-            ],
-            title: 'General Information',
-          },
-        ],
-        title: 'General Information',
-      },
-    ]
-
     it('should return sections for given CRM type, sectionId, usn', () => {
       const result = crmDisplayService.getSections('crm5', 'general-information', crm5Response)
 
-      expect(result).toEqual(generalInformation)
+      expect(result).toEqual([
+        {
+          sectionId: 'general-information',
+          subsections: [
+            {
+              fields: [
+                {
+                  label: 'Has a previous application for an extension been made?',
+                  value: 'Yes',
+                  apiField: 'hasPreviousApplication',
+                },
+                {
+                  label:
+                    'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
+                  value: 'No',
+                  apiField: 'appealedPrevDecision',
+                },
+                { label: 'Urgent?', value: 'Yes', apiField: 'urgent' },
+                { label: 'Reason for urgency', value: 'Urgent', apiField: 'urgencyReason' },
+              ],
+              title: 'General Information',
+            },
+          ],
+          title: 'General Information',
+        },
+      ])
     })
 
     it('should handle empty fields', () => {
@@ -179,6 +210,9 @@ describe('CRM Display Service', () => {
           urgencyReason: '',
         },
         evidenceFiles: {
+          files: [],
+        },
+        FurtherInformation: {
           files: [],
         },
       }
@@ -225,7 +259,56 @@ describe('CRM Display Service', () => {
     it('should return first section if conditions not met for given section', () => {
       const result = crmDisplayService.getSections('crm5', 'capital-details', crm5Response)
 
-      expect(result).toEqual(generalInformation)
+      expect(result).toEqual([
+        {
+          sectionId: 'standard-properties',
+          subsections: [
+            {
+              fields: [
+                {
+                  apiField: 'StandardProperties.usn',
+                  label: 'USN',
+                  value: 1234567,
+                },
+                {
+                  apiField: 'StandardProperties.dateReceived',
+                  label: 'Date received',
+                  type: 'date',
+                  value: '2023-04-05T00:00:00.00000:00',
+                },
+                {
+                  apiField: 'StandardProperties.timeReceived',
+                  label: 'Time received',
+                  type: 'time',
+                  value: '13:22:00',
+                },
+                {
+                  apiField: 'StandardProperties.submitterUserId',
+                  label: 'Submitter user ID',
+                  value: 'SomeUser',
+                },
+                {
+                  apiField: 'StandardProperties.language',
+                  label: 'Submitter language',
+                  value: 'English',
+                },
+                {
+                  apiField: 'StandardProperties.region',
+                  label: 'Region',
+                  value: 'Some Region',
+                },
+                {
+                  apiField: 'StandardProperties.office',
+                  label: 'Office',
+                  value: 'Some Office',
+                },
+              ],
+              title: 'Standard Properties',
+            },
+          ],
+          title: 'Standard Properties',
+        },
+      ])
     })
   })
 })
