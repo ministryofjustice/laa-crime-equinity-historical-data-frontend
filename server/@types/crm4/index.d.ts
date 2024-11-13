@@ -60,15 +60,13 @@ export interface Crm4Response extends CrmResponse {
         hourlyRate: number
         total: number
       }
-      AdditionalExpenditure: [
-        {
-          description: string
-          justification: string
-          quantity: number
-          rate: number
-          total: number
-        },
-      ]
+      AdditionalExpenditure: {
+        description: string
+        justification: string
+        quantity: number
+        rate: number
+        total: number
+      }[]
       Travel: {
         hours: string
         rate: number
