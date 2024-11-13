@@ -13,7 +13,6 @@ When('the user clicks the {string} link', (linkText: string) => {
 })
 
 When('the user selects {string} from the CRM type dropdown and performs a search', (crmType: string) => {
-  // cy.task('stubCrm4Api', { usn: 5001912 }) // Stub the CRM4 API response
   cy.task('stubSearchApi', { type: 1, typeName: 'CRM4' })
   cy.get('#type').select(crmType)
   cy.get('button[type="submit"]').click()

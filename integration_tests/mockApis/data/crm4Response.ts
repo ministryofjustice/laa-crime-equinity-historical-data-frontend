@@ -120,7 +120,7 @@ const getCrm4Response = (usn: number): Crm4Response => {
         decision: '',
       },
       StandardProperties: {
-        usn: 5001912,
+        usn,
         dateReceived: '2024-02-14T00:00:00.000+00:00',
         timeReceived: '16:45:12',
         region: 'South',
