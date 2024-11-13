@@ -62,11 +62,6 @@ Or run tests with the cypress UI:
 
 `npm run int-test-ui`
 
-## Change log
-
-A changelog for the service is available [here](./CHANGELOG.md)
-
-
 ## Dependency Checks
 
 The template project has implemented some scheduled checks to ensure that key dependencies are kept up to date.
