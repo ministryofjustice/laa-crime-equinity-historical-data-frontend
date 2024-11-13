@@ -1,5 +1,6 @@
 import { SuperAgentRequest } from 'superagent'
 import { stubFor } from './wiremock'
+import getCrm4Response from './data/crm4Response'
 import getCrm5Response from './data/crm5Response'
 import getSearchByTypeResponse from './data/searchByTypeResponse'
 
@@ -44,6 +45,20 @@ export default {
           'Content-Type': 'application/json;charset=UTF-8',
         },
         jsonBody: getCrm5Response(usn),
+      },
+    }),
+  stubCrm4Api: ({ usn }: { usn: number }): SuperAgentRequest =>
+    stubFor({
+      request: {
+        method: 'GET',
+        urlPattern: `/api/internal/v1/equinity/crm4/${usn}`,
+      },
+      response: {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+        },
+        jsonBody: getCrm4Response(usn),
       },
     }),
 }
