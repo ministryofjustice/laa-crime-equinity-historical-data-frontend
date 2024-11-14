@@ -87,5 +87,7 @@ export default function routes({
 
   get('/contact-us', staticPageController.showContact())
 
+  get('/accessibility-statement', staticPageController.showAccStatement())
+
   return router
 }
