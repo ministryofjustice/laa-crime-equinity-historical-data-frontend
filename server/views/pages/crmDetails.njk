@@ -28,77 +28,73 @@
                 {% endif %}
             </div>
         </div>
+        <span class="govuk-caption-l">eForm: {{ crmType }} | Case number: {{ usn }}</span>
+        <h1 class="govuk-heading-l">{{ title }}</h1>
+        <div class="govuk-grid-row">
+            {% set isSummaryPage = (sections | length) > 1 %}
 
-        <main class="govuk-main-wrapper">
-
-            <span class="govuk-caption-l">eForm: {{ crmType }} | Case number: {{ usn }}</span>
-            <h1 class="govuk-heading-l">{{ title }}</h1>
-            <div class="govuk-grid-row">
-                {% set isSummaryPage = (sections | length) > 1 %}
-
-                {% if isSummaryPage === false %}
-                <div class="govuk-grid-column-one-quarter">
-                    {{ navigationBar(navigationItems) }}
-                </div>
-                {% endif %}
-                <div class="govuk-grid-column-{% if isSummaryPage %}full{% else %}three-quarters{% endif %} govuk-!-padding-top-4">
-                    {% for section in sections %}
-                        <h2 class="govuk-heading-m">{{ section.title }}</h2>
-                        {% for subsection in section.subsections %}
-                            {% if subsection.customDisplay %}
-                                {{ customDisplay(subsection.customDisplay, crmType) }}
-                            {% elif subsection.fields.length > 0  %}
-                                <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
-                                    <div class="govuk-summary-card__title-wrapper">
-                                        <h3 class="govuk-summary-card__title">{{ subsection.title }}</h3>
-                                    </div>
-                                    <div class="govuk-summary-card__content">
-                                        <dl class="govuk-summary-list">
-                                            {% set hasPreviousContent = false %}
-                                            {% for field in subsection.fields %}
-                                                {% if field.subHeading %}
-                                                    {{ formFieldHeading(field.subHeading, hasPreviousContent) }}
-                                                {% else %}
-                                                    {% if loop.first %}
-                                                        {% if field.type === 'timeAndCost' %}
-                                                            {{ timeAndCost(field, true) }}
-                                                            {% elif field.type === 'totalAndCost' %}
-                                                            {{ totalAndCost(field, true) }}
-                                                        {% else %}
-                                                            {{ formField(field) }}
-                                                        {% endif %}
-                                                    {% elif loop.last %}
-                                                        {% if field.type === 'timeAndCost' %}
-                                                            {{ timeAndCost(field, false, true) }}
-                                                            {% elif field.type === 'totalAndCost' %}
-                                                            {{ totalAndCost(field, false, true) }}
-                                                        {% else %}
-                                                            {{ formField(field, section.sectionId === 'costs') }}
-                                                        {% endif %}
-                                                    {% else %}
-                                                        {% if field.type === 'timeAndCost' %}
-                                                            {{ timeAndCost(field) }}
-                                                            {% elif field.type === 'totalAndCost' %}
-                                                            {{ totalAndCost(field) }}
-                                                        {% else %}
-                                                            {{ formField(field, section.sectionId === 'costs') }}
-                                                        {% endif %}
-                                                    {% endif %}
-                                                    {% set hasPreviousContent = true %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </dl>
-                                    </div>
+            {% if isSummaryPage === false %}
+            <div class="govuk-grid-column-one-quarter">
+                {{ navigationBar(navigationItems) }}
+            </div>
+            {% endif %}
+            <div class="govuk-grid-column-{% if isSummaryPage %}full{% else %}three-quarters{% endif %} govuk-!-padding-top-4">
+                {% for section in sections %}
+                    <h2 class="govuk-heading-m">{{ section.title }}</h2>
+                    {% for subsection in section.subsections %}
+                        {% if subsection.customDisplay %}
+                            {{ customDisplay(subsection.customDisplay, crmType) }}
+                        {% elif subsection.fields.length > 0  %}
+                            <div class="govuk-form-group govuk-summary-card govuk-!-margin-bottom-6">
+                                <div class="govuk-summary-card__title-wrapper">
+                                    <h3 class="govuk-summary-card__title">{{ subsection.title }}</h3>
                                 </div>
-                            {% endif %}
-                        {% endfor %}
-                        {% if loop.last === false %}
-                            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                                <div class="govuk-summary-card__content">
+                                    <dl class="govuk-summary-list">
+                                        {% set hasPreviousContent = false %}
+                                        {% for field in subsection.fields %}
+                                            {% if field.subHeading %}
+                                                {{ formFieldHeading(field.subHeading, hasPreviousContent) }}
+                                            {% else %}
+                                                {% if loop.first %}
+                                                    {% if field.type === 'timeAndCost' %}
+                                                        {{ timeAndCost(field, true) }}
+                                                        {% elif field.type === 'totalAndCost' %}
+                                                        {{ totalAndCost(field, true) }}
+                                                    {% else %}
+                                                        {{ formField(field) }}
+                                                    {% endif %}
+                                                {% elif loop.last %}
+                                                    {% if field.type === 'timeAndCost' %}
+                                                        {{ timeAndCost(field, false, true) }}
+                                                        {% elif field.type === 'totalAndCost' %}
+                                                        {{ totalAndCost(field, false, true) }}
+                                                    {% else %}
+                                                        {{ formField(field, section.sectionId === 'costs') }}
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if field.type === 'timeAndCost' %}
+                                                        {{ timeAndCost(field) }}
+                                                        {% elif field.type === 'totalAndCost' %}
+                                                        {{ totalAndCost(field) }}
+                                                    {% else %}
+                                                        {{ formField(field, section.sectionId === 'costs') }}
+                                                    {% endif %}
+                                                {% endif %}
+                                                {% set hasPreviousContent = true %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </dl>
+                                </div>
+                            </div>
                         {% endif %}
                     {% endfor %}
-                </div>
+                    {% if loop.last === false %}
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                    {% endif %}
+                {% endfor %}
             </div>
-        </main>
+        </div>
     </div>
 {% endblock %}
 

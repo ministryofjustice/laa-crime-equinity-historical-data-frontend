@@ -40,7 +40,6 @@
 
     <div class="govuk-width-container">
         {{ backLink(backUrl) }}
-        <main class="govuk-main-wrapper">
 
             {% if hasErrors %}
                 {{ govukErrorSummary({
@@ -104,6 +103,5 @@
                 </div>
                 {{ paginationBox(pagination) }}
             {% endif %}
-        </main>
     </div>
 {% endblock %}
