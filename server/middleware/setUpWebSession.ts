@@ -24,7 +24,7 @@ export default function setUpWebSession(): Router {
       store,
       name: 'equiniti-historical-data.session',
       cookie: { maxAge: config.session.expiryMinutes * 60 * 1000, secure: config.https },
-      secret: process.env.EXPRESS_SESSION_SECRET,
+      secret: config.session.secret,
       resave: false,
       saveUninitialized: false,
       rolling: true,

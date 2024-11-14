@@ -85,7 +85,7 @@ export default {
     },
   },
   session: {
-    secret: get('SESSION_SECRET', 'app-insecure-default-session'),
+    secret: get('EXPRESS_SESSION_SECRET', 'xxx', requiredInProduction),
     expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 60)),
   },
   domain: get('INGRESS_URL', 'http://localhost:3000'),
