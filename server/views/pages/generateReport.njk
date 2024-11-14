@@ -12,8 +12,6 @@
 {% block content %}
     <div class="govuk-width-container">
         {{ backLink(backUrl) }}
-        <main class="govuk-main-wrapper">
-
             {% if errors.list | length %}
                 <div id="error-summary">
                     {{ govukErrorSummary({
@@ -184,7 +182,6 @@
                     </div>
                 </form>
             </div>
-        </main>
     </div>
 {% endblock %}
 {% block pageScripts %}
