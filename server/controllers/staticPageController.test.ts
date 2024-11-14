@@ -29,4 +29,13 @@ describe('StaticPageController', () => {
 
     expect(response.render).toHaveBeenCalledWith('pages/contactUs')
   })
+
+  it('should render the accessibility statement page', async () => {
+    const staticPageController = new StaticPageController()
+    const requestHandler = staticPageController.showAccStatement()
+
+    await requestHandler(request, response, next)
+
+    expect(response.render).toHaveBeenCalledWith('pages/accessibilityStatement')
+  })
 })
