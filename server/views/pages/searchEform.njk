@@ -83,6 +83,10 @@
                         {% set statusColour = (statusColour.push(status), statusColour) %}
                     {% endif %}
 
+                    {% if (laaCaseRef | isNotEmpty) === false %}
+                        {% set laaCaseRef = '<span class="govuk-visually-hidden">no data</span>' %}
+                    {% endif %}
+
                     {%- set tableRow = [
                         { text: [clientName, usn] | join | safe, attributes: { "data-header": "Client name / USN" } },
                         { text: type | safe, attributes: { "data-header": "CRM Type" } },
