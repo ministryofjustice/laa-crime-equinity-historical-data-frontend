@@ -30,7 +30,7 @@
             {% set linkUrl = "/download-evidence?fileKey=" + (fileKey | urlencode) + "&fileName=" + fileName %}
 
             {# Add aria-label to describe the type of file being downloaded #}
-            {% set ariaLabel = "Download " + (item.type | removeUnderscore ) + " evidence file" %}
+            {% set ariaLabel = "Download " + (item.name | removeUnderscore ) + " evidence file" %}
 
             {% set tableRow = [
                 { text: "Attachment " ~ loop.index, isHeader: true },
