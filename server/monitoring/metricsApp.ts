@@ -1,5 +1,6 @@
 import express from 'express'
 import promBundle from 'express-prom-bundle'
+import helmet from 'helmet'
 
 const metricsMiddleware = promBundle({
   autoregister: false,
@@ -20,6 +21,7 @@ function metricsPort(): number {
 
 function createMetricsApp(): express.Application {
   const metricsApp = express()
+  metricsApp.use(helmet.hidePoweredBy())
   metricsApp.use(metricsMiddleware.metricsMiddleware)
   metricsApp.set('port', metricsPort())
   return metricsApp
