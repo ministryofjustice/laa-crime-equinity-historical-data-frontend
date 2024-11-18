@@ -8,7 +8,7 @@
 {% from "../components/backLink.njk" import backLink %}
 {% from "../components/printButton.njk" import printButton %}
 
-{% set pageTitle = applicationName + " - " + crmType + ": " + title %}
+{% set pageTitle = "eForm:" + crmType + " | Case number:" + usn + " " + title + " - " + applicationName %}
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}

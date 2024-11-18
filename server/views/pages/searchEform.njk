@@ -9,7 +9,7 @@
 
 {% set hasErrors = errors.list | length %}
 
-{% set pageTitle = applicationName + " - Home" %}
+{% set pageTitle = "Search for eForm records - " + applicationName %}
 {% if hasErrors %}
     {% set pageTitle = "Error: " + pageTitle %}
 {% endif %}
