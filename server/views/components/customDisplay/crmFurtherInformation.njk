@@ -23,7 +23,8 @@
         {% set downloadLink = "" %}
         {% if item.downloadFile and item.key %}
             {% set linkUrl = "/download-evidence?fileKey=" + (fileKey | urlencode) + "&fileName=" + (item.originalFileName | urlencode) %}
-            {% set downloadLink = "<a href='" + linkUrl + "' class='govuk-link govuk-link--no-visited-state'>Download</a>" %}
+            {% set ariaLabel = "Download " + (item.originalFileName | removeUnderscore) + " file" %}
+            {% set downloadLink = "<a href='" + linkUrl + "' class='govuk-link govuk-link--no-visited-state' aria-label='" + ariaLabel + "'>Download</a>" %}
         {% endif %}
 
         {% set tableRow1 = [
