@@ -37,8 +37,8 @@ export default class SearchEformController {
         // render page with search results
         const searchParams: Record<string, string> = {
           usn: req.query.usn as string,
-          type: req.query.type as string,
           supplierAccountNumber: req.query.supplierAccountNumber as string,
+          type: req.query.type as string,
           clientName: req.query.clientName as string,
           clientDOB: req.query.clientDOB as string,
           startDate: req.query.startDate as string,
@@ -91,9 +91,10 @@ export default class SearchEformController {
     return async (req: Request, res: Response): Promise<void> => {
       const formValues = {
         usn: req.body.usn,
-        type: req.body.type,
         supplierAccountNumber: req.body.supplierAccountNumber,
+        type: req.body.type,
         clientName: req.body.clientName,
+        clientDOB: req.body.clientDOB,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
       }
@@ -121,8 +122,8 @@ export default class SearchEformController {
   private buildSearchRequest(queryParams: Record<string, string>, profileAcceptedTypes: string): SearchRequest {
     return {
       usn: this.undefinedIfEmpty(queryParams.usn),
-      type: this.undefinedIfEmpty(queryParams.type) && Number(queryParams.type),
       supplierAccountNumber: this.undefinedIfEmpty(queryParams.supplierAccountNumber),
+      type: this.undefinedIfEmpty(queryParams.type) && Number(queryParams.type),
       clientName: this.undefinedIfEmpty(queryParams.clientName),
       clientDOB: this.undefinedIfEmpty(queryParams.clientDOB),
       startDate: this.undefinedIfEmpty(queryParams.startDate),

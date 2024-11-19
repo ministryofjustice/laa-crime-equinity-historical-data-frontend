@@ -166,7 +166,7 @@ describe('Search Eform Controller', () => {
     expect(mockSearchEformService.search).not.toHaveBeenCalled()
   })
 
-  it('should render search eform with error when empty form submitted', async () => {
+  it('should render search eform with errors when empty form submitted', async () => {
     const searchEformController = new SearchEformController(mockSearchEformService)
     const requestHandler = searchEformController.show()
     request.query = {
@@ -187,10 +187,11 @@ describe('Search Eform Controller', () => {
         messages: {
           usn: { text: 'Enter at least one search field' },
           supplierAccountNumber: { text: 'Enter at least one search field' },
+          type: { text: 'Enter at least one search field' },
           clientName: { text: 'Enter at least one search field' },
+          clientDOB: { text: 'Enter at least one search field' },
           endDate: { text: 'Enter at least one search field' },
           startDate: { text: 'Enter at least one search field' },
-          type: { text: 'Enter at least one search field' },
         },
       },
       backUrl: '/',

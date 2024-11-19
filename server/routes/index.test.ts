@@ -147,7 +147,7 @@ describe('routes', () => {
         .expect(res => {
           expect(res.status).toEqual(302)
           expect(res.headers.location).toEqual(
-            '/search-eform?page=1&usn=1234567&supplierAccountNumber=123&clientName=John%20Doe&startDate=2022-11-01&endDate=2023-11-02',
+            '/search-eform?page=1&usn=1234567&supplierAccountNumber=123&clientName=John%20Doe&clientDOB=1960-02-12&startDate=2022-11-01&endDate=2023-11-02',
           )
         })
     })
