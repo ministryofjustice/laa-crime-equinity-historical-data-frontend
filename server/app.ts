@@ -1,6 +1,7 @@
 import express from 'express'
 
 import createError from 'http-errors'
+import helmet from 'helmet'
 
 import nunjucksSetup from './utils/nunjucksSetup'
 import errorHandler from './errorHandler'
@@ -29,6 +30,7 @@ export default function createApp(services: Services): express.Application {
 
   app.use(appInsightsMiddleware())
   app.use(metricsMiddleware)
+  app.use(helmet.hidePoweredBy())
   app.use(setUpHealthChecks(services.applicationInfo))
   app.use(setUpWebSecurity())
   app.use(setUpWebSession())

@@ -1,5 +1,6 @@
 import express, { Express } from 'express'
 import cookieSession from 'cookie-session'
+import helmet from 'helmet'
 import { NotFound } from 'http-errors'
 
 import routes from '../index'
@@ -22,6 +23,7 @@ export const flashProvider = jest.fn()
 
 function appSetup(services: Services, production: boolean): Express {
   const app = express()
+  app.use(helmet.hidePoweredBy())
 
   app.set('view engine', 'njk')
 
