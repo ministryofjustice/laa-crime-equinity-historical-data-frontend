@@ -39,6 +39,7 @@ describe('Search Eform Validation', () => {
         usn: { text: 'Enter at least one search field' },
         supplierAccountNumber: { text: 'Enter at least one search field' },
         clientName: { text: 'Enter at least one search field' },
+        clientDOB: { text: 'Enter at least one search field' },
         startDate: { text: 'Enter at least one search field' },
         endDate: { text: 'Enter at least one search field' },
         type: { text: 'Enter at least one search field' },
@@ -56,7 +57,7 @@ describe('Search Eform Validation', () => {
     ['Supplier account number must be 6 characters or less', 'supplierAccountNumber', '1234ABC'],
     ['Client name must be at least 3 characters', 'clientName', 'J'],
     ['Client date of birth must be a valid date', 'clientDOB', '5555-55-55'],
-    ['Client date of birth must be a valid date', 'clientDOB', `${new Date().getFullYear() + 1}-01-01`], // future date
+    ['Client date of birth cannot be a future date', 'clientDOB', `${new Date().getFullYear() + 1}-01-01`], // future date
     ['Submission date from must be a valid date', 'startDate', '5555-55-55'],
     ['Submission date to must be a valid date', 'endDate', '5555-55-55'],
   ])('should return "%s" error for %s = %s', (errorMessage: string, fieldName: string, fieldValue: string) => {

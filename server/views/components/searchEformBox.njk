@@ -80,6 +80,18 @@
             <div class="govuk-grid-column-one-third govuk-custom-stack-tablet">
                 {{ govukInput({
                     label: {
+                        text: "Client date of birth"
+                    },
+                    id: "clientDOB",
+                    name: "clientDOB",
+                    value: formValues.clientDOB,
+                    type: "date",
+                    errorMessage: errors.messages.clientDOB
+                }) }}
+            </div>
+            <div class="govuk-grid-column-one-third govuk-custom-stack-tablet">
+                {{ govukInput({
+                    label: {
                         text: "Submission date from"
                     },
                     id: "startDate",

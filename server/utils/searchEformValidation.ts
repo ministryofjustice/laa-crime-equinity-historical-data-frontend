@@ -20,7 +20,7 @@ const schema = Joi.object({
     .messages({ 'string.min': 'Client name must be at least 3 characters' }),
   clientDOB: Joi.date().iso().max('now').optional().allow('').messages({
     'date.format': 'Client date of birth must be a valid date',
-    'date.max': 'Client date of birth must be a valid date',
+    'date.max': 'Client date of birth cannot be a future date',
   }),
   startDate: Joi.date()
     .iso()
@@ -78,6 +78,7 @@ export default function validateSearchParams(params: Record<string, string>): Er
         supplierAccountNumber: { text: errorMessage },
         type: { text: errorMessage },
         clientName: { text: errorMessage },
+        clientDOB: { text: errorMessage },
         startDate: { text: errorMessage },
         endDate: { text: errorMessage },
       },
