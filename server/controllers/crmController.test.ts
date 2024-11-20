@@ -256,6 +256,16 @@ describe('CRM Controllers', () => {
             solicitorReference: '123456789',
           },
           decisionOfficeUseOnly: 'No',
+          OfficeUseOnly: {
+            QualityControl: {
+              decision: 'Approved',
+              decisionReason: 'Valid request',
+            },
+            Authority: {
+              signedAuth: 'Authorized',
+            },
+          },
+          FurtherInformation: [],
         },
         evidenceFiles: {
           files: [],
