@@ -59,6 +59,7 @@ export interface Crm7Response extends CrmResponse {
         profitCost: number
         disbursements: number
         travelCost: number
+        waitingCost: number
       }
     }
     solicitorDetails?: {
@@ -163,6 +164,8 @@ export interface Crm7Response extends CrmResponse {
         travel: string
         attendance: string
         preparation: string
+        attendanceCounsel: string
+        attendanceNoCounsel: string
       }
       timeTotals: {
         waiting: string
@@ -170,6 +173,8 @@ export interface Crm7Response extends CrmResponse {
         travel: string
         attendance: string
         preparation: string
+        attendanceCounsel: string
+        attendanceNoCounsel: string
       }
       totals: {
         total: number
@@ -261,6 +266,16 @@ export interface Crm7Response extends CrmResponse {
       additionalInfo: string
     }
     decisionOfficeUseOnly: string
+    OfficeUseOnly: {
+      QualityControl: {
+        decision: string
+        decisionReason: string
+      }
+      Authority: {
+        signedAuth: string
+      }
+    }
+    FurtherInformation: []
   }
   evidenceFiles: EvidenceFiles
 }
