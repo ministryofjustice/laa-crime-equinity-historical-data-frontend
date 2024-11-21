@@ -21,7 +21,7 @@ securityContext:
     drop: [ "ALL" ]
 
 ingress:
-  className: "default"
+  className: "nginx"
   annotations:
 #    external-dns.alpha.kubernetes.io/set-identifier: {{ .Chart.Name }}-ingress-{{ .Chart.Name }}-{{ .Values.service.environment }}-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
