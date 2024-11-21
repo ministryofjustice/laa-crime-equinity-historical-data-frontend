@@ -5,3 +5,7 @@ replicaCount: 2
 
 service:
   environment: "prod"
+
+ingress:
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: laa-crime-equinity-historical-data-frontend-ingress-laa-crime-equinity-historical-data-frontend-prod-green

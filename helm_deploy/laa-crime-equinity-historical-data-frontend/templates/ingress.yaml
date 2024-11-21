@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}-ingress
+  namespace: "{{ .Chart.Name }}-{{ .Values.service.environment }}"
+  labels:
+    {{- include "laa-crime-equinity-historical-data-frontend.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  tls:
+    - hosts:
+        - "{{ $.Chart.Name }}-{{ $.Values.service.environment }}.{{ .host }}"
+  rules:
+    {{- range .Values.ingress.hosts }}
+    - host: "{{ $.Chart.Name }}-{{ $.Values.service.environment }}.{{ .host }}"
+      http:
+        paths:
+        {{- range .paths }}
+        - path: {{ . }}
+          pathType: "ImplementationSpecific"
+          backend:
+            service:
+              name: {{ $.Chart.Name }}-service
+              port:
+                number: {{ $.Values.service.port }}
+        {{- end }}
+
+    {{- end }}
+

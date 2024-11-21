@@ -1,7 +1,7 @@
 {{/*
 Environment variables for service containers
 */}}
-{{- define "laa-crime-equinity-historical-data.env-vars" }}
+{{- define "laa-crime-equinity-historical-data-frontend.env-vars" }}
 env:
   - name: EQ_API_CLIENT_ID
     valueFrom:
