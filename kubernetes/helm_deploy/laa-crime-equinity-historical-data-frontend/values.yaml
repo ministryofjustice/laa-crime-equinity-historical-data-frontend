@@ -1,6 +1,8 @@
 service:
   port: 3000
 
+nameOverride: ""
+
 image:
   # Override the image repository whose real value should come from secret.
   repository: ""
