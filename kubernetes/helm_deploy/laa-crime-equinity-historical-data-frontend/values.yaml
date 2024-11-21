@@ -35,6 +35,8 @@ ingress:
   hosts:
     - host: apps.live.cloud-platform.service.justice.gov.uk
       paths: [ "/" ]
+  tls: ["apps.live.cloud-platform.service.justice.gov.uk"]
+
 replicaCount: 1
 
 # We usually recommend not to specify default resources and to leave this as a conscious
