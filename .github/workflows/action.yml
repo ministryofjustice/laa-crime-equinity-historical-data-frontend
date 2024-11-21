@@ -8,7 +8,6 @@ on:
 env:
   APP_NAME: "laa-crime-equinity-historical-data-frontend"
   IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
-  IMAGE_TAG_PDF: ${{ github.sha }}pdf # Tags ECR image with commit sha specifically for PDF Generator
 
 jobs:
   tests:
@@ -56,96 +55,50 @@ jobs:
           push: true
           
   deploy-dev:
-    runs-on: ubuntu-latest
     needs: ecr
-    environment: dev
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read # This is required for actions/checkout
-    env:  
-      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-      APP_ENV: "dev"
-
-    steps:
-#      - uses: actions/checkout@v4
-#
-#      - uses: aws-actions/configure-aws-credentials@v4
-#        with:
-#          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-#          aws-region: ${{ vars.ECR_REGION }}
-#
-#      - uses: aws-actions/amazon-ecr-login@v2
-#        id: login-ecr
-#
-#      - name: Build and push docker image
-#        uses: docker/build-push-action@v5
-#        env:
-#          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-#          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-#        with:
-#          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
-#          push: true
-
-      - uses: ./.github/workflows/_deploy-to.yml
-        with:
-          environment: ${{ env.APP_ENV }}
-          repo_name: ""
-          app_name: ${{ env.APP_NAME }}
-        secrets: inherit
+    uses: ./.github/workflows/_deploy-to.yml
+    with:
+      environment: "dev"
+      repo_name: ""
+      app_name: ${{ env.APP_NAME }}
+    secrets: inherit
     
   deploy-uat:
-    runs-on: ubuntu-latest
     needs: ecr
-    environment: uat
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read # This is required for actions/checkout
-    env:
-      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-      APP_ENV: "uat"
-      IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
-    steps:
-      - uses: ./.github/workflows/_deploy-to.yml
-        with:
-          environment: ${{ env.APP_ENV }}
-          repo_name: ""
-          app_name: ${{ env.APP_NAME }}
-        secrets: inherit
+    uses: ./.github/workflows/_deploy-to.yml
+    with:
+      environment: "uat"
+      repo_name: ""
+      app_name: ${{ env.APP_NAME }}
+    secrets: inherit
   
   deploy-archive:
-    runs-on: ubuntu-latest
     needs: deploy-uat
-    environment: archive
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read # This is required for actions/checkout
-    env:
-      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-      APP_ENV: "archive"
-      IMAGE_TAG: ${{ github.sha }}
-    steps:
-      - uses: ./.github/workflows/_deploy-to.yml
-        with:
-          environment: ${{ env.APP_ENV }}
-          repo_name: ""
-          app_name: ${{ env.APP_NAME }}
-        secrets: inherit
-  
+    uses: ./.github/workflows/_deploy-to.yml
+    with:
+      environment: "archive"
+      repo_name: ""
+      app_name: ${{ env.APP_NAME }}
+    secrets: inherit
+
   deploy-prod:
-    runs-on: ubuntu-latest
     needs: deploy-uat
-    environment: prod
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read # This is required for actions/checkout
-    env:
-      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-      APP_ENV: "prod"
-      IMAGE_TAG: ${{ github.sha }}
-    steps:
-      - uses: ./.github/workflows/_deploy-to.yml
-        with:
-          environment: ${{ env.APP_ENV }}
-          repo_name: ""
-          app_name: ${{ env.APP_NAME }}
-        secrets: inherit
+      packages: write
+    uses: ./.github/workflows/_deploy-to.yml
+    with:
+      environment: "prod"
+      repo_name: ""
+      app_name: ${{ env.APP_NAME }}
+    secrets: inherit
