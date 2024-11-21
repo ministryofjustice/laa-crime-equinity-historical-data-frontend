@@ -15,8 +15,8 @@ securityContext:
   runAsNonRoot: true
   allowPrivilegeEscalation: false
   seccompProfile:
-  type:
-    RuntimeDefault
+    type:
+      RuntimeDefault
   capabilities:
     drop: [ "ALL" ]
 
