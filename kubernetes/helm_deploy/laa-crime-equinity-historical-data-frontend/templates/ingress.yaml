@@ -11,9 +11,13 @@ metadata:
   {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
+  {{- if .Values.ingress.tls }}
   tls:
+    {{- range .Values.ingress.tls }}
     - hosts:
-        - "{{ $.Chart.Name }}-{{ $.Values.service.environment }}.{{ .host }}"
+        - "{{ $.Chart.Name }}-{{ $.Values.service.environment }}.{{ . }}"
+    {{- end }}
+  {{- end }}
   rules:
     {{- range .Values.ingress.hosts }}
     - host: "{{ $.Chart.Name }}-{{ $.Values.service.environment }}.{{ .host }}"
