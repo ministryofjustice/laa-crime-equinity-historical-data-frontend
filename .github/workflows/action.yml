@@ -6,14 +6,11 @@ on:
     branches:
       - 'main'
 env:
-  APP_NAME: "laa-crime-equinity-historical-data-frontend"
   IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
 
 jobs:
   tests:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -23,27 +20,22 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm run test:ci
-  
-      
+
   ecr:
     runs-on: ubuntu-latest
     needs: tests
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read # This is required for actions/checkout
-
     steps:
       - uses: actions/checkout@v4
-      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
           aws-region: ${{ vars.ECR_REGION }}
-          
       - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
-          
       # Build and push docker image to container repo
       - name: Build and push docker image
         uses: docker/build-push-action@v5
@@ -53,7 +45,7 @@ jobs:
         with:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
-          
+
   deploy-dev:
     needs: ecr
     permissions:
@@ -63,7 +55,7 @@ jobs:
     with:
       environment: "dev"
       repo_name: ""
-      app_name: ${{ env.APP_NAME }}
+      app_name: "laa-crime-equinity-historical-data-frontend"
     secrets: inherit
     
   deploy-uat:
@@ -75,7 +67,7 @@ jobs:
     with:
       environment: "uat"
       repo_name: ""
-      app_name: ${{ env.APP_NAME }}
+      app_name: "laa-crime-equinity-historical-data-frontend"
     secrets: inherit
   
   deploy-archive:
@@ -87,7 +79,7 @@ jobs:
     with:
       environment: "archive"
       repo_name: ""
-      app_name: ${{ env.APP_NAME }}
+      app_name: "laa-crime-equinity-historical-data-frontend"
     secrets: inherit
 
   deploy-prod:
@@ -100,5 +92,5 @@ jobs:
     with:
       environment: "prod"
       repo_name: ""
-      app_name: ${{ env.APP_NAME }}
+      app_name: "laa-crime-equinity-historical-data-frontend"
     secrets: inherit
