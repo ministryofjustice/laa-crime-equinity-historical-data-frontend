@@ -1,0 +1,6 @@
+service:
+  environment: "uat"
+
+ingress:
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: laa-crime-equinity-historical-data-frontend-ingress-laa-crime-equinity-historical-data-frontend-uat-green
