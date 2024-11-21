@@ -12,4 +12,4 @@ spec:
       targetPort: {{ .Values.service.port }}
   selector:
     labels:
-      {{- include "laa-crime-equinity-historical-data-frontend.labels" . | nindent 6 }}
+      {{- include "laa-crime-equinity-historical-data-frontend.selectorLabels" . | nindent 6 }}
