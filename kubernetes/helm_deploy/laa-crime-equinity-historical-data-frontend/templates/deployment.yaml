@@ -11,7 +11,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "laa-crime-equinity-historical-data-frontend.labels" . | nindent 6 }}
+      {{- include "laa-crime-equinity-historical-data-frontend.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
