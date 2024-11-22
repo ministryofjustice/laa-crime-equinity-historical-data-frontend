@@ -2,6 +2,7 @@ import { SuperAgentRequest } from 'superagent'
 import { stubFor } from './wiremock'
 import getCrm4Response from './data/crm4Response'
 import getCrm5Response from './data/crm5Response'
+import getCrm7Response from './data/crm7Response'
 import getSearchByTypeResponse from './data/searchByTypeResponse'
 
 export default {
@@ -59,6 +60,20 @@ export default {
           'Content-Type': 'application/json;charset=UTF-8',
         },
         jsonBody: getCrm4Response(usn),
+      },
+    }),
+  stubCrm7Api: ({ usn }: { usn: number }): SuperAgentRequest =>
+    stubFor({
+      request: {
+        method: 'GET',
+        urlPattern: `/api/internal/v1/equinity/crm7/${usn}`,
+      },
+      response: {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+        },
+        jsonBody: getCrm7Response(usn),
       },
     }),
 }

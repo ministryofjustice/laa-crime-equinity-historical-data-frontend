@@ -26,11 +26,21 @@
 
 @media (min-width: 40.0625em) and (max-width: 52.5em) {
   .govuk-custom-stack-tablet {
-    width: 50%;
-    display: block;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .govuk-custom-stack-tablet > div {
+    grid-column: span 1;
+    width: 100%;
+  }
+
+  .govuk-form-group {
+    margin-bottom: 0;
   }
 }
-
 
 @media (min-width: 48em) {
   .govuk-custom-no-padding-left-desktop {

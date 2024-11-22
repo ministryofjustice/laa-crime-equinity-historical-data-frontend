@@ -1,0 +1,11 @@
+# Default values for laa-crime-equinity-historical-data.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 2
+
+service:
+  environment: "prod"
+
+ingress:
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: laa-crime-equinity-historical-data-frontend-ingress-laa-crime-equinity-historical-data-frontend-prod-green

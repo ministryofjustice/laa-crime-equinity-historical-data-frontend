@@ -1,6 +1,6 @@
 dist
 kubectl_deploy*
-helm_deploy*
+kubernetes/helm_deploy
 README.md
 node_modules
 npm-debug.log
