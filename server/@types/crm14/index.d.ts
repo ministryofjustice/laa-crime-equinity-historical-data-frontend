@@ -71,8 +71,10 @@ export interface Crm14Response extends CrmResponse {
       homeAddressType: string
       relationshipToHomeOwner: string
       under18: string
+      chargedWithAdult: string
       havePartner: number
       maritalStatus: string
+      relationship: string
     }
     aboutYouPartner?: {
       partnerDetails: {
@@ -92,16 +94,16 @@ export interface Crm14Response extends CrmResponse {
         addressLine3: string
         postCode: string
       }
-      coDefendant: string
+      coDefendant: number
       conflictOfInterest: number
       partnerDifferentHome: string
     }
     interestOfJusticePart1?: {
-      chargesBrought: {
+      chargesBrought: Array<{
         charge: string
         whenOffence: string
-        offenceDate: string
-      }
+        offenceDateOn: string
+      }>
       offenceType: string
       anyDefendants: string
       defendantDetails: string
@@ -138,7 +140,7 @@ export interface Crm14Response extends CrmResponse {
       otherReasonRepresentedDetails: string
     }
     evidencePart1?: {
-      remandedInCustody: number
+      remandedInCustody: boolean
       remandedDate: string
       heardInMagistrateCourt: number
       employed: number
@@ -175,6 +177,7 @@ export interface Crm14Response extends CrmResponse {
         attachmentStoreId: string
         providerFirmId: number
       }[]
+      pseMessages: []
     }
     income?: {
       receiveBenefits: string
@@ -248,6 +251,10 @@ export interface Crm14Response extends CrmResponse {
         }
       }
       proofBenefits: string
+      freezingOrder: string
+      ownLandOrProperty: string
+      savingsOrInvestments: string
+      howPayBillsText: string
     }
     hasCrm15: boolean
     crm15Details?: Crm15Details
@@ -310,10 +317,14 @@ export interface Crm14Response extends CrmResponse {
       }
     }
     declarations?: {
+      isApplicantConfirmed: boolean
       applicantFullName: string
       applicantSignedDate: string
+      isPartnerConfirmed: boolean
       partnerFullName: string
       partnerSignedDate: string
+      partnerReasonNotSigned: string
+      isLegalRepConfirmed: bool
       legalRepFullName: string
       legalRepSignedDate: string
       legalRepAccountNum: string
