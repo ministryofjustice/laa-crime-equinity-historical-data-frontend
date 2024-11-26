@@ -45,8 +45,8 @@ Then('the Legal Representation section should display the proper layout', () => 
 })
 
 Given('the user is viewing a CRM14 case', () => {
-  cy.task('stubCrm14Api', { usn: 5001684 })
-  cy.visit('/crm14/5001684') // Navigate directly to the CRM14 case page
+  cy.task('stubCrm14Api', { usn: 1234567 })
+  cy.visit('/crm14/1234567') // Navigate directly to the CRM14 case page
 })
 
 When('the user navigates to the {string} section', (section: string) => {
