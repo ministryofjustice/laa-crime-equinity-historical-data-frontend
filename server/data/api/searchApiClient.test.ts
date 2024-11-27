@@ -49,7 +49,7 @@ describe('EQ Search Api Client', () => {
         total: 1,
         itemsPage: 10,
         itemsTotal: 2,
-        sort: 'submittedDate: DESC',
+        sort: 'submittedDate: ASC',
       },
     }
 
