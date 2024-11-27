@@ -54,7 +54,7 @@ describe('EQ Search Api Client', () => {
 
     fakeRestClient
       .get('/api/internal/v1/equinity/search/')
-      .query({ usn: '1234567', page: 0, pageSize: 10 })
+      .query({ usn: '1234567', page: 0, pageSize: 10, sort: 'submittedDate', order: 'asc' })
       .matchHeader('authorization', 'Bearer no_auth')
       .reply(200, searchResponse)
 
@@ -62,6 +62,8 @@ describe('EQ Search Api Client', () => {
       usn: '1234567',
       page: 0,
       pageSize: 10,
+      sort: 'submittedDate',
+      order: 'asc',
       profileAcceptedTypes: '1,4,5,6',
     })
 

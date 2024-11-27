@@ -43,8 +43,8 @@ export default class SearchEformController {
           clientDOB: req.query.clientDOB as string,
           startDate: req.query.startDate as string,
           endDate: req.query.endDate as string,
-          laaCaseRef: req.query.laaCaseRef as string,
           page: req.query.page as string,
+          sortBy: (req.query.sortBy as string) || 'submittedDate:desc',
         }
 
         const validationErrors = validateSearchParams(searchParams)
@@ -97,6 +97,7 @@ export default class SearchEformController {
         clientDOB: req.body.clientDOB,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
+        sortBy: req.body.sortBy,
       }
       const queryString = buildQueryString(formValues)
       // Reset session history when a new search is performed
@@ -120,6 +121,8 @@ export default class SearchEformController {
   }
 
   private buildSearchRequest(queryParams: Record<string, string>, profileAcceptedTypes: string): SearchRequest {
+    const [sort, order] = queryParams.sortBy.split(':')
+
     return {
       usn: this.undefinedIfEmpty(queryParams.usn),
       supplierAccountNumber: this.undefinedIfEmpty(queryParams.supplierAccountNumber),
@@ -128,9 +131,10 @@ export default class SearchEformController {
       clientDOB: this.undefinedIfEmpty(queryParams.clientDOB),
       startDate: this.undefinedIfEmpty(queryParams.startDate),
       endDate: this.undefinedIfEmpty(queryParams.endDate),
-      laaCaseRef: this.undefinedIfEmpty(queryParams.laaCaseRef),
       page: Number(queryParams.page) - 1, // search api page number starts from 0
       pageSize: SEARCH_PAGE_SIZE,
+      sort,
+      order,
       profileAcceptedTypes,
     }
   }

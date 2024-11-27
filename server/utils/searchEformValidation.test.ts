@@ -16,6 +16,27 @@ describe('Search Eform Validation', () => {
     expect(result).toBeNull()
   })
 
+  it.each([
+    ['type', '1'],
+    ['type', '4'],
+    ['type', '5'],
+    ['type', '6'],
+    ['sortBy', 'originatedDate:asc'],
+    ['sortBy', 'originatedDate:desc'],
+    ['sortBy', 'submittedDate:asc'],
+    ['sortBy', 'submittedDate:desc'],
+  ])('should validate search parameter for %s = %s', (fieldName, fieldValue: string) => {
+    const searchParams: Record<string, string> = {
+      [fieldName]: fieldValue,
+      startDate: '2022-11-01',
+      endDate: '2023-11-02',
+    }
+
+    const result = validateSearchParams(searchParams)
+
+    expect(result).toBeNull()
+  })
+
   it('should return error for empty search parameters', () => {
     const searchParams: Record<string, string> = {
       usn: '',
@@ -85,6 +106,7 @@ describe('Search Eform Validation', () => {
   it.each([
     ['Invalid page specified', 'page', '0'],
     ['Invalid page specified', 'page', 'w'],
+    ['Invalid sortBy specified', 'sortBy', 'ere'],
   ])('should return "%s" error for %s = %s', (errorMessage: string, fieldName: string, fieldValue: string) => {
     const searchParams: Record<string, string> = {
       [fieldName]: fieldValue,
@@ -96,8 +118,8 @@ describe('Search Eform Validation', () => {
     expect(result).toEqual({
       list: [
         {
-          href: '#page',
-          text: 'Invalid page specified',
+          href: `#${fieldName}`,
+          text: `Invalid ${fieldName} specified`,
         },
       ],
       messages: {
