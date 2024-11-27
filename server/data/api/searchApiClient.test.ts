@@ -49,6 +49,7 @@ describe('EQ Search Api Client', () => {
         total: 1,
         itemsPage: 10,
         itemsTotal: 2,
+        sort: 'submittedDate: DESC',
       },
     }
 
@@ -126,6 +127,7 @@ describe('EQ Search Api Client', () => {
         total: 1,
         itemsPage: 10,
         itemsTotal: 1,
+        sort: 'submittedDate: DESC',
       },
     }
 

@@ -37,6 +37,7 @@ type SearchPaging = {
   total: number
   itemsPage: number
   itemsTotal: number
+  sort: string
 }
 
 type SearchResponse = {

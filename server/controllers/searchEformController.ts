@@ -11,6 +11,7 @@ import { buildErrors } from '../utils/errorDisplayHelper'
 const CURRENT_URL = '/search-eform'
 const SEARCH_PAGE_SIZE = 10
 const VIEW_PATH = 'pages/searchEform'
+const DEFAULT_SORT_BY = 'submittedDate:desc'
 
 export default class SearchEformController {
   constructor(private readonly searchEformService: SearchEformService) {}
@@ -44,7 +45,7 @@ export default class SearchEformController {
           startDate: req.query.startDate as string,
           endDate: req.query.endDate as string,
           page: req.query.page as string,
-          sortBy: (req.query.sortBy as string) || 'submittedDate:desc',
+          sortBy: req.query.sortBy as string,
         }
 
         const validationErrors = validateSearchParams(searchParams)
@@ -97,13 +98,15 @@ export default class SearchEformController {
         clientDOB: req.body.clientDOB,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
-        sortBy: req.body.sortBy,
+        sortBy: req.body.sortBy || DEFAULT_SORT_BY,
       }
-      const queryString = buildQueryString(formValues)
+
       // Reset session history when a new search is performed
       req.session.history = []
       req.session.searchResults = [] // Clear previous search results
       req.session.formValues = formValues // Store form values in session
+
+      const queryString = buildQueryString(formValues)
       res.redirect(302, `/search-eform?page=1${queryString ? `&${queryString}` : ''}`)
     }
   }
@@ -121,7 +124,7 @@ export default class SearchEformController {
   }
 
   private buildSearchRequest(queryParams: Record<string, string>, profileAcceptedTypes: string): SearchRequest {
-    const [sort, order] = queryParams.sortBy.split(':')
+    const [sort, order] = queryParams.sortBy?.split(':') || []
 
     return {
       usn: this.undefinedIfEmpty(queryParams.usn),

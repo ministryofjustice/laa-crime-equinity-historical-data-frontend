@@ -59,6 +59,7 @@ describe('Search Eform Controller', () => {
         total: 1,
         itemsPage: 10,
         itemsTotal: 1,
+        sort: 'submittedDate: DESC',
       },
     }
     mockSearchEformService.search.mockResolvedValue(searchResponse)
@@ -68,6 +69,7 @@ describe('Search Eform Controller', () => {
     request.query = {
       usn: '123456789',
       page: '1',
+      sortBy: 'submittedDate:desc',
     }
 
     await requestHandler(request, response, next)
@@ -160,7 +162,7 @@ describe('Search Eform Controller', () => {
         supplierAccountNumber: undefined,
         usn: '1',
         page: '1',
-        sortBy: 'submittedDate:desc',
+        sortBy: undefined,
       },
     })
 
@@ -205,7 +207,7 @@ describe('Search Eform Controller', () => {
         supplierAccountNumber: undefined,
         usn: undefined,
         page: '1',
-        sortBy: 'submittedDate:desc',
+        sortBy: undefined,
       },
     })
 
@@ -256,7 +258,7 @@ describe('Search Eform Controller', () => {
         supplierAccountNumber: undefined,
         usn: '8888888',
         page: '1',
-        sortBy: 'submittedDate:desc',
+        sortBy: undefined,
       },
     })
 
@@ -269,8 +271,8 @@ describe('Search Eform Controller', () => {
       usn: '8888888',
       page: 0,
       pageSize: 10,
-      sort: 'submittedDate',
-      order: 'desc',
+      sort: undefined,
+      order: undefined,
       profileAcceptedTypes: '1,4,5,6',
     })
   })
@@ -284,6 +286,9 @@ describe('Search Eform Controller', () => {
 
     await requestHandler(request, response, next)
 
-    expect(response.redirect).toHaveBeenCalledWith(302, '/search-eform?page=1&usn=123456789')
+    expect(response.redirect).toHaveBeenCalledWith(
+      302,
+      '/search-eform?page=1&usn=123456789&sortBy=submittedDate%3Adesc',
+    )
   })
 })

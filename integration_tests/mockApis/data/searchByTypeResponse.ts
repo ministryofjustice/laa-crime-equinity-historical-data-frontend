@@ -40,6 +40,7 @@ const getSearchByTypeResponse = (typeName: string): SearchResponse => {
       total: 1,
       itemsPage: 10,
       itemsTotal: 3,
+      sort: 'submittedDate: DESC',
     },
   }
 }
