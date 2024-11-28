@@ -127,6 +127,7 @@ describe('Search Eform Service', () => {
         total: 3,
         itemsPage: 0,
         itemsTotal: 29,
+        sort: 'submittedDate: DESC',
       },
     }
 

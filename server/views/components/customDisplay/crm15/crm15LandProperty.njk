@@ -38,34 +38,16 @@
                 {% endif %}
 
                 {% if (data.propertyList | length) > 0 %}
-                    <div class="govuk-summary-list__row govuk-grid-row">
-                        {% set tableData = {
-                            head: [
-                                { text: "Type"},
-                                { text: "Address" },
-                                { text: "Ownership" },
-                                { text: "Values" },
-                                { text: "Details" }
-                            ],
-                            rows: []
-                        } %}
-
-                        {% for item in data.propertyList %}
-                            {%- set formattedOwnershipDetails = item.ownershipDetailsDisplay
-                                | replace("You:", "<strong>You:</strong>\r\n")
-                                | replace("Your Partner:", "<strong>Your Partner:</strong>\r\n") -%}
-
-                            {%- set tableRow = [
-                                { text: item.type | safe, attributes: { "data-header": "Type" } },
-                                { text: item.lAndpAddressDisplay | safe, attributes: { "data-header": "Address" } },
-                                { text: formattedOwnershipDetails | safe, attributes: { "data-header": "Ownership" } },
-                                { text: item.mortgageDisplay | safe, attributes: { "data-header": "Values" } },
-                                { text: item.residentialCommercialLandDetailsDisplay | safe, attributes: { "data-header": "Details" } }
-                            ] -%}
-                            {% set list = tableData.rows.push(tableRow) %}
-                        {% endfor %}
-                        {{ formTable(tableData) }}
-                    </div>
+                    {% for item in data.propertyList %}
+                        {% set index = loop.index0 %}
+                        {{ formFieldHeading("Property " ~ (index + 1) ~ ":", hasPreviousContent=true) }}
+                        {{ formField({ label: "Type", value: item.type | safe }) }}
+                        {{ formField({ label: "Address", value: item.lAndpAddressDisplay | safe }) }}
+                        {{ formField({ label: "Ownership", value: item.ownershipDetailsDisplay | safe
+                        }) }}
+                        {{ formField({ label: "Values", value: item.mortgageDisplay | safe }) }}
+                        {{ formField({ label: "Details", value: item.residentialCommercialLandDetailsDisplay | safe }) }}
+                    {% endfor %}
                 {% endif %}
             </dl>
         </div>

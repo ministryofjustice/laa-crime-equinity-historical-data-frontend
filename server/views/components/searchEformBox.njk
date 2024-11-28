@@ -1,8 +1,7 @@
-<div class="form-background govuk-!-padding-4 ">
-    <form action="/search-eform" method="POST">
-        <div class="govuk-grid-row govuk-custom-stack-tablet">
-            <div class="govuk-grid-column-one-third ">
-                <div class="govuk-form-group">
+<div class="form-background govuk-!-padding-4">
+    <div class="govuk-grid-row govuk-custom-stack-tablet">
+        <div class="govuk-grid-column-one-third ">
+            <div class="govuk-form-group">
                 {{ govukInput({
                     label: {
                         text: 'USN'
@@ -14,12 +13,12 @@
                     spellcheck: false,
                     errorMessage: errors.messages.usn
                 }) }}
-                </div>
             </div>
         </div>
-        <div class="govuk-grid-row govuk-custom-stack-tablet">
-            <div class="govuk-grid-column-one-third ">
-                <div class="govuk-form-group">
+    </div>
+    <div class="govuk-grid-row govuk-custom-stack-tablet">
+        <div class="govuk-grid-column-one-third ">
+            <div class="govuk-form-group">
                 {{ govukInput({
                     label: {
                         text: "Provider account number"
@@ -29,10 +28,10 @@
                     value: formValues.supplierAccountNumber,
                     errorMessage: errors.messages.supplierAccountNumber
                 }) }}
-                </div>
             </div>
-            <div class="govuk-grid-column-one-third ">
-                <div class="govuk-form-group">
+        </div>
+        <div class="govuk-grid-column-one-third ">
+            <div class="govuk-form-group">
                 {{ govukSelect({
                     label: {
                         text: "CRM type"
@@ -66,10 +65,10 @@
                     value: formValues.type,
                     errorMessage: errors.messages.type
                 }) }}
-                </div>
             </div>
-            <div class="govuk-grid-column-one-third ">
-                <div class="govuk-form-group">
+        </div>
+        <div class="govuk-grid-column-one-third ">
+            <div class="govuk-form-group">
                 {{ govukInput({
                     label: {
                         text: "Client surname"
@@ -80,11 +79,11 @@
                     value: formValues.clientName,
                     errorMessage: errors.messages.clientName
                 }) }}
-                </div>
             </div>
+        </div>
 
-            <div class="govuk-grid-column-one-third ">
-                <div class="govuk-form-group">
+        <div class="govuk-grid-column-one-third ">
+            <div class="govuk-form-group">
                 {{ govukInput({
                     label: {
                         text: "Client date of birth"
@@ -95,10 +94,10 @@
                     type: "date",
                     errorMessage: errors.messages.clientDOB
                 }) }}
-                </div>
             </div>
-            <div class="govuk-grid-column-one-third ">
-                <div class="govuk-form-group">
+        </div>
+        <div class="govuk-grid-column-one-third ">
+            <div class="govuk-form-group">
                 {{ govukInput({
                     label: {
                         text: "Submission date from"
@@ -109,10 +108,10 @@
                     type: "date",
                     errorMessage: errors.messages.startDate
                 }) }}
-                </div>
             </div>
-            <div class="govuk-grid-column-one-third ">
-                <div class="govuk-form-group">
+        </div>
+        <div class="govuk-grid-column-one-third ">
+            <div class="govuk-form-group">
                 {{ govukInput({
                     label: {
                         text: "Submission date to"
@@ -124,17 +123,16 @@
                     type: "date",
                     errorMessage: errors.messages.endDate
                 }) }}
-                </div>
             </div>
         </div>
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-full">
-                <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-                {{ govukButton({
-                    text: 'Search',
-                    classes: 'govuk-!-margin-bottom-1'
-                }) }}
-            </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
+            {{ govukButton({
+                text: 'Search',
+                classes: 'govuk-!-margin-bottom-1'
+            }) }}
         </div>
-    </form>
+    </div>
 </div>
