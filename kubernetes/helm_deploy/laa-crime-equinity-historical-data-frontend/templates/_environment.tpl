@@ -15,8 +15,8 @@ env:
   - name: CACHE_SDS_AUTH_TTL
     value: {{ .Values.env.CACHE_SDS_AUTH_TTL | quote }}
 
- - name: ENVIRONMENT_NAME
-    value: {{ .Values.env.ENVIRONMENT_NAME | quote }}
+  - name: ENVIRONMENT_NAME
+    value: {{ .Values.service.environment }}
 
   - name: EQ_API_CLIENT_ID
     valueFrom:
@@ -85,22 +85,13 @@ env:
         key: CLIENT_SECRET
 
   - name: SSO_CLOUD_INSTANCE
-    valueFrom:
-      secretKeyRef:
-        name: appsecret
-        key: CLOUD_INSTANCE
+    value: {{ .Values.env.SSO_CLOUD_INSTANCE | quote }}
 
    - name: SSO_POST_LOGOUT_REDIRECT_URI
-    valueFrom:
-      secretKeyRef:
-        name: appsecret
-        key: POST_LOGOUT_REDIRECT_URI
+    value: {{ .Values.env.SSO_POST_LOGOUT_REDIRECT_URI | quote }}
 
   - name: SSO_REDIRECT_URI
-    valueFrom:
-      secretKeyRef:
-        name: appsecret
-        key: REDIRECT_URI
+    value: {{ .Values.env.SSO_REDIRECT_URI | quote }}
 
   - name: SSO_REPORTING_USER_PROFILE_GROUP
     valueFrom:
@@ -113,3 +104,5 @@ env:
       secretKeyRef:
         name: appsecret
         key: TENANT_ID
+
+{{- end -}}

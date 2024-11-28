@@ -44,6 +44,7 @@ env:
   CACHE_SDS_AUTH_TTL: 50
   REDIS_ENABLED: true
   REDIS_TLS_ENABLED: true
+  SSO_CLOUD_INSTANCE: https://login.microsoftonline.com/
 
 replicaCount: 1
 
