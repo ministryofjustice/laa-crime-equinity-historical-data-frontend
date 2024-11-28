@@ -10,9 +10,9 @@ import logger from '../../logger'
  */
 const msalConfig: Configuration = {
   auth: {
-    clientId: config.auth.clientId, // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
-    authority: config.auth.cloudInstance + config.auth.tenantId, // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
-    clientSecret: config.auth.clientSecret, // Client secret generated from the app registration in Azure portal
+    clientId: config.sso.clientId, // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
+    authority: config.sso.cloudInstance + config.sso.tenantId, // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
+    clientSecret: config.sso.clientSecret, // Client secret generated from the app registration in Azure portal
   },
   system: {
     loggerOptions: {
@@ -25,7 +25,7 @@ const msalConfig: Configuration = {
   },
 }
 
-const REDIRECT_URI = config.auth.redirectUri
-const POST_LOGOUT_REDIRECT_URI = config.auth.redirectUri
+const REDIRECT_URI = config.sso.redirectUri
+const POST_LOGOUT_REDIRECT_URI = config.sso.redirectUri
 
 export { msalConfig, REDIRECT_URI, POST_LOGOUT_REDIRECT_URI }
