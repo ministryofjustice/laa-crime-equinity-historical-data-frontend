@@ -6,6 +6,7 @@ ingress:
     external-dns.alpha.kubernetes.io/set-identifier: laa-crime-equinity-historical-data-frontend-ingress-laa-crime-equinity-historical-data-frontend-dev-green
 
 env:
-  ENVIRONMENT_NAME: dev
   EQ_API_URL: https://laa-crime-equinity-historical-data-uat.apps.live.cloud-platform.service.justice.gov.uk
   SDS_API_URL: https://laa-sds-dev.apps.live.cloud-platform.service.justice.gov.uk
+  SSO_POST_LOGOUT_REDIRECT_URI: https://laa-crime-equinity-historical-data-frontend-dev.apps.live.cloud-platform.service.justice.gov.uk
+  SSO_REDIRECT_URI: https://laa-crime-equinity-historical-data-frontend-dev.apps.live.cloud-platform.service.justice.gov.uk/auth/redirect
