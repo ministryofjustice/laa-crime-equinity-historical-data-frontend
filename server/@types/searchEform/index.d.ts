@@ -24,9 +24,10 @@ type SearchRequest = {
   startDate?: string
   endDate?: string
   supplierAccountNumber?: string
-  laaCaseRef?: string
   pageSize: number
   page: number
+  sort?: string
+  order?: string
   profileAcceptedTypes: string
 }
 
@@ -36,6 +37,7 @@ type SearchPaging = {
   total: number
   itemsPage: number
   itemsTotal: number
+  sort: string
 }
 
 type SearchResponse = {

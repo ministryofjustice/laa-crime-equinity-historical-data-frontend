@@ -25,7 +25,7 @@ export default {
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/api/internal/v1/equinity/search/\\?type=${type}&page=0&pageSize=10`,
+        urlPattern: `/api/internal/v1/equinity/search/\\?type=${type}&page=0&pageSize=10&sort=submittedDate&order=desc`,
       },
       response: {
         status: 200,

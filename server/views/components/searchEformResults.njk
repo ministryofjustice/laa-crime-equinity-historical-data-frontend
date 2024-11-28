@@ -1,0 +1,71 @@
+{% if results | length %}
+
+    {% set laaOrMaatTitle = "LAA Case Ref" %}
+    {% if results[0].type === 'CRM14' %}
+        {% set laaOrMaatTitle = "MAAT ID" %}
+    {% endif %}
+
+    {% set tableData = {
+        caption: "Search results",
+        captionClasses: "govuk-visually-hidden",
+        head: [
+            { text: "Client name / USN" },
+            { text: "CRM Type" },
+            { text: "Start date" },
+            { text: "Submission date" },
+            { text: "Provider account number" },
+            { text: laaOrMaatTitle },
+            { text: "Status" }
+        ],
+        rows: []
+    } %}
+
+    {% for item in results %}
+
+        {% set clientName = '<a href="' + item.crmLink + '" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-!-font-weight-bold">' + item.clientName | lower | capitalize  + '</a>' %}
+        {% set usn = '<div class="first-column-usn govuk-!-margin-bottom-2 govuk-!-margin-top-1">' + item.usn + '</div>' %}
+        {% set type = item.type %}
+        {% set originatedDate = item.originatedDate %}
+        {% set submittedDate = item.submittedDate %}
+        {% set providerAccount = item.providerAccount %}
+        {% set laaCaseRef = item.laaCaseRef %}
+        {% set status = item.status %}
+
+        {% set statusColour = [] %}
+        {% if (status === 'Granted') or (status === 'Completed') or (status === 'Post Refer Granted') or (status === 'Granted By SC') or (status === 'Part Granted') or (status === 'Post Refer Granted') or (status === 'Post Refer Part Granted') or (status === 'Part Granted By SC') %}
+            {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-body-s govuk-tag--green">' + status + '</div>'), statusColour) %}
+        {% elseif (status === 'Printed') %}
+            {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-body-s govuk-tag--light-blue">' + status + '</div>'), statusColour) %}
+        {% elseif (status === 'Aborted') %}
+            {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-body-s govuk-tag--blue">' + status + '</div>'), statusColour) %}
+        {% elseif (status === 'Deleted') %}
+            {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-body-s govuk-tag--grey">' + status + '</div>'), statusColour) %}
+        {% elseif (status === 'Rejected No Info') or (status === 'Rejected') or (status === 'Rejected By SC') or (status === 'Post Refer Rejected') or (status === 'Returned or Reassigned') %}
+            {% set statusColour = (statusColour.push('<div class="govuk-tag govuk-tag--orange">' + status + '</div>'), statusColour) %}
+        {% else %}
+            {% set statusColour = (statusColour.push(status), statusColour) %}
+        {% endif %}
+
+        {% if (laaCaseRef | isNotEmpty) === false %}
+            {% set laaCaseRef = '<span class="govuk-visually-hidden">no data</span>' %}
+        {% endif %}
+
+        {%- set tableRow = [
+            { text: [clientName, usn] | join | safe, attributes: { "data-header": "Client name / USN" } },
+            { text: type | safe, attributes: { "data-header": "CRM Type" } },
+            { text: originatedDate | formatDate('dd/MM/yyyy') | safe, attributes: { "data-header": "Start date" } },
+            { text: submittedDate | formatDate('dd/MM/yyyy') | safe, attributes: { "data-header": "Submission date" } },
+            { text: providerAccount | safe, attributes: { "data-header": "Provider account number" } },
+            { text: laaCaseRef | safe, attributes: { "data-header": laaOrMaatTitle } },
+            { text: statusColour | safe, attributes: { "data-header": "Status" } }
+        ] -%}
+
+        {% set list = tableData.rows.push(tableRow) %}
+    {% endfor %}
+
+    <div class="govuk-custom-stack-table">
+        {{ govukTable(tableData) }}
+    </div>
+
+    {{ paginationBox(pagination) }}
+{% endif %}

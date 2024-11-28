@@ -60,6 +60,11 @@ const schema = Joi.object({
     .optional()
     .allow('')
     .messages({ 'number.min': 'Invalid page specified', 'number.base': 'Invalid page specified' }),
+  sortBy: Joi.string()
+    .valid('originatedDate:asc', 'originatedDate:desc', 'submittedDate:asc', 'submittedDate:desc')
+    .optional()
+    .allow('')
+    .messages({ 'any.only': 'Invalid sortBy specified' }),
 })
   .options({ allowUnknown: true, abortEarly: false })
   .messages({
@@ -95,5 +100,7 @@ export default function validateSearchParams(params: Record<string, string>): Er
 
 const searchParamsIsEmpty = (params: Record<string, string>): boolean => {
   // ignore page query parameter
-  return !Object.keys(params).some((key: string) => key !== 'page' && params[key] && params[key].length > 0)
+  return !Object.keys(params).some(
+    (key: string) => !['page', 'sortBy'].includes(key) && params[key] && params[key].length > 0,
+  )
 }
