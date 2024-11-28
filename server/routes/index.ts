@@ -22,7 +22,7 @@ export default function routes({
   const router = Router()
 
   router.use((req: Request, res: Response, next: NextFunction): void => {
-    if (config.auth.disabled) {
+    if (config.sso.disabled) {
       return next()
     }
 

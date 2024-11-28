@@ -21,7 +21,7 @@ describe('authProvider', () => {
     request = createMock<Request>({})
     response = createMock<Response>({})
     session = createMock<Session>({})
-    fakeAuthClient = nock(`${config.auth.cloudInstance}${config.auth.tenantId}`)
+    fakeAuthClient = nock(`${config.sso.cloudInstance}${config.sso.tenantId}`)
   })
 
   afterEach(() => {
