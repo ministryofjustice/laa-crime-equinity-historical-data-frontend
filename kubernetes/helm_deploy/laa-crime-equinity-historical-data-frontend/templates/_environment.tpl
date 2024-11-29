@@ -39,11 +39,6 @@ env:
         key: primary_endpoint_address
   - name: REDIS_TLS_ENABLED
     value: {{ .Values.env.REDIS_TLS_ENABLED | quote }}
-  - name: SESSION_SECRET
-    valueFrom:
-      secretKeyRef:
-        name: appsecret
-        key: EXPRESS_SESSION_SECRET
   - name: SDS_API_URL
     value: {{ .Values.env.SDS_API_URL | quote }}
   - name: SDS_AUTH_SCOPE
@@ -51,6 +46,11 @@ env:
       secretKeyRef:
         name: appsecret
         key: SDS_AUTH_SCOPE
+  - name: SESSION_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: appsecret
+        key: EXPRESS_SESSION_SECRET
   - name: SSO_ALLOWED_USER_PROFILE_GROUPS
     valueFrom:
       secretKeyRef:
