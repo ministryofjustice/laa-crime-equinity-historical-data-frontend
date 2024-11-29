@@ -113,13 +113,6 @@ env:
       secretKeyRef:
         name: appsecret
         key: REPORTING_USER_PROFILE_GROUP
-  - name: HOST_ENV
+  - name: ENVIRONMENT_NAME
     value: {{ .Values.service.environment }}
-
-{{/*TODO (EMP-692): remove K8 secret stored for environment name and delete commented code below*/}}
-{{/*  - name: ENVIRONMENT_NAME*/}}
-{{/*    valueFrom:*/}}
-{{/*    secretKeyRef:*/}}
-{{/*      name: appsecret*/}}
-{{/*      key: ENVIRONMENT_NAME*/}}
 {{- end -}}
