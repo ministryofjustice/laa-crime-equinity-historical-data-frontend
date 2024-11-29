@@ -27,6 +27,8 @@ export default class SearchApiClient {
         providerAccount: searchRequest.supplierAccountNumber,
         page: searchRequest.page,
         pageSize: searchRequest.pageSize,
+        sort: searchRequest.sort,
+        order: searchRequest.order,
       },
     })
   }

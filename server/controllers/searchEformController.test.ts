@@ -59,6 +59,7 @@ describe('Search Eform Controller', () => {
         total: 1,
         itemsPage: 10,
         itemsTotal: 1,
+        sort: 'submittedDate: DESC',
       },
     }
     mockSearchEformService.search.mockResolvedValue(searchResponse)
@@ -68,6 +69,7 @@ describe('Search Eform Controller', () => {
     request.query = {
       usn: '123456789',
       page: '1',
+      sortBy: 'submittedDate:desc',
     }
 
     await requestHandler(request, response, next)
@@ -91,7 +93,7 @@ describe('Search Eform Controller', () => {
         items: [
           {
             current: true,
-            href: '/search-eform?usn=123456789&page=1',
+            href: '/search-eform?usn=123456789&sortBy=submittedDate%3Adesc&page=1',
             number: 1,
           },
         ],
@@ -102,11 +104,11 @@ describe('Search Eform Controller', () => {
         clientName: undefined,
         endDate: undefined,
         page: '1',
+        sortBy: 'submittedDate:desc',
         startDate: undefined,
         supplierAccountNumber: undefined,
         type: undefined,
         usn: '123456789',
-        laaCaseRef: undefined,
       },
     })
 
@@ -120,8 +122,9 @@ describe('Search Eform Controller', () => {
       usn: '123456789',
       page: 0,
       pageSize: 10,
+      sort: 'submittedDate',
+      order: 'desc',
       profileAcceptedTypes: '1,4,5,6',
-      laaCaseRef: undefined,
     })
   })
 
@@ -158,8 +161,8 @@ describe('Search Eform Controller', () => {
         startDate: undefined,
         supplierAccountNumber: undefined,
         usn: '1',
-        laaCaseRef: undefined,
         page: '1',
+        sortBy: undefined,
       },
     })
 
@@ -203,8 +206,8 @@ describe('Search Eform Controller', () => {
         startDate: undefined,
         supplierAccountNumber: undefined,
         usn: undefined,
-        laaCaseRef: undefined,
         page: '1',
+        sortBy: undefined,
       },
     })
 
@@ -254,8 +257,8 @@ describe('Search Eform Controller', () => {
         startDate: undefined,
         supplierAccountNumber: undefined,
         usn: '8888888',
-        laaCaseRef: undefined,
         page: '1',
+        sortBy: undefined,
       },
     })
 
@@ -265,10 +268,11 @@ describe('Search Eform Controller', () => {
       endDate: undefined,
       startDate: undefined,
       supplierAccountNumber: undefined,
-      laaCaseRef: undefined,
       usn: '8888888',
       page: 0,
       pageSize: 10,
+      sort: undefined,
+      order: undefined,
       profileAcceptedTypes: '1,4,5,6',
     })
   })
@@ -282,6 +286,9 @@ describe('Search Eform Controller', () => {
 
     await requestHandler(request, response, next)
 
-    expect(response.redirect).toHaveBeenCalledWith(302, '/search-eform?page=1&usn=123456789')
+    expect(response.redirect).toHaveBeenCalledWith(
+      302,
+      '/search-eform?page=1&usn=123456789&sortBy=submittedDate%3Adesc',
+    )
   })
 })
