@@ -85,7 +85,7 @@ export default {
     },
   },
   session: {
-    secret: get('EXPRESS_SESSION_SECRET', 'xxx', requiredInProduction),
+    secret: get('SESSION_SECRET', 'xxx', requiredInProduction),
     expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 60)),
   },
   domain: get('INGRESS_URL', 'http://localhost:3000'),
@@ -96,8 +96,8 @@ export default {
       ttlMinutes: Number(get('CACHE_CRM_API_TTL', 10)),
     },
     sdsAuthCache: {
-      max: Number(get('SDS_AUTH_CACHE_MAX', 100)),
-      ttlMinutes: Number(get('SDS_AUTH_CACHE_TTL', 50)),
+      max: Number(get('CACHE_SDS_AUTH_MAX', 100)),
+      ttlMinutes: Number(get('CACHE_SDS_AUTH_TTL', 50)),
     },
   },
 }
