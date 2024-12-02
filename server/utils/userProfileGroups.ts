@@ -3,7 +3,7 @@ import config from '../config'
 
 const getProfileAcceptedTypes = (res: Response): string => {
   const ssoUserGroups = getSsoUserGroups(res)
-  const allowedUserProfileGroups = config.auth.allowedUserProfileGroups.split(',')
+  const allowedUserProfileGroups = config.sso.allowedUserProfileGroups.split(',')
 
   return allowedUserProfileGroups
     .map(group => {
@@ -19,7 +19,7 @@ const getProfileAcceptedTypes = (res: Response): string => {
 
 const isReportingAllowed = (res: Response): boolean => {
   const ssoUserGroups = getSsoUserGroups(res)
-  return ssoUserGroups.includes(config.auth.reportingUserProfileGroup)
+  return ssoUserGroups.includes(config.sso.reportingUserProfileGroup)
 }
 
 const getSsoUserGroups = (res: Response): string[] => res.locals.ssoUserGroups || []

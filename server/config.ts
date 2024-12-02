@@ -43,16 +43,16 @@ export default {
   production,
   https: production,
   staticResourceCacheDuration: '1h',
-  auth: {
-    cloudInstance: get('CLOUD_INSTANCE', 'https://login.microsoftonline.com/', requiredInProduction),
-    clientId: get('CLIENT_ID', 'xxx', requiredInProduction),
-    clientSecret: get('CLIENT_SECRET', 'xxx', requiredInProduction),
-    tenantId: get('TENANT_ID', 'xxx', requiredInProduction),
-    redirectUri: get('REDIRECT_URI', 'http://localhost:3000/auth/redirect'),
-    postLogoutRedirectUri: get('POST_LOGOUT_REDIRECT_URI', 'http://localhost:3000/auth/redirect'),
-    allowedUserProfileGroups: get('ALLOWED_USER_PROFILE_GROUPS', '', requiredInProduction),
-    reportingUserProfileGroup: get('REPORTING_USER_PROFILE_GROUP', '', requiredInProduction),
-    disabled: get('AUTH_DISABLED', 'false') === 'true',
+  sso: {
+    allowedUserProfileGroups: get('SSO_ALLOWED_USER_PROFILE_GROUPS', '', requiredInProduction),
+    clientId: get('SSO_CLIENT_ID', 'xxx', requiredInProduction),
+    clientSecret: get('SSO_CLIENT_SECRET', 'xxx', requiredInProduction),
+    cloudInstance: get('SSO_CLOUD_INSTANCE', 'https://login.microsoftonline.com/', requiredInProduction),
+    disabled: get('SSO_DISABLED', 'false') === 'true',
+    postLogoutRedirectUri: get('SSO_POST_LOGOUT_REDIRECT_URI', 'http://localhost:3000/auth/redirect'),
+    redirectUri: get('SSO_REDIRECT_URI', 'http://localhost:3000/auth/redirect'),
+    reportingUserProfileGroup: get('SSO_REPORTING_USER_PROFILE_GROUP', '', requiredInProduction),
+    tenantId: get('SSO_TENANT_ID', 'xxx', requiredInProduction),
   },
   redis: {
     enabled: get('REDIS_ENABLED', 'false', requiredInProduction) === 'true',
@@ -92,8 +92,8 @@ export default {
   environmentName: get('ENVIRONMENT_NAME', 'local'),
   cache: {
     crmApiCache: {
-      max: Number(get('CRM_API_CACHE_MAX', 1000)),
-      ttlMinutes: Number(get('CRM_API_CACHE_TTL', 10)),
+      max: Number(get('CACHE_CRM_API_MAX', 1000)),
+      ttlMinutes: Number(get('CACHE_CRM_API_TTL', 10)),
     },
     sdsAuthCache: {
       max: Number(get('SDS_AUTH_CACHE_MAX', 100)),
