@@ -16,12 +16,12 @@ env:
   - name: EQ_API_CLIENT_ID
     valueFrom:
       secretKeyRef:
-        name: appsecret
+        name: equinity-historical-data-frontend-secrets
         key: EQ_API_CLIENT_ID
   - name: EQ_API_SECRET
     valueFrom:
       secretKeyRef:
-        name: appsecret
+        name: equinity-historical-data-frontend-secrets
         key: EQ_API_SECRET
   - name: EQ_API_URL
     value: {{ .Values.env.EQ_API_URL | quote }}
@@ -44,28 +44,28 @@ env:
   - name: SDS_AUTH_SCOPE
     valueFrom:
       secretKeyRef:
-        name: appsecret
+        name: equinity-historical-data-frontend-secrets
         key: SDS_AUTH_SCOPE
   - name: SESSION_SECRET
     valueFrom:
       secretKeyRef:
-        name: appsecret
-        key: EXPRESS_SESSION_SECRET
+        name: equinity-historical-data-frontend-secrets
+        key: SESSION_SECRET
   - name: SSO_ALLOWED_USER_PROFILE_GROUPS
     valueFrom:
       secretKeyRef:
-        name: appsecret
-        key: ALLOWED_USER_PROFILE_GROUPS
+        name: equinity-historical-data-frontend-secrets
+        key: SSO_ALLOWED_USER_PROFILE_GROUPS
   - name: SSO_CLIENT_ID
     valueFrom:
       secretKeyRef:
-        name: appsecret
-        key: CLIENT_ID
+        name: equinity-historical-data-frontend-secrets
+        key: SSO_CLIENT_ID
   - name: SSO_CLIENT_SECRET
     valueFrom:
       secretKeyRef:
-        name: appsecret
-        key: CLIENT_SECRET
+        name: equinity-historical-data-frontend-secrets
+        key: SSO_CLIENT_SECRET
   - name: SSO_CLOUD_INSTANCE
     value: {{ .Values.env.SSO_CLOUD_INSTANCE | quote }}
   - name: SSO_POST_LOGOUT_REDIRECT_URI
@@ -75,11 +75,11 @@ env:
   - name: SSO_REPORTING_USER_PROFILE_GROUP
     valueFrom:
       secretKeyRef:
-        name: appsecret
-        key: REPORTING_USER_PROFILE_GROUP
+        name: equinity-historical-data-frontend-secrets
+        key: SSO_REPORTING_USER_PROFILE_GROUP
   - name: SSO_TENANT_ID
     valueFrom:
       secretKeyRef:
-        name: appsecret
-        key: TENANT_ID
+        name: equinity-historical-data-frontend-secrets
+        key: SSO_TENANT_ID
 {{- end -}}
