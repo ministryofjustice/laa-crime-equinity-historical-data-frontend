@@ -7,7 +7,7 @@ on:
         description: 'Node version'
         type: string
         required: false
-        default: '20.12'
+        default: '20.x'
   push:
     branches:
       - 'main'
