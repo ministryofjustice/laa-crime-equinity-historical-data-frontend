@@ -28,8 +28,8 @@ describe('authProvider', () => {
     nock.cleanAll()
   })
 
-  xit('should handle redirect request', async () => {
-    fakeAuthClient.post('/oauth2/v2.0/token').reply(200, {
+  it('should handle redirect request', async () => {
+    fakeAuthClient.post('/oauth2/v2.0/token').query(true).reply(200, {
       access_token: 'some-access-token',
     })
 
@@ -41,9 +41,9 @@ describe('authProvider', () => {
       challenge: 'some-challenge',
       challengeMethod: 'some-challengeMethod',
     }
-    // request.session.authCodeRequest = {
-    //   redirectUri: '/',
-    // } as AuthorizationCodeRequest
+    request.session.authCodeRequest = {
+      redirectUri: '/',
+    } as AuthorizationCodeRequest
     request.session.tokenCache = null
 
     request.body = {
@@ -66,7 +66,7 @@ describe('authProvider', () => {
     request.session = session
     request.session.pkceCodes = null
     request.session.authCodeRequest = {
-      redirectUri: '/oauth2/v2.0/token',
+      redirectUri: '/',
     } as AuthorizationCodeRequest
     request.session.tokenCache = null
 
@@ -80,8 +80,8 @@ describe('authProvider', () => {
     expect(response.redirect).toHaveBeenCalledWith('/auth/signin')
   })
 
-  xit('should handle redirect when invalid_grant error', async () => {
-    fakeAuthClient.post('/oauth2/v2.0/token').reply(500, {
+  it('should handle redirect when invalid_grant error', async () => {
+    fakeAuthClient.post('/oauth2/v2.0/token').query(true).reply(500, {
       error: 'invalid_grant',
     })
 
@@ -94,7 +94,7 @@ describe('authProvider', () => {
       challengeMethod: 'some-challengeMethod',
     }
     request.session.authCodeRequest = {
-      redirectUri: '/oauth2/v2.0/token',
+      redirectUri: '/',
     } as AuthorizationCodeRequest
     request.session.tokenCache = null
 
@@ -120,7 +120,7 @@ describe('authProvider', () => {
       challengeMethod: 'some-challengeMethod',
     }
     request.session.authCodeRequest = {
-      redirectUri: '/oauth2/v2.0/token',
+      redirectUri: '/',
     } as AuthorizationCodeRequest
     request.session.tokenCache = null
 
@@ -144,8 +144,8 @@ describe('authProvider', () => {
     expect(request.session.destroy).toHaveBeenCalled()
   })
 
-  xit('should get access token for given scope', async () => {
-    fakeAuthClient.post('/oauth2/v2.0/token').reply(200, {
+  it('should get access token for given scope', async () => {
+    fakeAuthClient.post('/oauth2/v2.0/token').query(true).reply(200, {
       access_token: 'some-access-token',
     })
 

@@ -20,11 +20,11 @@ describe('SDS Api Client', () => {
     sdsAuthCache.clear()
   })
 
-  xit('should retrieve file for the given file name', async () => {
+  it('should retrieve file for the given file name', async () => {
     const spyCacheSet = jest.spyOn(sdsAuthCache, 'set')
     const spyCacheGet = jest.spyOn(sdsAuthCache, 'get')
 
-    fakeAuthClient.post('/oauth2/v2.0/token').reply(200, {
+    fakeAuthClient.post('/oauth2/v2.0/token').query(true).reply(200, {
       access_token: 'some-access-token',
     })
 
