@@ -37,6 +37,15 @@ ingress:
       paths: [ "/" ]
   tls: ["apps.live.cloud-platform.service.justice.gov.uk"]
 
+env:
+  CACHE_CRM_API_MAX: 1000
+  CACHE_CRM_API_TTL: 10
+  CACHE_SDS_AUTH_MAX: 100
+  CACHE_SDS_AUTH_TTL: 50
+  REDIS_ENABLED: true
+  REDIS_TLS_ENABLED: true
+  SSO_CLOUD_INSTANCE: https://login.microsoftonline.com/
+
 replicaCount: 1
 
 # We usually recommend not to specify default resources and to leave this as a conscious
