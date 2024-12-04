@@ -79,7 +79,7 @@ jobs:
             build/
             dist/
             assets/stylesheets/
-  unit-tests:
+  node_unit_tests:
     name: Run the node unit tests
     runs-on: ubuntu-latest
     steps:
@@ -121,7 +121,7 @@ jobs:
         with:
           script: |
             core.setFailed('Unit tests failed')
-  integration-tests:
+  node_integration_tests:
     runs-on: ubuntu-latest
     needs: [node_build]
     steps:
@@ -176,7 +176,9 @@ jobs:
             core.setFailed('Integration tests failed')
   ecr:
     runs-on: ubuntu-latest
-    needs: unit-tests
+    needs:
+      - node_integration_tests
+      - node_unit_tests
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read # This is required for actions/checkout
