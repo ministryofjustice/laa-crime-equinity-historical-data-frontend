@@ -29,7 +29,7 @@ describe('authProvider', () => {
   })
 
   it('should handle redirect request', async () => {
-    fakeAuthClient.post('/oauth2/v2.0/token').reply(200, {
+    fakeAuthClient.post('/oauth2/v2.0/token').query(true).reply(200, {
       access_token: 'some-access-token',
     })
 
@@ -42,7 +42,7 @@ describe('authProvider', () => {
       challengeMethod: 'some-challengeMethod',
     }
     request.session.authCodeRequest = {
-      redirectUri: '/oauth2/v2.0/token',
+      redirectUri: '/',
     } as AuthorizationCodeRequest
     request.session.tokenCache = null
 
@@ -66,7 +66,7 @@ describe('authProvider', () => {
     request.session = session
     request.session.pkceCodes = null
     request.session.authCodeRequest = {
-      redirectUri: '/oauth2/v2.0/token',
+      redirectUri: '/',
     } as AuthorizationCodeRequest
     request.session.tokenCache = null
 
@@ -81,7 +81,7 @@ describe('authProvider', () => {
   })
 
   it('should handle redirect when invalid_grant error', async () => {
-    fakeAuthClient.post('/oauth2/v2.0/token').reply(500, {
+    fakeAuthClient.post('/oauth2/v2.0/token').query(true).reply(500, {
       error: 'invalid_grant',
     })
 
@@ -94,7 +94,7 @@ describe('authProvider', () => {
       challengeMethod: 'some-challengeMethod',
     }
     request.session.authCodeRequest = {
-      redirectUri: '/oauth2/v2.0/token',
+      redirectUri: '/',
     } as AuthorizationCodeRequest
     request.session.tokenCache = null
 
@@ -120,7 +120,7 @@ describe('authProvider', () => {
       challengeMethod: 'some-challengeMethod',
     }
     request.session.authCodeRequest = {
-      redirectUri: '/oauth2/v2.0/token',
+      redirectUri: '/',
     } as AuthorizationCodeRequest
     request.session.tokenCache = null
 
@@ -145,7 +145,7 @@ describe('authProvider', () => {
   })
 
   it('should get access token for given scope', async () => {
-    fakeAuthClient.post('/oauth2/v2.0/token').reply(200, {
+    fakeAuthClient.post('/oauth2/v2.0/token').query(true).reply(200, {
       access_token: 'some-access-token',
     })
 
