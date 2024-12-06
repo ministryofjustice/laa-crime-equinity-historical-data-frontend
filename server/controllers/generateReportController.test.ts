@@ -113,18 +113,10 @@ describe('GenerateReportController', () => {
       expect(mockGenerateReportService.getCrmReport).not.toHaveBeenCalled()
     })
 
-    it.each([
-      ['Not authorised to generate report', 401],
-      ['Not authorised to generate report', 403],
-      ['No report data found', 404],
-      ['Something went wrong with generate report', 500],
-    ])('should render generate page with "%s" error for status %s', async (errorMessage, errorStatus) => {
+    it('should render generate page with error', async () => {
       const crmReportResponse: CrmReportResponse = {
         text: null,
-        error: {
-          status: errorStatus,
-          message: 'error',
-        },
+        errorMessage: 'Some error',
       }
 
       mockGenerateReportService.getCrmReport.mockResolvedValue(crmReportResponse)
@@ -145,7 +137,7 @@ describe('GenerateReportController', () => {
           list: [
             {
               href: '#',
-              text: errorMessage,
+              text: 'Some error',
             },
           ],
         },

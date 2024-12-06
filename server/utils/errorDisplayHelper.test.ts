@@ -1,21 +1,10 @@
-import { SearchError } from '@searchEform'
 import { ValidationError, ValidationErrorItem } from 'joi'
 import { buildErrors, buildValidationErrors } from './errorDisplayHelper'
 
 describe('errorDisplayHelper', () => {
   describe('buildErrors', () => {
     it('returns errors for given error status', () => {
-      const searchError: SearchError = {
-        status: 500,
-        message: 'Something went wrong',
-      }
-
-      const result = buildErrors(searchError, (errorStatus: number): string => {
-        switch (errorStatus) {
-          default:
-            return 'Something went wrong with the search'
-        }
-      })
+      const result = buildErrors('Something went wrong with the search')
 
       expect(result).toEqual({ list: [{ href: '#', text: 'Something went wrong with the search' }] })
     })

@@ -18,7 +18,7 @@ type CrmReportRequest = {
 
 type CrmReportResponse = {
   text: string
-  error?: CrmReportError
+  errorMessage?: string
 }
 
 export { CrmReportRequest, CrmReportResponse, CrmReportError }

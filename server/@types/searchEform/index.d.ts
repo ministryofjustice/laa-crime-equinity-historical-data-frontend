@@ -43,7 +43,7 @@ type SearchPaging = {
 type SearchResponse = {
   results: Array<SearchResult>
   paging?: SearchPaging
-  error?: SearchError
+  errorMessage?: string
 }
 
 export type { SearchRequest, SearchResponse, SearchError, SearchResult }
