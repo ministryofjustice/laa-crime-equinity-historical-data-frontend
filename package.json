@@ -112,7 +112,7 @@
     "connect-redis": "^7.1.1",
     "csurf": "^1.11.0",
     "date-fns": "^3.6.0",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "express-prom-bundle": "^8.0.0",
     "express-session": "^1.18.1",
     "govuk-frontend": "^5.2.0",
