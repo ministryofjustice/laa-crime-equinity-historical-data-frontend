@@ -26,11 +26,17 @@
         {% for item in evidenceData %}
             {#             Prefix fileKey with CRM14/ path if fileKey starts with "att_" #}
             {% set fileKey = "CRM14/" + item.key if crmType === "CRM 14" and (item.key | truncate(4, true, '')) === "att_" else item.key %}
-            {% set fileName = item.name | replace("'", "") | urlencode %}
             {% set linkUrl = "/download-evidence?fileKey=" + (fileKey | urlencode) + "&fileName=" + fileName %}
 
             {# Add aria-label to describe the type of file being downloaded #}
-            {% set ariaLabel = "Download " + (item.name | removeUnderscore ) + " evidence file" %}
+
+            {% if item.name %}
+                {% set fileName = item.name | replace("'", "") | urlencode %}
+                {% set ariaLabel = "Download " + (item.name | removeUnderscore) + " evidence file" %}
+            {% else %}
+                {% set fileName = "Unknown_File" %}
+                {% set ariaLabel = "Download evidence file" %}
+            {% endif %}
 
             {% set tableRow = [
                 { text: "Attachment " ~ loop.index, isHeader: true },
