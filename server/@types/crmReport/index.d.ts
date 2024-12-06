@@ -1,8 +1,3 @@
-type CrmReportError = {
-  status: number
-  message: string
-}
-
 type CrmReportRequest = {
   crmType: CrmType
   decisionFromDate?: string
@@ -21,4 +16,4 @@ type CrmReportResponse = {
   errorMessage?: string
 }
 
-export { CrmReportRequest, CrmReportResponse, CrmReportError }
+export { CrmReportRequest, CrmReportResponse }
