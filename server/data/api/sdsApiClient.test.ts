@@ -9,7 +9,7 @@ describe('SDS Api Client', () => {
   let sdsApiClient: SdsApiClient
 
   beforeEach(() => {
-    fakeAuthClient = nock(`${config.auth.cloudInstance}${config.auth.tenantId}`)
+    fakeAuthClient = nock(`${config.sso.cloudInstance}${config.sso.tenantId}`)
     fakeRestClient = nock(config.apis.sdsApi.url)
     sdsApiClient = new SdsApiClient()
   })
@@ -24,7 +24,7 @@ describe('SDS Api Client', () => {
     const spyCacheSet = jest.spyOn(sdsAuthCache, 'set')
     const spyCacheGet = jest.spyOn(sdsAuthCache, 'get')
 
-    fakeAuthClient.post('/oauth2/v2.0/token').reply(200, {
+    fakeAuthClient.post('/oauth2/v2.0/token').query(true).reply(200, {
       access_token: 'some-access-token',
     })
 
