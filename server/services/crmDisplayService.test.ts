@@ -27,35 +27,15 @@ describe('CRM Display Service', () => {
         firmSupplierNo: '1234AB',
         firmContactName: 'Some Firm',
         firmSolicitorName: 'Some Solicitor',
-        firmSolicitorRef: 'Ref1',
+        firmSolicitorRef: '',
       },
-      CapitalDetails: {
-        hasIncomeSupport: 'Yes',
-        isUnder18: 'No',
-        numOfDependants: 2,
-        clientSavings: 60000,
-        partnerSavings: 40000,
-        totalSavings: 100000,
-      },
-      StatementOfCase: 'Statement Of Case',
-      DetailsOfWorkCompleted: 'Some Details of Work Completed',
-      DetailsOfApplication: 'Some Details of Application',
+      StatementOfCase: '',
+      DetailsOfWorkCompleted: '',
+      DetailsOfApplication: '',
     },
-    FurtherInformation: [
-      {
-        name: 'Attachment1',
-        description: 'Test Description',
-        downloadFile: 'test-link',
-      },
-    ],
+    FurtherInformation: [],
     evidenceFiles: {
-      files: [
-        {
-          key: 'somefile.att',
-          type: 'somefile',
-          name: 'somefile.pdf',
-        },
-      ],
+      files: [],
     },
   }
 
@@ -63,22 +43,14 @@ describe('CRM Display Service', () => {
 
   describe('getNavigation()', () => {
     it('should return crm navigation for given crm type, sectionId, usn', () => {
-      const result = crmDisplayService.getNavigation('crm5', 1234567, 'details-of-work-completed', crm5Response)
+      const result = crmDisplayService.getNavigation('crm5', 1234567, 'standard-properties', crm5Response)
 
       expect(result).toEqual({
         items: [
-          { href: '/crm5/1234567/standard-properties', text: 'Standard Properties', active: false },
+          { href: '/crm5/1234567/standard-properties', text: 'Standard Properties', active: true },
           { href: '/crm5/1234567/general-information', text: 'General Information', active: false },
           { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
-          { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
-          { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
-          { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: true },
-          { href: '/crm5/1234567/costs', text: 'Costs', active: false },
-          { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
-          { href: '/crm5/1234567/office-use-only', text: 'Office Use Only', active: false },
-          { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
-          { href: '/crm5/1234567/further-information', text: 'Further Information', active: false },
           { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
@@ -93,15 +65,7 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/standard-properties', text: 'Standard Properties', active: true },
           { href: '/crm5/1234567/general-information', text: 'General Information', active: false },
           { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
-          { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
-          { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
-          { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
-          { href: '/crm5/1234567/costs', text: 'Costs', active: false },
-          { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
-          { href: '/crm5/1234567/office-use-only', text: 'Office Use Only', active: false },
-          { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
-          { href: '/crm5/1234567/further-information', text: 'Further Information', active: false },
           { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
@@ -116,49 +80,60 @@ describe('CRM Display Service', () => {
           { href: '/crm5/1234567/standard-properties', text: 'Standard Properties', active: true },
           { href: '/crm5/1234567/general-information', text: 'General Information', active: false },
           { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
-          { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
-          { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
-          { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
-          { href: '/crm5/1234567/costs', text: 'Costs', active: false },
-          { text: 'Case History', href: '/crm5/1234567/case-history', active: false },
-          { text: "Solicitor's Certification", href: '/crm5/1234567/solicitors-certification', active: false },
-          { href: '/crm5/1234567/office-use-only', text: 'Office Use Only', active: false },
-          { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
-          { href: '/crm5/1234567/further-information', text: 'Further Information', active: false },
+          { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
           { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
       })
     })
-
     it('should return crm navigation for conditions met', () => {
-      const customResponse: Crm5Response = {
-        ...crm5Response,
+      const mockCrm5Response: Crm5Response = {
         formDetails: {
-          ...crm5Response.formDetails,
-          hasPreviousApplication: 'No', // ensure showWhen condition met
+          usn: 1234567,
+          hasPreviousApplication: 'No', // Ensures showWhen condition is met
+          previousApplicationRef: '',
+          appealedPrevDecision: 'No',
+          appealedPrevDecisionDetails: '',
+          urgent: 'No',
+          urgencyReason: '',
+          StatementOfCase: '',
+          DetailsOfWorkCompleted: '',
+          DetailsOfApplication: '',
+          Firm: {
+            firmAddress: '6 SOME PLACE LONDON ROAD BIRMINGHAM B5 2XL',
+            firmName: 'ABELS',
+            firmPhone: '02380 111 222',
+            firmSupplierNo: 'AB123C',
+            firmContactName: 'Quasi Modo',
+            firmSolicitorName: 'Quasi Modo',
+            firmSolicitorRef: '457547457',
+          },
+          StandardProperties: {
+            usn: 1234567,
+            dateReceived: '2024-07-02T00:00:00.000+00:00',
+            timeReceived: '12:47:47',
+            submitterUserId: 'FTUHBCFDFG',
+            language: 'English',
+            region: 'South',
+            office: 'Reading',
+          },
+        },
+        FurtherInformation: '',
+        evidenceFiles: {
+          files: [],
         },
       }
 
-      const result = crmDisplayService.getNavigation('crm5', 1234567, '', customResponse)
+      const result = crmDisplayService.getNavigation('crm5', 1234567, '', mockCrm5Response)
 
       expect(result).toEqual({
         items: [
           { href: '/crm5/1234567/standard-properties', text: 'Standard Properties', active: true },
           { href: '/crm5/1234567/general-information', text: 'General Information', active: false },
           { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
-          { href: '/crm5/1234567/clients-details', text: "Client's Details", active: false },
-          { href: '/crm5/1234567/capital-details', text: 'Capital Details', active: false }, // showWhen(hasPreviousApplication: 'No')
-          { href: '/crm5/1234567/income-details', text: 'Income Details', active: false }, // showWhen(hasPreviousApplication: 'No')
-          { href: '/crm5/1234567/solicitors-declaration', text: "Solicitor's Declaration", active: false }, // showWhen(hasPreviousApplication: 'No')
-          { href: '/crm5/1234567/court-of-appeal-funding', text: 'Court of Appeal Funding', active: false },
-          { href: '/crm5/1234567/details-of-work-completed', text: 'Details of Work Completed', active: false },
-          { href: '/crm5/1234567/costs', text: 'Costs', active: false },
-          { href: '/crm5/1234567/case-history', text: 'Case History', active: false },
+          { href: '/crm5/1234567/income-details', text: 'Income Details', active: false },
+          { href: '/crm5/1234567/solicitors-declaration', text: "Solicitor's Declaration", active: false },
           { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
-          { href: '/crm5/1234567/office-use-only', text: 'Office Use Only', active: false },
-          { href: '/crm5/1234567/evidence', text: 'Evidence', active: false },
-          { href: '/crm5/1234567/further-information', text: 'Further Information', active: false },
           { href: '/crm5/1234567/summary', text: 'Summary', active: false },
         ],
         label: 'Side navigation',
@@ -203,41 +178,52 @@ describe('CRM Display Service', () => {
         formDetails: {
           ...crm5Response.formDetails,
           hasPreviousApplication: '',
-          previousApplicationRef: '',
           appealedPrevDecision: '',
-          appealedPrevDecisionDetails: '',
           urgent: '',
           urgencyReason: '',
+          Firm: {
+            firmAddress: '1 SOME PLACE',
+            firmName: '',
+            firmPhone: '',
+            firmSupplierNo: '',
+            firmContactName: '',
+            firmSolicitorName: '',
+            firmSolicitorRef: '',
+          },
         },
         evidenceFiles: {
           files: [],
         },
-        FurtherInformation: {
-          files: [],
-        },
+        FurtherInformation: [],
       }
 
-      const result = crmDisplayService.getSections('crm5', 'general-information', customResponse)
+      const result = crmDisplayService.getSections('crm5', 'firm-details', customResponse)
 
       expect(result).toEqual([
         {
-          sectionId: 'general-information',
-          subsections: [{ fields: [], title: 'General Information' }],
-          title: 'General Information',
+          sectionId: 'firm-details',
+          subsections: [
+            {
+              title: "Solicitor's Details",
+              fields: [
+                {
+                  apiField: 'Firm.firmAddress',
+                  label: 'Address/DX',
+                  type: 'multiline',
+                  value: '1 SOME PLACE',
+                },
+              ],
+            },
+          ],
+          title: 'Firm Details',
         },
       ])
     })
 
-    it('should handle crm section with no data in crm response', () => {
+    it('should skip sections with no data in crm response', () => {
       const result = crmDisplayService.getSections('crm5', 'court-of-appeal-funding', crm5Response)
 
-      expect(result).toEqual([
-        {
-          sectionId: 'court-of-appeal-funding',
-          subsections: [{ fields: [], title: 'Court of Appeal Funding' }],
-          title: 'Court of Appeal Funding',
-        },
-      ])
+      expect(result).not.toContainEqual(expect.objectContaining({ sectionId: 'court-of-appeal-funding' }))
     })
 
     it('should return crm section for conditions met', () => {
@@ -249,11 +235,11 @@ describe('CRM Display Service', () => {
         },
       }
 
-      const result = crmDisplayService.getSections('crm5', 'capital-details', customResponse)
+      const result = crmDisplayService.getSections('crm5', 'standard-properties', customResponse)
 
       expect(result.length).toEqual(1)
-      expect(result[0].sectionId).toEqual('capital-details')
-      expect(result[0].title).toEqual('Capital Details')
+      expect(result[0].sectionId).toEqual('standard-properties')
+      expect(result[0].title).toEqual('Standard Properties')
     })
 
     it('should return first section if conditions not met for given section', () => {
@@ -265,11 +251,7 @@ describe('CRM Display Service', () => {
           subsections: [
             {
               fields: [
-                {
-                  apiField: 'StandardProperties.usn',
-                  label: 'USN',
-                  value: 1234567,
-                },
+                { apiField: 'StandardProperties.usn', label: 'USN', value: 1234567 },
                 {
                   apiField: 'StandardProperties.dateReceived',
                   label: 'Date received',

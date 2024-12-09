@@ -5,6 +5,7 @@ import {
   isNotEmpty,
   splitCamelCase,
   removeUnderscore,
+  fieldHasValue,
 } from './utils'
 
 describe('buildQueryString', () => {
@@ -87,5 +88,29 @@ describe('removeUnderscore', () => {
     ['multiple__underscores', 'Multiple  Underscores'],
   ])('given "%s" returns "%s"', (input: string, expected: string) => {
     expect(removeUnderscore(input)).toEqual(expected)
+  })
+})
+
+describe('fieldHasValue', () => {
+  it.each([
+    [undefined, false],
+    [null, false],
+    ['', false],
+    ['   ', false],
+    ['Test', true],
+    [true, true],
+    [false, true],
+    [0, true],
+    [123, true],
+    [[], false],
+    [[null, undefined], false],
+    [[null, 'value'], true],
+    [{}, false],
+    [{ key: null }, false],
+    [{ key: 'value' }, true],
+    [[{}, { key: null }], false],
+    [[{}, { key: 'value' }], true],
+  ])('given %s returns %s', (input: unknown, expected: boolean) => {
+    expect(fieldHasValue(input)).toEqual(expected)
   })
 })
