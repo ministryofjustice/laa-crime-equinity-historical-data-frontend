@@ -1,5 +1,3 @@
-import { SearchError } from '@searchEform'
-import { CrmReportError } from '@crmReport'
 import Joi from 'joi'
 
 type ErrorMessage = Record<string, { text: string }>
@@ -14,12 +12,12 @@ type Errors = {
   messages?: ErrorMessage
 }
 
-const buildErrors = (error: SearchError | CrmReportError, errorMessageFn: (errorStatus: number) => string): Errors => {
+const buildErrors = (errorMessage: string): Errors => {
   return {
     list: [
       {
         href: '#',
-        text: errorMessageFn(error.status),
+        text: errorMessage,
       },
     ],
   }

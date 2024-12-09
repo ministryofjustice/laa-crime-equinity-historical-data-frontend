@@ -70,12 +70,17 @@ describe('Generate Report Service', () => {
     })
   })
 
-  it('should return error', async () => {
+  it.each([
+    ['Not authorised to generate report', 401],
+    ['Not authorised to generate report', 403],
+    ['No report data found', 404],
+    ['Something went wrong with generate report', 500],
+  ])('should return error "%s" error for status %s', async (errorMessage, errorStatus) => {
     const error: SanitisedError = {
       name: 'some error',
       message: 'some message',
       stack: 'some stack',
-      status: 404,
+      status: errorStatus,
       text: 'error',
     }
     mockCrmReportApiClient.getCrmReport.mockRejectedValue(error)
@@ -90,11 +95,8 @@ describe('Generate Report Service', () => {
     })
 
     expect(result).toEqual({
-      error: {
-        message: 'some message',
-        status: 404,
-      },
       text: null,
+      errorMessage,
     })
 
     expect(mockCrmReportApiClient.getCrmReport).toHaveBeenCalledWith({

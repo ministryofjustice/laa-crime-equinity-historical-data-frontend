@@ -50,9 +50,9 @@ export default class GenerateReportController {
         const crmReportResponse = await this.generateReportService.getCrmReport(crmReportRequest)
 
         // check for any errors in the report response
-        if (crmReportResponse.error) {
+        if (crmReportResponse.errorMessage) {
           // render with errors for report API error
-          const errors = buildErrors(crmReportResponse.error, this.getErrorMessage)
+          const errors = buildErrors(crmReportResponse.errorMessage)
           res.render(VIEW_PATH, {
             results: [],
             errors,
@@ -65,18 +65,6 @@ export default class GenerateReportController {
           res.send(crmReportResponse.text)
         }
       }
-    }
-  }
-
-  private getErrorMessage(errorStatus: number): string {
-    switch (errorStatus) {
-      case 401:
-      case 403:
-        return 'Not authorised to generate report'
-      case 404:
-        return 'No report data found'
-      default:
-        return 'Something went wrong with generate report'
     }
   }
 

@@ -18,7 +18,7 @@ export default class GenerateReportService {
       return successResponse(response.text)
     } catch (error) {
       logger.error('Report API error', error)
-      return errorResponse(error.status, error.message)
+      return errorResponse(error.status)
     }
   }
 }
@@ -29,9 +29,21 @@ const successResponse = (data: string): CrmReportResponse => {
   }
 }
 
-const errorResponse = (status: number, message: string): CrmReportResponse => {
+const errorResponse = (errorStatus: number): CrmReportResponse => {
   return {
     text: null,
-    error: { status, message },
+    errorMessage: getErrorMessage(errorStatus),
+  }
+}
+
+const getErrorMessage = (errorStatus: number): string => {
+  switch (errorStatus) {
+    case 401:
+    case 403:
+      return 'Not authorised to generate report'
+    case 404:
+      return 'No report data found'
+    default:
+      return 'Something went wrong with generate report'
   }
 }

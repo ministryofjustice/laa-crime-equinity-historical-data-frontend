@@ -83,12 +83,17 @@ describe('Search Eform Service', () => {
     })
   })
 
-  it('should search and return error', async () => {
+  it.each([
+    ['Not authorised to search', 401],
+    ['Not authorised to search', 403],
+    ['No search result found', 404],
+    ['Something went wrong with the search', 500],
+  ])('should render search eform with "%s" error for status %s', async (errorMessage, errorStatus) => {
     const error: SanitisedError = {
       name: 'some error',
       message: 'some message',
       stack: 'some stack',
-      status: 404,
+      status: errorStatus,
       text: 'error',
     }
 
@@ -104,10 +109,7 @@ describe('Search Eform Service', () => {
     })
 
     expect(result).toEqual({
-      error: {
-        message: 'some message',
-        status: 404,
-      },
+      errorMessage,
       results: [],
     })
     expect(mockSearchApiClient.search).toHaveBeenCalledWith({
@@ -142,10 +144,7 @@ describe('Search Eform Service', () => {
       profileAcceptedTypes: '1,4,5,6',
     })
     expect(result).toEqual({
-      error: {
-        message: 'No search results found',
-        status: 500,
-      },
+      errorMessage: 'No search result found',
       results: [],
     })
     expect(mockSearchApiClient.search).toHaveBeenCalledWith({
