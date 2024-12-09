@@ -86,6 +86,59 @@ describe('CRM Display Service', () => {
         label: 'Side navigation',
       })
     })
+    it('should return crm navigation for conditions met', () => {
+      const mockCrm5Response: Crm5Response = {
+        formDetails: {
+          usn: 1234567,
+          hasPreviousApplication: 'No', // Ensures showWhen condition is met
+          previousApplicationRef: '',
+          appealedPrevDecision: 'No',
+          appealedPrevDecisionDetails: '',
+          urgent: 'No',
+          urgencyReason: '',
+          StatementOfCase: '',
+          DetailsOfWorkCompleted: '',
+          DetailsOfApplication: '',
+          Firm: {
+            firmAddress: '6 SOME PLACE LONDON ROAD BIRMINGHAM B5 2XL',
+            firmName: 'ABELS',
+            firmPhone: '02380 111 222',
+            firmSupplierNo: 'AB123C',
+            firmContactName: 'Quasi Modo',
+            firmSolicitorName: 'Quasi Modo',
+            firmSolicitorRef: '457547457',
+          },
+          StandardProperties: {
+            usn: 1234567,
+            dateReceived: '2024-07-02T00:00:00.000+00:00',
+            timeReceived: '12:47:47',
+            submitterUserId: 'FTUHBCFDFG',
+            language: 'English',
+            region: 'South',
+            office: 'Reading',
+          },
+        },
+        FurtherInformation: '',
+        evidenceFiles: {
+          files: [],
+        },
+      }
+
+      const result = crmDisplayService.getNavigation('crm5', 1234567, '', mockCrm5Response)
+
+      expect(result).toEqual({
+        items: [
+          { href: '/crm5/1234567/standard-properties', text: 'Standard Properties', active: true },
+          { href: '/crm5/1234567/general-information', text: 'General Information', active: false },
+          { href: '/crm5/1234567/firm-details', text: 'Firm Details', active: false },
+          { href: '/crm5/1234567/income-details', text: 'Income Details', active: false },
+          { href: '/crm5/1234567/solicitors-declaration', text: "Solicitor's Declaration", active: false },
+          { href: '/crm5/1234567/solicitors-certification', text: "Solicitor's Certification", active: false },
+          { href: '/crm5/1234567/summary', text: 'Summary', active: false },
+        ],
+        label: 'Side navigation',
+      })
+    })
   })
 
   describe('getSections()', () => {
@@ -151,10 +204,6 @@ describe('CRM Display Service', () => {
           sectionId: 'firm-details',
           subsections: [
             {
-              title: 'Firm Details',
-              fields: [],
-            },
-            {
               title: "Solicitor's Details",
               fields: [
                 {
@@ -164,14 +213,6 @@ describe('CRM Display Service', () => {
                   value: '1 SOME PLACE',
                 },
               ],
-            },
-            {
-              customDisplay: {
-                apiField: 'CaseDetails',
-                name: 'crm5CaseDetails',
-                value: '',
-              },
-              fields: undefined,
             },
           ],
           title: 'Firm Details',
@@ -185,8 +226,24 @@ describe('CRM Display Service', () => {
       expect(result).not.toContainEqual(expect.objectContaining({ sectionId: 'court-of-appeal-funding' }))
     })
 
+    it('should return crm section for conditions met', () => {
+      const customResponse: Crm5Response = {
+        ...crm5Response,
+        formDetails: {
+          ...crm5Response.formDetails,
+          hasPreviousApplication: 'No', // ensure showWhen condition met
+        },
+      }
+
+      const result = crmDisplayService.getSections('crm5', 'standard-properties', customResponse)
+
+      expect(result.length).toEqual(1)
+      expect(result[0].sectionId).toEqual('standard-properties')
+      expect(result[0].title).toEqual('Standard Properties')
+    })
+
     it('should return first section if conditions not met for given section', () => {
-      const result = crmDisplayService.getSections('crm5', 'non-existent-section', crm5Response)
+      const result = crmDisplayService.getSections('crm5', 'capital-details', crm5Response)
 
       expect(result).toEqual([
         {

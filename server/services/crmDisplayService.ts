@@ -17,7 +17,7 @@ import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 import crm7DisplayConfig from './config/crm7DisplayConfig.json'
 import crm14DisplayConfig from './config/crm14DisplayConfig.json'
 import validateConfig from '../utils/crmDisplayConfigValidation'
-import { getApiFieldValue, includeSection } from '../utils/crmDisplayHelper'
+import { getApiFieldValue, isSubsectionEmpty, shouldIncludeInNavigation } from '../utils/crmDisplayHelper'
 
 const configMap: Record<CrmType, CrmDisplayConfig> = {
   crm4: validateConfig(crm4DisplayConfig as CrmDisplayConfig, 'crm4'),
@@ -32,22 +32,24 @@ export default class CrmDisplayService {
   getNavigation<T extends CrmResponse>(crmType: CrmType, usn: number, sectionId: string, crmResponse: T): Navigation {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
 
-    let isAnySectionActive = false
-    const items: NavigationItem[] = crmDisplayConfig.sections
-      .filter(section => includeSection(section, crmResponse))
-      .map(section => {
-        const isActive = section.sectionId === sectionId
-        if (isActive) {
-          isAnySectionActive = true
-        }
-        return {
-          href: `/${crmType}/${usn}/${section.sectionId}`,
-          text: section.title,
-          active: isActive,
-        }
-      })
+    const items: Array<NavigationItem> = crmDisplayConfig.sections
+      .filter(section => shouldIncludeInNavigation(section, crmResponse))
+      .map(section => ({
+        href: `/${crmType}/${usn}/${section.sectionId}`,
+        text: section.title,
+        active: section.sectionId === sectionId,
+      }))
 
-    if (!isAnySectionActive && items.length > 0) {
+    const summarySection = crmDisplayConfig.sections.find(section => section.sectionId === 'summary')
+    if (summarySection) {
+      items.push({
+        href: `/${crmType}/${usn}/summary`,
+        text: 'Summary',
+        active: sectionId === 'summary',
+      })
+    }
+
+    if (items.length > 0 && !items.some(item => item.active)) {
       items[0].active = true
     }
 
@@ -57,60 +59,63 @@ export default class CrmDisplayService {
     }
   }
 
-  getSections<T extends CrmResponse>(crmType: CrmType, sectionId: string, crmResponse: T): Section[] {
+  getSections<T extends CrmResponse>(crmType: CrmType, sectionId: string, crmResponse: T): Array<Section> {
     const crmDisplayConfig = this.getCrmDisplayConfig(crmType)
-    const availableSections = crmDisplayConfig.sections.filter(section => includeSection(section, crmResponse))
+    const availableSections = crmDisplayConfig.sections.filter(section =>
+      shouldIncludeInNavigation(section, crmResponse),
+    )
 
     if (sectionId === SUMMARY_SECTION_ID) {
-      // return all sections for summary
       return availableSections
         .filter(section => section.sectionId !== SUMMARY_SECTION_ID)
         .map(section => this.getSectionWithData(section, crmResponse))
     }
 
-    // otherwise return only the required section
     const requiredSection = availableSections.find(section => section.sectionId === sectionId) || availableSections[0]
     return [this.getSectionWithData(requiredSection, crmResponse)]
   }
 
+  private getFields<T extends CrmResponse>(fields: Array<FieldOrSubHeading>, crmResponse: T): Array<FieldOrSubHeading> {
+    if (fields) {
+      return fields
+        .map(field => {
+          if (isConfigField(field)) {
+            return { ...field, value: getApiFieldValue(crmResponse, field.apiField) }
+          }
+          return field
+        })
+        .filter(field => isSubHeading(field) || field.value !== '')
+    }
+    return undefined
+  }
+
   private getSectionWithData<T extends CrmResponse>(section: Section, crmResponse: T): Section {
-    const subsections: Subsection[] = section.subsections.map(subsection => ({
-      ...subsection,
-      fields: this.getFields(subsection.fields, crmResponse),
-      ...(subsection.customDisplay
-        ? { customDisplay: this.getCustomDisplay(subsection.customDisplay, crmResponse) }
-        : {}),
-    }))
+    // Filter out empty subsections
+    const subsections: Array<Subsection> = section.subsections
+      .filter(subsection => !isSubsectionEmpty(subsection, crmResponse))
+      .map(subsection => ({
+        ...subsection,
+        fields: this.getFields(subsection.fields, crmResponse),
+        customDisplay: this.getCustomDisplay(subsection.customDisplay, crmResponse),
+      }))
 
     return { ...section, subsections }
   }
 
   private getCrmDisplayConfig(crmType: CrmType): CrmDisplayConfig {
     const crmDisplayConfig = configMap[crmType]
-    if (!crmDisplayConfig) {
-      throw new Error(`Display config not found for CRM type = ${crmType}`)
-    }
+    if (!crmDisplayConfig) throw new Error(`Display config not found for CRM type = ${crmType}`)
     return crmDisplayConfig
   }
 
-  private getFields<T extends CrmResponse>(fields: FieldOrSubHeading[], crmResponse: T): FieldOrSubHeading[] {
-    if (!fields) return undefined
-
-    return fields
-      .map(field => {
-        if (isConfigField(field)) {
-          // populate config file with api field value
-          return { ...field, value: getApiFieldValue(crmResponse, field.apiField) }
-        }
-        // otherwise return field as is
-        return field
-      })
-      .filter(field => isSubHeading(field) || field.value !== '')
-  }
-
   private getCustomDisplay<T extends CrmResponse>(customDisplay: CustomDisplay, crmResponse: T): CustomDisplay {
-    if (!customDisplay) return undefined
-    return { ...customDisplay, value: getApiFieldValue(crmResponse, customDisplay.apiField) }
+    if (customDisplay) {
+      return {
+        ...customDisplay,
+        value: getApiFieldValue(crmResponse, customDisplay.apiField),
+      }
+    }
+    return undefined
   }
 }
 
