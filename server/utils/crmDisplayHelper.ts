@@ -3,13 +3,6 @@ import { Section, ShowOrHideWhen, Subsection } from '@crmDisplay'
 import _ from 'lodash'
 import { fieldHasValue } from './utils'
 
-export const includeSection = <T extends CrmResponse>(section: Section, crmResponse: T): boolean => {
-  if (section.hideWhen && conditionsMet(section.hideWhen, crmResponse)) {
-    return false
-  }
-  return !section.showWhen || conditionsMet(section.showWhen, crmResponse)
-}
-
 export const getApiFieldValue = <T extends CrmResponse>(crmResponse: T, apiFieldName: string): string => {
   let apiFieldValue = _.get(crmResponse, `formDetails.${apiFieldName}`)
   if (_.isNil(apiFieldValue)) {
@@ -19,10 +12,6 @@ export const getApiFieldValue = <T extends CrmResponse>(crmResponse: T, apiField
     }
   }
   return apiFieldValue as string
-}
-
-export const isSectionEmpty = <T extends CrmResponse>(section: Section, crmResponse: T): boolean => {
-  return section.subsections.every(subsection => isSubsectionEmpty(subsection, crmResponse))
 }
 
 // Utility to check if a subsection is empty
@@ -58,6 +47,16 @@ export const shouldIncludeInNavigation = <T extends CrmResponse>(section: Sectio
   }
   // Check if at least one subsection is non-empty
   return section.subsections.some(subsection => !isSubsectionEmpty(subsection, crmResponse))
+}
+
+const includeSection = <T extends CrmResponse>(section: Section, crmResponse: T): boolean => {
+  if (section.hideWhen && conditionsMet(section.hideWhen, crmResponse)) {
+    return false
+  }
+  if (!section.subsections || section.subsections.length === 0) {
+    return true
+  }
+  return !section.showWhen || conditionsMet(section.showWhen, crmResponse)
 }
 
 const conditionsMet = <T extends CrmResponse>(showOrHideWhen: Array<ShowOrHideWhen>, crmResponse: T): boolean => {
