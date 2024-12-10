@@ -1,9 +1,69 @@
-import { Section } from '@crmDisplay'
+import { Section, Subsection } from '@crmDisplay'
 import { CrmResponse } from '@eqApi'
-import { getApiFieldValue, includeSection } from './crmDisplayHelper'
+import { getApiFieldValue, isSubsectionEmpty, shouldIncludeInNavigation } from './crmDisplayHelper'
 
 describe('crmDisplayHelper', () => {
-  describe('includeSection()', () => {
+  describe('isSubsectionEmpty', () => {
+    const mockCrmResponse: CrmResponse = {
+      formDetails: {
+        hasPreviousApplication: 'Yes',
+        previousApplicationRef: '',
+        appealedPrevDecision: '',
+        firmName: 'ABELS',
+        firmAddress: '',
+      },
+    }
+
+    it('should return true if all fields in subsection are empty', () => {
+      const subsection: Subsection = {
+        title: 'General Information',
+        fields: [
+          { label: 'Has Previous Application', apiField: 'hasPreviousApplication' },
+          { label: 'Appealed Previous Decision', apiField: 'appealedPrevDecision' },
+        ],
+      }
+
+      const customResponse: CrmResponse = {
+        formDetails: {
+          hasPreviousApplication: '',
+          appealedPrevDecision: '',
+        },
+      }
+
+      expect(isSubsectionEmpty(subsection, customResponse)).toBe(true)
+    })
+
+    it('should return false if any field in subsection is not empty', () => {
+      const subsection: Subsection = {
+        title: 'General Information',
+        fields: [
+          { label: 'Has Previous Application', apiField: 'hasPreviousApplication' },
+          { label: 'Appealed Previous Decision', apiField: 'appealedPrevDecision' },
+        ],
+      }
+
+      expect(isSubsectionEmpty(subsection, mockCrmResponse)).toBe(false)
+    })
+
+    it('should return true if subsection has no fields', () => {
+      const subsection: Subsection = {
+        title: 'Empty Subsection',
+        fields: [],
+      }
+
+      expect(isSubsectionEmpty(subsection, mockCrmResponse)).toBe(true)
+    })
+
+    it('should return true if subsection.fields is undefined', () => {
+      const subsection: Subsection = {
+        title: 'Undefined Fields Subsection',
+      }
+
+      expect(isSubsectionEmpty(subsection, mockCrmResponse)).toBe(true)
+    })
+  })
+
+  describe('shouldIncludeInNavigation()', () => {
     const section: Section = {
       sectionId: 'general-information',
       title: 'General Information',
@@ -19,55 +79,73 @@ describe('crmDisplayHelper', () => {
               label: 'Most recent application reference',
               apiField: 'previousApplicationRef',
             },
+          ],
+        },
+        {
+          title: 'Details of Appeal',
+          fields: [
             {
-              label: 'Have you successfully appealed a previous decision of a CRM5 application (for the same matter)?',
+              label: 'Have you successfully appealed a previous decision?',
               apiField: 'appealedPrevDecision',
-            },
-            {
-              label: 'Please give details',
-              apiField: 'appealedPrevDecisionDetails',
             },
           ],
         },
       ],
     }
 
-    it('should return false if hideWhen conditions met', () => {
-      const customSection: Section = {
+    it('should return false if the section is not included due to conditions', () => {
+      const customSection = {
         ...section,
         hideWhen: [
           {
             apiField: 'hasPreviousApplication',
             equals: 'Yes',
           },
-          {
-            apiField: 'appealedPrevDecision',
-            equals: 'No',
-          },
         ],
       }
 
       const crmResponse: CrmResponse = {
         formDetails: {
-          usn: 1234567,
           hasPreviousApplication: 'Yes',
-          appealedPrevDecision: 'No',
+          previousApplicationRef: '',
+          appealedPrevDecision: '',
         },
       }
 
-      const result = includeSection(customSection, crmResponse)
-
+      const result = shouldIncludeInNavigation(customSection, crmResponse)
       expect(result).toBe(false)
     })
 
-    it('should return true if hideWhen conditions not met', () => {
-      const customSection: Section = {
+    it('should return true if the section has at least one non-empty subsection', () => {
+      const crmResponse: CrmResponse = {
+        formDetails: {
+          hasPreviousApplication: 'No',
+          previousApplicationRef: '12345',
+          appealedPrevDecision: '',
+        },
+      }
+
+      const result = shouldIncludeInNavigation(section, crmResponse)
+      expect(result).toBe(true)
+    })
+
+    it('should return false if all subsections are empty', () => {
+      const crmResponse: CrmResponse = {
+        formDetails: {
+          hasPreviousApplication: '',
+          previousApplicationRef: '',
+          appealedPrevDecision: '',
+        },
+      }
+
+      const result = shouldIncludeInNavigation(section, crmResponse)
+      expect(result).toBe(false)
+    })
+
+    it('should return false if the section itself is excluded by conditions', () => {
+      const customSection = {
         ...section,
         hideWhen: [
-          {
-            apiField: 'hasPreviousApplication',
-            equals: 'Yes',
-          },
           {
             apiField: 'appealedPrevDecision',
             equals: 'No',
@@ -77,162 +155,13 @@ describe('crmDisplayHelper', () => {
 
       const crmResponse: CrmResponse = {
         formDetails: {
-          usn: 1234567,
-          hasPreviousApplication: 'Yes', // hideWhen condition met
-          appealedPrevDecision: 'Yes', // hideWhen condition not met
-        },
-      }
-
-      const result = includeSection(customSection, crmResponse)
-
-      expect(result).toBe(true)
-    })
-
-    it('should return false if hideWhen and showWhen condition met', () => {
-      const customSection: Section = {
-        ...section,
-        showWhen: [
-          {
-            apiField: 'hasPreviousApplication',
-            equals: 'Yes',
-          },
-        ],
-        hideWhen: [
-          {
-            apiField: 'appealedPrevDecision',
-            equals: 'Yes',
-          },
-        ],
-      }
-
-      const crmResponse: CrmResponse = {
-        formDetails: {
-          usn: 1234567,
-          hasPreviousApplication: 'Yes', // hideWhen condition met
-          appealedPrevDecision: 'Yes', // showWhen condition met
-        },
-      }
-
-      const result = includeSection(customSection, crmResponse)
-
-      expect(result).toBe(false)
-    })
-
-    it('should return false if showWhen condition not met', () => {
-      const customSection: Section = {
-        ...section,
-        showWhen: [
-          {
-            apiField: 'hasPreviousApplication',
-            equals: 'Yes',
-          },
-        ],
-      }
-
-      const crmResponse: CrmResponse = {
-        formDetails: {
-          usn: 1234567,
-          hasPreviousApplication: 'No', // showWhen condition not met
-          appealedPrevDecision: 'Yes',
-        },
-      }
-
-      const result = includeSection(customSection, crmResponse)
-
-      expect(result).toBe(false)
-    })
-
-    it('should return true if no conditions defined on section', () => {
-      const crmResponse: CrmResponse = {
-        formDetails: {
-          usn: 1234567,
-          hasPreviousApplication: 'No',
+          hasPreviousApplication: 'Yes',
+          previousApplicationRef: '',
           appealedPrevDecision: 'No',
         },
       }
 
-      const result = includeSection(section, crmResponse)
-
-      expect(result).toBe(true)
-    })
-
-    it('should return true if hideWhen condition not met', () => {
-      const customSection: Section = {
-        ...section,
-        hideWhen: [
-          {
-            apiField: 'hasPreviousApplication',
-            equals: 'Yes',
-          },
-        ],
-      }
-
-      const crmResponse: CrmResponse = {
-        formDetails: {
-          usn: 1234567,
-          hasPreviousApplication: 'No', // hideWhen condition not met
-          appealedPrevDecision: 'No',
-        },
-      }
-
-      const result = includeSection(customSection, crmResponse)
-
-      expect(result).toBe(true)
-    })
-
-    it('should return true if showWhen conditions met', () => {
-      const customSection: Section = {
-        ...section,
-        showWhen: [
-          {
-            apiField: 'hasPreviousApplication',
-            equals: 'Yes',
-          },
-          {
-            apiField: 'appealedPrevDecision',
-            equals: 'Yes',
-          },
-        ],
-      }
-
-      const crmResponse: CrmResponse = {
-        formDetails: {
-          usn: 1234567,
-          hasPreviousApplication: 'Yes', // showWhen condition met
-          appealedPrevDecision: 'Yes', // showWhen condition met
-        },
-      }
-
-      const result = includeSection(customSection, crmResponse)
-
-      expect(result).toBe(true)
-    })
-
-    it('should return false if showWhen conditions not met', () => {
-      const customSection: Section = {
-        ...section,
-        showWhen: [
-          {
-            apiField: 'hasPreviousApplication',
-            equals: 'Yes',
-          },
-          {
-            apiField: 'appealedPrevDecision',
-            equals: 'Yes',
-          },
-        ],
-      }
-
-      const crmResponse: CrmResponse = {
-        formDetails: {
-          usn: 1234567,
-          hasPreviousApplication: 'Yes', // showWhen condition met
-          appealedPrevDecision: 'No', // showWhen condition not met
-        },
-      }
-
-      const result = includeSection(customSection, crmResponse)
-
+      const result = shouldIncludeInNavigation(customSection, crmResponse)
       expect(result).toBe(false)
     })
   })
