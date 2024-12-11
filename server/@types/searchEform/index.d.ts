@@ -11,11 +11,6 @@ type SearchResult = {
   crmLink?: string
 }
 
-type SearchError = {
-  status: number
-  message: string
-}
-
 type SearchRequest = {
   usn?: string
   type?: number
@@ -43,7 +38,7 @@ type SearchPaging = {
 type SearchResponse = {
   results: Array<SearchResult>
   paging?: SearchPaging
-  error?: SearchError
+  errorMessage?: string
 }
 
-export type { SearchRequest, SearchResponse, SearchError, SearchResult }
+export type { SearchRequest, SearchResponse, SearchResult }

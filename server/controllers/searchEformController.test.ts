@@ -214,19 +214,12 @@ describe('Search Eform Controller', () => {
     expect(mockSearchEformService.search).not.toHaveBeenCalled()
   })
 
-  it.each([
-    ['Not authorised to search', 401],
-    ['Not authorised to search', 403],
-    ['No search result found', 404],
-    ['Something went wrong with the search', 500],
-  ])('should render search eform with "%s" error for status %s', async (errorMessage, errorStatus) => {
+  it('should render search eform with error', async () => {
     const searchResponse: SearchResponse = {
       results: [],
-      error: {
-        status: errorStatus,
-        message: 'error',
-      },
+      errorMessage: 'Some error',
     }
+
     mockSearchEformService.search.mockResolvedValue(searchResponse)
 
     const searchEformController = new SearchEformController(mockSearchEformService)
@@ -244,7 +237,7 @@ describe('Search Eform Controller', () => {
         list: [
           {
             href: '#',
-            text: errorMessage,
+            text: 'Some error',
           },
         ],
       },

@@ -10,20 +10,13 @@ export default class SearchEformService {
       const response = await this.searchApiClient.search(searchRequest)
       if (response.results.length === 0) {
         logger.error('No results returned by search API')
-        return errorResponse(500, 'No search results found')
+        return errorResponse(404)
       }
       return successResponse(response)
     } catch (error) {
       logger.error('Search API error', error)
-      return errorResponse(error.status, error.message)
+      return errorResponse(error.status)
     }
-  }
-}
-
-const errorResponse = (status: number, message: string): SearchResponse => {
-  return {
-    results: [],
-    error: { status, message },
   }
 }
 
@@ -35,6 +28,25 @@ const successResponse = (searchResponse: SearchResponse): SearchResponse => {
   return {
     ...searchResponse,
     results: resultsWithLinks,
+  }
+}
+
+const errorResponse = (errorStatus: number): SearchResponse => {
+  return {
+    results: [],
+    errorMessage: getErrorMessage(errorStatus),
+  }
+}
+
+const getErrorMessage = (errorStatus: number): string => {
+  switch (errorStatus) {
+    case 401:
+    case 403:
+      return 'Not authorised to search'
+    case 404:
+      return 'No search result found'
+    default:
+      return 'Something went wrong with the search'
   }
 }
 

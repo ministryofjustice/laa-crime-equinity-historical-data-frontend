@@ -57,10 +57,10 @@ export default class SearchEformController {
           const searchRequest = this.buildSearchRequest(searchParams, getProfileAcceptedTypes(res))
           const searchResponse = await this.searchEformService.search(searchRequest)
 
-          if (searchResponse.error) {
+          if (searchResponse.errorMessage) {
             // render with errors for search API error
-            const searchErrors = buildErrors(searchResponse.error, this.getErrorMessage)
-            res.render(VIEW_PATH, { results: [], errors: searchErrors, formValues: searchParams, backUrl })
+            const errors = buildErrors(searchResponse.errorMessage)
+            res.render(VIEW_PATH, { results: [], errors, formValues: searchParams, backUrl })
           } else {
             // render with search results
             const { results, paging } = searchResponse
@@ -108,18 +108,6 @@ export default class SearchEformController {
 
       const queryString = buildQueryString(formValues)
       res.redirect(302, `/search-eform?page=1${queryString ? `&${queryString}` : ''}`)
-    }
-  }
-
-  private getErrorMessage(errorStatus: number): string {
-    switch (errorStatus) {
-      case 401:
-      case 403:
-        return 'Not authorised to search'
-      case 404:
-        return 'No search result found'
-      default:
-        return 'Something went wrong with the search'
     }
   }
 
