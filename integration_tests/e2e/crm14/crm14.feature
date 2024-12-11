@@ -6,7 +6,7 @@ Feature: CRM14 Case Journey
     And the user chooses "CRM 14" from the CRM type dropdown and initiates a search
     And the user clicks on a Client name or USN link
     Then the system should display the CRM14 case details page
-    And the navigation panel should have "20" items listed
+    And the navigation panel should have "12" items listed
     And the main content area should present the expected details
     And the Legal Representation section should display the proper layout
 

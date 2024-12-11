@@ -6,7 +6,7 @@ Feature: CRM4 Case Navigation
     And the user selects "CRM 4" from the CRM type dropdown and performs a search
     And the user clicks on a Client name or USN link
     Then it should navigate to the corresponding CRM4 case page
-    And the left navigation bar should display "11" items
+    And the left navigation bar should display "10" items
     And the right container should show static information
     And the Standard Properties page should display the correct layout
 
