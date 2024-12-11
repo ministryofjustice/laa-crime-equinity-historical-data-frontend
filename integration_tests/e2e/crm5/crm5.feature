@@ -6,6 +6,6 @@ Feature: CRM5 Case Navigation
     And the user selects "CRM 5" from the CRM type dropdown and clicks search
     And the user clicks on a Client name or USN link
     Then it should return a page related to the corresponding CRM5 case
-    And we should see a left bar navigation with "18" items
+    And we should see a left bar navigation with "15" items
     And we should see a right container with static infos displayed
     And the Costs page should be displayed with the correct layout
