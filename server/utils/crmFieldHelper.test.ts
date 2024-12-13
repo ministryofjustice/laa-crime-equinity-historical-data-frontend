@@ -1,7 +1,7 @@
 import { CrmResponse } from '@eqApi'
 import { fieldHasValue, getCrmFieldValue } from './crmFieldHelper'
 
-describe('crmResponseHelper', () => {
+describe('crmFieldHelper', () => {
   describe('fieldHasValue', () => {
     it.each([
       [undefined, false],
