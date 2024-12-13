@@ -53,14 +53,3 @@ export const removeUnderscore = (value: string): string => {
     .toLowerCase()
     .replace(/\b\w/g, char => char.toUpperCase())
 }
-
-export const fieldHasValue = (value: unknown): boolean => {
-  if (value === undefined || value === null) return false
-  if (typeof value === 'string') return value.trim() !== ''
-  if (typeof value === 'boolean' || typeof value === 'number') return true
-  if (Array.isArray(value)) return value.some(fieldHasValue)
-  if (typeof value === 'object') {
-    return Object.values(value).some(fieldHasValue)
-  }
-  return false
-}

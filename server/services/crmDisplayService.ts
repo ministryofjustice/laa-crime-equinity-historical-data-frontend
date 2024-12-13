@@ -17,7 +17,8 @@ import crm5DisplayConfig from './config/crm5DisplayConfig.json'
 import crm7DisplayConfig from './config/crm7DisplayConfig.json'
 import crm14DisplayConfig from './config/crm14DisplayConfig.json'
 import validateConfig from '../utils/crmDisplayConfigValidation'
-import { getApiFieldValue, isSubsectionEmpty, shouldIncludeInNavigation } from '../utils/crmDisplayHelper'
+import { isSubsectionEmpty, shouldIncludeInNavigation } from '../utils/crmDisplayHelper'
+import { getCrmFieldValue } from '../utils/crmFieldHelper'
 
 const configMap: Record<CrmType, CrmDisplayConfig> = {
   crm4: validateConfig(crm4DisplayConfig as CrmDisplayConfig, 'crm4'),
@@ -80,7 +81,7 @@ export default class CrmDisplayService {
       return fields
         .map(field => {
           if (isConfigField(field)) {
-            return { ...field, value: getApiFieldValue(crmResponse, field.apiField) }
+            return { ...field, value: getCrmFieldValue(crmResponse, field.apiField) }
           }
           return field
         })
@@ -112,7 +113,7 @@ export default class CrmDisplayService {
     if (customDisplay) {
       return {
         ...customDisplay,
-        value: getApiFieldValue(crmResponse, customDisplay.apiField),
+        value: getCrmFieldValue(crmResponse, customDisplay.apiField),
       }
     }
     return undefined

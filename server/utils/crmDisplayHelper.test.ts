@@ -1,6 +1,6 @@
 import { Section, Subsection } from '@crmDisplay'
 import { CrmResponse } from '@eqApi'
-import { getApiFieldValue, isSubsectionEmpty, shouldIncludeInNavigation } from './crmDisplayHelper'
+import { isSubsectionEmpty, shouldIncludeInNavigation } from './crmDisplayHelper'
 
 describe('crmDisplayHelper', () => {
   describe('isSubsectionEmpty', () => {
@@ -163,55 +163,6 @@ describe('crmDisplayHelper', () => {
 
       const result = shouldIncludeInNavigation(customSection, crmResponse)
       expect(result).toBe(false)
-    })
-  })
-
-  describe('getApiFieldValue', () => {
-    const crmResponse: CrmResponse = {
-      formDetails: {
-        usn: 1234567,
-        hasPreviousApplication: 'Yes',
-        previousApplicationRef: '',
-        appealedPrevDecision: 'No',
-        appealedPrevDecisionDetails: '',
-        urgent: 'Yes',
-        urgencyReason: 'Urgent',
-      },
-      evidenceFiles: {
-        files: [
-          {
-            key: '0000.att',
-            type: 'SomeFile',
-            name: 'somefile.png',
-          },
-        ],
-      },
-    }
-
-    it('returns api field value in formDetails', () => {
-      const result = getApiFieldValue(crmResponse, 'usn')
-
-      expect(result).toEqual(1234567)
-    })
-
-    it('returns api field value not in formDetails', () => {
-      const result = getApiFieldValue(crmResponse, 'evidenceFiles')
-
-      expect(result).toEqual({
-        files: [
-          {
-            key: '0000.att',
-            type: 'SomeFile',
-            name: 'somefile.png',
-          },
-        ],
-      })
-    })
-
-    it('returns empty string if api field not found', () => {
-      const result = getApiFieldValue(crmResponse, '???')
-
-      expect(result).toEqual('')
     })
   })
 })
