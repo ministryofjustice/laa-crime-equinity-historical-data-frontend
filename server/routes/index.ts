@@ -16,6 +16,7 @@ export default function routes({
   crm14Controller,
   downloadEvidenceController,
   generateReportController,
+  providerReportController,
   homeController,
   staticPageController,
 }: Controllers): Router {
@@ -88,6 +89,10 @@ export default function routes({
   get('/contact-us', staticPageController.showContact())
 
   get('/accessibility-statement', staticPageController.showAccStatement())
+
+  get('/provider-report', providerReportController.show(), checkReportingAllowed)
+
+  post('/provider-report', providerReportController.submit())
 
   return router
 }
