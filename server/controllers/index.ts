@@ -6,6 +6,7 @@ import type { Services } from '../services'
 import CrmController from './crmController'
 import DownloadEvidenceController from './downloadEvidenceController'
 import GenerateReportController from './generateReportController'
+import ProviderReportController from './providerReportController'
 import HomeController from './homeController'
 import SearchEformController from './searchEformController'
 import StaticPageController from './staticPageController'
@@ -17,6 +18,7 @@ export const controllers = (services: Services) => {
   const crm14Controller = new CrmController<Crm14Response>('crm14', services.crm14Service, services.crmDisplayService)
   const downloadEvidenceController = new DownloadEvidenceController(services.downloadEvidenceService)
   const generateReportController = new GenerateReportController(services.generateReportService)
+  const providerReportController = new ProviderReportController(services.providerReportService)
   const homeController = new HomeController()
   const searchEformController = new SearchEformController(services.searchEformService)
   const staticPageController = new StaticPageController()
@@ -28,6 +30,7 @@ export const controllers = (services: Services) => {
     crm14Controller,
     downloadEvidenceController,
     generateReportController,
+    providerReportController,
     homeController,
     searchEformController,
     staticPageController,

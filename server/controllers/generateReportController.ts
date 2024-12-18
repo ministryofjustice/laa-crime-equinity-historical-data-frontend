@@ -17,6 +17,7 @@ export default class GenerateReportController {
       const backUrl = manageBackLink(CURRENT_URL)
       res.render(VIEW_PATH, {
         backUrl,
+        isProviderReport: false,
       })
     }
   }
@@ -43,6 +44,7 @@ export default class GenerateReportController {
           errors: validationErrors,
           formValues: reportParams,
           backUrl: manageBackLink(CURRENT_URL),
+          isProviderReport: false,
         })
       } else {
         // perform generate report
@@ -58,6 +60,7 @@ export default class GenerateReportController {
             errors,
             formValues: reportParams,
             backUrl: manageBackLink(CURRENT_URL),
+            isProviderReport: false,
           })
         } else {
           res.setHeader('Content-Type', 'text/csv')
