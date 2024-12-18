@@ -1,19 +1,24 @@
 import type { Request, RequestHandler, Response } from 'express'
 import ProviderReportService from '../services/providerReportService'
-import validateProviderReportParams from '../utils/providerReportValidation'
+import validateReportParams from '../utils/generateReportValidation'
 import manageBackLink from '../utils/crmBackLink'
 
 const CURRENT_URL = '/provider-report'
-const VIEW_PATH = 'pages/providerReport'
+const VIEW_PATH = 'pages/generateReport'
 
 export default class ProviderReportController {
   constructor(private readonly providerReportService: ProviderReportService) {}
 
+  // Show the Provider Report page
   show(): RequestHandler {
-    return async (req: Request, res: Response): Promise<void> => {
+    return (req: Request, res: Response): void => {
       const backUrl = manageBackLink(CURRENT_URL)
+
       res.render(VIEW_PATH, {
         backUrl,
+        isProviderReport: true, // Flag to identify Provider Report
+        formValues: {}, // Default form values
+        errors: {}, // No errors initially
       })
     }
   }
@@ -54,13 +59,15 @@ export default class ProviderReportController {
       }
 
       // Validate filtered parameters
-      const validationErrors = validateProviderReportParams(reportParams)
+      // const validationErrors = validateReportParams(reportParams)
+      const validationErrors = validateReportParams(reportParams, true) // Pass the flag as 'true'
 
       if (validationErrors) {
         return res.render(VIEW_PATH, {
           formValues: allParams,
           errors: validationErrors,
           backUrl: manageBackLink(CURRENT_URL),
+          isProviderReport: true,
         })
       }
       // eslint-disable-next-line no-console

@@ -35,6 +35,7 @@ describe('GenerateReportController', () => {
 
       expect(response.render).toHaveBeenCalledWith('pages/generateReport', {
         backUrl: '/',
+        isProviderReport: false,
       })
     })
   })
@@ -108,7 +109,14 @@ describe('GenerateReportController', () => {
           crmType: '',
           decisionFromDate: '2023-03-01',
           decisionToDate: '2023-03-30',
+          submittedFromDate: undefined,
+          submittedToDate: undefined,
+          createdFromDate: undefined,
+          createdToDate: undefined,
+          lastSubmittedFromDate: undefined,
+          lastSubmittedToDate: undefined,
         },
+        isProviderReport: false,
       })
       expect(mockGenerateReportService.getCrmReport).not.toHaveBeenCalled()
     })
@@ -146,7 +154,14 @@ describe('GenerateReportController', () => {
           crmType: 'crm4',
           decisionFromDate: '2023-03-01',
           decisionToDate: '2023-03-30',
+          submittedFromDate: undefined,
+          submittedToDate: undefined,
+          createdFromDate: undefined,
+          createdToDate: undefined,
+          lastSubmittedFromDate: undefined,
+          lastSubmittedToDate: undefined,
         },
+        isProviderReport: false,
       })
     })
   })

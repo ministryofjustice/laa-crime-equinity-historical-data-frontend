@@ -18,11 +18,11 @@
                   <a href="/generate-report" class="govuk-link govuk-link--no-visited-state">Generate eForm reports</a>
               </p>
           {% endif %}
-
+          {% if environmentName and environmentName !== 'prod' %}
           <p class="govuk-body">
               <a href="/provider-report" class="govuk-link govuk-link--no-visited-state">Generate provider reports</a>
           </p>
-
+          {% endif %}
           <p class="govuk-body">
               <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
           </p>
