@@ -4,7 +4,6 @@ import CrmApiService from './crmApiService'
 import CrmDisplayService from './crmDisplayService'
 import DownloadEvidenceService from './downloadEvidenceService'
 import GenerateReportService from './generateReportService'
-import ProviderReportService from './providerReportService'
 
 export const services = () => {
   const {
@@ -25,7 +24,6 @@ export const services = () => {
   const crmDisplayService = new CrmDisplayService()
   const downloadEvidenceService = new DownloadEvidenceService(sdsApiClient)
   const generateReportService = new GenerateReportService(crmReportApiClient)
-  const providerReportService = new ProviderReportService()
   const searchEformService = new SearchEformService(searchApiClient)
 
   return {
@@ -38,7 +36,6 @@ export const services = () => {
     generateReportService,
     downloadEvidenceService,
     searchEformService,
-    providerReportService,
   }
 }
 
