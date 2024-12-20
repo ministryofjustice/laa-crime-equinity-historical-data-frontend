@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
     crm14Container.style.display = crmTypeDropdown.value === 'crm14' ? 'block' : 'none'
   }
 
-  // const crmTypeDropdown = document.getElementById('crmType');
   const providerAccountField = document.getElementById('providerAccountField')
 
   function toggleProviderAccountField() {
