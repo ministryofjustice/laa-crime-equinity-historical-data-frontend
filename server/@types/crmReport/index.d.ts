@@ -9,6 +9,7 @@ type CrmReportRequest = {
   lastSubmittedFromDate?: string
   lastSubmittedToDate?: string
   profileAcceptedTypes: string
+  providerAccount?: string
 }
 
 type CrmReportResponse = {
