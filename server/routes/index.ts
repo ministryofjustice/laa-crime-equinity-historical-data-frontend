@@ -16,7 +16,6 @@ export default function routes({
   crm14Controller,
   downloadEvidenceController,
   generateReportController,
-  providerReportController,
   homeController,
   staticPageController,
 }: Controllers): Router {
@@ -78,7 +77,7 @@ export default function routes({
 
   get('/crm14/:usn/:sectionId?', crm14Controller.show())
 
-  get('/generate-report', generateReportController.show(), checkReportingAllowed)
+  get('/generate-report', generateReportController.show(false), checkReportingAllowed)
 
   post('/generate-report', generateReportController.submit(), checkReportingAllowed)
 
@@ -90,9 +89,9 @@ export default function routes({
 
   get('/accessibility-statement', staticPageController.showAccStatement())
 
-  get('/provider-report', providerReportController.show(), checkReportingAllowed)
+  get('/provider-report', generateReportController.show(true), checkReportingAllowed)
 
-  post('/provider-report', providerReportController.submit())
+  post('/provider-report', generateReportController.submit(), checkReportingAllowed)
 
   return router
 }
