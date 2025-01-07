@@ -113,16 +113,4 @@ describe('CRM Report Api Client', () => {
       }),
     ).rejects.toThrow('Not Found')
   })
-
-  it('should handle missing providerAccount', async () => {
-    await expect(
-      crmReportApiClient.getProviderCrmReport({
-        crmType: 'crm4',
-        decisionFromDate: '2023-03-01',
-        decisionToDate: '2023-03-30',
-        providerAccount: '', // Missing provider account
-        profileAcceptedTypes: '1,4,5,6',
-      }),
-    ).rejects.toThrow('Missing required providerAccount parameter')
-  })
 })

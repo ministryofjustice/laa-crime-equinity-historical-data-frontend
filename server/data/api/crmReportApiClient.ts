@@ -29,10 +29,6 @@ export default class CrmReportApiClient {
   async getProviderCrmReport(crmReportRequest: CrmReportRequest): Promise<superagent.Response> {
     const { crmType, decisionFromDate, decisionToDate, providerAccount } = crmReportRequest
 
-    if (!providerAccount) {
-      throw new Error('Missing required providerAccount parameter')
-    }
-
     return CrmReportApiClient.restClient('Provider Report API client', 'no_auth').get<superagent.Response>({
       path: `/api/internal/v1/equinity/report/provider/${crmType}/`,
       headers: {
