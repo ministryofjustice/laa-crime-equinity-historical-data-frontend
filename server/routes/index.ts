@@ -79,7 +79,7 @@ export default function routes({
 
   get('/generate-report', generateReportController.show(false), checkReportingAllowed)
 
-  post('/generate-report', generateReportController.submit(), checkReportingAllowed)
+  post('/generate-report', generateReportController.submit(false), checkReportingAllowed)
 
   get('/download-evidence', downloadEvidenceController.download())
 
@@ -91,7 +91,7 @@ export default function routes({
 
   get('/provider-report', generateReportController.show(true), checkReportingAllowed)
 
-  post('/provider-report', generateReportController.submit(), checkReportingAllowed)
+  post('/provider-report', generateReportController.submit(true), checkReportingAllowed)
 
   return router
 }

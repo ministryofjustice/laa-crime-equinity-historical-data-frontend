@@ -162,15 +162,19 @@ describe('GenerateReportController', () => {
     })
 
     it('should send the requested Provider CRM report as a download', async () => {
-      const crmReportResponse = getCrmReportResponse()
+      const crmReportResponse: { text: string | null; errorMessage: string | null } = {
+        text: 'Header1,Header2,Header3\nValue1,Value2,Value3',
+        errorMessage: null,
+      }
+
       mockGenerateReportService.getProviderCrmReport.mockResolvedValue(crmReportResponse)
 
       const generateReportController = new GenerateReportController(mockGenerateReportService)
-      const requestHandler = generateReportController.submit()
+      const requestHandler = generateReportController.submit(true)
 
-      // Mock the path property
       Object.defineProperty(request, 'path', {
         value: '/provider-report', // Simulate the provider report route
+        writable: false,
       })
 
       request.body = {

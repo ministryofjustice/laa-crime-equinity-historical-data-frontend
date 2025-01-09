@@ -169,7 +169,7 @@ export default function validateReportParams(
       providerAccount: Joi.when('crmType', {
         is: 'crm4',
         then: Joi.string().required().empty('').messages({
-          'any.required': 'Enter Provider account',
+          'any.required': "Enter 'Provider account'",
         }),
         otherwise: Joi.string().optional().allow(''),
       }),

@@ -312,19 +312,17 @@ describe('Generate Report Validation', () => {
       })
     })
   })
+
   describe('Provider Report Validation', () => {
     describe('valid provider report parameters', () => {
-      it.each([
-        [
-          'CRM 4 with provider account',
-          {
-            crmType: 'crm4',
-            decisionFromDate: '2024-01-01',
-            decisionToDate: '2024-01-10',
-            providerAccount: '123456',
-          },
-        ],
-      ])('should validate %s', (name, params) => {
+      it('should validate CRM 4 with provider account', () => {
+        const params = {
+          crmType: 'crm4',
+          decisionFromDate: '2024-01-01',
+          decisionToDate: '2024-01-10',
+          providerAccount: '123456',
+        }
+
         const result = validateReportParams(params, true) // Pass isProviderReport: true
 
         expect(result).toBeNull()
@@ -332,31 +330,26 @@ describe('Generate Report Validation', () => {
     })
 
     describe('validation errors', () => {
-      it.each([
-        [
-          'missing provider account',
-          'providerAccount',
-          {
-            crmType: 'crm4',
-            decisionFromDate: '2024-01-01',
-            decisionToDate: '2024-01-10',
-            providerAccount: '',
-          },
-          'Enter Provider account',
-        ],
-      ])('should return error for %s', (reason, field, params, error) => {
+      it('should return error for missing provider account', () => {
+        const params = {
+          crmType: 'crm4',
+          decisionFromDate: '2024-01-01',
+          decisionToDate: '2024-01-10',
+          providerAccount: '',
+        }
+
         const result = validateReportParams(params, true) // Pass isProviderReport: true
 
         expect(result).toEqual({
           list: [
             {
-              href: `#${field}`,
-              text: error,
+              href: '#providerAccount',
+              text: "Enter 'Provider account'",
             },
           ],
           messages: {
-            [field]: {
-              text: error,
+            providerAccount: {
+              text: "Enter 'Provider account'",
             },
           },
         })

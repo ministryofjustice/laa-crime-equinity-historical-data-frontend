@@ -24,10 +24,8 @@ export default class GenerateReportController {
     }
   }
 
-  submit(): RequestHandler {
+  submit(isProviderReport = false): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      const isProviderReport = req.path === '/provider-report'
-
       const allParams: Record<string, string> = {
         crmType: req.body.crmType as string,
         decisionFromDate: req.body.decisionFromDate as string,
@@ -52,13 +50,9 @@ export default class GenerateReportController {
           backUrl: manageBackLink(CURRENT_URL),
           isProviderReport,
         })
-        return
-      }
-
-      // perform generate report
-      const crmReportRequest = this.buildReportRequest(reportParams, getProfileAcceptedTypes(res), isProviderReport)
-
-      try {
+      } else {
+        // perform generate report
+        const crmReportRequest = this.buildReportRequest(reportParams, getProfileAcceptedTypes(res), isProviderReport)
         const crmReportResponse = isProviderReport
           ? await this.generateReportService.getProviderCrmReport(crmReportRequest)
           : await this.generateReportService.getCrmReport(crmReportRequest)
@@ -73,24 +67,15 @@ export default class GenerateReportController {
             backUrl: manageBackLink(CURRENT_URL),
             isProviderReport,
           })
-          return
+        } else {
+          // Send the report as a CSV
+          res.setHeader('Content-Type', 'text/csv')
+          res.setHeader(
+            'Content-Disposition',
+            `attachment; filename=${this.getReportFilename(reportParams.crmType, isProviderReport)}`,
+          )
+          res.send(crmReportResponse.text)
         }
-
-        // Send the report as a CSV
-        res.setHeader('Content-Type', 'text/csv')
-        res.setHeader(
-          'Content-Disposition',
-          `attachment; filename=${this.getReportFilename(reportParams.crmType, isProviderReport)}`,
-        )
-        res.send(crmReportResponse.text)
-      } catch (error) {
-        // Handle unexpected errors
-        res.render(VIEW_PATH, {
-          errors: { list: [{ href: '#', text: 'An unexpected error occurred. Please try again later.' }] },
-          formValues: allParams,
-          backUrl: manageBackLink(CURRENT_URL),
-          isProviderReport,
-        })
       }
     }
   }
