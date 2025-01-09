@@ -157,12 +157,29 @@ const schemaCrm14 = Joi.object({
     'lastSubmittedToDate.range': 'Last submitted date range cannot be more than 1 month',
   })
 
-export default function validateReportParams(params: Record<string, string>): Errors {
+export default function validateReportParams(
+  params: Record<string, string>,
+  isProviderReport: boolean = false, // Add the flag with a default value
+): Errors {
+  let extendedSchema = schema // Start with the existing base schema
+
+  // Conditionally append the providerAccount field if it's a Provider Report
+  if (isProviderReport) {
+    extendedSchema = schema.append({
+      providerAccount: Joi.when('crmType', {
+        is: 'crm4',
+        then: Joi.string().required().empty('').messages({
+          'any.required': "Enter 'Provider account'",
+        }),
+        otherwise: Joi.string().optional().allow(''),
+      }),
+    })
+  }
   if (params.crmType === 'crm14') {
     return validateCrm14ReportParams(params)
   }
-
-  const { error } = schema.validate(params)
+  // Validate the params using the (potentially extended) schema
+  const { error } = extendedSchema.validate(params)
   if (error?.details) {
     return buildValidationErrors(error)
   }

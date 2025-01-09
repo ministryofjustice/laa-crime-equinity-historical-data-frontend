@@ -35,6 +35,9 @@ describe('GenerateReportController', () => {
 
       expect(response.render).toHaveBeenCalledWith('pages/generateReport', {
         backUrl: '/',
+        isProviderReport: false,
+        formValues: {},
+        errors: {},
       })
     })
   })
@@ -50,12 +53,6 @@ describe('GenerateReportController', () => {
         crmType: 'crm4',
         decisionFromDate: '2023-03-01',
         decisionToDate: '2023-03-30',
-        submittedFromDate: '2023-03-01',
-        submittedToDate: '2023-03-30',
-        createdFromDate: '2023-03-01',
-        createdToDate: '2023-03-30',
-        lastSubmittedFromDate: '2023-03-01',
-        lastSubmittedToDate: '2023-03-30',
       }
 
       await requestHandler(request, response, next)
@@ -64,16 +61,16 @@ describe('GenerateReportController', () => {
       expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=crm4Report.csv')
       expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
       expect(mockGenerateReportService.getCrmReport).toHaveBeenCalledWith({
-        createdFromDate: '2023-03-01',
-        createdToDate: '2023-03-30',
         crmType: 'crm4',
         decisionFromDate: '2023-03-01',
         decisionToDate: '2023-03-30',
-        lastSubmittedFromDate: '2023-03-01',
-        lastSubmittedToDate: '2023-03-30',
         profileAcceptedTypes: '1,4,5,6',
-        submittedFromDate: '2023-03-01',
-        submittedToDate: '2023-03-30',
+        submittedFromDate: undefined,
+        submittedToDate: undefined,
+        createdFromDate: undefined,
+        createdToDate: undefined,
+        lastSubmittedFromDate: undefined,
+        lastSubmittedToDate: undefined,
       })
     })
 
@@ -89,7 +86,6 @@ describe('GenerateReportController', () => {
       await requestHandler(request, response, next)
 
       expect(response.render).toHaveBeenCalledWith('pages/generateReport', {
-        results: [],
         errors: {
           list: [
             {
@@ -108,7 +104,15 @@ describe('GenerateReportController', () => {
           crmType: '',
           decisionFromDate: '2023-03-01',
           decisionToDate: '2023-03-30',
+          submittedFromDate: undefined,
+          submittedToDate: undefined,
+          createdFromDate: undefined,
+          createdToDate: undefined,
+          lastSubmittedFromDate: undefined,
+          lastSubmittedToDate: undefined,
+          providerAccount: undefined,
         },
+        isProviderReport: false,
       })
       expect(mockGenerateReportService.getCrmReport).not.toHaveBeenCalled()
     })
@@ -132,7 +136,6 @@ describe('GenerateReportController', () => {
       await requestHandler(request, response, next)
 
       expect(response.render).toHaveBeenCalledWith('pages/generateReport', {
-        results: [],
         errors: {
           list: [
             {
@@ -146,7 +149,50 @@ describe('GenerateReportController', () => {
           crmType: 'crm4',
           decisionFromDate: '2023-03-01',
           decisionToDate: '2023-03-30',
+          submittedFromDate: undefined,
+          submittedToDate: undefined,
+          createdFromDate: undefined,
+          createdToDate: undefined,
+          lastSubmittedFromDate: undefined,
+          lastSubmittedToDate: undefined,
         },
+        isProviderReport: false,
+      })
+    })
+
+    it('should send the requested Provider CRM report as a download', async () => {
+      const crmReportResponse: { text: string | null; errorMessage: string | null } = {
+        text: 'Header1,Header2,Header3\nValue1,Value2,Value3',
+        errorMessage: null,
+      }
+
+      mockGenerateReportService.getProviderCrmReport.mockResolvedValue(crmReportResponse)
+
+      const generateReportController = new GenerateReportController(mockGenerateReportService)
+      const requestHandler = generateReportController.submit(true)
+
+      request.body = {
+        crmType: 'crm4',
+        decisionFromDate: '2023-03-01',
+        decisionToDate: '2023-03-30',
+        providerAccount: '1234',
+      }
+
+      await requestHandler(request, response, next)
+
+      expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'text/csv')
+      expect(response.setHeader).toHaveBeenCalledWith(
+        'Content-Disposition',
+        'attachment; filename=crm4-ProviderReport.csv',
+      )
+      expect(response.send).toHaveBeenCalledWith(crmReportResponse.text)
+
+      expect(mockGenerateReportService.getProviderCrmReport).toHaveBeenCalledWith({
+        crmType: 'crm4',
+        decisionFromDate: '2023-03-01',
+        decisionToDate: '2023-03-30',
+        providerAccount: '1234',
+        profileAcceptedTypes: '',
       })
     })
   })

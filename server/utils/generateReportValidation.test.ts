@@ -312,4 +312,48 @@ describe('Generate Report Validation', () => {
       })
     })
   })
+
+  describe('Provider Report Validation', () => {
+    describe('valid provider report parameters', () => {
+      it('should validate CRM 4 with provider account', () => {
+        const params = {
+          crmType: 'crm4',
+          decisionFromDate: '2024-01-01',
+          decisionToDate: '2024-01-10',
+          providerAccount: '123456',
+        }
+
+        const result = validateReportParams(params, true) // Pass isProviderReport: true
+
+        expect(result).toBeNull()
+      })
+    })
+
+    describe('validation errors', () => {
+      it('should return error for missing provider account', () => {
+        const params = {
+          crmType: 'crm4',
+          decisionFromDate: '2024-01-01',
+          decisionToDate: '2024-01-10',
+          providerAccount: '',
+        }
+
+        const result = validateReportParams(params, true) // Pass isProviderReport: true
+
+        expect(result).toEqual({
+          list: [
+            {
+              href: '#providerAccount',
+              text: "Enter 'Provider account'",
+            },
+          ],
+          messages: {
+            providerAccount: {
+              text: "Enter 'Provider account'",
+            },
+          },
+        })
+      })
+    })
+  })
 })

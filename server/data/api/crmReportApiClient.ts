@@ -26,6 +26,23 @@ export default class CrmReportApiClient {
     })
   }
 
+  async getProviderCrmReport(crmReportRequest: CrmReportRequest): Promise<superagent.Response> {
+    const { crmType, decisionFromDate, decisionToDate, providerAccount } = crmReportRequest
+
+    return CrmReportApiClient.restClient('Provider Report API client', 'no_auth').get<superagent.Response>({
+      path: `/api/internal/v1/equinity/report/provider/${crmType}/`,
+      headers: {
+        ...this.headers,
+      },
+      query: {
+        decisionFrom: decisionFromDate,
+        decisionTo: decisionToDate,
+        providerAccount,
+      },
+      raw: true, // handle API plain-text response data
+    })
+  }
+
   async getCrm14Report(crmReportRequest: CrmReportRequest): Promise<string> {
     const {
       crmType,

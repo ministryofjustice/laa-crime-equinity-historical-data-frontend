@@ -77,9 +77,9 @@ export default function routes({
 
   get('/crm14/:usn/:sectionId?', crm14Controller.show())
 
-  get('/generate-report', generateReportController.show(), checkReportingAllowed)
+  get('/generate-report', generateReportController.show(false), checkReportingAllowed)
 
-  post('/generate-report', generateReportController.submit(), checkReportingAllowed)
+  post('/generate-report', generateReportController.submit(false), checkReportingAllowed)
 
   get('/download-evidence', downloadEvidenceController.download())
 
@@ -88,6 +88,10 @@ export default function routes({
   get('/contact-us', staticPageController.showContact())
 
   get('/accessibility-statement', staticPageController.showAccStatement())
+
+  get('/provider-report', generateReportController.show(true), checkReportingAllowed)
+
+  post('/provider-report', generateReportController.submit(true), checkReportingAllowed)
 
   return router
 }
