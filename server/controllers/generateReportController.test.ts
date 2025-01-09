@@ -136,7 +136,6 @@ describe('GenerateReportController', () => {
       await requestHandler(request, response, next)
 
       expect(response.render).toHaveBeenCalledWith('pages/generateReport', {
-        results: [],
         errors: {
           list: [
             {
@@ -171,11 +170,6 @@ describe('GenerateReportController', () => {
 
       const generateReportController = new GenerateReportController(mockGenerateReportService)
       const requestHandler = generateReportController.submit(true)
-
-      Object.defineProperty(request, 'path', {
-        value: '/provider-report', // Simulate the provider report route
-        writable: false,
-      })
 
       request.body = {
         crmType: 'crm4',

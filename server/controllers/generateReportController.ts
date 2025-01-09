@@ -61,7 +61,6 @@ export default class GenerateReportController {
           // render with errors for report API error
           const errors = buildErrors(crmReportResponse.errorMessage)
           res.render(VIEW_PATH, {
-            results: [],
             errors,
             formValues: reportParams,
             backUrl: manageBackLink(CURRENT_URL),
