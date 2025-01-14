@@ -5,14 +5,15 @@ import logger from '../../logger'
 export default class GenerateReportService {
   constructor(private readonly crmReportApiClient: CrmReportApiClient) {}
 
-  async getCrmReport(crmReportRequest: CrmReportRequest, isProviderReport = false): Promise<CrmReportResponse> {
-    if (isProviderReport && !crmReportRequest.providerAccount) {
-      throw new Error('Missing required providerAccount parameter')
-    }
+  // async getCrmReport(crmReportRequest: CrmReportRequest, isProviderReport = false): Promise<CrmReportResponse> {
+  async getCrmReport(crmReportRequest: CrmReportRequest): Promise<CrmReportResponse> {
+    // if (isProviderReport && !crmReportRequest.providerAccount) {
+    //   throw new Error('Missing required providerAccount parameter')
+    // }
     try {
-      if (isProviderReport) {
-        return await this.getProviderCrmReport(crmReportRequest)
-      }
+      // if (isProviderReport) {
+      //   return await this.getProviderCrmReport(crmReportRequest)
+      // }
 
       if (crmReportRequest.crmType === 'crm14') {
         // Get CRM 14 report
@@ -31,6 +32,11 @@ export default class GenerateReportService {
 
   async getProviderCrmReport(crmReportRequest: CrmReportRequest): Promise<CrmReportResponse> {
     try {
+      if (crmReportRequest.crmType === 'crm14') {
+        // Get CRM 14 report
+        const response = await this.crmReportApiClient.getProviderCrm14Report(crmReportRequest)
+        return successResponse(response)
+      }
       const response = await this.crmReportApiClient.getProviderCrmReport(crmReportRequest)
       return successResponse(response.text)
     } catch (error) {

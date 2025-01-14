@@ -39,6 +39,8 @@ export default class GenerateReportController {
         providerAccount: req.body.providerAccount as string,
       }
 
+      console.log('Params received in controller:', allParams)
+
       const reportParams = this.buildReportParams(allParams, isProviderReport)
 
       const validationErrors = validateReportParams(reportParams, isProviderReport)
@@ -86,7 +88,9 @@ export default class GenerateReportController {
     reportParams.decisionFromDate = allParams.decisionFromDate
     reportParams.decisionToDate = allParams.decisionToDate
 
-    if (isProviderReport && allParams.crmType === 'crm4') {
+    // Include providerAccount for provider reports with CRM4 and CRM14
+    if (isProviderReport && ['crm4', 'crm14'].includes(allParams.crmType)) {
+      // if (isProviderReport && allParams.crmType === 'crm4') {
       // Only include providerAccount for provider reports with CRM4
       reportParams.providerAccount = allParams.providerAccount
     }

@@ -49,7 +49,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function toggleProviderAccountField() {
     if (crmTypeDropdown && providerAccountField) {
-      providerAccountField.style.display = crmTypeDropdown.value === 'crm4' ? 'block' : 'none'
+      providerAccountField.style.display = ['crm4', 'crm14'].includes(crmTypeDropdown.value) ? 'block' : 'none'
+      // providerAccountField.style.display = crmTypeDropdown.value === 'crm4' ? 'block' : 'none'
     }
   }
 
