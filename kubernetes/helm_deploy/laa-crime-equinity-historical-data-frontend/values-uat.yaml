@@ -8,5 +8,6 @@ ingress:
 env:
   EQ_API_URL: https://laa-crime-equinity-historical-data-uat.apps.live.cloud-platform.service.justice.gov.uk
   SDS_API_URL: https://laa-sds-test.apps.live.cloud-platform.service.justice.gov.uk
+  SSO_DISABLED: true
   SSO_POST_LOGOUT_REDIRECT_URI: https://laa-crime-equinity-historical-data-frontend-uat.apps.live.cloud-platform.service.justice.gov.uk
   SSO_REDIRECT_URI: https://laa-crime-equinity-historical-data-frontend-uat.apps.live.cloud-platform.service.justice.gov.uk/auth/redirect
