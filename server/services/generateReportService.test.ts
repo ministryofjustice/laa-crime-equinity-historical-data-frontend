@@ -109,10 +109,10 @@ describe('Generate Report Service', () => {
 
   it('should return provider crm report', async () => {
     const responseData = {
-      text: 'sample,csv,data\n1,2,3', // Mocked CSV data
-    } as superagent.Response // Mock the response object as a superagent Response type
+      text: 'sample,csv,data\n1,2,3',
+    } as superagent.Response
 
-    mockCrmReportApiClient.getProviderCrmReport.mockResolvedValue(responseData) // Mock resolves with responseData
+    mockCrmReportApiClient.getProviderCrmReport.mockResolvedValue(responseData)
 
     const generateReportService = new GenerateReportService(mockCrmReportApiClient)
 
@@ -124,7 +124,7 @@ describe('Generate Report Service', () => {
       profileAcceptedTypes: '1,4,5,6',
     })
 
-    expect(result).toEqual({ text: 'sample,csv,data\n1,2,3' }) // Expect successful response
+    expect(result).toEqual({ text: 'sample,csv,data\n1,2,3' })
     expect(mockCrmReportApiClient.getProviderCrmReport).toHaveBeenCalledWith({
       crmType: 'crm4',
       decisionFromDate: '2024-01-01',
@@ -141,7 +141,7 @@ describe('Generate Report Service', () => {
       crmType: 'crm4',
       decisionFromDate: '2024-01-01',
       decisionToDate: '2024-01-31',
-      profileAcceptedTypes: '1,4,5,6', // No providerAccount is included
+      profileAcceptedTypes: '1,4,5,6',
     })
 
     expect(result).toEqual({
