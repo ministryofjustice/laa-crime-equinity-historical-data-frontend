@@ -45,6 +45,7 @@ env:
   REDIS_ENABLED: true
   REDIS_TLS_ENABLED: true
   SSO_CLOUD_INSTANCE: https://login.microsoftonline.com/
+  SSO_DISABLED: false
 
 replicaCount: 1
 

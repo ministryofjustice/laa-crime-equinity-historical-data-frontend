@@ -68,6 +68,8 @@ env:
         key: SSO_CLIENT_SECRET
   - name: SSO_CLOUD_INSTANCE
     value: {{ .Values.env.SSO_CLOUD_INSTANCE | quote }}
+  - name: SSO_DISABLED
+    value: {{ .Values.env.SSO_DISABLED | quote }}
   - name: SSO_POST_LOGOUT_REDIRECT_URI
     value: {{ .Values.env.SSO_POST_LOGOUT_REDIRECT_URI | quote }}
   - name: SSO_REDIRECT_URI
