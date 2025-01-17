@@ -193,7 +193,7 @@ export default function validateReportParams(
       validationErrors.list.push({ href: '#providerAccount', text: "Enter 'Provider account'" })
       validationErrors.messages = {
         ...validationErrors.messages,
-        providerAccount: { text: "Enter 'Provider account'" }, // Safely add the error message
+        providerAccount: { text: "Enter 'Provider account'" },
       }
     }
 
