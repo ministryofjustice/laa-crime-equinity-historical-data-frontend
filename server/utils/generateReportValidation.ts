@@ -200,7 +200,7 @@ export default function validateReportParams(
     return validationErrors
   }
 
-  // Validate the params using the (potentially extended) schema
+  // Validate the params using the extended schema
   const { error } = extendedSchema.validate(params)
   if (error?.details) {
     return buildValidationErrors(error)

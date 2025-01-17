@@ -107,27 +107,24 @@ describe('Generate Report Service', () => {
     })
   })
 
-  it('should return provider crm report when isProviderReport is true', async () => {
+  it('should return provider crm report', async () => {
     const responseData = {
-      text: 'sample,csv,data\n1,2,3',
-    } as superagent.Response
+      text: 'sample,csv,data\n1,2,3', // Mocked CSV data
+    } as superagent.Response // Mock the response object as a superagent Response type
 
-    mockCrmReportApiClient.getProviderCrmReport.mockResolvedValue(responseData)
+    mockCrmReportApiClient.getProviderCrmReport.mockResolvedValue(responseData) // Mock resolves with responseData
 
     const generateReportService = new GenerateReportService(mockCrmReportApiClient)
 
-    const result = await generateReportService.getCrmReport(
-      {
-        crmType: 'crm4',
-        decisionFromDate: '2024-01-01',
-        decisionToDate: '2024-01-31',
-        providerAccount: '12345',
-        profileAcceptedTypes: '1,4,5,6',
-      },
-      true, // isProviderReport
-    )
+    const result = await generateReportService.getProviderCrmReport({
+      crmType: 'crm4',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-01-31',
+      providerAccount: '12345',
+      profileAcceptedTypes: '1,4,5,6',
+    })
 
-    expect(result).toEqual({ text: 'sample,csv,data\n1,2,3' })
+    expect(result).toEqual({ text: 'sample,csv,data\n1,2,3' }) // Expect successful response
     expect(mockCrmReportApiClient.getProviderCrmReport).toHaveBeenCalledWith({
       crmType: 'crm4',
       decisionFromDate: '2024-01-01',
@@ -137,20 +134,20 @@ describe('Generate Report Service', () => {
     })
   })
 
-  it('should throw error for missing providerAccount in provider crm report', async () => {
+  it('should return error for missing providerAccount in provider crm report', async () => {
     const generateReportService = new GenerateReportService(mockCrmReportApiClient)
 
-    await expect(
-      generateReportService.getCrmReport(
-        {
-          crmType: 'crm4',
-          decisionFromDate: '2024-01-01',
-          decisionToDate: '2024-01-31',
-          profileAcceptedTypes: '1,4,5,6',
-        },
-        true, // isProviderReport
-      ),
-    ).rejects.toThrow('Missing required providerAccount parameter')
+    const result = await generateReportService.getProviderCrmReport({
+      crmType: 'crm4',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-01-31',
+      profileAcceptedTypes: '1,4,5,6', // No providerAccount is included
+    })
+
+    expect(result).toEqual({
+      text: null,
+      errorMessage: 'Something went wrong with generate report',
+    })
   })
 
   it.each([
@@ -160,10 +157,10 @@ describe('Generate Report Service', () => {
     ['Something went wrong with generate report', 500],
   ])('should return error "%s" for provider crm report with status %s', async (errorMessage, errorStatus) => {
     const error: SanitisedError = {
+      status: errorStatus,
       name: 'some error',
       message: 'some message',
       stack: 'some stack',
-      status: errorStatus,
       text: 'error',
     }
 
@@ -171,16 +168,13 @@ describe('Generate Report Service', () => {
 
     const generateReportService = new GenerateReportService(mockCrmReportApiClient)
 
-    const result = await generateReportService.getCrmReport(
-      {
-        crmType: 'crm4',
-        decisionFromDate: '2024-01-01',
-        decisionToDate: '2024-01-31',
-        providerAccount: '12345',
-        profileAcceptedTypes: '1,4,5,6',
-      },
-      true, // isProviderReport
-    )
+    const result = await generateReportService.getProviderCrmReport({
+      crmType: 'crm4',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-01-31',
+      providerAccount: '12345',
+      profileAcceptedTypes: '1,4,5,6',
+    })
 
     expect(result).toEqual({
       text: null,
