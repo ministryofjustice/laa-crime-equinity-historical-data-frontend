@@ -28,7 +28,6 @@ export default class CrmReportApiClient {
 
   async getProviderCrmReport(crmReportRequest: CrmReportRequest): Promise<superagent.Response> {
     const { crmType, decisionFromDate, decisionToDate, providerAccount } = crmReportRequest
-
     return CrmReportApiClient.restClient('Provider Report API client', 'no_auth').get<superagent.Response>({
       path: `/api/internal/v1/equinity/report/provider/${crmType}/`,
       headers: {
@@ -76,6 +75,44 @@ export default class CrmReportApiClient {
         filterByLastSubmit: this.getFilterBy(lastSubmittedFromDate, lastSubmittedToDate),
         lastSubmittedFrom: this.todayDateIfEmpty(lastSubmittedFromDate),
         lastSubmittedTo: this.todayDateIfEmpty(lastSubmittedToDate),
+      },
+    })
+  }
+
+  async getProviderCrm14Report(crmReportRequest: CrmReportRequest): Promise<string> {
+    const {
+      crmType,
+      decisionFromDate,
+      decisionToDate,
+      submittedFromDate,
+      submittedToDate,
+      createdFromDate,
+      createdToDate,
+      lastSubmittedFromDate,
+      lastSubmittedToDate,
+      providerAccount,
+    } = crmReportRequest
+
+    return CrmReportApiClient.restClient('Provider Report API client', 'no_auth').get<string>({
+      path: `/api/internal/v1/equinity/report/provider/${crmType}/`,
+      headers: {
+        ...this.headers,
+      },
+      responseType: 'blob',
+      query: {
+        filterByDecision: this.getFilterBy(decisionFromDate, decisionToDate),
+        decisionFrom: this.todayDateIfEmpty(decisionFromDate),
+        decisionTo: this.todayDateIfEmpty(decisionToDate),
+        filterBySubmit: this.getFilterBy(submittedFromDate, submittedToDate),
+        submittedFrom: this.todayDateIfEmpty(submittedFromDate),
+        submittedTo: this.todayDateIfEmpty(submittedToDate),
+        filterByCreation: this.getFilterBy(createdFromDate, createdToDate),
+        createdFrom: this.todayDateIfEmpty(createdFromDate),
+        createdTo: this.todayDateIfEmpty(createdToDate),
+        filterByLastSubmit: this.getFilterBy(lastSubmittedFromDate, lastSubmittedToDate),
+        lastSubmittedFrom: this.todayDateIfEmpty(lastSubmittedFromDate),
+        lastSubmittedTo: this.todayDateIfEmpty(lastSubmittedToDate),
+        providerAccount,
       },
     })
   }

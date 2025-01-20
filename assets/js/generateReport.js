@@ -44,18 +44,4 @@ document.addEventListener('DOMContentLoaded', function () {
   if (crmTypeDropdown && crm14Container) {
     crm14Container.style.display = crmTypeDropdown.value === 'crm14' ? 'block' : 'none'
   }
-
-  const providerAccountField = document.getElementById('providerAccountField')
-
-  function toggleProviderAccountField() {
-    if (crmTypeDropdown && providerAccountField) {
-      providerAccountField.style.display = crmTypeDropdown.value === 'crm4' ? 'block' : 'none'
-    }
-  }
-
-  // Set the initial state on page load
-  if (crmTypeDropdown) {
-    toggleProviderAccountField() // Ensure the correct initial state
-    crmTypeDropdown.addEventListener('change', toggleProviderAccountField)
-  }
 })

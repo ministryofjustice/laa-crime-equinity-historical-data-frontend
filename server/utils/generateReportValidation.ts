@@ -155,30 +155,91 @@ const schemaCrm14 = Joi.object({
     'lastSubmittedToDate.earlier':
       "Your 'Last submitted date to' must be the same as or after your 'Last submitted date from'",
     'lastSubmittedToDate.range': 'Last submitted date range cannot be more than 1 month',
+    'providerAccount.any.required': "Enter 'Provider account'",
   })
 
 export default function validateReportParams(
   params: Record<string, string>,
-  isProviderReport: boolean = false, // Add the flag with a default value
+  isProviderReport: boolean = false,
 ): Errors {
-  let extendedSchema = schema // Start with the existing base schema
+  let extendedSchema = schema
 
-  // Conditionally append the providerAccount field if it's a Provider Report
   if (isProviderReport) {
+    // Append providerAccount validation to the schema
     extendedSchema = schema.append({
-      providerAccount: Joi.when('crmType', {
-        is: 'crm4',
-        then: Joi.string().required().empty('').messages({
-          'any.required': "Enter 'Provider account'",
-        }),
-        otherwise: Joi.string().optional().allow(''),
+      providerAccount: Joi.string().min(4).max(6).required().empty('').messages({
+        'any.required': "Enter 'Provider account'",
+        'string.min': 'Provider account number must be at least 4 characters',
+        'string.max': 'Provider account number must be 6 characters or less',
       }),
     })
   }
+
   if (params.crmType === 'crm14') {
-    return validateCrm14ReportParams(params)
+    let validationErrors = validateCrm14ReportParams(params)
+
+    // Ensure providerAccount validation is included in crm14 validation when it's a provider report
+    if (isProviderReport) {
+      if (!params.providerAccount) {
+        if (!validationErrors) {
+          // Initialize validationErrors if it's null
+          validationErrors = {
+            list: [{ href: '#providerAccount', text: "Enter 'Provider account'" }],
+            messages: {
+              providerAccount: { text: "Enter 'Provider account'" },
+            },
+          }
+        } else {
+          validationErrors.list.push({ href: '#providerAccount', text: "Enter 'Provider account'" })
+          validationErrors.messages = {
+            ...validationErrors.messages,
+            providerAccount: { text: "Enter 'Provider account'" },
+          }
+        }
+      } else {
+        // Validate providerAccount length
+        const providerAccountErrors = Joi.string()
+          .min(4)
+          .max(6)
+          .messages({
+            'string.min': 'Provider account number must be at least 4 characters',
+            'string.max': 'Provider account number must be 6 characters or less',
+          })
+          .validate(params.providerAccount, { abortEarly: true })
+
+        if (providerAccountErrors.error) {
+          if (!validationErrors) {
+            // Initialize validationErrors if it's null
+            validationErrors = {
+              list: [
+                {
+                  href: '#providerAccount',
+                  text: providerAccountErrors.error.details[0].message,
+                },
+              ],
+              messages: {
+                providerAccount: {
+                  text: providerAccountErrors.error.details[0].message,
+                },
+              },
+            }
+          } else {
+            validationErrors.list.push({
+              href: '#providerAccount',
+              text: providerAccountErrors.error.details[0].message,
+            })
+            validationErrors.messages.providerAccount = {
+              text: providerAccountErrors.error.details[0].message,
+            }
+          }
+        }
+      }
+    }
+
+    return validationErrors
   }
-  // Validate the params using the (potentially extended) schema
+
+  // Validate the params using the extended schema
   const { error } = extendedSchema.validate(params)
   if (error?.details) {
     return buildValidationErrors(error)
@@ -189,18 +250,34 @@ export default function validateReportParams(
 
 const validateCrm14ReportParams = (params: Record<string, string>): Errors => {
   const { error } = schemaCrm14.validate(params)
-  if (error?.details) {
-    return buildValidationErrors(error)
-  }
+  let validationErrors = error ? buildValidationErrors(error) : null
 
   if (dateParamsIsEmpty(params)) {
-    return { list: [{ href: '#', text: 'Enter at least one date range' }] }
+    if (!validationErrors) {
+      validationErrors = {
+        list: [{ href: '#', text: 'Enter at least one date range' }],
+        messages: { dateRange: { text: 'Enter at least one date range' } },
+      }
+    } else if (!validationErrors.messages.dateRange) {
+      validationErrors.list.push({ href: '#', text: 'Enter at least one date range' })
+      validationErrors.messages.dateRange = { text: 'Enter at least one date range' }
+    }
   }
 
-  return null
+  return validationErrors
 }
 
 const dateParamsIsEmpty = (params: Record<string, string>): boolean => {
-  // ignore crmType parameter
-  return !Object.keys(params).some((key: string) => key !== 'crmType' && params[key] && params[key].length > 0)
+  const dateFields = [
+    'decisionFromDate',
+    'decisionToDate',
+    'submittedFromDate',
+    'submittedToDate',
+    'createdFromDate',
+    'createdToDate',
+    'lastSubmittedFromDate',
+    'lastSubmittedToDate',
+  ]
+
+  return !dateFields.some(field => params[field]?.trim())
 }

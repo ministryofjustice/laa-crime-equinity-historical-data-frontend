@@ -86,8 +86,8 @@ export default class GenerateReportController {
     reportParams.decisionFromDate = allParams.decisionFromDate
     reportParams.decisionToDate = allParams.decisionToDate
 
-    if (isProviderReport && allParams.crmType === 'crm4') {
-      // Only include providerAccount for provider reports with CRM4
+    // Include providerAccount for provider reports
+    if (isProviderReport) {
       reportParams.providerAccount = allParams.providerAccount
     }
 

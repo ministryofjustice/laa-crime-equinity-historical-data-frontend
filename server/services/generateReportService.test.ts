@@ -107,7 +107,7 @@ describe('Generate Report Service', () => {
     })
   })
 
-  it('should return provider crm report when isProviderReport is true', async () => {
+  it('should return provider crm report', async () => {
     const responseData = {
       text: 'sample,csv,data\n1,2,3',
     } as superagent.Response
@@ -116,16 +116,13 @@ describe('Generate Report Service', () => {
 
     const generateReportService = new GenerateReportService(mockCrmReportApiClient)
 
-    const result = await generateReportService.getCrmReport(
-      {
-        crmType: 'crm4',
-        decisionFromDate: '2024-01-01',
-        decisionToDate: '2024-01-31',
-        providerAccount: '12345',
-        profileAcceptedTypes: '1,4,5,6',
-      },
-      true, // isProviderReport
-    )
+    const result = await generateReportService.getProviderCrmReport({
+      crmType: 'crm4',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-01-31',
+      providerAccount: '12345',
+      profileAcceptedTypes: '1,4,5,6',
+    })
 
     expect(result).toEqual({ text: 'sample,csv,data\n1,2,3' })
     expect(mockCrmReportApiClient.getProviderCrmReport).toHaveBeenCalledWith({
@@ -137,20 +134,41 @@ describe('Generate Report Service', () => {
     })
   })
 
-  it('should throw error for missing providerAccount in provider crm report', async () => {
+  it('should return provider crm14 report when crmType is crm14', async () => {
+    const responseData = 'sample,csv,data\n7,8,9' // Mocked CSV data
+
+    mockCrmReportApiClient.getProviderCrm14Report.mockResolvedValue(responseData)
+
     const generateReportService = new GenerateReportService(mockCrmReportApiClient)
 
-    await expect(
-      generateReportService.getCrmReport(
-        {
-          crmType: 'crm4',
-          decisionFromDate: '2024-01-01',
-          decisionToDate: '2024-01-31',
-          profileAcceptedTypes: '1,4,5,6',
-        },
-        true, // isProviderReport
-      ),
-    ).rejects.toThrow('Missing required providerAccount parameter')
+    const result = await generateReportService.getProviderCrmReport({
+      crmType: 'crm14',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-01-31',
+      submittedFromDate: '',
+      submittedToDate: '',
+      createdFromDate: '2024-01-01',
+      createdToDate: '2024-01-31',
+      lastSubmittedFromDate: '',
+      lastSubmittedToDate: '',
+      providerAccount: '12345',
+      profileAcceptedTypes: '1,4,5,6',
+    })
+
+    expect(result).toEqual({ text: 'sample,csv,data\n7,8,9' })
+    expect(mockCrmReportApiClient.getProviderCrm14Report).toHaveBeenCalledWith({
+      crmType: 'crm14',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-01-31',
+      submittedFromDate: '',
+      submittedToDate: '',
+      createdFromDate: '2024-01-01',
+      createdToDate: '2024-01-31',
+      lastSubmittedFromDate: '',
+      lastSubmittedToDate: '',
+      providerAccount: '12345',
+      profileAcceptedTypes: '1,4,5,6',
+    })
   })
 
   it.each([
@@ -160,10 +178,10 @@ describe('Generate Report Service', () => {
     ['Something went wrong with generate report', 500],
   ])('should return error "%s" for provider crm report with status %s', async (errorMessage, errorStatus) => {
     const error: SanitisedError = {
+      status: errorStatus,
       name: 'some error',
       message: 'some message',
       stack: 'some stack',
-      status: errorStatus,
       text: 'error',
     }
 
@@ -171,16 +189,13 @@ describe('Generate Report Service', () => {
 
     const generateReportService = new GenerateReportService(mockCrmReportApiClient)
 
-    const result = await generateReportService.getCrmReport(
-      {
-        crmType: 'crm4',
-        decisionFromDate: '2024-01-01',
-        decisionToDate: '2024-01-31',
-        providerAccount: '12345',
-        profileAcceptedTypes: '1,4,5,6',
-      },
-      true, // isProviderReport
-    )
+    const result = await generateReportService.getProviderCrmReport({
+      crmType: 'crm4',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-01-31',
+      providerAccount: '12345',
+      profileAcceptedTypes: '1,4,5,6',
+    })
 
     expect(result).toEqual({
       text: null,
