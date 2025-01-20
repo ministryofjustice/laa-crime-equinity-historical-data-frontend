@@ -164,17 +164,13 @@ export default function validateReportParams(
 ): Errors {
   let extendedSchema = schema
 
-  // Conditionally append the providerAccount field if it's a Provider Report and crm4
   if (isProviderReport) {
+    // Append providerAccount validation to the schema
     extendedSchema = schema.append({
-      providerAccount: Joi.when('crmType', {
-        is: 'crm4',
-        then: Joi.string().min(4).max(6).required().empty('').messages({
-          'any.required': "Enter 'Provider account'",
-          'string.min': 'Provider account number must be at least 4 characters',
-          'string.max': 'Provider account number must be 6 characters or less',
-        }),
-        otherwise: Joi.string().optional().allow(''),
+      providerAccount: Joi.string().min(4).max(6).required().empty('').messages({
+        'any.required': "Enter 'Provider account'",
+        'string.min': 'Provider account number must be at least 4 characters',
+        'string.max': 'Provider account number must be 6 characters or less',
       }),
     })
   }
