@@ -164,13 +164,15 @@ export default function validateReportParams(
 ): Errors {
   let extendedSchema = schema
 
-  // Conditionally append the providerAccount field if it's a Provider Report
+  // Conditionally append the providerAccount field if it's a Provider Report and crm4
   if (isProviderReport) {
     extendedSchema = schema.append({
       providerAccount: Joi.when('crmType', {
-        is: Joi.valid('crm4', 'crm14'), // Include both crm4 and crm14
-        then: Joi.string().required().empty('').messages({
+        is: 'crm4',
+        then: Joi.string().min(4).max(6).required().empty('').messages({
           'any.required': "Enter 'Provider account'",
+          'string.min': 'Provider account number must be at least 4 characters',
+          'string.max': 'Provider account number must be 6 characters or less',
         }),
         otherwise: Joi.string().optional().allow(''),
       }),
@@ -178,22 +180,63 @@ export default function validateReportParams(
   }
 
   if (params.crmType === 'crm14') {
-    const validationErrors = validateCrm14ReportParams(params)
+    let validationErrors = validateCrm14ReportParams(params)
 
     // Ensure providerAccount validation is included in crm14 validation when it's a provider report
-    if (isProviderReport && !params.providerAccount) {
-      if (!validationErrors) {
-        return {
-          list: [{ href: '#providerAccount', text: "Enter 'Provider account'" }],
-          messages: {
+    if (isProviderReport) {
+      if (!params.providerAccount) {
+        if (!validationErrors) {
+          // Initialize validationErrors if it's null
+          validationErrors = {
+            list: [{ href: '#providerAccount', text: "Enter 'Provider account'" }],
+            messages: {
+              providerAccount: { text: "Enter 'Provider account'" },
+            },
+          }
+        } else {
+          validationErrors.list.push({ href: '#providerAccount', text: "Enter 'Provider account'" })
+          validationErrors.messages = {
+            ...validationErrors.messages,
             providerAccount: { text: "Enter 'Provider account'" },
-          },
+          }
         }
-      }
-      validationErrors.list.push({ href: '#providerAccount', text: "Enter 'Provider account'" })
-      validationErrors.messages = {
-        ...validationErrors.messages,
-        providerAccount: { text: "Enter 'Provider account'" },
+      } else {
+        // Validate providerAccount length
+        const providerAccountErrors = Joi.string()
+          .min(4)
+          .max(6)
+          .messages({
+            'string.min': 'Provider account number must be at least 4 characters',
+            'string.max': 'Provider account number must be 6 characters or less',
+          })
+          .validate(params.providerAccount, { abortEarly: true })
+
+        if (providerAccountErrors.error) {
+          if (!validationErrors) {
+            // Initialize validationErrors if it's null
+            validationErrors = {
+              list: [
+                {
+                  href: '#providerAccount',
+                  text: providerAccountErrors.error.details[0].message,
+                },
+              ],
+              messages: {
+                providerAccount: {
+                  text: providerAccountErrors.error.details[0].message,
+                },
+              },
+            }
+          } else {
+            validationErrors.list.push({
+              href: '#providerAccount',
+              text: providerAccountErrors.error.details[0].message,
+            })
+            validationErrors.messages.providerAccount = {
+              text: providerAccountErrors.error.details[0].message,
+            }
+          }
+        }
       }
     }
 

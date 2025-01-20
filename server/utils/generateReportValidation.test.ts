@@ -327,14 +327,49 @@ describe('Generate Report Validation', () => {
 
         expect(result).toBeNull()
       })
+
+      it('should validate CRM 14 with provider account and decision dates', () => {
+        const params = {
+          crmType: 'crm14',
+          decisionFromDate: '2024-01-01',
+          decisionToDate: '2024-01-31',
+          providerAccount: '123456',
+        }
+
+        const result = validateReportParams(params, true) // Pass isProviderReport: true
+
+        expect(result).toBeNull()
+      })
+
+      it('should validate CRM 14 with provider account and multiple date ranges', () => {
+        const params = {
+          crmType: 'crm14',
+          decisionFromDate: '2024-01-01',
+          decisionToDate: '2024-01-31',
+          submittedFromDate: '2024-01-01',
+          submittedToDate: '2024-01-31',
+          createdFromDate: '2024-01-01',
+          createdToDate: '2024-01-31',
+          lastSubmittedFromDate: '2024-01-01',
+          lastSubmittedToDate: '2024-01-31',
+          providerAccount: '123456',
+        }
+
+        const result = validateReportParams(params, true) // Pass isProviderReport: true
+
+        expect(result).toBeNull()
+      })
     })
 
     describe('validation errors', () => {
-      it('should return error for missing provider account', () => {
+      it.each([
+        ['CRM 14', 'crm14'],
+        ['CRM 4', 'crm4'],
+      ])('should return error for missing provider account in %s', (_, crmType) => {
         const params = {
-          crmType: 'crm4',
+          crmType,
           decisionFromDate: '2024-01-01',
-          decisionToDate: '2024-01-10',
+          decisionToDate: '2024-01-31',
           providerAccount: '',
         }
 
@@ -353,6 +388,107 @@ describe('Generate Report Validation', () => {
             },
           },
         })
+      })
+
+      it('should return error for invalid decision date range in CRM 14 with provider account', () => {
+        const params = {
+          crmType: 'crm14',
+          decisionFromDate: '2024-01-01',
+          decisionToDate: '2024-04-01', // Exceeds 1 month range
+          providerAccount: '123456',
+        }
+
+        const result = validateReportParams(params, true) // Pass isProviderReport: true
+
+        expect(result).toEqual({
+          list: [
+            {
+              href: '#',
+              text: 'Decision date range cannot be more than 1 month',
+            },
+          ],
+          messages: {},
+        })
+      })
+
+      it('should return multiple errors for CRM 14 with missing provider account and invalid dates', () => {
+        const params = {
+          crmType: 'crm14',
+          decisionFromDate: '5555-55-55',
+          decisionToDate: '5555-55-55',
+          providerAccount: '',
+        }
+
+        const result = validateReportParams(params, true) // Pass isProviderReport: true
+
+        expect(result).toEqual({
+          list: [
+            { href: '#decisionFromDate', text: 'Decision date from must be a valid date' },
+            { href: '#decisionToDate', text: 'Decision date to must be a valid date' },
+            { href: '#providerAccount', text: "Enter 'Provider account'" },
+          ],
+          messages: {
+            decisionFromDate: { text: 'Decision date from must be a valid date' },
+            decisionToDate: { text: 'Decision date to must be a valid date' },
+            providerAccount: { text: "Enter 'Provider account'" },
+          },
+        })
+      })
+    })
+
+    describe('Provider Account Length Validation', () => {
+      it.each([
+        ['less than 4 characters', '123', 'Provider account number must be at least 4 characters'],
+        ['more than 6 characters', '1234567', 'Provider account number must be 6 characters or less'],
+      ])('should return error for provider account with %s', (_, providerAccount, expectedErrorMessage) => {
+        const params = {
+          crmType: 'crm14',
+          decisionFromDate: '2024-01-01',
+          decisionToDate: '2024-01-31',
+          providerAccount, // Test different invalid lengths
+        }
+
+        const result = validateReportParams(params, true) // Pass isProviderReport: true
+
+        expect(result).toEqual({
+          list: [
+            {
+              href: '#providerAccount',
+              text: expectedErrorMessage,
+            },
+          ],
+          messages: {
+            providerAccount: {
+              text: expectedErrorMessage,
+            },
+          },
+        })
+      })
+
+      it('should validate provider account with valid length (4 characters)', () => {
+        const params = {
+          crmType: 'crm14',
+          decisionFromDate: '2024-01-01',
+          decisionToDate: '2024-01-31',
+          providerAccount: '1234', // Valid length
+        }
+
+        const result = validateReportParams(params, true) // Pass isProviderReport: true
+
+        expect(result).toBeNull()
+      })
+
+      it('should validate provider account with valid length (6 characters)', () => {
+        const params = {
+          crmType: 'crm14',
+          decisionFromDate: '2024-01-01',
+          decisionToDate: '2024-01-31',
+          providerAccount: '123456', // Valid length
+        }
+
+        const result = validateReportParams(params, true) // Pass isProviderReport: true
+
+        expect(result).toBeNull()
       })
     })
   })

@@ -134,19 +134,40 @@ describe('Generate Report Service', () => {
     })
   })
 
-  it('should return error for missing providerAccount in provider crm report', async () => {
+  it('should return provider crm14 report when crmType is crm14', async () => {
+    const responseData = 'sample,csv,data\n7,8,9' // Mocked CSV data
+
+    mockCrmReportApiClient.getProviderCrm14Report.mockResolvedValue(responseData)
+
     const generateReportService = new GenerateReportService(mockCrmReportApiClient)
 
     const result = await generateReportService.getProviderCrmReport({
-      crmType: 'crm4',
+      crmType: 'crm14',
       decisionFromDate: '2024-01-01',
       decisionToDate: '2024-01-31',
+      submittedFromDate: '',
+      submittedToDate: '',
+      createdFromDate: '2024-01-01',
+      createdToDate: '2024-01-31',
+      lastSubmittedFromDate: '',
+      lastSubmittedToDate: '',
+      providerAccount: '12345',
       profileAcceptedTypes: '1,4,5,6',
     })
 
-    expect(result).toEqual({
-      text: null,
-      errorMessage: 'Something went wrong with generate report',
+    expect(result).toEqual({ text: 'sample,csv,data\n7,8,9' })
+    expect(mockCrmReportApiClient.getProviderCrm14Report).toHaveBeenCalledWith({
+      crmType: 'crm14',
+      decisionFromDate: '2024-01-01',
+      decisionToDate: '2024-01-31',
+      submittedFromDate: '',
+      submittedToDate: '',
+      createdFromDate: '2024-01-01',
+      createdToDate: '2024-01-31',
+      lastSubmittedFromDate: '',
+      lastSubmittedToDate: '',
+      providerAccount: '12345',
+      profileAcceptedTypes: '1,4,5,6',
     })
   })
 

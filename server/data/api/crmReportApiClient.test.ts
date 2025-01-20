@@ -92,6 +92,44 @@ describe('CRM Report Api Client', () => {
     expect(result.text).toEqual('{"text":"provider,csv,data\\n1,2,3"}')
   })
 
+  it('should return Provider CRM14 Report', async () => {
+    fakeRestClient
+      .get('/api/internal/v1/equinity/report/provider/crm14/')
+      .query({
+        filterByDecision: 1,
+        decisionFrom: '2023-03-01',
+        decisionTo: '2023-03-30',
+        filterBySubmit: 0,
+        submittedFrom: '2024-01-01',
+        submittedTo: '2024-01-01',
+        filterByCreation: 1,
+        createdFrom: '2023-03-01',
+        createdTo: '2023-03-31',
+        filterByLastSubmit: 0,
+        lastSubmittedFrom: '2024-01-01',
+        lastSubmittedTo: '2024-01-01',
+        providerAccount: '0D182J',
+      })
+      .matchHeader('authorization', 'Bearer no_auth')
+      .reply(200, 'sample,csv,data\n4,5,6')
+
+    const result = await crmReportApiClient.getProviderCrm14Report({
+      crmType: 'crm14',
+      decisionFromDate: '2023-03-01',
+      decisionToDate: '2023-03-30',
+      submittedFromDate: '',
+      submittedToDate: '',
+      createdFromDate: '2023-03-01',
+      createdToDate: '2023-03-31',
+      lastSubmittedFromDate: '',
+      lastSubmittedToDate: '',
+      providerAccount: '0D182J',
+      profileAcceptedTypes: '1,4,5,6',
+    })
+
+    expect(result.toString()).toEqual('sample,csv,data\n4,5,6')
+  })
+
   it('should handle Provider CRM Report 404 error', async () => {
     fakeRestClient
       .get('/api/internal/v1/equinity/report/provider/crm4/')
