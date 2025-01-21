@@ -50,6 +50,7 @@ export default {
     cloudInstance: get('SSO_CLOUD_INSTANCE', 'https://login.microsoftonline.com/', requiredInProduction),
     disabled: get('SSO_DISABLED', 'false') === 'true',
     postLogoutRedirectUri: get('SSO_POST_LOGOUT_REDIRECT_URI', 'http://localhost:3000/auth/redirect'),
+    providerReportingUserProfileGroup: get('SSO_PROVIDER_REPORTING_USER_PROFILE_GROUP', '', requiredInProduction),
     redirectUri: get('SSO_REDIRECT_URI', 'http://localhost:3000/auth/redirect'),
     reportingUserProfileGroup: get('SSO_REPORTING_USER_PROFILE_GROUP', '', requiredInProduction),
     tenantId: get('SSO_TENANT_ID', 'xxx', requiredInProduction),

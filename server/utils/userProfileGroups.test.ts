@@ -18,6 +18,7 @@ describe('userProfileGroups', () => {
     config.sso = {
       allowedUserProfileGroups:
         '36c86b9e-be2f-4f73-8bf7-ea654dea0165:1,1dd31ec8-f384-4661-bd3f-34aa2588706e:4,87bfe474-f53e-4641-b992-fff11346782f:5,2248a7a9-6cd2-4330-80fd-cb916edd445e:6',
+      providerReportingUserProfileGroup: 'a25b36d0-3401-4c07-b6bf-90fc788a49bc',
       reportingUserProfileGroup: 'e1bd9e59-37bd-472f-8212-95a8fcc69e48',
       clientId: 'some-client-id',
       clientSecret: 'some-client-secret',
