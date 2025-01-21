@@ -72,6 +72,11 @@ env:
     value: {{ .Values.env.SSO_DISABLED | quote }}
   - name: SSO_POST_LOGOUT_REDIRECT_URI
     value: {{ .Values.env.SSO_POST_LOGOUT_REDIRECT_URI | quote }}
+  - name: SSO_PROVIDER_REPORTING_USER_PROFILE_GROUP
+    valueFrom:
+      secretKeyRef:
+        name: equinity-historical-data-frontend-secrets
+        key: SSO_PROVIDER_REPORTING_USER_PROFILE_GROUP
   - name: SSO_REDIRECT_URI
     value: {{ .Values.env.SSO_REDIRECT_URI | quote }}
   - name: SSO_REPORTING_USER_PROFILE_GROUP
