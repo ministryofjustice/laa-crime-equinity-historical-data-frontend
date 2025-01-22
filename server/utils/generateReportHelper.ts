@@ -22,11 +22,11 @@ export const buildReportRequest = (
 }
 
 export const getReportParams = (req: Request, isProviderReport: boolean): Record<string, string> => {
-  const reportParams: Record<string, string> = {}
-
-  reportParams.crmType = req.body.crmType as string
-  reportParams.decisionFromDate = req.body.decisionFromDate as string
-  reportParams.decisionToDate = req.body.decisionToDate as string
+  const reportParams: Record<string, string> = {
+    crmType: req.body.crmType as string,
+    decisionFromDate: req.body.decisionFromDate as string,
+    decisionToDate: req.body.decisionToDate as string,
+  }
 
   // Include providerAccount for provider reports
   if (isProviderReport) {

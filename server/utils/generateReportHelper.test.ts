@@ -97,7 +97,6 @@ describe('generateReportHelper', () => {
         crmType: 'crm14',
         decisionFromDate: '2023-03-01',
         decisionToDate: '2023-03-30',
-        profileAcceptedTypes: '1,4,5,6',
         submittedFromDate: '2023-03-01',
         submittedToDate: '2023-03-30',
         createdFromDate: '2023-03-01',

@@ -5,7 +5,7 @@ import GenerateReportService from '../services/generateReportService'
 import validateReportParams from '../utils/generateReportValidation'
 import manageBackLink from '../utils/crmBackLink'
 import { buildErrors } from '../utils/errorDisplayHelper'
-import { getReportParams, buildReportRequest } from '../utils/generateReportHelper'
+import { buildReportRequest, getReportParams } from '../utils/generateReportHelper'
 
 const CURRENT_URL = '/generate-report'
 const VIEW_PATH = 'pages/generateReport'
