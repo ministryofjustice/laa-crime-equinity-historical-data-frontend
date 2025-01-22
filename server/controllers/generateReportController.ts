@@ -1,10 +1,11 @@
 import type { Request, RequestHandler, Response } from 'express'
-import { CrmReportRequest } from '@crmReport'
+
 import { getProfileAcceptedTypes } from '../utils/userProfileGroups'
 import GenerateReportService from '../services/generateReportService'
 import validateReportParams from '../utils/generateReportValidation'
 import manageBackLink from '../utils/crmBackLink'
 import { buildErrors } from '../utils/errorDisplayHelper'
+import { buildReportRequest, getReportParams } from '../utils/generateReportHelper'
 
 const CURRENT_URL = '/generate-report'
 const VIEW_PATH = 'pages/generateReport'
@@ -26,42 +27,28 @@ export default class GenerateReportController {
 
   submit(isProviderReport = false): RequestHandler {
     return async (req: Request, res: Response): Promise<void> => {
-      const allParams: Record<string, string> = {
-        crmType: req.body.crmType as string,
-        decisionFromDate: req.body.decisionFromDate as string,
-        decisionToDate: req.body.decisionToDate as string,
-        submittedFromDate: req.body.submittedFromDate as string,
-        submittedToDate: req.body.submittedToDate as string,
-        createdFromDate: req.body.createdFromDate as string,
-        createdToDate: req.body.createdToDate as string,
-        lastSubmittedFromDate: req.body.lastSubmittedFromDate as string,
-        lastSubmittedToDate: req.body.lastSubmittedToDate as string,
-        providerAccount: req.body.providerAccount as string,
-      }
-
-      const reportParams = this.buildReportParams(allParams, isProviderReport)
+      const reportParams = getReportParams(req, isProviderReport)
 
       const validationErrors = validateReportParams(reportParams, isProviderReport)
       if (validationErrors) {
         // render with validation errors
         res.render(VIEW_PATH, {
-          formValues: allParams,
+          formValues: reportParams,
           errors: validationErrors,
           backUrl: manageBackLink(CURRENT_URL),
           isProviderReport,
         })
       } else {
         // perform generate report
-        const crmReportRequest = this.buildReportRequest(reportParams, getProfileAcceptedTypes(res), isProviderReport)
+        const crmReportRequest = buildReportRequest(reportParams, getProfileAcceptedTypes(res), isProviderReport)
         const crmReportResponse = isProviderReport
           ? await this.generateReportService.getProviderCrmReport(crmReportRequest)
           : await this.generateReportService.getCrmReport(crmReportRequest)
         // check for any errors in the report response
         if (crmReportResponse.errorMessage) {
           // render with errors for report API error
-          const errors = buildErrors(crmReportResponse.errorMessage)
           res.render(VIEW_PATH, {
-            errors,
+            errors: buildErrors(crmReportResponse.errorMessage),
             formValues: reportParams,
             backUrl: manageBackLink(CURRENT_URL),
             isProviderReport,
@@ -71,59 +58,11 @@ export default class GenerateReportController {
           res.setHeader('Content-Type', 'text/csv')
           res.setHeader(
             'Content-Disposition',
-            `attachment; filename=${this.getReportFilename(reportParams.crmType, isProviderReport)}`,
+            `attachment; filename=${reportParams.crmType}${isProviderReport ? '-Provider' : ''}Report.csv`,
           )
           res.send(crmReportResponse.text)
         }
       }
     }
-  }
-
-  private buildReportParams(allParams: Record<string, string>, isProviderReport: boolean): Record<string, string> {
-    const reportParams: Record<string, string> = { crmType: allParams.crmType }
-
-    // Include decision dates for all CRM types
-    reportParams.decisionFromDate = allParams.decisionFromDate
-    reportParams.decisionToDate = allParams.decisionToDate
-
-    // Include providerAccount for provider reports
-    if (isProviderReport) {
-      reportParams.providerAccount = allParams.providerAccount
-    }
-
-    if (allParams.crmType === 'crm14') {
-      reportParams.submittedFromDate = allParams.submittedFromDate
-      reportParams.submittedToDate = allParams.submittedToDate
-      reportParams.createdFromDate = allParams.createdFromDate
-      reportParams.createdToDate = allParams.createdToDate
-      reportParams.lastSubmittedFromDate = allParams.lastSubmittedFromDate
-      reportParams.lastSubmittedToDate = allParams.lastSubmittedToDate
-    }
-
-    return reportParams
-  }
-
-  private buildReportRequest(
-    reportParams: Record<string, string>,
-    profileAcceptedTypes: string,
-    isProviderReport: boolean,
-  ): CrmReportRequest {
-    return {
-      crmType: reportParams.crmType,
-      decisionFromDate: reportParams.decisionFromDate,
-      decisionToDate: reportParams.decisionToDate,
-      submittedFromDate: reportParams.submittedFromDate,
-      submittedToDate: reportParams.submittedToDate,
-      createdFromDate: reportParams.createdFromDate,
-      createdToDate: reportParams.createdToDate,
-      lastSubmittedFromDate: reportParams.lastSubmittedFromDate,
-      lastSubmittedToDate: reportParams.lastSubmittedToDate,
-      providerAccount: isProviderReport ? reportParams.providerAccount : undefined, // Include only for provider reports
-      profileAcceptedTypes: isProviderReport ? '' : profileAcceptedTypes, // Set profileAcceptedTypes for non-provider reports
-    }
-  }
-
-  private getReportFilename(crmType: string, isProviderReport: boolean): string {
-    return `${crmType}${isProviderReport ? '-Provider' : ''}Report.csv`
   }
 }
