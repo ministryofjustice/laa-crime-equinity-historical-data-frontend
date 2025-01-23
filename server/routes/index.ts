@@ -3,7 +3,7 @@ import { type NextFunction, type Request, type RequestHandler, type Response, Ro
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import { Controllers } from '../controllers'
 import config from '../config'
-import { isReportingAllowed } from '../utils/userProfileGroups'
+import { isReportingAllowed, isProviderReportingAllowed } from '../utils/userProfileGroups'
 import logger from '../../logger'
 import { SanitisedError } from '../sanitisedError'
 
@@ -63,6 +63,17 @@ export default function routes({
     return next()
   }
 
+  const checkProviderReportingAllowed = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    if (!isProviderReportingAllowed(res)) {
+      // throw forbidden error
+      logger.error('Not authorised to generate provider report')
+      const error = new Error('Forbidden') as SanitisedError
+      error.status = 403
+      throw error
+    }
+    return next()
+  }
+
   get('/', homeController.show())
 
   get('/search-eform', searchEformController.show())
@@ -89,9 +100,9 @@ export default function routes({
 
   get('/accessibility-statement', staticPageController.showAccStatement())
 
-  get('/provider-report', generateReportController.show(true), checkReportingAllowed)
+  get('/provider-report', generateReportController.show(true), checkProviderReportingAllowed)
 
-  post('/provider-report', generateReportController.submit(true), checkReportingAllowed)
+  post('/provider-report', generateReportController.submit(true), checkProviderReportingAllowed)
 
   return router
 }

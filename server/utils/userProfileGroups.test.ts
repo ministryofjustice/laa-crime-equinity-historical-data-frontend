@@ -1,6 +1,6 @@
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import type { Response } from 'express'
-import { getProfileAcceptedTypes, isReportingAllowed } from './userProfileGroups'
+import { getProfileAcceptedTypes, isProviderReportingAllowed, isReportingAllowed } from './userProfileGroups'
 
 import config from '../config'
 
@@ -114,6 +114,47 @@ describe('userProfileGroups', () => {
       }
 
       const result = isReportingAllowed(response)
+
+      expect(result).toBe(false)
+    })
+  })
+
+  describe('isProviderReportingAllowed()', () => {
+    it('returns true if ssoUserGroups contains provider reporting user group', () => {
+      response.locals = {
+        user: { token: '', authSource: '' },
+        ssoUserGroups: [
+          '36c86b9e-be2f-4f73-8bf7-ea654dea0165',
+          '87bfe474-f53e-4641-b992-fff11346782f',
+          'a25b36d0-3401-4c07-b6bf-90fc788a49bc', // provider reporting user group
+        ],
+      }
+
+      const result = isProviderReportingAllowed(response)
+
+      expect(result).toBe(true)
+    })
+
+    it('returns true if SSO is disabled', () => {
+      config.sso.disabled = true
+
+      response.locals = {
+        user: { token: '', authSource: '' },
+        ssoUserGroups: ['36c86b9e-be2f-4f73-8bf7-ea654dea0165', '87bfe474-f53e-4641-b992-fff11346782f'],
+      }
+
+      const result = isProviderReportingAllowed(response)
+
+      expect(result).toBe(true)
+    })
+
+    it('returns false if ssoUserGroups does not contain provider reporting user group', () => {
+      response.locals = {
+        user: { token: '', authSource: '' },
+        ssoUserGroups: ['36c86b9e-be2f-4f73-8bf7-ea654dea0165', '87bfe474-f53e-4641-b992-fff11346782f'],
+      }
+
+      const result = isProviderReportingAllowed(response)
 
       expect(result).toBe(false)
     })

@@ -9,22 +9,30 @@
       <div class="govuk-width-container">
           <h1 class="govuk-heading-l">Access eForms Records</h1>
 
-          {% set introText = 'You can generate reports or search for an eForm record' if isReportingAllowed else 'You can search for eForm records' %}
-
-          <p class="govuk-body govuk-!-margin-bottom-7">{{ introText }}</p>
-
           {% if isReportingAllowed %}
+              <p class="govuk-body">
+                  You can generate reports or search for an eFormm record.
+              </p>
               <p class="govuk-body">
                   <a href="/generate-report" class="govuk-link govuk-link--no-visited-state">Generate eForm reports</a>
               </p>
+              <p class="govuk-body">
+                  <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
+              </p>
+          {% elseif isProviderReportingAllowed %}
+              <p class="govuk-body">
+                  You can generate provider reports.
+              </p>
+              <p class="govuk-body">
+                  <a href="/provider-report" class="govuk-link govuk-link--no-visited-state">Generate provider reports</a>
+              </p>
+          {% else %}
+              <p class="govuk-body">
+                  You can search for eForm records.
+              </p>
+              <p class="govuk-body">
+                  <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
+              </p>
           {% endif %}
-          {% if environmentName and environmentName !== 'prod' %}
-          <p class="govuk-body">
-              <a href="/provider-report" class="govuk-link govuk-link--no-visited-state">Generate provider reports</a>
-          </p>
-          {% endif %}
-          <p class="govuk-body">
-              <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
-          </p>
       </div>
   {% endblock %}

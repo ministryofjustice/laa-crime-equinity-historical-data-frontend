@@ -18,6 +18,9 @@ describe('HomeController', () => {
 
     await requestHandler(request, response, next)
 
-    expect(response.render).toHaveBeenCalledWith('pages/index', { isReportingAllowed: false })
+    expect(response.render).toHaveBeenCalledWith('pages/index', {
+      isReportingAllowed: false,
+      isProviderReportingAllowed: false,
+    })
   })
 })
