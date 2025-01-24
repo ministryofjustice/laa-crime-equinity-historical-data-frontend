@@ -11,7 +11,7 @@
 
           {% if isReportingAllowed and isProviderReportingAllowed %}
               <p class="govuk-body">
-                  You can generate reports, generate provider reports, or search for an eForm record.
+                  You can generate eForm reports, generate provider reports, or search for an eForm record.
               </p>
               <p class="govuk-body">
                   <a href="/generate-report" class="govuk-link govuk-link--no-visited-state">Generate eForm reports</a>
@@ -34,13 +34,10 @@
               </p>
               {% elif isProviderReportingAllowed %}
               <p class="govuk-body">
-                  You can generate provider reports or search for an eForm record.
+                  You can generate provider reports.
               </p>
               <p class="govuk-body">
                   <a href="/provider-report" class="govuk-link govuk-link--no-visited-state">Generate provider reports</a>
-              </p>
-              <p class="govuk-body">
-                  <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
               </p>
           {% else %}
               <p class="govuk-body">
