@@ -10,7 +10,7 @@ import CrmApiService from '../services/crmApiService'
 import SearchEformService from '../services/searchEformService'
 import CrmDisplayService from '../services/crmDisplayService'
 import GenerateReportService from '../services/generateReportService'
-import { getProfileAcceptedTypes, isReportingAllowed } from '../utils/userProfileGroups'
+import { getProfileAcceptedTypes, isReportingAllowed, isProviderReportingAllowed } from '../utils/userProfileGroups'
 
 jest.mock('../services/crmApiService')
 jest.mock('../services/searchEformService')
@@ -22,6 +22,7 @@ let app: Express
 
 let mockGetProfileAcceptedTypes: jest.Mock
 let mockIsReportingAllowed: jest.Mock
+let mockIsProviderReportingAllowed: jest.Mock
 let mockCrm4Service: jest.Mocked<CrmApiService<Crm4Response>>
 let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
 let mockCrm7Service: jest.Mocked<CrmApiService<Crm7Response>>
@@ -33,6 +34,7 @@ let mockGenerateReportService: jest.Mocked<GenerateReportService>
 beforeEach(() => {
   mockGetProfileAcceptedTypes = getProfileAcceptedTypes as jest.Mock
   mockIsReportingAllowed = isReportingAllowed as jest.Mock
+  mockIsProviderReportingAllowed = isProviderReportingAllowed as jest.Mock
   mockCrm4Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm4Response>>
   mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
   mockCrm7Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm7Response>>
@@ -54,6 +56,7 @@ beforeEach(() => {
   })
   mockGetProfileAcceptedTypes.mockReturnValue('1,4,5,6')
   mockIsReportingAllowed.mockReturnValue(true)
+  mockIsProviderReportingAllowed.mockReturnValue(true)
 })
 
 afterEach(() => {
@@ -75,12 +78,14 @@ describe('routes', () => {
 
     it('should render index page without generate reports ', () => {
       mockIsReportingAllowed.mockReturnValue(false)
+      mockIsProviderReportingAllowed.mockReturnValue(false)
       return request(app)
         .get('/')
         .expect('Content-Type', /html/)
         .expect(res => {
           expect(res.text).toContain('Equiniti Historical Data')
           expect(res.text).not.toContain('Generate eForm reports') // hidden
+          expect(res.text).not.toContain('Generate provider reports') // hidden
           expect(res.text).toContain('View eForm records')
         })
     })
@@ -458,6 +463,72 @@ describe('routes', () => {
           expect(res.text).toContain('Cookies')
           expect(res.text).toContain('Essential cookies')
           expect(res.text).toContain('session_cookie')
+        })
+    })
+  })
+  describe('GET /provider-report', () => {
+    it('should render the provider report page if user has permission', () => {
+      mockIsProviderReportingAllowed.mockReturnValue(true)
+      return request(app)
+        .get('/provider-report')
+        .expect('Content-Type', /html/)
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toContain('Provider reports')
+          expect(res.text).toContain('Generate report by')
+        })
+    })
+
+    it('should return 403 Forbidden if user does not have permission', () => {
+      mockIsProviderReportingAllowed.mockReturnValue(false)
+      return request(app)
+        .get('/provider-report')
+        .expect('Content-Type', /html/)
+        .expect(403)
+        .expect(res => {
+          expect(res.text).toContain('Forbidden')
+        })
+    })
+  })
+
+  describe('POST /provider-report', () => {
+    it('should generate and download the provider report as a CSV', () => {
+      const reportData = 'sample,csv,data\n1,2,3'
+
+      mockGenerateReportService.getProviderCrmReport.mockResolvedValue({
+        text: reportData,
+      })
+
+      return request(app)
+        .post('/provider-report')
+        .send({
+          crmType: 'crm4',
+          providerAccount: '123456',
+          decisionFromDate: '2023-03-01',
+          decisionToDate: '2023-03-31',
+        })
+        .expect('Content-Type', 'text/csv; charset=utf-8')
+        .expect('Content-Disposition', 'attachment; filename=crm4-ProviderReport.csv')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toEqual('sample,csv,data\n1,2,3')
+        })
+    })
+
+    it('should render error page with forbidden error', () => {
+      mockIsProviderReportingAllowed.mockReturnValue(false)
+
+      return request(app)
+        .post('/provider-report')
+        .send({
+          crmType: 'crm4',
+          providerAccount: '12345',
+          decisionFromDate: '2022-11-01',
+          decisionToDate: '2023-11-02',
+        })
+        .expect(403)
+        .expect(res => {
+          expect(res.text).toContain('Error: Forbidden')
         })
     })
   })
