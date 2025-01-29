@@ -1,5 +1,5 @@
 import Joi, { ErrorReport } from 'joi'
-import { differenceInDays, isBefore } from 'date-fns'
+import { differenceInDays, isBefore, subYears } from 'date-fns'
 import { buildValidationErrors, Errors } from './errorDisplayHelper'
 
 const schema = Joi.object({
@@ -8,14 +8,36 @@ const schema = Joi.object({
     .empty('')
     .valid('crm4', 'crm5', 'crm14')
     .messages({ 'any.required': 'CRM type must be selected', 'any.only': 'Invalid CRM type specified' }),
-  decisionFromDate: Joi.date().required().iso().empty('').messages({
-    'any.required': "Enter 'Decision date from'",
-    'date.format': 'Decision date from must be a valid date',
-  }),
-  decisionToDate: Joi.date().required().iso().empty('').messages({
-    'any.required': "Enter 'Decision date to'",
-    'date.format': 'Decision date to must be a valid date',
-  }),
+  decisionFromDate: Joi.date()
+    .required()
+    .iso()
+    .empty('')
+    .messages({
+      'any.required': "Enter 'Decision date from'",
+      'date.format': 'Decision date from must be a valid date',
+    })
+    .custom((value, helpers) => {
+      const sevenYearsAgo = subYears(new Date(), 7)
+      if (isBefore(new Date(value), sevenYearsAgo)) {
+        return helpers.error('decisionFromDate.tooOld', { path: ['decisionFromDate'] })
+      }
+      return value
+    }),
+  decisionToDate: Joi.date()
+    .required()
+    .iso()
+    .empty('')
+    .messages({
+      'any.required': "Enter 'Decision date to'",
+      'date.format': 'Decision date to must be a valid date',
+    })
+    .custom((value, helpers) => {
+      const sevenYearsAgo = subYears(new Date(), 7)
+      if (isBefore(new Date(value), sevenYearsAgo)) {
+        return helpers.error('decisionToDate.tooOld', { path: ['decisionToDate'] })
+      }
+      return value
+    }),
 })
   .options({ allowUnknown: true, abortEarly: false })
   .custom((value, helpers) => {
@@ -32,6 +54,8 @@ const schema = Joi.object({
     return value
   })
   .messages({
+    'decisionFromDate.tooOld': 'Decision date from cannot be older than 7 years from today',
+    'decisionToDate.tooOld': 'Decision date to cannot be older than 7 years from today',
     'decisionToDate.earlier': "Your 'Decision date to' must be the same as or after your 'Decision date from'",
     'decisionToDate.range': 'Decision date range cannot be more than 1 month',
   })
@@ -40,6 +64,18 @@ const crm14CheckToDate = (toDateField: string) => {
   return (value: string, helpers: Joi.CustomHelpers): ErrorReport | string => {
     if (!helpers.state.ancestors[0][toDateField]) {
       return helpers.error(`${toDateField}.missing`, undefined, { path: [toDateField] })
+    }
+
+    return value
+  }
+}
+
+const crm14Check7YearValidation = (field: string) => {
+  return (value: string, helpers: Joi.CustomHelpers): ErrorReport | string => {
+    const sevenYearsAgo = subYears(new Date(), 7)
+
+    if (isBefore(new Date(value), sevenYearsAgo)) {
+      return helpers.error(`${field}.tooOld`, undefined, { path: [] })
     }
 
     return value
@@ -78,6 +114,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Decision date from must be a valid date',
     })
+    .custom(crm14Check7YearValidation('decisionFromDate'))
     .custom(crm14CheckToDate('decisionToDate')),
   decisionToDate: Joi.date()
     .optional()
@@ -86,6 +123,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Decision date to must be a valid date',
     })
+    .custom(crm14Check7YearValidation('decisionToDate'))
     .custom(crm14CheckDateRange('decisionFromDate', 'decisionToDate')),
   submittedFromDate: Joi.date()
     .optional()
@@ -94,6 +132,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Submitted date from must be a valid date',
     })
+    .custom(crm14Check7YearValidation('submittedFromDate'))
     .custom(crm14CheckToDate('submittedToDate')),
   submittedToDate: Joi.date()
     .optional()
@@ -102,6 +141,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Submitted date to must be a valid date',
     })
+    .custom(crm14Check7YearValidation('submittedToDate'))
     .custom(crm14CheckDateRange('submittedFromDate', 'submittedToDate')),
   createdFromDate: Joi.date()
     .optional()
@@ -110,6 +150,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Created date from must be a valid date',
     })
+    .custom(crm14Check7YearValidation('createdFromDate'))
     .custom(crm14CheckToDate('createdToDate')),
   createdToDate: Joi.date()
     .optional()
@@ -118,6 +159,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Created date to must be a valid date',
     })
+    .custom(crm14Check7YearValidation('createdToDate'))
     .custom(crm14CheckDateRange('createdFromDate', 'createdToDate')),
   lastSubmittedFromDate: Joi.date()
     .optional()
@@ -126,6 +168,7 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Last submitted date from must be a valid date',
     })
+    .custom(crm14Check7YearValidation('lastSubmittedFromDate'))
     .custom(crm14CheckToDate('lastSubmittedToDate')),
   lastSubmittedToDate: Joi.date()
     .optional()
@@ -134,10 +177,19 @@ const schemaCrm14 = Joi.object({
     .messages({
       'date.format': 'Last submitted date to must be a valid date',
     })
+    .custom(crm14Check7YearValidation('lastSubmittedToDate'))
     .custom(crm14CheckDateRange('lastSubmittedFromDate', 'lastSubmittedToDate')),
 })
   .options({ allowUnknown: true, abortEarly: false })
   .messages({
+    'decisionFromDate.tooOld': 'Decision date from cannot be older than 7 years from today',
+    'decisionToDate.tooOld': 'Decision date to cannot be older than 7 years from today',
+    'submittedFromDate.tooOld': 'Submitted date from cannot be older than 7 years from today',
+    'submittedToDate.tooOld': 'Submitted date to cannot be older than 7 years from today',
+    'createdFromDate.tooOld': 'Created date from cannot be older than 7 years from today',
+    'createdToDate.tooOld': 'Created date to cannot be older than 7 years from today',
+    'lastSubmittedFromDate.tooOld': 'Last submitted date from cannot be older than 7 years from today',
+    'lastSubmittedToDate.tooOld': 'Last submitted date to cannot be older than 7 years from today',
     'decisionFromDate.missing': "Enter 'Decision date from'",
     'decisionToDate.missing': "Enter 'Decision date to'",
     'decisionToDate.earlier': "Your 'Decision date to' must be the same as or after your 'Decision date from'",
