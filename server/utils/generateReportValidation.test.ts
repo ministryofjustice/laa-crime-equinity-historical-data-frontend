@@ -492,4 +492,67 @@ describe('Generate Report Validation', () => {
       })
     })
   })
+  describe('7-year validation errors (CRM4 & CRM5)', () => {
+    it.each([
+      [
+        'Decision date from older than 7 years',
+        'decisionFromDate',
+        { crmType: 'crm4', decisionFromDate: '2015-01-01', decisionToDate: '2024-01-10' },
+        'Decision date from cannot be older than 7 years from today',
+      ],
+      [
+        'Decision date to older than 7 years',
+        'decisionToDate',
+        { crmType: 'crm5', decisionFromDate: '2024-01-01', decisionToDate: '2015-01-01' },
+        'Decision date to cannot be older than 7 years from today',
+      ],
+    ])('should return error for %s', (reason: string, field, params, error) => {
+      const result = validateReportParams(params)
+
+      expect(result).toEqual({
+        list: [{ href: `#${field}`, text: error }],
+        messages: { [field]: { text: error } },
+      })
+    })
+  })
+  describe('7-year validation errors (CRM14)', () => {
+    it.each([
+      ['Decision date from', 'decisionFromDate', '2015-01-01', 'Decision date to', 'decisionToDate'],
+      ['Decision date to', 'decisionToDate', '2015-01-01', 'Decision date from', 'decisionFromDate'],
+      ['Submitted date from', 'submittedFromDate', '2015-01-01', 'Submitted date to', 'submittedToDate'],
+      ['Submitted date to', 'submittedToDate', '2015-01-01', 'Submitted date from', 'submittedFromDate'],
+      ['Created date from', 'createdFromDate', '2015-01-01', 'Created date to', 'createdToDate'],
+      ['Created date to', 'createdToDate', '2015-01-01', 'Created date from', 'createdFromDate'],
+      [
+        'Last submitted date from',
+        'lastSubmittedFromDate',
+        '2015-01-01',
+        'Last submitted date to',
+        'lastSubmittedToDate',
+      ],
+      [
+        'Last submitted date to',
+        'lastSubmittedToDate',
+        '2015-01-01',
+        'Last submitted date from',
+        'lastSubmittedFromDate',
+      ],
+    ])(
+      'should return error when %s is older than 7 years',
+      (errorLabel, field, date, missingFieldLabel, missingField) => {
+        const params: Record<string, string> = { crmType: 'crm14', [field]: date }
+        const result = validateReportParams(params)
+
+        expect(result).toEqual({
+          list: [
+            { href: '#', text: `${errorLabel} cannot be older than 7 years from today` },
+            { href: `#${missingField}`, text: `Enter '${missingFieldLabel}'` },
+          ],
+          messages: {
+            [missingField]: { text: `Enter '${missingFieldLabel}'` },
+          },
+        })
+      },
+    )
+  })
 })

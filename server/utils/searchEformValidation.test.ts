@@ -164,8 +164,8 @@ describe('Search Eform Validation', () => {
       supplierAccountNumber: '1234AB',
       clientName: 'John Doe',
       clientDOB: '1960-02-12',
-      startDate: '2022-11-01',
-      endDate: '2000-11-02',
+      startDate: '2024-11-01',
+      endDate: '2023-11-02',
     }
     const result = validateSearchParams(searchParams)
 
@@ -232,6 +232,24 @@ describe('Search Eform Validation', () => {
         endDate: {
           text: "Enter 'Submission date to'",
         },
+      },
+    })
+  })
+})
+
+describe('7-year validation errors (Eform Search)', () => {
+  it.each([
+    ['Submission date from', 'startDate', '2016-12-31'],
+    ['Submission date to', 'endDate', '2016-12-31'],
+  ])('should return error when %s is older than 7 years', (name, field, date) => {
+    const searchParams: Record<string, string> = { [field]: date }
+
+    const result = validateSearchParams(searchParams)
+
+    expect(result).toEqual({
+      list: [{ href: `#${field}`, text: `${name} cannot be older than 7 years from today` }],
+      messages: {
+        [field]: { text: `${name} cannot be older than 7 years from today` },
       },
     })
   })

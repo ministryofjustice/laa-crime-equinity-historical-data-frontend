@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { isBefore } from 'date-fns'
+import { isBefore, subYears } from 'date-fns'
 import { buildValidationErrors, Errors } from './errorDisplayHelper'
 
 const schema = Joi.object({
@@ -30,6 +30,12 @@ const schema = Joi.object({
       'date.format': 'Submission date from must be a valid date',
     })
     .custom((value, helpers) => {
+      const sevenYearsAgo = subYears(new Date(), 7)
+      sevenYearsAgo.setHours(0, 0, 0, 0)
+
+      if (isBefore(new Date(value), sevenYearsAgo)) {
+        return helpers.error('startDate.tooOld', { path: [] })
+      }
       if (!helpers.state.ancestors[0].endDate) {
         return helpers.error('endDate.missing', undefined, { path: ['endDate'] })
       }
@@ -44,6 +50,13 @@ const schema = Joi.object({
       'date.format': 'Submission date to must be a valid date',
     })
     .custom((value, helpers) => {
+      const sevenYearsAgo = subYears(new Date(), 7)
+      sevenYearsAgo.setHours(0, 0, 0, 0)
+
+      if (isBefore(new Date(value), sevenYearsAgo)) {
+        return helpers.error('endDate.tooOld', { path: [] })
+      }
+
       const { startDate } = helpers.state.ancestors[0]
       if (!startDate) {
         return helpers.error('startDate.missing', undefined, { path: ['startDate'] })
@@ -68,6 +81,8 @@ const schema = Joi.object({
 })
   .options({ allowUnknown: true, abortEarly: false })
   .messages({
+    'startDate.tooOld': 'Submission date from cannot be older than 7 years from today',
+    'endDate.tooOld': 'Submission date to cannot be older than 7 years from today',
     'startDate.missing': "Enter 'Submission date from'",
     'endDate.missing': "Enter 'Submission date to'",
     'endDate.earlier': "Your 'Submission date to' must be the same as or after your 'Submission date from'",
