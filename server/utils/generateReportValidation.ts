@@ -18,7 +18,6 @@ const schema = Joi.object({
     })
     .custom((value, helpers) => {
       const sevenYearsAgo = subYears(new Date(), 7)
-      sevenYearsAgo.setHours(0, 0, 0, 0)
       if (isBefore(new Date(value), sevenYearsAgo)) {
         return helpers.error('decisionFromDate.tooOld', { path: ['decisionFromDate'] })
       }
@@ -34,7 +33,6 @@ const schema = Joi.object({
     })
     .custom((value, helpers) => {
       const sevenYearsAgo = subYears(new Date(), 7)
-      sevenYearsAgo.setHours(0, 0, 0, 0)
       if (isBefore(new Date(value), sevenYearsAgo)) {
         return helpers.error('decisionToDate.tooOld', { path: ['decisionToDate'] })
       }
@@ -75,7 +73,6 @@ const crm14CheckToDate = (toDateField: string) => {
 const crm14Check7YearValidation = (field: string) => {
   return (value: string, helpers: Joi.CustomHelpers): ErrorReport | string => {
     const sevenYearsAgo = subYears(new Date(), 7)
-    sevenYearsAgo.setHours(0, 0, 0, 0)
 
     if (isBefore(new Date(value), sevenYearsAgo)) {
       return helpers.error(`${field}.tooOld`, undefined, { path: [] })
