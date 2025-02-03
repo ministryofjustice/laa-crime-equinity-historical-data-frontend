@@ -17,10 +17,39 @@ The app requires:
 * redis - session store and token caching (optional - use REDIS_ENABLED=true in .env to enable usage)
 
 ### Running the application dependencies
-The easiest way to run the app is to use docker compose to create the service and all dependencies. 
+The easiest way to run the app is to use docker compose to create the service and all dependencies.
 
-`docker compose pull`
+Create a `docker-compose.override.yml` in the project root directory.
+
+Add the following to specify the environment variables for the external APIs:-
+```
+services:
+  app:
+    environment:
+      - EQ_API_URL=xxxxxxxxxxx
+      - EQ_API_CLIENT_ID=xxxxxxxxxxx
+      - EQ_API_SECRET=xxxxxxxxxxx
+      - SDS_API_URL=xxxxxxxxxxx
+      - SDS_AUTH_SCOPE=xxxxxxxxxxx
+      
+      # Optionally, specify to enable SSO
+      - SSO_DISABLED=false
+      - SSO_ALLOWED_USER_PROFILE_GROUPS=xxxxxxxxxxx
+      - SSO_CLIENT_ID=xxxxxxxxxxx
+      - SSO_CLIENT_SECRET=xxxxxxxxxxx
+      - SSO_CLOUD_INSTANCE=https://login.microsoftonline.com/
+      - SSO_POST_LOGOUT_REDIRECT_URI=http://localhost:3000
+      - SSO_PROVIDER_REPORTING_USER_PROFILE_GROUP=xxxxxxxxxxx
+      - SSO_REDIRECT_URI=http://localhost:3000/auth/redirect
+      - SSO_REPORTING_USER_PROFILE_GROUP=xxxxxxxxxxx
+      - SSO_TENANT_ID=xxxxxxxxxxx
+```
+
+
+`docker compose build`
+
 `docker compose up`
+
 
 ### Running the app for development
 
