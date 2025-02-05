@@ -1,6 +1,7 @@
 import Joi, { ErrorReport } from 'joi'
 import { differenceInDays, isBefore, subYears } from 'date-fns'
 import { buildValidationErrors, Errors } from './errorDisplayHelper'
+import config from '../config'
 
 const schema = Joi.object({
   crmType: Joi.string()
@@ -17,6 +18,10 @@ const schema = Joi.object({
       'date.format': 'Decision date from must be a valid date',
     })
     .custom((value, helpers) => {
+      // Skip validation if ENVIRONMENT_NAME is 'archive'
+      if (config.environmentName === 'archive') {
+        return value
+      }
       const sevenYearsAgo = subYears(new Date(), 7)
       sevenYearsAgo.setHours(0, 0, 0, 0)
       if (isBefore(new Date(value), sevenYearsAgo)) {
@@ -33,6 +38,10 @@ const schema = Joi.object({
       'date.format': 'Decision date to must be a valid date',
     })
     .custom((value, helpers) => {
+      // Skip validation if ENVIRONMENT_NAME is 'archive'
+      if (config.environmentName === 'archive') {
+        return value
+      }
       const sevenYearsAgo = subYears(new Date(), 7)
       sevenYearsAgo.setHours(0, 0, 0, 0)
       if (isBefore(new Date(value), sevenYearsAgo)) {
@@ -74,6 +83,10 @@ const crm14CheckToDate = (toDateField: string) => {
 
 const crm14Check7YearValidation = (field: string) => {
   return (value: string, helpers: Joi.CustomHelpers): ErrorReport | string => {
+    // Skip validation if ENVIRONMENT_NAME is 'archive'
+    if (config.environmentName === 'archive') {
+      return value
+    }
     const sevenYearsAgo = subYears(new Date(), 7)
     sevenYearsAgo.setHours(0, 0, 0, 0)
 

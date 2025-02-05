@@ -1,6 +1,7 @@
 import Joi from 'joi'
 import { isBefore, subYears } from 'date-fns'
 import { buildValidationErrors, Errors } from './errorDisplayHelper'
+import config from '../config'
 
 const schema = Joi.object({
   usn: Joi.string().pattern(/^\d+$/).min(4).max(10).optional().allow('').messages({
@@ -30,6 +31,10 @@ const schema = Joi.object({
       'date.format': 'Submission date from must be a valid date',
     })
     .custom((value, helpers) => {
+      // Skip validation if ENVIRONMENT_NAME is 'archive'
+      if (config.environmentName === 'archive') {
+        return value
+      }
       const sevenYearsAgo = subYears(new Date(), 7)
       sevenYearsAgo.setHours(0, 0, 0, 0)
 
@@ -50,6 +55,10 @@ const schema = Joi.object({
       'date.format': 'Submission date to must be a valid date',
     })
     .custom((value, helpers) => {
+      // Skip validation if ENVIRONMENT_NAME is 'archive'
+      if (config.environmentName === 'archive') {
+        return value
+      }
       const sevenYearsAgo = subYears(new Date(), 7)
       sevenYearsAgo.setHours(0, 0, 0, 0)
 
