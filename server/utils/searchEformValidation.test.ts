@@ -1,4 +1,5 @@
 import validateSearchParams from './searchEformValidation'
+import config from '../config'
 
 describe('Search Eform Validation', () => {
   it('should validate search parameters', () => {
@@ -235,22 +236,108 @@ describe('Search Eform Validation', () => {
       },
     })
   })
-})
+  describe('7-year validation errors (Eform Search)', () => {
+    beforeEach(() => {
+      config.environmentName = 'uat'
+    })
 
-describe('7-year validation errors (Eform Search)', () => {
-  it.each([
-    ['Submission date from', 'startDate', '2016-12-31'],
-    ['Submission date to', 'endDate', '2016-12-31'],
-  ])('should return error when %s is older than 7 years', (name, field, date) => {
-    const searchParams: Record<string, string> = { [field]: date }
+    afterEach(() => {
+      config.environmentName = 'uat' // Reset environment after each test
+    })
 
-    const result = validateSearchParams(searchParams)
+    it('should return error when Submission date from is older than 7 years', () => {
+      const searchParams: Record<string, string> = {
+        startDate: '2016-12-31',
+        endDate: '2024-01-02',
+      }
 
-    expect(result).toEqual({
-      list: [{ href: `#${field}`, text: `${name} cannot be older than 7 years from today` }],
-      messages: {
-        [field]: { text: `${name} cannot be older than 7 years from today` },
-      },
+      const result = validateSearchParams(searchParams)
+
+      expect(result).toEqual({
+        list: [{ href: '#startDate', text: 'Submission date from cannot be older than 7 years from today' }],
+        messages: { startDate: { text: 'Submission date from cannot be older than 7 years from today' } },
+      })
+    })
+
+    it('should return error when Submission date to is older than 7 years', () => {
+      const searchParams: Record<string, string> = {
+        startDate: '2024-01-01',
+        endDate: '2016-12-31',
+      }
+
+      const result = validateSearchParams(searchParams)
+
+      expect(result).toEqual({
+        list: [{ href: '#endDate', text: 'Submission date to cannot be older than 7 years from today' }],
+        messages: { endDate: { text: 'Submission date to cannot be older than 7 years from today' } },
+      })
+    })
+
+    it('should return errors when BOTH Submission date from and to are older than 7 years', () => {
+      const searchParams: Record<string, string> = {
+        startDate: '2016-12-31',
+        endDate: '2016-11-30',
+      }
+
+      const result = validateSearchParams(searchParams)
+
+      expect(result).toEqual({
+        list: [
+          { href: '#startDate', text: 'Submission date from cannot be older than 7 years from today' },
+          { href: '#endDate', text: 'Submission date to cannot be older than 7 years from today' },
+        ],
+        messages: {
+          startDate: { text: 'Submission date from cannot be older than 7 years from today' },
+          endDate: { text: 'Submission date to cannot be older than 7 years from today' },
+        },
+      })
+    })
+
+    it('should NOT return 7-year validation errors in archive environment', () => {
+      config.environmentName = 'archive' // Simulate archive mode
+
+      const searchParams: Record<string, string> = {
+        startDate: '2016-12-31',
+        endDate: '2016-12-31',
+      }
+
+      const result = validateSearchParams(searchParams)
+
+      expect(result).toBeNull()
+    })
+  })
+
+  describe('Archive Environment - 7-year Validation Bypass', () => {
+    beforeEach(() => {
+      config.environmentName = 'archive'
+    })
+
+    it('should NOT return a 7-year validation error when in archive environment (Submission date from)', () => {
+      const searchParams: Record<string, string> = {
+        startDate: '2015-01-01',
+        endDate: '',
+      }
+
+      const result = validateSearchParams(searchParams)
+
+      expect(result).toEqual({
+        list: [{ href: '#endDate', text: "Enter 'Submission date to'" }],
+        messages: { endDate: { text: "Enter 'Submission date to'" } },
+      })
+    })
+
+    it('should NOT return a 7-year validation error when in archive environment (Submission date to)', () => {
+      const searchParams: Record<string, string> = {
+        startDate: '',
+        endDate: '2015-01-01',
+      }
+
+      const result = validateSearchParams(searchParams)
+
+      expect(result).toEqual({
+        list: [{ href: '#startDate', text: "Enter 'Submission date from'" }],
+        messages: { startDate: { text: "Enter 'Submission date from'" } },
+      })
     })
   })
 })

@@ -1,6 +1,7 @@
 import Joi from 'joi'
 import { isBefore, subYears } from 'date-fns'
 import { buildValidationErrors, Errors } from './errorDisplayHelper'
+import config from '../config'
 
 const schema = Joi.object({
   usn: Joi.string().pattern(/^\d+$/).min(4).max(10).optional().allow('').messages({
@@ -30,13 +31,19 @@ const schema = Joi.object({
       'date.format': 'Submission date from must be a valid date',
     })
     .custom((value, helpers) => {
-      const sevenYearsAgo = subYears(new Date(), 7)
-      sevenYearsAgo.setHours(0, 0, 0, 0)
+      const { endDate } = helpers.state.ancestors[0]
 
-      if (isBefore(new Date(value), sevenYearsAgo)) {
-        return helpers.error('startDate.tooOld', { path: [] })
+      // Skip 7-year validation if ENVIRONMENT_NAME is 'archive'
+      if (config.environmentName !== 'archive') {
+        const sevenYearsAgo = subYears(new Date(), 7)
+        sevenYearsAgo.setHours(0, 0, 0, 0)
+
+        if (isBefore(new Date(value), sevenYearsAgo)) {
+          return helpers.error('startDate.tooOld', { path: [] })
+        }
       }
-      if (!helpers.state.ancestors[0].endDate) {
+
+      if (!endDate) {
         return helpers.error('endDate.missing', undefined, { path: ['endDate'] })
       }
 
@@ -50,14 +57,18 @@ const schema = Joi.object({
       'date.format': 'Submission date to must be a valid date',
     })
     .custom((value, helpers) => {
-      const sevenYearsAgo = subYears(new Date(), 7)
-      sevenYearsAgo.setHours(0, 0, 0, 0)
+      const { startDate } = helpers.state.ancestors[0]
 
-      if (isBefore(new Date(value), sevenYearsAgo)) {
-        return helpers.error('endDate.tooOld', { path: [] })
+      // Skip 7-year validation if ENVIRONMENT_NAME is 'archive'
+      if (config.environmentName !== 'archive') {
+        const sevenYearsAgo = subYears(new Date(), 7)
+        sevenYearsAgo.setHours(0, 0, 0, 0)
+
+        if (isBefore(new Date(value), sevenYearsAgo)) {
+          return helpers.error('endDate.tooOld', { path: [] })
+        }
       }
 
-      const { startDate } = helpers.state.ancestors[0]
       if (!startDate) {
         return helpers.error('startDate.missing', undefined, { path: ['startDate'] })
       }

@@ -1,4 +1,5 @@
 import validateReportParams from './generateReportValidation'
+import config from '../config'
 
 describe('Generate Report Validation', () => {
   describe('valid report parameters', () => {
@@ -554,5 +555,61 @@ describe('Generate Report Validation', () => {
         })
       },
     )
+  })
+  describe('Archive Environment - 7-year Validation Bypass', () => {
+    beforeEach(() => {
+      jest.resetModules()
+    })
+
+    it('should NOT return a 7-year validation error when in archive environment (Decision date from)', () => {
+      config.environmentName = 'archive'
+
+      const params = {
+        crmType: 'crm4',
+        decisionFromDate: '2017-01-01',
+        decisionToDate: '2017-01-15',
+      }
+
+      const result = validateReportParams(params)
+
+      expect(result).toBeNull()
+    })
+
+    it('should NOT return a 7-year validation error when in archive environment (Decision date to)', () => {
+      config.environmentName = 'archive'
+
+      const params = {
+        crmType: 'crm4',
+        decisionFromDate: '2017-01-10',
+        decisionToDate: '2017-01-25',
+      }
+
+      const result = validateReportParams(params)
+
+      expect(result).toBeNull()
+    })
+
+    it('should apply 7-year validation in NON-archive environments (Decision date from and to)', () => {
+      config.environmentName = 'uat'
+
+      const params = {
+        crmType: 'crm4',
+        decisionFromDate: '2015-01-01',
+        decisionToDate: '2015-01-10',
+      }
+
+      const result = validateReportParams(params)
+
+      expect(result).toEqual({
+        list: [
+          { href: '#decisionFromDate', text: 'Decision date from cannot be older than 7 years from today' },
+          { href: '#decisionToDate', text: 'Decision date to cannot be older than 7 years from today' },
+        ],
+        messages: {
+          decisionFromDate: { text: 'Decision date from cannot be older than 7 years from today' },
+          decisionToDate: { text: 'Decision date to cannot be older than 7 years from today' },
+        },
+      })
+    })
   })
 })
