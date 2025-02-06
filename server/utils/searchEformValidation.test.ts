@@ -312,14 +312,32 @@ describe('Search Eform Validation', () => {
       config.environmentName = 'archive'
     })
 
-    it.each([
-      ['Submission date from', 'startDate', '2015-01-01'],
-      ['Submission date to', 'endDate', '2015-01-01'],
-    ])('should NOT return a 7-year validation error when in archive environment (%s)', (name, field, date) => {
-      const searchParams: Record<string, string> = { [field]: date }
+    it('should NOT return a 7-year validation error when in archive environment (Submission date from)', () => {
+      const searchParams: Record<string, string> = {
+        startDate: '2015-01-01',
+        endDate: '',
+      }
+
       const result = validateSearchParams(searchParams)
 
-      expect(result).toBeNull()
+      expect(result).toEqual({
+        list: [{ href: '#endDate', text: "Enter 'Submission date to'" }],
+        messages: { endDate: { text: "Enter 'Submission date to'" } },
+      })
+    })
+
+    it('should NOT return a 7-year validation error when in archive environment (Submission date to)', () => {
+      const searchParams: Record<string, string> = {
+        startDate: '',
+        endDate: '2015-01-01',
+      }
+
+      const result = validateSearchParams(searchParams)
+
+      expect(result).toEqual({
+        list: [{ href: '#startDate', text: "Enter 'Submission date from'" }],
+        messages: { startDate: { text: "Enter 'Submission date from'" } },
+      })
     })
   })
 })
