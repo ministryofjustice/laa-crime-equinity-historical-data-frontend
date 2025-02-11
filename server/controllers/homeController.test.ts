@@ -1,6 +1,7 @@
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import type { NextFunction, Request, Response } from 'express'
 import HomeController from './homeController'
+import config from '../config'
 
 describe('HomeController', () => {
   let request: DeepMocked<Request>
@@ -21,6 +22,22 @@ describe('HomeController', () => {
     expect(response.render).toHaveBeenCalledWith('pages/index', {
       isReportingAllowed: false,
       isProviderReportingAllowed: false,
+      isArchiveEnvironment: false,
+    })
+  })
+
+  it('should hide reporting links in archive environment', async () => {
+    config.environmentName = 'archive'
+
+    const homeController = new HomeController()
+    const requestHandler = homeController.show()
+
+    await requestHandler(request, response, next)
+
+    expect(response.render).toHaveBeenCalledWith('pages/index', {
+      isReportingAllowed: false,
+      isProviderReportingAllowed: false,
+      isArchiveEnvironment: true,
     })
   })
 })

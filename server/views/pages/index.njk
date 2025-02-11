@@ -9,6 +9,15 @@
       <div class="govuk-width-container">
           <h1 class="govuk-heading-l">Access eForms Records</h1>
 
+          {% if isArchiveEnvironment %}
+          <p class="govuk-body">
+              You can search for eForm records.
+          </p>
+          <p class="govuk-body">
+              <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
+          </p>
+          {% else %}
+
           {% if isReportingAllowed and isProviderReportingAllowed %}
               <p class="govuk-body">
                   You can generate eForm reports, generate provider reports, or search for an eForm record.
@@ -46,6 +55,7 @@
               <p class="govuk-body">
                   <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
               </p>
+          {% endif %}
           {% endif %}
       </div>
   {% endblock %}
