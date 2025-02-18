@@ -34,7 +34,7 @@ export const crm14CheckToDate = (toDateField: string) => {
 // For CRM14: Validates that the date is not older than 7 years.
 export const crm14Check7YearValidation = (field: string) => {
   return (value: string, helpers: Joi.CustomHelpers): string | Error => {
-    // Skip validation if ENVIRONMENT_NAME is 'archive'
+    // Skip the validation if ENVIRONMENT_NAME is 'archive'
     if (config.environmentName === 'archive') {
       return value
     }
