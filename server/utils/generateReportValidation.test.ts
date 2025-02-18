@@ -546,10 +546,17 @@ describe('Generate Report Validation', () => {
 
         expect(result).toEqual({
           list: [
-            { href: '#', text: `${errorLabel} cannot be older than 7 years from today` },
-            { href: `#${missingField}`, text: `Enter '${missingFieldLabel}'` },
+            {
+              href: `#${field}`,
+              text: `${errorLabel} cannot be older than 7 years from today`,
+            },
+            {
+              href: `#${missingField}`,
+              text: `Enter '${missingFieldLabel}'`,
+            },
           ],
           messages: {
+            [field]: { text: `${errorLabel} cannot be older than 7 years from today` },
             [missingField]: { text: `Enter '${missingFieldLabel}'` },
           },
         })
