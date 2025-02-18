@@ -1,14 +1,14 @@
-import Joi, { ErrorReport } from 'joi'
+import Joi from 'joi'
 import { differenceInDays, isBefore, subYears } from 'date-fns'
 import { buildValidationErrors, Errors } from './errorDisplayHelper'
 import config from '../config'
+import { crm14CheckToDate, crm14Check7YearValidation, crm14CheckDateRange } from './validators'
 
 const schema = Joi.object({
-  crmType: Joi.string()
-    .required()
-    .empty('')
-    .valid('crm4', 'crm5', 'crm14')
-    .messages({ 'any.required': 'CRM type must be selected', 'any.only': 'Invalid CRM type specified' }),
+  crmType: Joi.string().required().empty('').valid('crm4', 'crm5', 'crm14').messages({
+    'any.required': 'CRM type must be selected',
+    'any.only': 'Invalid CRM type specified',
+  }),
   decisionFromDate: Joi.date()
     .required()
     .iso()
@@ -18,14 +18,13 @@ const schema = Joi.object({
       'date.format': 'Decision date from must be a valid date',
     })
     .custom((value, helpers) => {
-      // Skip validation if ENVIRONMENT_NAME is 'archive'
-      if (config.environmentName === 'archive') {
-        return value
-      }
-      const sevenYearsAgo = subYears(new Date(), 7)
-      sevenYearsAgo.setHours(0, 0, 0, 0)
-      if (isBefore(new Date(value), sevenYearsAgo)) {
-        return helpers.error('decisionFromDate.tooOld', { path: ['decisionFromDate'] })
+      // 7-year check for non-archive environments
+      if (config.environmentName !== 'archive') {
+        const sevenYearsAgo = subYears(new Date(), 7)
+        sevenYearsAgo.setHours(0, 0, 0, 0)
+        if (isBefore(new Date(value), sevenYearsAgo)) {
+          return helpers.error('decisionFromDate.tooOld', { path: ['decisionFromDate'] })
+        }
       }
       return value
     }),
@@ -38,14 +37,13 @@ const schema = Joi.object({
       'date.format': 'Decision date to must be a valid date',
     })
     .custom((value, helpers) => {
-      // Skip validation if ENVIRONMENT_NAME is 'archive'
-      if (config.environmentName === 'archive') {
-        return value
-      }
-      const sevenYearsAgo = subYears(new Date(), 7)
-      sevenYearsAgo.setHours(0, 0, 0, 0)
-      if (isBefore(new Date(value), sevenYearsAgo)) {
-        return helpers.error('decisionToDate.tooOld', { path: ['decisionToDate'] })
+      // 7-year check for non-archive environments
+      if (config.environmentName !== 'archive') {
+        const sevenYearsAgo = subYears(new Date(), 7)
+        sevenYearsAgo.setHours(0, 0, 0, 0)
+        if (isBefore(new Date(value), sevenYearsAgo)) {
+          return helpers.error('decisionToDate.tooOld', { path: ['decisionToDate'] })
+        }
       }
       return value
     }),
@@ -71,58 +69,12 @@ const schema = Joi.object({
     'decisionToDate.range': 'Decision date range cannot be more than 1 month',
   })
 
-const crm14CheckToDate = (toDateField: string) => {
-  return (value: string, helpers: Joi.CustomHelpers): ErrorReport | string => {
-    if (!helpers.state.ancestors[0][toDateField]) {
-      return helpers.error(`${toDateField}.missing`, undefined, { path: [toDateField] })
-    }
-
-    return value
-  }
-}
-
-const crm14Check7YearValidation = (field: string) => {
-  return (value: string, helpers: Joi.CustomHelpers): ErrorReport | string => {
-    // Skip validation if ENVIRONMENT_NAME is 'archive'
-    if (config.environmentName === 'archive') {
-      return value
-    }
-    const sevenYearsAgo = subYears(new Date(), 7)
-    sevenYearsAgo.setHours(0, 0, 0, 0)
-
-    if (isBefore(new Date(value), sevenYearsAgo)) {
-      return helpers.error(`${field}.tooOld`, undefined, { path: [] })
-    }
-
-    return value
-  }
-}
-
-const crm14CheckDateRange = (fromDateField: string, toDateField: string) => {
-  return (value: string, helpers: Joi.CustomHelpers): ErrorReport | string => {
-    const fromDate = helpers.state.ancestors[0][fromDateField]
-    if (!fromDate) {
-      return helpers.error(`${fromDateField}.missing`, undefined, { path: [fromDateField] })
-    }
-
-    if (isBefore(value, fromDate)) {
-      return helpers.error(`${toDateField}.earlier`, undefined, { path: [toDateField] })
-    }
-
-    if (differenceInDays(value, fromDate) > 31) {
-      return helpers.error(`${toDateField}.range`, undefined, { path: [] })
-    }
-
-    return value
-  }
-}
-
 const schemaCrm14 = Joi.object({
-  crmType: Joi.string()
-    .required()
-    .empty('')
-    .valid('crm4', 'crm5', 'crm14')
-    .messages({ 'any.required': 'CRM type must be selected', 'any.only': 'Invalid CRM type specified' }),
+  crmType: Joi.string().required().empty('').valid('crm4', 'crm5', 'crm14').messages({
+    'any.required': 'CRM type must be selected',
+    'any.only': 'Invalid CRM type specified',
+  }),
+
   decisionFromDate: Joi.date()
     .optional()
     .iso()
@@ -253,9 +205,7 @@ export default function validateReportParams(
           // Initialize validationErrors if it's null
           validationErrors = {
             list: [{ href: '#providerAccount', text: "Enter 'Provider account'" }],
-            messages: {
-              providerAccount: { text: "Enter 'Provider account'" },
-            },
+            messages: { providerAccount: { text: "Enter 'Provider account'" } },
           }
         } else {
           validationErrors.list.push({ href: '#providerAccount', text: "Enter 'Provider account'" })
