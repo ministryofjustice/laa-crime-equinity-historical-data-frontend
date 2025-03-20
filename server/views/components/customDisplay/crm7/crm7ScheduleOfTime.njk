@@ -26,7 +26,7 @@
             { text: item.feeEarnerInitials },
             { text: item.date },
             { text: item.costType },
-            { text: item.time | formatTime('HH:mm') },
+            { text: item.time | formatHours(true) },
             { text: item.hearingTypeCode },
             { text: item.personAttendedCode },
             { text: item.hourlyRate | formatCurrency },
@@ -56,7 +56,7 @@
     {% for item in data.laaAdjustments %}
         {% set row = [
             { text: item.line },
-            { text: item.time | formatTime('HH:mm') },
+            { text: item.time | formatHours(true) },
             { text: item.hourlyRate | formatCurrency },
             { text: item.basicClaim | formatCurrency },
             { text: item.uplift | formatPercentage },
