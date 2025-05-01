@@ -39,6 +39,12 @@ const isProviderReportingAllowed = (res: Response): boolean => {
   return ssoUserGroups.includes(config.sso.providerReportingUserProfileGroup)
 }
 
+const isViewEformAllowed = (res: Response): boolean => {
+  if (config.sso.disabled) {
+    return true // Allow unrestricted access if SSO is disabled
+  }
+  return !!getProfileAcceptedTypes(res)
+}
 const getSsoUserGroups = (res: Response): string[] => res.locals.ssoUserGroups || []
 
-export { getProfileAcceptedTypes, isReportingAllowed, isProviderReportingAllowed }
+export { getProfileAcceptedTypes, isReportingAllowed, isProviderReportingAllowed, isViewEformAllowed }

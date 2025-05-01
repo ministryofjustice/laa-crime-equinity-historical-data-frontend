@@ -10,7 +10,12 @@ import CrmApiService from '../services/crmApiService'
 import SearchEformService from '../services/searchEformService'
 import CrmDisplayService from '../services/crmDisplayService'
 import GenerateReportService from '../services/generateReportService'
-import { getProfileAcceptedTypes, isReportingAllowed, isProviderReportingAllowed } from '../utils/userProfileGroups'
+import {
+  getProfileAcceptedTypes,
+  isReportingAllowed,
+  isProviderReportingAllowed,
+  isViewEformAllowed,
+} from '../utils/userProfileGroups'
 
 jest.mock('../services/crmApiService')
 jest.mock('../services/searchEformService')
@@ -23,6 +28,7 @@ let app: Express
 let mockGetProfileAcceptedTypes: jest.Mock
 let mockIsReportingAllowed: jest.Mock
 let mockIsProviderReportingAllowed: jest.Mock
+let mockIsViewEformAllowed: jest.Mock
 let mockCrm4Service: jest.Mocked<CrmApiService<Crm4Response>>
 let mockCrm5Service: jest.Mocked<CrmApiService<Crm5Response>>
 let mockCrm7Service: jest.Mocked<CrmApiService<Crm7Response>>
@@ -35,6 +41,7 @@ beforeEach(() => {
   mockGetProfileAcceptedTypes = getProfileAcceptedTypes as jest.Mock
   mockIsReportingAllowed = isReportingAllowed as jest.Mock
   mockIsProviderReportingAllowed = isProviderReportingAllowed as jest.Mock
+  mockIsViewEformAllowed = isViewEformAllowed as jest.Mock
   mockCrm4Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm4Response>>
   mockCrm5Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm5Response>>
   mockCrm7Service = new CrmApiService(null) as jest.Mocked<CrmApiService<Crm7Response>>
@@ -57,6 +64,7 @@ beforeEach(() => {
   mockGetProfileAcceptedTypes.mockReturnValue('1,4,5,6')
   mockIsReportingAllowed.mockReturnValue(true)
   mockIsProviderReportingAllowed.mockReturnValue(true)
+  mockIsViewEformAllowed.mockReturnValue(true)
 })
 
 afterEach(() => {
@@ -77,6 +85,7 @@ describe('routes', () => {
     })
 
     it('should render index page without generate reports ', () => {
+      mockIsReportingAllowed.mockReturnValue(false)
       mockIsReportingAllowed.mockReturnValue(false)
       mockIsProviderReportingAllowed.mockReturnValue(false)
       return request(app)

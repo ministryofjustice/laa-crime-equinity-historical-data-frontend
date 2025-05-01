@@ -1,6 +1,11 @@
 import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import type { Response } from 'express'
-import { getProfileAcceptedTypes, isProviderReportingAllowed, isReportingAllowed } from './userProfileGroups'
+import {
+  getProfileAcceptedTypes,
+  isProviderReportingAllowed,
+  isReportingAllowed,
+  isViewEformAllowed,
+} from './userProfileGroups'
 
 import config from '../config'
 
@@ -11,6 +16,11 @@ jest.mock('../config', () => {
 })
 
 describe('userProfileGroups', () => {
+  const USER_GROUP_CRM4 = '36c86b9e-be2f-4f73-8bf7-ea654dea0165'
+  const USER_GROUP_CRM7 = '87bfe474-f53e-4641-b992-fff11346782f'
+  const USER_GROUP_PROVIDER_REPORTING = 'a25b36d0-3401-4c07-b6bf-90fc788a49bc'
+  const USER_GROUP_REPORTING = 'e1bd9e59-37bd-472f-8212-95a8fcc69e48'
+
   let response: DeepMocked<Response>
 
   beforeEach(() => {
@@ -35,8 +45,8 @@ describe('userProfileGroups', () => {
       response.locals = {
         user: { token: '', authSource: '' },
         ssoUserGroups: [
-          '36c86b9e-be2f-4f73-8bf7-ea654dea0165', // user profile group for type 1
-          '87bfe474-f53e-4641-b992-fff11346782f', // user profile group for type 5
+          USER_GROUP_CRM4,
+          USER_GROUP_CRM7,
           'be12a2da-8c3d-4681-8e50-3290c9d2d925',
           '6f3c64a9-8ab4-4e2a-afe8-f3abb72a9375',
         ],
@@ -82,11 +92,7 @@ describe('userProfileGroups', () => {
     it('returns true if ssoUserGroups contains reporting user group', () => {
       response.locals = {
         user: { token: '', authSource: '' },
-        ssoUserGroups: [
-          '36c86b9e-be2f-4f73-8bf7-ea654dea0165',
-          '87bfe474-f53e-4641-b992-fff11346782f',
-          'e1bd9e59-37bd-472f-8212-95a8fcc69e48', // reporting user group
-        ],
+        ssoUserGroups: [USER_GROUP_CRM4, USER_GROUP_CRM7, USER_GROUP_REPORTING],
       }
 
       const result = isReportingAllowed(response)
@@ -99,7 +105,7 @@ describe('userProfileGroups', () => {
 
       response.locals = {
         user: { token: '', authSource: '' },
-        ssoUserGroups: ['36c86b9e-be2f-4f73-8bf7-ea654dea0165', '87bfe474-f53e-4641-b992-fff11346782f'],
+        ssoUserGroups: [USER_GROUP_CRM4, USER_GROUP_CRM7],
       }
 
       const result = isReportingAllowed(response)
@@ -110,7 +116,7 @@ describe('userProfileGroups', () => {
     it('returns false if ssoUserGroups does not contain reporting user group', () => {
       response.locals = {
         user: { token: '', authSource: '' },
-        ssoUserGroups: ['36c86b9e-be2f-4f73-8bf7-ea654dea0165', '87bfe474-f53e-4641-b992-fff11346782f'],
+        ssoUserGroups: [USER_GROUP_CRM4, USER_GROUP_CRM7],
       }
 
       const result = isReportingAllowed(response)
@@ -123,11 +129,7 @@ describe('userProfileGroups', () => {
     it('returns true if ssoUserGroups contains provider reporting user group', () => {
       response.locals = {
         user: { token: '', authSource: '' },
-        ssoUserGroups: [
-          '36c86b9e-be2f-4f73-8bf7-ea654dea0165',
-          '87bfe474-f53e-4641-b992-fff11346782f',
-          'a25b36d0-3401-4c07-b6bf-90fc788a49bc', // provider reporting user group
-        ],
+        ssoUserGroups: [USER_GROUP_CRM4, USER_GROUP_CRM7, USER_GROUP_PROVIDER_REPORTING],
       }
 
       const result = isProviderReportingAllowed(response)
@@ -140,7 +142,7 @@ describe('userProfileGroups', () => {
 
       response.locals = {
         user: { token: '', authSource: '' },
-        ssoUserGroups: ['36c86b9e-be2f-4f73-8bf7-ea654dea0165', '87bfe474-f53e-4641-b992-fff11346782f'],
+        ssoUserGroups: [USER_GROUP_CRM4, USER_GROUP_CRM7],
       }
 
       const result = isProviderReportingAllowed(response)
@@ -151,10 +153,47 @@ describe('userProfileGroups', () => {
     it('returns false if ssoUserGroups does not contain provider reporting user group', () => {
       response.locals = {
         user: { token: '', authSource: '' },
-        ssoUserGroups: ['36c86b9e-be2f-4f73-8bf7-ea654dea0165', '87bfe474-f53e-4641-b992-fff11346782f'],
+        ssoUserGroups: [USER_GROUP_CRM4, USER_GROUP_CRM7],
       }
 
       const result = isProviderReportingAllowed(response)
+
+      expect(result).toBe(false)
+    })
+  })
+
+  describe('isViewEformAllowed()', () => {
+    it('returns true if ssoUserGroups contains CRM user groups', () => {
+      response.locals = {
+        user: { token: '', authSource: '' },
+        ssoUserGroups: [USER_GROUP_CRM4, USER_GROUP_CRM7],
+      }
+
+      const result = isViewEformAllowed(response)
+
+      expect(result).toBe(true)
+    })
+
+    it('returns true if SSO is disabled', () => {
+      config.sso.disabled = true
+
+      response.locals = {
+        user: { token: '', authSource: '' },
+        ssoUserGroups: [USER_GROUP_CRM4, USER_GROUP_CRM7],
+      }
+
+      const result = isViewEformAllowed(response)
+
+      expect(result).toBe(true)
+    })
+
+    it('returns false if ssoUserGroups does not contain any CRM user groups', () => {
+      response.locals = {
+        user: { token: '', authSource: '' },
+        ssoUserGroups: ['be12a2da-8c3d-4681-8e50-3290c9d2d925', '6f3c64a9-8ab4-4e2a-afe8-f3abb72a9375'],
+      }
+
+      const result = isViewEformAllowed(response)
 
       expect(result).toBe(false)
     })
