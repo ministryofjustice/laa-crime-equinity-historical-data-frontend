@@ -1,5 +1,5 @@
 import type { Request, RequestHandler, Response } from 'express'
-import { isReportingAllowed, isProviderReportingAllowed } from '../utils/userProfileGroups'
+import { isReportingAllowed, isProviderReportingAllowed, isViewEformAllowed } from '../utils/userProfileGroups'
 import config from '../config'
 
 export default class HomeController {
@@ -10,9 +10,10 @@ export default class HomeController {
       const isArchiveEnvironment = config.environmentName === 'archive'
 
       res.render('pages/index', {
+        isArchiveEnvironment,
         isReportingAllowed: isReportingAllowed(res),
         isProviderReportingAllowed: isProviderReportingAllowed(res),
-        isArchiveEnvironment,
+        isViewEformAllowed: isViewEformAllowed(res),
       })
     }
   }

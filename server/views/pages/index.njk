@@ -5,56 +5,60 @@
 {% set pageTitle =  "Access eForms Records - " + applicationName %}
 {% set mainClasses = "app-container govuk-body" %}
 
-  {% block content %}
-      <div class="govuk-width-container">
-          <h1 class="govuk-heading-l">Access eForms Records</h1>
+{% block content %}
+  <div class="govuk-width-container">
+      <h1 class="govuk-heading-l">Access eForms Records</h1>
 
-          {% if isArchiveEnvironment %}
-              <p class="govuk-body">
-                  You can search for eForm records.
-              </p>
-              <p class="govuk-body">
-                  <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
-              </p>
-          {% else %}
-              {% if isReportingAllowed and isProviderReportingAllowed %}
-                  <p class="govuk-body">
-                      You can generate eForm reports, generate provider reports, or search for an eForm record.
-                  </p>
-                  <p class="govuk-body">
-                      <a href="/generate-report" class="govuk-link govuk-link--no-visited-state">Generate eForm reports</a>
-                  </p>
-                  <p class="govuk-body">
-                      <a href="/provider-report" class="govuk-link govuk-link--no-visited-state">Generate provider reports</a>
-                  </p>
-                  <p class="govuk-body">
-                      <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
-                  </p>
-              {% elif isReportingAllowed %}
-                  <p class="govuk-body">
-                      You can generate reports or search for an eForm record.
-                  </p>
-                  <p class="govuk-body">
-                      <a href="/generate-report" class="govuk-link govuk-link--no-visited-state">Generate eForm reports</a>
-                  </p>
-                  <p class="govuk-body">
-                      <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
-                  </p>
-              {% elif isProviderReportingAllowed %}
-                  <p class="govuk-body">
-                      You can generate provider reports.
-                  </p>
-                  <p class="govuk-body">
-                      <a href="/provider-report" class="govuk-link govuk-link--no-visited-state">Generate provider reports</a>
-                  </p>
-              {% else %}
-                  <p class="govuk-body">
-                      You can search for eForm records.
-                  </p>
-                  <p class="govuk-body">
-                      <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
-                  </p>
-              {% endif %}
-          {% endif %}
-      </div>
-  {% endblock %}
+      {{ displayHeading(isReportingAllowed, isProviderReportingAllowed, (isArchiveEnvironment or isViewEformAllowed)) }}
+
+      {{ displayLinks(isReportingAllowed, isProviderReportingAllowed, (isArchiveEnvironment or isViewEformAllowed)) }}
+  </div>
+{% endblock %}
+
+{% macro displayHeading(isReportingAllowed, isProviderReportingAllowed, isViewEformAllowed) %}
+    {% set headingParts = [] %}
+
+    {% if isReportingAllowed %}
+        {% set _ = headingParts.push("generate eForm reports") %}
+    {% endif %}
+
+    {% if isProviderReportingAllowed %}
+        {% set _ = headingParts.push("generate provider reports") %}
+    {% endif %}
+
+    {% if isViewEformAllowed %}
+        {% set _ = headingParts.push("search for an eForm record") %}
+    {% endif %}
+
+    <p class="govuk-body">
+        {% if headingParts.length == 1 %}
+            You can {{ headingParts[0] }}.
+        {% elif headingParts.length == 2 %}
+            You can {{ headingParts[0] }} or {{ headingParts[1] }}.
+        {% elif headingParts.length == 3 %}
+            You can {{ headingParts[0] }}, {{ headingParts[1] }} or {{ headingParts[2] }}.
+        {% endif %}
+    </p>
+{% endmacro %}
+
+{% macro displayLinks(isReportingAllowed, isProviderReportingAllowed, isViewEformAllowed) %}
+
+    {% if isReportingAllowed %}
+        <p class="govuk-body">
+            <a href="/generate-report" class="govuk-link govuk-link--no-visited-state">Generate eForm reports</a>
+        </p>
+    {% endif %}
+
+    {% if isProviderReportingAllowed %}
+        <p class="govuk-body">
+            <a href="/provider-report" class="govuk-link govuk-link--no-visited-state">Generate provider reports</a>
+        </p>
+    {% endif %}
+
+    {% if isViewEformAllowed %}
+        <p class="govuk-body">
+            <a href="/search-eform" class="govuk-link govuk-link--no-visited-state">View eForm records</a>
+        </p>
+    {% endif %}
+
+{% endmacro %}
