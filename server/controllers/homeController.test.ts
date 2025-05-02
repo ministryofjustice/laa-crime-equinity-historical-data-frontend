@@ -2,7 +2,6 @@ import { createMock, DeepMocked } from '@golevelup/ts-jest'
 import type { NextFunction, Request, Response } from 'express'
 import HomeController from './homeController'
 import config from '../config'
-import { isViewEformAllowed } from '../utils/userProfileGroups'
 
 describe('HomeController', () => {
   let request: DeepMocked<Request>
