@@ -9,13 +9,21 @@
   <div class="govuk-width-container">
       <h1 class="govuk-heading-l">Access eForms Records</h1>
 
-      {{ displayHeading(isReportingAllowed, isProviderReportingAllowed, (isArchiveEnvironment or isViewEformAllowed)) }}
+      {% if isArchiveEnvironment %}
+          <p class="govuk-body">You can generate eForm reports.</p>
 
-      {{ displayLinks(isReportingAllowed, isProviderReportingAllowed, (isArchiveEnvironment or isViewEformAllowed)) }}
+          <p class="govuk-body">
+              <a href="/generate-report" class="govuk-link govuk-link--no-visited-state">Generate eForm reports</a>
+          </p>
+      {% else %}
+
+          {{ displayLinks(isReportingAllowed, isProviderReportingAllowed, isViewEformAllowed) }}
+
+      {% endif %}
   </div>
 {% endblock %}
 
-{% macro displayHeading(isReportingAllowed, isProviderReportingAllowed, isViewEformAllowed) %}
+{% macro displayLinks(isReportingAllowed, isProviderReportingAllowed, isViewEformAllowed) %}
     {% set headingParts = [] %}
 
     {% if isReportingAllowed %}
@@ -39,9 +47,6 @@
             You can {{ headingParts[0] }}, {{ headingParts[1] }} or {{ headingParts[2] }}.
         {% endif %}
     </p>
-{% endmacro %}
-
-{% macro displayLinks(isReportingAllowed, isProviderReportingAllowed, isViewEformAllowed) %}
 
     {% if isReportingAllowed %}
         <p class="govuk-body">

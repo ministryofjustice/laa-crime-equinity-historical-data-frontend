@@ -192,6 +192,7 @@ describe('GenerateReportController', () => {
         decisionFromDate: '2023-03-01',
         decisionToDate: '2023-03-30',
         providerAccount: '1234',
+        profileAcceptedTypes: '1,4,5,6',
       })
     })
   })

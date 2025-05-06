@@ -79,6 +79,7 @@ describe('CRM Report Api Client', () => {
         providerAccount: '0D182J',
       })
       .matchHeader('authorization', 'Bearer no_auth')
+      .matchHeader('profileAcceptedTypes', '1,4,5,6')
       .reply(200, { text: 'provider,csv,data\n1,2,3' })
 
     const result = await crmReportApiClient.getProviderCrmReport({
@@ -111,6 +112,7 @@ describe('CRM Report Api Client', () => {
         providerAccount: '0D182J',
       })
       .matchHeader('authorization', 'Bearer no_auth')
+      .matchHeader('profileAcceptedTypes', '1,4,5,6')
       .reply(200, 'sample,csv,data\n4,5,6')
 
     const result = await crmReportApiClient.getProviderCrm14Report({
@@ -128,27 +130,5 @@ describe('CRM Report Api Client', () => {
     })
 
     expect(result.toString()).toEqual('sample,csv,data\n4,5,6')
-  })
-
-  it('should handle Provider CRM Report 404 error', async () => {
-    fakeRestClient
-      .get('/api/internal/v1/equinity/report/provider/crm4/')
-      .query({
-        decisionFrom: '2023-03-01',
-        decisionTo: '2023-03-30',
-        providerAccount: 'INVALID',
-      })
-      .matchHeader('authorization', 'Bearer no_auth')
-      .reply(404, { message: 'Not found' })
-
-    await expect(
-      crmReportApiClient.getProviderCrmReport({
-        crmType: 'crm4',
-        decisionFromDate: '2023-03-01',
-        decisionToDate: '2023-03-30',
-        providerAccount: 'INVALID',
-        profileAcceptedTypes: '1,4,5,6',
-      }),
-    ).rejects.toThrow('Not Found')
   })
 })

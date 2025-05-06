@@ -17,7 +17,7 @@ export const buildReportRequest = (
     lastSubmittedFromDate: reportParams.lastSubmittedFromDate,
     lastSubmittedToDate: reportParams.lastSubmittedToDate,
     providerAccount: isProviderReport ? reportParams.providerAccount : undefined, // Include only for provider reports
-    profileAcceptedTypes: isProviderReport ? undefined : profileAcceptedTypes, // Set profileAcceptedTypes for non-provider reports
+    profileAcceptedTypes,
   }
 }
 

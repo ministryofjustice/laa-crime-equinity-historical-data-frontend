@@ -46,7 +46,7 @@ describe('generateReportHelper', () => {
         decisionToDate: '2023-03-30',
         lastSubmittedFromDate: undefined,
         lastSubmittedToDate: undefined,
-        profileAcceptedTypes: undefined,
+        profileAcceptedTypes: '1,4,5,6',
         providerAccount: '1234AB',
         submittedFromDate: undefined,
         submittedToDate: undefined,
