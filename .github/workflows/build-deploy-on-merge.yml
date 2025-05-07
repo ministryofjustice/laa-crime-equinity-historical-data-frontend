@@ -1,0 +1,250 @@
+name: Build and deploy after PR merged
+
+on:
+  workflow_dispatch:
+    inputs:
+      node_version:
+        description: 'Node version'
+        type: string
+        required: false
+        default: '20.x'
+  push:
+    branches:
+      - 'main'
+env:
+  IMAGE_NAME: "equinity-frontend"
+  IMAGE_TAG: ${{ github.sha }} # Tags ECR image with commit sha
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ inputs.node_version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node_version }}
+      - name: update npm
+        shell: bash
+        run: |
+          sudo npm install -g npm@latest
+      - name: refresh cache
+        id: initial-cache
+        uses: actions/cache@v4
+        env:
+          cache-name: node-modules
+        with:
+          path: |
+            ~/.cache
+            node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: install dependencies
+        if: steps.initial-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          npm ci --no-audit
+      - name: refresh cache
+        id: refresh-cache
+        uses: actions/cache@v4
+        env:
+          cache-name: node-modules
+        with:
+          path: |
+            ~/.cache
+            node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: build npm
+        shell: bash
+        run: |
+          npm run build
+      - name: Linter check # Run linter after build because the integration test code depend on compiled typescript...
+        shell: bash
+        run: |
+          npm run lint
+      - name: upload the artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm_build_artifacts
+          path: |
+            node_modules/
+            build/
+            dist/
+            assets/stylesheets/
+  unit-tests:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ inputs.node_version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node_version }}
+      - name: refresh cache
+        id: refresh-cache
+        uses: actions/cache@v4
+        env:
+          cache-name: node-modules
+        with:
+          path: |
+            ~/.cache
+            node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: unit tests
+        id: unit-tests
+        shell: bash
+        run: |
+          sudo npm run test:ci
+        # continue-on-error: true
+        # Replacing the above with if: always()
+      - name: upload the artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm_unit_test_artifacts
+          path: test_results/
+      - name: fail the action if the tests failed
+        if: ${{ steps.unit-tests.outcome == 'failure' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            core.setFailed('Unit tests failed')
+  integration-tests:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ inputs.node_version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node_version }}
+      - name: download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: npm_build_artifacts
+      - name: refresh cache
+        id: refresh-cache
+        uses: actions/cache@v4
+        env:
+          cache-name: node-modules
+        with:
+          path: |
+            ~/.cache
+            node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Get wiremock
+        shell: bash
+        run: |
+          curl -o wiremock.jar https://repo1.maven.org/maven2/org/wiremock/wiremock-standalone/3.9.1/wiremock-standalone-3.9.1.jar
+      - name: Prepare and run integration tests
+        id: integration-tests
+        shell: bash
+        run: |
+          nohup java -jar wiremock.jar --port 9091 &
+          nohup npm run start-feature &
+          sleep 5
+          npm run int-test        
+      - name: upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm_integration_test_artifacts
+          path: |
+            integration-tests/videos/
+            integration_tests/screenshots/
+      - name: fail the action if the tests failed
+        if: ${{ steps.integration-tests.outcome == 'failure' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            core.setFailed('Integration tests failed')
+  ecr:
+    runs-on: ubuntu-latest
+    needs:
+      - integration-tests
+      - unit-tests
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read # This is required for actions/checkout
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+      # Build and push docker image to container repo
+      - name: Build and push docker image
+        uses: docker/build-push-action@v5
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+        with:
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_NAME }}-${{ env.IMAGE_TAG }}
+          push: true
+
+  deploy-dev:
+    needs: ecr
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read # This is required for actions/checkout
+    uses: ./.github/workflows/_deploy-to.yml
+    with:
+      environment: "dev"
+      repo_name: "equinity-frontend"
+      app_name: "laa-crime-equinity-historical-data-frontend"
+    secrets: inherit
+    
+  deploy-uat:
+    needs: deploy-dev
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read # This is required for actions/checkout
+    uses: ./.github/workflows/_deploy-to.yml
+    with:
+      environment: "uat"
+      repo_name: "equinity-frontend"
+      app_name: "laa-crime-equinity-historical-data-frontend"
+    secrets: inherit
+  
+  deploy-archive:
+    needs: deploy-uat
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read # This is required for actions/checkout
+    uses: ./.github/workflows/_deploy-to.yml
+    with:
+      environment: "archive"
+      repo_name: "equinity-frontend"
+      app_name: "laa-crime-equinity-historical-data-frontend"
+    secrets: inherit
+
+  deploy-prod:
+    needs: deploy-uat
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read # This is required for actions/checkout
+      packages: write
+    uses: ./.github/workflows/_deploy-to.yml
+    with:
+      environment: "prod"
+      repo_name: "equinity-frontend"
+      app_name: "laa-crime-equinity-historical-data-frontend"
+    secrets: inherit
