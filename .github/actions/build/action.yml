@@ -3,7 +3,6 @@ description: "This action builds the application"
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
     - name: Use Node.js ${{ inputs.node_version }}
       uses: actions/setup-node@v4
       with:
