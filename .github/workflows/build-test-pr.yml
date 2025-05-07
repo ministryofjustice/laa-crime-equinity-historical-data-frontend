@@ -1,0 +1,37 @@
+name: Build and test PR
+on:
+  workflow_dispatch:
+    inputs:
+      node_version:
+        description: 'Node version'
+        type: string
+        required: false
+        default: '20.x'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        id: build
+        uses: ./.github/actions/build
+  unit-tests:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run unit tests
+        id: unit-test
+        uses: ./.github/actions/unit-test
+  integration-tests:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run integration tests
+        id: unit-test
+        uses: ./.github/actions/integration-test
