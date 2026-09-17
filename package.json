@@ -118,7 +118,7 @@
     "govuk-frontend": "^5.8.0",
     "helmet": "^7.2.0",
     "http-errors": "^2.0.0",
-    "joi": "^17.13.0",
+    "joi": "^17.13.7",
     "lodash": "^4.17.21",
     "lru-cache": "^11.0.2",
     "nocache": "^4.0.0",
